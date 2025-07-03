@@ -8,8 +8,8 @@
     height: 46px;
     border-radius: 50px;
     font-family: 'Inter', sans-serif;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    // margin-top: 30px;
+    // margin-bottom: 50px;
 }
 
 .iconEmail {
@@ -24,8 +24,47 @@
     background-color: transparent;
     width: 85%;
     height: 85%;
+
+    &::placeholder {
+        color: #0C4F64;
+    }
 }
 
 .inputEmail:focus {
+    outline: none;
+}
+
+.container2 {
+    background-color: #0B0E31;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 383px;
+    height: 46px;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    margin: 10px;
+}
+
+.iconEmail2 {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.inputEmail2 {
+    color: white;
+    font-size: 15px;
+    border: none;
+    background-color: transparent;
+    width: 85%;
+    height: 85%;
+
+    &::placeholder {
+        color: white;
+    }
+
+}
+
+.inputEmail2:focus {
     outline: none;
 }

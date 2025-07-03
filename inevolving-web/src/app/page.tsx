@@ -23,7 +23,7 @@ export default function Home() {
         // transition={{
         //   duration: 0.4,
         //   scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-        // }} 
+        // }}
         className={styles.container}
     >
       <CardLogin />

@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 .cardRegistro{
-    background-color: #0B0E31;
+    background-color: #F4F4FE;
     width: 622px;
     height: 583px;
     border-top-right-radius: 16px;
@@ -33,16 +35,41 @@
     flex-direction: row;
     align-items: center;;
     margin-top: -5px;
-    margin-bottom: 30px;
 
     p {
         margin-right: 5px;
-        color: #E7E2D6;
+        color: #0B0E31;
         font-weight: 500;
         font-size: 19px;
     }
 }
 
-.margem{
-    margin-bottom: 50px;
+.email{
+    margin: 0;
+}
+
+
+.esqueciSenhaContainer{
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+        font-family: 'Inter', sans-serif;
+        color: #0B0E31;
+    }
+}
+
+
+.naoTemConta {
+    margin: 20px;
+    font-family: 'Inter', sans-serif;
+    color: #0B0E31;
+
+    a {
+        color: #0B0E31;
+        margin-left: 10px;
+    }
 }

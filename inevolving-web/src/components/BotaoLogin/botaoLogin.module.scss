@@ -42,3 +42,27 @@
     transition: 0.2s;
     border: solid 3px #E76148;
 }
+
+.botaoGrande{
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    background-color: #E76148;
+    border: none;
+    color: white;
+    width: 383px;
+    padding: 15px 90px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+.botaoGrande:hover {
+    background-color: #70f37400;
+    color: #E76148;
+    padding: 20px 65px;
+    transition: 0.2s;
+    border: solid 3px #E76148;
+}

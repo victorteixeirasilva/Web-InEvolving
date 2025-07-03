@@ -1,10 +1,10 @@
+'use client';
 /* index.tsx */
 
 
 import Image from 'next/image';
 import styles from './cardLogin.module.scss';
 import BotaoLogin from '../BotaoLogin';
-
 
 export default function CardLogin() {
   return (
@@ -15,7 +15,7 @@ export default function CardLogin() {
                 alt='logo'
                 width={86}
                 height={86}
-                />
+            />  
             <h1 className={styles.bemVindoDeVolta}>
                 Bem-vindo<br/> 
                 de volta!

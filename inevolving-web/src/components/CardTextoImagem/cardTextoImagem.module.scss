@@ -1,0 +1,76 @@
+/* cardLogin.module.scss */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.cardLogin {
+    position: relative;
+    background-image: url("/Imagens/fundo/Bem-vindo Background.png");
+    background-size: cover;       // cobre toda a área
+    background-position: center;  // centraliza a imagem
+    background-repeat: no-repeat; // evita repetição
+    height: 100vh; 
+
+    width: 322px;
+    height: 583px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.52);
+
+     &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url('/Imagens/fundo/Bem-vindoBackgroundOver.png');
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+    }
+
+}
+
+.bemVindoDeVolta {
+    margin-top: 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    line-height: 100%;
+    font-size: 28px;
+    color: #FFFFFF;
+    z-index: 3;
+}
+
+
+.logo{
+    z-index: 3;
+}
+
+.containerCardLogin{
+    margin: auto;
+    display: flex;
+    flex-direction: column; 
+}
+
+.subtituloLogin{
+    margin-top: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #0B0E31;
+    margin-bottom: 50px;
+}
+
+.containerBotaoLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    a {
+        margin-top: 20px;
+        font-family: 'Inter', sans-serif;
+        color: #0C4F64;
+    }
+}
+
+
+

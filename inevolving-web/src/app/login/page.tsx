@@ -1,5 +1,20 @@
+import CardTextoImagem from "@/components/CardTextoImagem";
+import styles from "./page.module.scss";
+import CardInputLogin from "@/components/CardInputLogin";
+
 export default function Login() {
     return (
-        <h1>Login Page</h1>
+        <div className={styles.background}>
+            <div>
+                <CardTextoImagem texto={
+                        <>
+                            Bem-vindo<br />
+                            de volta
+                        </>
+                    }
+                />
+            </div>
+            <CardInputLogin />
+        </div>
     );
 }

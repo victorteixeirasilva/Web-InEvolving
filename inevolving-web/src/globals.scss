@@ -1,11 +1,11 @@
 @import "./app/variables.scss";
 
 :root {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
+    // height: 100vh;
+    // width: 100vw;
+    margin: none;
 }
 
-// body {
-//     position: relative;
-// }
+body {
+    margin: 0;
+}
