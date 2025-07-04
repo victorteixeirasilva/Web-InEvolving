@@ -3,7 +3,7 @@ import styles from './inputEmail.module.scss';
 
 interface InputEmailProps {
   tema: string;
-  tipo: 'email' | 'senha';
+  tipo: 'email' | 'senha' | 'telefone';
   value: string;
   onChange: (value: string) => void;
 }
@@ -51,7 +51,7 @@ export default function InputEmail( { tema, tipo, value, onChange }: InputEmailP
                     />
                 </div>
             );
-        } else {
+        } else if (tipo === 'senha') {
             return (
                 <div className={styles.container2}>
                     <Image
@@ -71,7 +71,28 @@ export default function InputEmail( { tema, tipo, value, onChange }: InputEmailP
                     />
                 </div>
             );
+        } else if (tipo === 'telefone') {
+            return (
+                <div className={styles.container2}>
+                    <Image
+                        className={styles.iconEmail2}
+                        src="/IconeTelefone.svg"
+                        alt='Icone de telefone'
+                        width={17}
+                        height={14}
+                    />
+                    <input
+                        className={styles.inputEmail2} 
+                        type="tel"
+                        id='telefone'
+                        placeholder='Digite seu telefone.' 
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                    />
+                </div>
+            );
         }
+
     }
 
     

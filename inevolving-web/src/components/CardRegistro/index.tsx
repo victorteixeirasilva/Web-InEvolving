@@ -21,7 +21,7 @@ export default function CardRegistro() {
                     height={13}
                 />
             </div>
-            {/* <InputEmail tema='claro'/> */}
+            <InputEmail tema='claro'/>
             <div className={styles.margem}/>
             <BotaoLogin texto='Cadastrar' tipo='2'/>
         </div>

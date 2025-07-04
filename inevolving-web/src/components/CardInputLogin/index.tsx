@@ -13,20 +13,17 @@ export default function CardInputLogin() {
     const router = useRouter();
 
     const handleLogin = async () => {
-        try {
-            const response = await fetch('http://127.0.0.1:2327/api/authentication/login', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password: senha }),
-            });
+        const response = await fetch('http://127.0.0.1:2327/api/authentication/login', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password: senha }),
+        });
 
-            if (!response.ok) {
-                throw new Error('Falha no login');
-            }
+        const data = await response.json();
 
-            const data = await response.json();
+        if (response.ok){
 
             // Armazena no localStorage
             localStorage.setItem('token', data.BearerToken);
@@ -34,9 +31,9 @@ export default function CardInputLogin() {
 
             // Redireciona para o dashboard ou outra rota
             router.push('/dashboard');
-        } catch (error) {
-            console.error('Erro ao fazer login:', error);
-            alert('Email ou senha inválidos');
+        } else {
+            alert(data.message);
+            console.error('Erro no login:', data.message);
         }
     };
 
@@ -73,7 +70,7 @@ export default function CardInputLogin() {
                 <div className={styles.naoTemConta}>
                     Não tem uma conta? 
                     <strong>
-                        <a href="">
+                        <a href="/cadastro">
                             Cadastre-se
                         </a>
                     </strong>
