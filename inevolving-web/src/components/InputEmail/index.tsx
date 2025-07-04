@@ -1,7 +1,14 @@
 import Image from 'next/image';
 import styles from './inputEmail.module.scss';
 
-export default function InputEmail( { tema, tipo }: { tema?: string, tipo?: string } ) {
+interface InputEmailProps {
+  tema: string;
+  tipo: 'email' | 'senha';
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export default function InputEmail( { tema, tipo, value, onChange }: InputEmailProps ) {
     
     if (tema === 'claro') {
             return (
@@ -18,6 +25,8 @@ export default function InputEmail( { tema, tipo }: { tema?: string, tipo?: stri
                         type="email"
                         id='email'
                         placeholder='Digite seu e-mail (seuemail@exemplo.com).' 
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
                     />
                 </div>
             );
@@ -36,7 +45,9 @@ export default function InputEmail( { tema, tipo }: { tema?: string, tipo?: stri
                         className={styles.inputEmail2} 
                         type="email"
                         id='email'
-                        placeholder='Digite seu e-mail (seuemail@exemplo.com).' 
+                        placeholder='Digite seu e-mail (seuemail@exemplo.com).'
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)} 
                     />
                 </div>
             );
@@ -55,6 +66,8 @@ export default function InputEmail( { tema, tipo }: { tema?: string, tipo?: stri
                         type="password"
                         id='password'
                         placeholder='Digite seu senha.' 
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
                     />
                 </div>
             );

@@ -2,8 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 import styles from "./botaoLogin.module.scss";
+interface BotaoLoginProps {
+  texto: string;
+  tipo: string;
+  onClick?: () => void;
+}
 
-export default function BotaoLogin({ texto, tipo }: { texto: string, tipo: string }) {
+export default function BotaoLogin({ texto, tipo, onClick }: BotaoLoginProps) {
   
   const router = useRouter();
 
@@ -31,7 +36,7 @@ export default function BotaoLogin({ texto, tipo }: { texto: string, tipo: strin
         );
     } else if (tipo === "3") {
         return (
-          <button type="submit" className={styles.botaoGrande} onClick={handleClick}>
+          <button type="submit" className={styles.botaoGrande} onClick={onClick}>
             {texto}
           </button>
         );
