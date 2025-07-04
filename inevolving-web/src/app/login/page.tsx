@@ -7,25 +7,30 @@ import { motion } from "motion/react";
 
 export default function Login() {
     return (
-        <motion.div 
+        <div 
             className={styles.background}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-                duration: 0.4,
-                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-            }}
+            
         >
-            <div>
-                <CardTextoImagem texto={
-                        <>
-                            Bem-vindo<br />
-                            de volta
-                        </>
-                    }
-                />
-            </div>
-            <CardInputLogin />
-        </motion.div>
+            <motion.div
+                className={styles.container}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    duration: 0.4,
+                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                }}
+            >
+                <div>
+                    <CardTextoImagem texto={
+                            <>
+                                Bem-vindo<br />
+                                de volta
+                            </>
+                        }
+                    />
+                </div>
+                <CardInputLogin />
+            </motion.div>
+        </div>
     );
 }
