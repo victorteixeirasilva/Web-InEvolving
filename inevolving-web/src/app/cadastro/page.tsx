@@ -28,7 +28,9 @@ export default function Cadastro() {
                         }
                     />
                 </div>
-                <CardInputCadastro />
+                <CardInputCadastro preEmail={
+                    localStorage.getItem('email') || ''
+                }/>
             </motion.div>
         </div>
     );

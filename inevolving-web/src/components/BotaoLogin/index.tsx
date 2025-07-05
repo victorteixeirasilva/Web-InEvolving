@@ -5,10 +5,11 @@ import styles from "./botaoLogin.module.scss";
 interface BotaoLoginProps {
   texto: string;
   tipo: string;
+  value?: string;
   onClick?: () => void;
 }
 
-export default function BotaoLogin({ texto, tipo, onClick }: BotaoLoginProps) {
+export default function BotaoLogin({ texto, tipo, value, onClick }: BotaoLoginProps) {
   
   const router = useRouter();
 
@@ -16,6 +17,8 @@ export default function BotaoLogin({ texto, tipo, onClick }: BotaoLoginProps) {
     if (tipo === '1') {
       router.push('/login');
     } else if (tipo === '2') {
+      // Redireciona para a página de cadastro
+      localStorage.setItem('email', value || '');
       router.push('/cadastro');
     } else {
       router.push('/'); // Redireciona para a página inicial por padrão

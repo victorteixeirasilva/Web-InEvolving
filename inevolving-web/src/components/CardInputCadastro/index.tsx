@@ -7,8 +7,8 @@ import BotaoLogin from '../BotaoLogin';
 import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
 
-export default function CardInputCadastro() {
-    const [email, setEmail] = useState('');
+export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
+    const [email, setEmail] = useState(preEmail || '');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -16,36 +16,27 @@ export default function CardInputCadastro() {
     const router = useRouter();
 
     const handleCadastro = async () => {
-        try {
-            if (senha !== confirmarSenha) {
-                alert('As senhas não coincidem');
-                return;
-            }
-            const response = await fetch('http://127.0.0.1:2327/api/authentication/register', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password: senha }),
-            });
+        if (senha !== confirmarSenha) {
+            alert('As senhas não coincidem');
+            return;
+        }
+        const response = await fetch('http://127.0.0.1:2327/api/authentication/register', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password: senha }),
+        });
 
-            if (!response.ok) {
-                throw new Error('Falha no login');
-            }
-
-            const data = await response.json();
-
-            alert(data.message);
-
-            // Redireciona para o dashboard ou outra rota   
+        const data = await response.json();
+        if (response.ok) {
             if (response.status === 200) {
                 router.push('/login');
             }
-
-        } catch (error) {
-            console.error('Erro ao fazer login:', error);
-            alert('Email ou senha inválidos');
+        } else {
+            alert(`Erro: ${data.message || 'Erro ao cadastrar'}`);
         }
+
     };
 
     return (
