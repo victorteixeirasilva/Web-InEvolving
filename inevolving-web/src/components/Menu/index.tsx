@@ -30,7 +30,7 @@ export default function Menu() {
                     InEvolving
                 </h2>
             </div>            
-            <nav>
+            <nav className={styles.esp}>
                 <div className={styles.nav}>
                     <Image 
                         src="/iconeDashboard.svg"
@@ -109,7 +109,6 @@ export default function Menu() {
                         {isActiveMotivacao && <div className={styles.ativo}></div>}
                     </a>
                 </div>
-            </nav>
             <div className={styles.ajuste}>
                 <div className={styles.nav}>
                     <Image 
@@ -138,6 +137,7 @@ export default function Menu() {
                     </a>
                 </div>
             </div>
+            </nav>
         </div>
         </>
     );
