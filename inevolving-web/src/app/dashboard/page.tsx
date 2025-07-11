@@ -5,6 +5,7 @@ import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
 import * as motion from "motion/react-client"
+import { useRef } from "react"
 
 
 export interface Objective {
@@ -39,10 +40,12 @@ export interface ResponseDashboard {
 
 
 export default function Dashboard() {
-
+    const constraintsRef = useRef<HTMLDivElement>(null)
     const [urlVisionBord, setUrlVisionBord] = useState<string | null>(null);
     const [jwtToken, setJwtToken] = useState('');
+    
     const [dashboardData, setDashboardData] = useState<ResponseDashboard | null>(null);
+
     const [showVisionBoard, setShowVisionBoard] = useState(false);
 
 
@@ -113,7 +116,7 @@ export default function Dashboard() {
                     <h1>Métricas</h1>
                 </div>
 
-                <div className={styles.containerConteudo}>
+                <motion.div ref={constraintsRef} className={styles.containerConteudo}>
                     {dashboardData?.categoryDTOList.map((category) => (
                         <motion.div 
                             whileHover={{ scale: 1.03 }}
@@ -121,7 +124,9 @@ export default function Dashboard() {
                             key={category.id} 
                             className={styles.categoria}
                         >
-                            <div className={styles.containerConteudoCategoria}>
+                            <motion.div
+                                className={styles.containerConteudoCategoria}
+                            >
                                 <h2>{category.categoryName}</h2>
                                 <div className={styles.containerBotao}>
                                     <motion.button
@@ -138,10 +143,10 @@ export default function Dashboard() {
                                         Editar
                                     </motion.a>
                                 </div>
-                            </div>
+                            </motion.div>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
             {showVisionBoard && (
                 <div className={styles.overlay}>

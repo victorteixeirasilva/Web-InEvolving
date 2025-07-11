@@ -1,6 +1,26 @@
 import Image from "next/image";
 import styles from "./menu.module.scss";
 import { usePathname } from "next/navigation";
+import { Calendar, CalendarProps } from 'react-calendar';
+import { useEffect, useState } from 'react';
+import 'react-calendar/dist/Calendar.css'; // opcional, se quiser base
+
+export interface Tarefa {
+    id: string,
+    nameTask: string,
+    descriptionTask: string,
+    status: string,
+    dateTask: string,
+    idObjective: string,
+    idUser: string,
+    idParentTask: string,
+    idOriginalTask: string,
+    hasSubtasks: boolean,
+    blockedByObjective: boolean,
+    isCopy: boolean,
+    cancellationReason: string
+}
+
 
 export default function Menu() {
     const pathname = usePathname();
@@ -12,6 +32,56 @@ export default function Menu() {
     const isActiveMotivacao = pathname === '/motivacao';
     const isActiveAjustes = pathname === '/ajustes';
     const isActiveAjuda = pathname === '/ajuda';
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+    
+    const handleDateChange : CalendarProps['onChange'] = (value, _) => {
+        if (value instanceof Date) {
+            setSelectedDate(value);
+            pegarTarefasDoDia();
+            // Desenvolver busca de tarefas
+        } else if (Array.isArray(value) && value[0] instanceof Date) {
+            setSelectedDate(value[0]); // ou outro tratamento para intervalo
+        }
+    };
+
+    const [jwtToken, setJwtToken] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setJwtToken(token ?? '');
+    }, []);
+    
+    const [tarefasData, setTarefasData] = useState<Tarefa[] | null>(null);
+    
+    useEffect(() => {
+        if (selectedDate && jwtToken) {
+            pegarTarefasDoDia();
+        }
+    }, [selectedDate, jwtToken]);
+    
+    
+    const pegarTarefasDoDia = async () => {
+            if (!selectedDate) return;
+            const dateFormatted = selectedDate?.toISOString().split('T')[0];
+            const response = await fetch(
+                    'http://127.0.0.1:2327/auth/api/tasks/' + dateFormatted, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                });
+    
+            const data: Tarefa[] = await response.json();
+                
+            if (!response.ok){
+                return;
+            }
+            
+            setTarefasData(data);
+    };
 
 
     return (
@@ -140,7 +210,29 @@ export default function Menu() {
             </nav>
         </div>
         <div className={styles.containerMenuResumo}>
-        
+            <Calendar
+                className={styles.calendar}
+                selectRange={false}
+                onChange={handleDateChange}
+                value={selectedDate}
+            />
+
+            {selectedDate && (
+                <p>
+                    {/* Data selecionada: {selectedDate.toLocaleDateString()} */}
+                    {selectedDate.toISOString()}                    
+                </p>
+            )}
+
+            <h2>Tarefas do Dia</h2>
+            <div>
+                {tarefasData?.map((tarefa) => (
+                    <div key={tarefa.id}>
+                        <p>{tarefa.nameTask}</p>
+                        <p>{tarefa.status}</p>
+                    </div>
+                ))}
+            </div>
         </div>
         </>
     );
