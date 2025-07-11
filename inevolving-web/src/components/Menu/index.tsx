@@ -139,6 +139,9 @@ export default function Menu() {
             </div>
             </nav>
         </div>
+        <div className={styles.containerMenuResumo}>
+        
+        </div>
         </>
     );
 }

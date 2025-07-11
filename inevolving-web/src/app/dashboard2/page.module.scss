@@ -4,7 +4,7 @@
     overflow-x: hidden;
     font-family: 'Inter', sans-serif;
 
-    position: fixed;
+    position: absolute;
     z-index: 3;
     margin-top: 30px;
     margin-left: 200px;
@@ -82,7 +82,6 @@
     margin-top: 40px;
     margin-left: 50px;
     margin-right: 50px;
-    margin-bottom: 150px;
     
     .categoria {
         width: 100%;
