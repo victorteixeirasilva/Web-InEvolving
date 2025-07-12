@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // opcional, se quiser base
 import { motion } from "motion/react";
 import { ClipLoader } from 'react-spinners';
+import IconeStatus from "../IconeStatus";
 
 export interface Tarefa {
     id: string,
@@ -254,14 +255,23 @@ export default function Menu() {
                             duration: 0.4,
                             scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                         }} 
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.8 }} 
                     >
+                        <Image
+                            className={styles.icone} 
+                            src="/iconeTarefasAzul.svg"
+                            alt="Icone da Tarefa"
+                            width={16}
+                            height={20}
+                        />
                         <p>{tarefa.nameTask}</p>
-                        <p>{tarefa.status}</p>
+                        <IconeStatus status={tarefa.status}/>
                     </motion.div>
                 ))}
                 {!carregandoTarefas && !verTarefas && (
                     <motion.div 
-                        className={styles.tarefa}
+                        className={styles.alerta}
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{
@@ -269,8 +279,38 @@ export default function Menu() {
                             scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                         }} 
                     >
+                        <Image
+                            src="/iconeAlerta.svg"
+                            alt="Icone Alerta"
+                            width={100}
+                            height={100}
+                        />
                         <h3>Nenhuma tarefa para o dia selecionado!</h3>
                     </motion.div>
+                )}
+                {verTarefas && (
+                    <div className={styles.verTarefas}>
+                        <motion.button 
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                                duration: 0.4,
+                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                            }} 
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botao} 
+                        >
+                            Ver tarefas
+                            <Image 
+                                src="/iconeSetaDireita.svg"
+                                alt="seta para direita"
+                                width={6}
+                                height={10}
+                                className={styles.seta}
+                            />    
+                        </motion.button>
+                    </div>
                 )}
             </div>
         </motion.div>

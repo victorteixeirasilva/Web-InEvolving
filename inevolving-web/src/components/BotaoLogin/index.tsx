@@ -50,7 +50,7 @@ export default function BotaoLogin({ carregando, texto, tipo, value, onClick }: 
             className={styles.botaoGrande} 
             onClick={onClick}
           >
-            {carregando && <ClipLoader size={10} color="#fff" />}
+            {carregando && <ClipLoader size={10} color="#0B0E31" />}
               <span 
                 style={{ 
                   marginLeft: carregando ? '8px' : '0'
