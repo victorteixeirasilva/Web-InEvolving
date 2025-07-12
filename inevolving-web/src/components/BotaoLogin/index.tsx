@@ -2,14 +2,19 @@
 
 import { useRouter } from 'next/navigation';
 import styles from "./botaoLogin.module.scss";
+import { ClipLoader } from 'react-spinners';
+
+
+
 interface BotaoLoginProps {
+  carregando?: boolean;
   texto: string;
   tipo: string;
   value?: string;
   onClick?: () => void;
 }
 
-export default function BotaoLogin({ texto, tipo, value, onClick }: BotaoLoginProps) {
+export default function BotaoLogin({ carregando, texto, tipo, value, onClick }: BotaoLoginProps) {
   
   const router = useRouter();
 
@@ -39,8 +44,20 @@ export default function BotaoLogin({ texto, tipo, value, onClick }: BotaoLoginPr
         );
     } else if (tipo === "3") {
         return (
-          <button type="submit" className={styles.botaoGrande} onClick={onClick}>
-            {texto}
+          <button 
+            disabled={carregando} 
+            type="submit" 
+            className={styles.botaoGrande} 
+            onClick={onClick}
+          >
+            {carregando && <ClipLoader size={10} color="#fff" />}
+              <span 
+                style={{ 
+                  marginLeft: carregando ? '8px' : '0'
+                }}
+              >
+                {texto}
+              </span>
           </button>
         );
     }

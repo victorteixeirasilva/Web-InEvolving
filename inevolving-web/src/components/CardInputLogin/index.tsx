@@ -11,8 +11,12 @@ export default function CardInputLogin() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const router = useRouter();
+    const [carregando, setCarregando] = useState(false);
+
 
     const handleLogin = async () => {
+        setCarregando(true);
+
         const response = await fetch('http://127.0.0.1:2327/api/authentication/login', {
             method: 'POST',
             headers: {
@@ -30,6 +34,7 @@ export default function CardInputLogin() {
             localStorage.setItem('visionBordUrl', data.urlVisionBord);
 
             // Redireciona para o dashboard ou outra rota
+            setCarregando(false);
             router.push('/dashboard');
         } else {
             alert(data.message);
@@ -65,8 +70,13 @@ export default function CardInputLogin() {
                     </a>
                 </div>
 
-                <BotaoLogin texto='Entrar' tipo='3' onClick={handleLogin}/>
-                
+                <BotaoLogin 
+                    carregando={carregando} 
+                    texto={carregando ? 'Entrando...' : 'Entrar'} 
+                    tipo='3' 
+                    onClick={handleLogin}
+                />
+
                 <div className={styles.naoTemConta}>
                     Não tem uma conta? 
                     <strong>

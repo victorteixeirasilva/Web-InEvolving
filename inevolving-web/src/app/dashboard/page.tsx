@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
-import * as motion from "motion/react-client"
-import { useRef } from "react"
+import * as motion from "motion/react-client";
+import { useRef } from "react";
+import { ClipLoader } from 'react-spinners';
 
 
 export interface Objective {
@@ -43,10 +44,12 @@ export default function Dashboard() {
     const constraintsRef = useRef<HTMLDivElement>(null)
     const [urlVisionBord, setUrlVisionBord] = useState<string | null>(null);
     const [jwtToken, setJwtToken] = useState('');
-    
+
     const [dashboardData, setDashboardData] = useState<ResponseDashboard | null>(null);
 
     const [showVisionBoard, setShowVisionBoard] = useState(false);
+
+    const [carregandoDash, setCarregandoDash] = useState(false);
 
 
 
@@ -58,6 +61,7 @@ export default function Dashboard() {
     }, []);
 
     const getDashboard = async () => {
+        setCarregandoDash(true);
         const response = await fetch(
                 'http://127.0.0.1:2327/auth/api/dashboard', 
             {
@@ -72,10 +76,12 @@ export default function Dashboard() {
         
 
         if (!response.ok){
+            setCarregandoDash(false);
             alert('Erro ao puxar dashboard');
             console.error('Erro ao puxar dashboard');
         }
         
+        setCarregandoDash(false);
         setDashboardData(data);
     };
 
@@ -83,7 +89,7 @@ export default function Dashboard() {
         if (jwtToken) {
             getDashboard();
         }
-        }, [jwtToken]);
+    }, [jwtToken]);
 
 
     const handleOpenInNewTab = () => {
@@ -94,9 +100,16 @@ export default function Dashboard() {
 
 
     return (
-        <>
+        <motion.div>
             <Menu />
-            <div className={styles.container}>
+            <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    duration: 0.4,
+                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                }} 
+                className={styles.container}>
                 {/* ✅ Só renderiza se a URL for válida e diferente de "No dreams were found" */}
                 {urlVisionBord && urlVisionBord !== "No dreams were found" && (
                     <div className={styles.preVisionBordContainer}>
@@ -117,7 +130,10 @@ export default function Dashboard() {
                 </div>
 
                 <motion.div ref={constraintsRef} className={styles.containerConteudo}>
-                    {dashboardData?.categoryDTOList.map((category) => (
+                    {carregandoDash && (
+                        <ClipLoader size={50} color="#0B0E31" />
+                    )}
+                    {!carregandoDash && dashboardData?.categoryDTOList.map((category) => (
                         <motion.div 
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.8 }} 
@@ -147,9 +163,16 @@ export default function Dashboard() {
                         </motion.div>
                     ))}
                 </motion.div>
-            </div>
-            {showVisionBoard && (
-                <div className={styles.overlay}>
+            </motion.div>
+            {!carregandoDash && showVisionBoard && (
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.4,
+                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                    }} 
+                    className={styles.overlay}>
                     <div className={styles.popup}>
                         <div className={styles.containerBotoes}>
                             <motion.button
@@ -183,8 +206,8 @@ export default function Dashboard() {
                             className={styles.popupImage}
                         />
                     </div>
-                </div>
+                </motion.div>
             )}
-        </>
+        </motion.div>
     );
 }

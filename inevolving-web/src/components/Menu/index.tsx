@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { Calendar, CalendarProps } from 'react-calendar';
 import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // opcional, se quiser base
+import { motion } from "motion/react";
+import { ClipLoader } from 'react-spinners';
 
 export interface Tarefa {
     id: string,
@@ -32,10 +34,11 @@ export default function Menu() {
     const isActiveMotivacao = pathname === '/motivacao';
     const isActiveAjustes = pathname === '/ajustes';
     const isActiveAjuda = pathname === '/ajuda';
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
+    const [carregandoTarefas, setCarregandoTarefas] = useState(false);
 
     
-    const handleDateChange : CalendarProps['onChange'] = (value, _) => {
+    const handleDateChange : CalendarProps['onChange'] = (value) => {
         if (value instanceof Date) {
             setSelectedDate(value);
             pegarTarefasDoDia();
@@ -53,6 +56,7 @@ export default function Menu() {
     }, []);
     
     const [tarefasData, setTarefasData] = useState<Tarefa[] | null>(null);
+    const [verTarefas, setVerTarefas] = useState(false);
     
     useEffect(() => {
         if (selectedDate && jwtToken) {
@@ -60,9 +64,9 @@ export default function Menu() {
         }
     }, [selectedDate, jwtToken]);
     
-    
     const pegarTarefasDoDia = async () => {
             if (!selectedDate) return;
+            setCarregandoTarefas(true);
             const dateFormatted = selectedDate?.toISOString().split('T')[0];
             const response = await fetch(
                     'http://127.0.0.1:2327/auth/api/tasks/' + dateFormatted, 
@@ -77,17 +81,29 @@ export default function Menu() {
             const data: Tarefa[] = await response.json();
                 
             if (!response.ok){
+                setVerTarefas(false);
+                setCarregandoTarefas(false);
                 return;
             }
             
+            setCarregandoTarefas(false);
+            setVerTarefas(true);
             setTarefasData(data);
     };
 
 
     return (
         <>
-        <div className={styles.linha}></div>
-        <div className={styles.container}>
+        <motion.div 
+            className={styles.linha}></motion.div>
+        <motion.div 
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+                duration: 0.4,
+                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+            }}
+            className={styles.container}>
             <div className={styles.titulo}>
                 <Image 
                     src="/logo/logo-inovasoft-menu.svg"
@@ -208,32 +224,56 @@ export default function Menu() {
                 </div>
             </div>
             </nav>
-        </div>
-        <div className={styles.containerMenuResumo}>
+        </motion.div>
+        <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+                    duration: 0.4,
+                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+            }} 
+            className={styles.containerMenuResumo}>
             <Calendar
                 className={styles.calendar}
                 selectRange={false}
                 onChange={handleDateChange}
                 value={selectedDate}
             />
-
-            {selectedDate && (
-                <p>
-                    {/* Data selecionada: {selectedDate.toLocaleDateString()} */}
-                    {selectedDate.toISOString()}                    
-                </p>
-            )}
-
             <h2>Tarefas do Dia</h2>
             <div>
-                {tarefasData?.map((tarefa) => (
-                    <div key={tarefa.id}>
+                {carregandoTarefas && (
+                    <ClipLoader size={35} color="#0B0E31" />
+                )}
+                {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, 3).map((tarefa) => (
+                    <motion.div 
+                        key={tarefa.id}
+                        className={styles.tarefa}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }} 
+                    >
                         <p>{tarefa.nameTask}</p>
                         <p>{tarefa.status}</p>
-                    </div>
+                    </motion.div>
                 ))}
+                {!carregandoTarefas && !verTarefas && (
+                    <motion.div 
+                        className={styles.tarefa}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }} 
+                    >
+                        <h3>Nenhuma tarefa para o dia selecionado!</h3>
+                    </motion.div>
+                )}
             </div>
-        </div>
+        </motion.div>
         </>
     );
 }
