@@ -1,28 +1,9 @@
 import Image from "next/image";
 import styles from "./menu.module.scss";
 import { usePathname } from "next/navigation";
-import { Calendar, CalendarProps } from 'react-calendar';
-import { useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // opcional, se quiser base
 import { motion } from "motion/react";
-import { ClipLoader } from 'react-spinners';
-import IconeStatus from "../IconeStatus";
-
-export interface Tarefa {
-    id: string,
-    nameTask: string,
-    descriptionTask: string,
-    status: string,
-    dateTask: string,
-    idObjective: string,
-    idUser: string,
-    idParentTask: string,
-    idOriginalTask: string,
-    hasSubtasks: boolean,
-    blockedByObjective: boolean,
-    isCopy: boolean,
-    cancellationReason: string
-}
+import MenuResumo from "../MenuResumo";
 
 
 export default function Menu() {
@@ -35,64 +16,7 @@ export default function Menu() {
     const isActiveMotivacao = pathname === '/motivacao';
     const isActiveAjustes = pathname === '/ajustes';
     const isActiveAjuda = pathname === '/ajuda';
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
-    const [carregandoTarefas, setCarregandoTarefas] = useState(false);
-
-    
-    const handleDateChange : CalendarProps['onChange'] = (value) => {
-        if (value instanceof Date) {
-            setSelectedDate(value);
-            pegarTarefasDoDia();
-            // Desenvolver busca de tarefas
-        } else if (Array.isArray(value) && value[0] instanceof Date) {
-            setSelectedDate(value[0]); // ou outro tratamento para intervalo
-        }
-    };
-
-    const [jwtToken, setJwtToken] = useState('');
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setJwtToken(token ?? '');
-    }, []);
-    
-    const [tarefasData, setTarefasData] = useState<Tarefa[] | null>(null);
-    const [verTarefas, setVerTarefas] = useState(false);
-    
-    useEffect(() => {
-        if (selectedDate && jwtToken) {
-            pegarTarefasDoDia();
-        }
-    }, [selectedDate, jwtToken]);
-    
-    const pegarTarefasDoDia = async () => {
-            if (!selectedDate) return;
-            setCarregandoTarefas(true);
-            const dateFormatted = selectedDate?.toISOString().split('T')[0];
-            const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/tasks/' + dateFormatted, 
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + jwtToken
-                    },
-                });
-    
-            const data: Tarefa[] = await response.json();
-                
-            if (!response.ok){
-                setVerTarefas(false);
-                setCarregandoTarefas(false);
-                return;
-            }
-            
-            setCarregandoTarefas(false);
-            setVerTarefas(true);
-            setTarefasData(data);
-    };
-
-
+        
     return (
         <>
         <motion.div 
@@ -226,94 +150,7 @@ export default function Menu() {
             </div>
             </nav>
         </motion.div>
-        <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-                    duration: 0.4,
-                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-            }} 
-            className={styles.containerMenuResumo}>
-            <Calendar
-                className={styles.calendar}
-                selectRange={false}
-                onChange={handleDateChange}
-                value={selectedDate}
-            />
-            <h2>Tarefas do Dia</h2>
-            <div>
-                {carregandoTarefas && (
-                    <ClipLoader size={35} color="#0B0E31" />
-                )}
-                {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, 3).map((tarefa) => (
-                    <motion.div 
-                        key={tarefa.id}
-                        className={styles.tarefa}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.4,
-                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                        }} 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.8 }} 
-                    >
-                        <Image
-                            className={styles.icone} 
-                            src="/iconeTarefasAzul.svg"
-                            alt="Icone da Tarefa"
-                            width={16}
-                            height={20}
-                        />
-                        <p>{tarefa.nameTask}</p>
-                        <IconeStatus status={tarefa.status}/>
-                    </motion.div>
-                ))}
-                {!carregandoTarefas && !verTarefas && (
-                    <motion.div 
-                        className={styles.alerta}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.4,
-                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                        }} 
-                    >
-                        <Image
-                            src="/iconeAlerta.svg"
-                            alt="Icone Alerta"
-                            width={100}
-                            height={100}
-                        />
-                        <h3>Nenhuma tarefa para o dia selecionado!</h3>
-                    </motion.div>
-                )}
-                {verTarefas && (
-                    <div className={styles.verTarefas}>
-                        <motion.button 
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                            }} 
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.botao} 
-                        >
-                            Ver tarefas
-                            <Image 
-                                src="/iconeSetaDireita.svg"
-                                alt="seta para direita"
-                                width={6}
-                                height={10}
-                                className={styles.seta}
-                            />    
-                        </motion.button>
-                    </div>
-                )}
-            </div>
-        </motion.div>
+        <MenuResumo />
         </>
     );
 }

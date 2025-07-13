@@ -7,38 +7,7 @@ import Image from "next/image";
 import * as motion from "motion/react-client";
 import { useRef } from "react";
 import { ClipLoader } from 'react-spinners';
-
-
-export interface Objective {
-  id: string;
-  nameObjective: string;
-  descriptionObjective: string;
-  statusObjective: string;
-  completionDate: string;
-  idUser: string;
-  totNumberTasks: number;
-  numberTasksToDo: number;
-  numberTasksDone: number;
-  numberTasksInProgress: number;
-  numberTasksOverdue: number;
-  percentageTasksToDo: number;
-  percentageTasksDone: number;
-  percentageTasksInProgress: number;
-  percentageTasksOverdue: number;
-}
-
-export interface Category {
-  id: string;
-  categoryName: string;
-  categoryDescription: string;
-  objectives: Objective[];
-}
-
-export interface ResponseDashboard {
-  idUser: string;
-  categoryDTOList: Category[];
-}
-
+import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 
 export default function Dashboard() {
     const constraintsRef = useRef<HTMLDivElement>(null)
