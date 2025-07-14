@@ -26,7 +26,7 @@ export default function CardLogin() {
             </p>
             <div className={styles.containerBotaoLogin}>
                 <BotaoLogin texto='Entrar' tipo='1' />
-                <a href='#'>Esqueceu a senha?</a>
+                <a href='/desculpa'>Esqueceu a senha?</a>
             </div>
         </div>
     </div>

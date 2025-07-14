@@ -65,7 +65,7 @@ export default function CardInputLogin() {
                 <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
                 
                 <div className={styles.esqueciSenhaContainer}>
-                    <a href="">
+                    <a href="/desculpa">
                         Esqueci minha senha
                     </a>
                 </div>
@@ -80,7 +80,7 @@ export default function CardInputLogin() {
                 <div className={styles.naoTemConta}>
                     Não tem uma conta? 
                     <strong>
-                        <a href="/cadastro">
+                        <a href="/">
                             Cadastre-se
                         </a>
                     </strong>

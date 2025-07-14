@@ -8,6 +8,7 @@ import * as motion from "motion/react-client";
 import { useRef } from "react";
 import { ClipLoader } from 'react-spinners';
 import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
+import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
 
 export default function Dashboard() {
     const constraintsRef = useRef<HTMLDivElement>(null)
@@ -114,16 +115,11 @@ export default function Dashboard() {
                             >
                                 <h2>{category.categoryName}</h2>
                                 <div className={styles.containerBotao}>
-                                    <motion.button
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }} 
-                                    >
-                                        Ver detalhes
-                                    </motion.button>
+                                    <BotaoDashVerDatalhesCategoria categoria={category}/>
                                     <motion.a 
                                         whileHover={{ scale: 1.2 }}
                                         whileTap={{ scale: 0.8 }}
-                                        href=""
+                                        href="/desculpa"
                                     >
                                         Editar
                                     </motion.a>

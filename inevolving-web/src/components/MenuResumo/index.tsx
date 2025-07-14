@@ -7,11 +7,31 @@ import { motion } from "motion/react";
 import { ClipLoader } from 'react-spinners';
 import IconeStatus from "../IconeStatus";
 import { Tarefa } from "../interfaces/Tarefa";
+import { useRouter } from "next/navigation";
 
 
 export default function MenuResumo() {
+    const router = useRouter();
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
     const [carregandoTarefas, setCarregandoTarefas] = useState(false);
+    const [limiteTarefas, setLimiteTarefas] = useState(3);
+
+    useEffect(() => {
+        const atualizarLimite = () => {
+            const altura = window.innerHeight;
+            
+            if (altura < 800) {
+                setLimiteTarefas(3);
+            } else {
+                setLimiteTarefas(6);
+            }
+        };
+
+        atualizarLimite(); // define ao carregar
+        window.addEventListener('resize', atualizarLimite); // atualiza ao redimensionar
+
+        return () => window.removeEventListener('resize', atualizarLimite);
+    }, []);
 
     const handleDateChange : CalendarProps['onChange'] = (value) => {
         if (value instanceof Date) {
@@ -82,11 +102,11 @@ export default function MenuResumo() {
                 value={selectedDate}
             />
             <h2>Tarefas do Dia</h2>
-            <div>
+            <div className={styles.containerTarefasDoDia}>
                 {carregandoTarefas && (
                     <ClipLoader size={35} color="#0B0E31" />
                 )}
-                {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, 3).map((tarefa) => (
+                {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, limiteTarefas).map((tarefa) => (
                     <motion.div 
                         key={tarefa.id}
                         className={styles.tarefa}
@@ -97,7 +117,8 @@ export default function MenuResumo() {
                             scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                         }} 
                         whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.8 }} 
+                        whileTap={{ scale: 0.8 }}
+                        onClick={() => {router.push("/desculpa")}} 
                     >
                         <Image
                             className={styles.icone} 
@@ -140,7 +161,8 @@ export default function MenuResumo() {
                             }} 
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.8 }}
-                            className={styles.botao} 
+                            className={styles.botao}
+                            onClick={() => {router.push("/desculpa")}} 
                         >
                             Ver tarefas
                             <Image 

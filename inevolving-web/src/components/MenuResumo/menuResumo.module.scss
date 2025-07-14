@@ -1,5 +1,4 @@
 .calendar {
-    margin-top: 20px;
     border: none;
     width: 100%;
     font-family: 'Inter', sans-serif;
@@ -152,9 +151,10 @@
     flex-direction: column;
     display: flex;
     align-items: center;
+    justify-content: center;
 
     h2 {
-        margin-top: 30px;
+        margin-top: 20px;
         margin-bottom: 0px;
         margin-left: 40px;
         width: 100%;
@@ -165,12 +165,18 @@
     }
 }
 
+.containerTarefasDoDia {
+    width: 90%;
+    padding: 0;
+}
+
 .tarefa {
     margin-top: 15px;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 0px 0px 0px;
     display: flex;
     flex-direction: row;
-    width: 170px;
+    // width: 170px;
+    width: 100%;
     height: 60px;
     border-radius: 20px;
     background-color: #FFFFFF;
@@ -180,6 +186,7 @@
 
     .icone {
         margin-right: 10px;
+        margin-left: 20px;
     }
 
     p {
@@ -194,6 +201,7 @@
 }
 
 .alerta {
+    margin: auto;
     margin-top: 15px;
     padding: 20px 20px 20px 20px;
     display: flex;
@@ -223,14 +231,16 @@
     width: 100%;
     position: relative;       
     top: 0;                
-    margin-left: 50%;
-
+    
     .botao{
         border-radius: 20px;
         background-color: #FBF7ED;
         padding: 10px 10px;
         border: none;
         color: #0B0E31;
+        width: 60%;
+        margin-left: 40%;
+        margin-bottom: 30px;
 
         font-family: 'Inter', sans-serif;
         font-weight: 600;
