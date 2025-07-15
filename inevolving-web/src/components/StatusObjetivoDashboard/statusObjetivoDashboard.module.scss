@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h3 {
+        margin: 0px;
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    p {
+        margin: 0;
+        color: #ACACAC;
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+}

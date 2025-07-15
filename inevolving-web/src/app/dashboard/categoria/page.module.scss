@@ -42,7 +42,7 @@
 
     .objetivo {
         width: 100%;
-        padding: 20px 0px;
+        padding: 30px 0px;
         background-color: #F4F4FE;
         border-radius: 22px;
         box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
@@ -54,4 +54,35 @@
 
     }
 
+    .conteudoCard{
+        margin: 0px 30px;
+    }
+
+}
+
+.containerBotao {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+        cursor: pointer;
+        background-color: white;
+        border: none;
+        width: 119px;
+        height: 27px;
+        border-radius: 7px;
+
+        color: #ACACAC;
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #ACACAC;
+        font-weight: 500;
+        font-size: 18px;
+    }
 }

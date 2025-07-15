@@ -3,26 +3,32 @@
 import { useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
-// import Image from "next/image";
 import * as motion from "motion/react-client";
-// import { ClipLoader } from 'react-spinners';
-// import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import { Category } from '@/components/interfaces/Category';
+import StatusObjetivoDashboard from '@/components/StatusObjetivoDashboard';
+import CardRendimentoDoObjetivoDashboard from '@/components/CardRendimentoDoObjetivoDashboard';
+import BotaoDashVerDatalhesObjetivo from '@/components/BotaoDashVerDatalhesObjetivo';
+import { useRouter } from 'next/navigation';
+import { Objective } from '@/components/interfaces/Objective';
 
 export default function Categoria( ) {
-    // const [jwtToken, setJwtToken] = useState('');
 
     const [categoria, setCategoria] = useState<Category | null>(null);
 
     useEffect(() => {
-        // const token = localStorage.getItem('token');
-        // setJwtToken(token ?? '');
         const categoriaStr = localStorage.getItem('categoriaAtual');
         if (categoriaStr) {
             const categoriaObj: Category = JSON.parse(categoriaStr);
             setCategoria(categoriaObj);
         }
     }, []);
+
+    const router = useRouter();
+        
+    const handleClick = (objetivo:Objective) => {
+        localStorage.setItem('objetivoAtual', JSON.stringify(objetivo));
+        router.push('/dashboard/categoria/objetivo');
+    };
 
     return (
         <motion.div>
@@ -42,11 +48,33 @@ export default function Categoria( ) {
                 </div>
                 <motion.div className={styles.containerConteudo}>
                     {categoria && categoria?.objectives.map((objetivo) => (
-                        <div key={objetivo.id} className={styles.objetivo}>
-                            <h3>
-                                {objetivo.nameObjective}
-                            </h3>
-                        </div>
+                        <motion.div 
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.8 }}
+                            key={objetivo.id} 
+                            className={styles.objetivo}
+                            onClick={() => handleClick(objetivo)}
+                        >
+                            <div className={styles.conteudoCard}>
+                                <StatusObjetivoDashboard 
+                                    nome={objetivo.nameObjective} 
+                                    status={objetivo.statusObjective}
+                                />
+                                <CardRendimentoDoObjetivoDashboard 
+                                    objetivo={objetivo}
+                                />
+                                <div className={styles.containerBotao}>
+                                    <BotaoDashVerDatalhesObjetivo objetivo={objetivo}/>
+                                    <motion.a 
+                                        whileHover={{ scale: 1.2 }}
+                                        whileTap={{ scale: 0.8 }}
+                                        href="/desculpa"
+                                    >
+                                        Editar
+                                    </motion.a>
+                                </div>
+                            </div>
+                        </motion.div>
                     ))}
                 </motion.div>
             </motion.div>

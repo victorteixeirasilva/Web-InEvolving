@@ -9,6 +9,8 @@ import { useRef } from "react";
 import { ClipLoader } from 'react-spinners';
 import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
+import { useRouter } from 'next/navigation';
+import { Category } from '@/components/interfaces/Category';
 
 export default function Dashboard() {
     const constraintsRef = useRef<HTMLDivElement>(null)
@@ -67,6 +69,12 @@ export default function Dashboard() {
         window.open(urlVisionBord, '_blank');
     };
 
+    const router = useRouter();
+            
+    const handleClick = (categoria:Category) => {
+        localStorage.setItem('categoriaAtual', JSON.stringify(categoria));
+        router.push('/dashboard/categoria');
+    };
 
 
     return (
@@ -109,6 +117,7 @@ export default function Dashboard() {
                             whileTap={{ scale: 0.8 }} 
                             key={category.id} 
                             className={styles.categoria}
+                            onClick={() => handleClick(category)}
                         >
                             <motion.div
                                 className={styles.containerConteudoCategoria}
