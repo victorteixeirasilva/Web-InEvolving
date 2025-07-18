@@ -6,6 +6,7 @@ import styles from './page.module.scss';
 import * as motion from "motion/react-client";
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { ClipLoader } from 'react-spinners';
+import AdicionarNovoObjetivoOuCategoria from '@/components/PopUp/adicionarNovoObjetivoOuCategoria';
 
 
 export default function Categoria( ) {
@@ -108,7 +109,10 @@ export default function Categoria( ) {
         }
     }, [jwtToken]);
 
+    const [popUpObjetivoECategoria, setPopUpObjetivoECategoria] = useState(false);
+
     return (
+        <>
         <motion.div>
             <Menu />
             <motion.div
@@ -119,10 +123,10 @@ export default function Categoria( ) {
                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                 }} 
                 className={styles.container}
-            >
+                >
                 <div className={styles.tituloContainer}>
                     <h1>Objetivos</h1>
-                    <motion.button className={styles.botaoNovo} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}>
+                    <motion.button className={styles.botaoNovo} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={() => {setPopUpObjetivoECategoria(true)}}>
                         Novo <strong>+</strong>
                     </motion.button>
                 </div>
@@ -148,7 +152,7 @@ export default function Categoria( ) {
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
                             onClick={pegarObjetivosDone}
-                        >
+                            >
                             Concluídos
                         </motion.button>
                         <motion.button 
@@ -158,7 +162,7 @@ export default function Categoria( ) {
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
                             onClick={pegarObjetivosToDo}
-                        >
+                            >
                             Em progresso
                         </motion.button>
                     </motion.div>
@@ -169,23 +173,23 @@ export default function Categoria( ) {
                     )}
                     {!carregandoObjetivos && objetivos?.map((objetivo) => (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                            }} 
-                            whileHover={{ scale: 1.1 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.objetivo}
-                            key={objetivo.id}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }} 
+                        whileHover={{ scale: 1.03 }} 
+                        whileTap={{ scale: 0.8 }}
+                        className={styles.objetivo}
+                        key={objetivo.id}
                         >
                             <h3>{objetivo.nameObjective}</h3>
                             <p
                                 className={
                                     objetivo.statusObjective === "DONE" ? styles.ok : styles.p
                                 }
-                            >
+                                >
                                 {objetivo.statusObjective === "TODO" ? "Em execução" : "Concluído"}
                             </p>
                         </motion.div>
@@ -193,5 +197,18 @@ export default function Categoria( ) {
                 </motion.div>
             </motion.div>
         </motion.div>
+        {popUpObjetivoECategoria && (
+            <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    duration: 0.4,
+                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                }} 
+            >
+                <AdicionarNovoObjetivoOuCategoria/>
+            </motion.div>    
+        )}
+        </>
     );
 }
