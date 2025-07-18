@@ -1,10 +1,15 @@
 import Image from "next/image";
 import styles from "./adicionarNovoObjetivoOuCategoria.module.scss";
 import * as motion from "motion/react-client";
+import { useState } from "react";
+import AdicionarNovoObjetivo from "../adicionarNovoObjetivo";
 
 export default function AdicionarNovoObjetivoOuCategoria() {
 
+    const [popUpNovoObjetivo, setPopUpNovoObjetivo] = useState(false);
+
     return (
+        <>
         <div className={styles.overlay}>
             <div className={styles.containerPopUp}>
                 <motion.button
@@ -12,7 +17,7 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                     whileTap={{ scale: 0.8 }}
                     className={styles.botaoVoltar} 
                     onClick={() => window.location.reload()}
-                >
+                    >
                     <strong>X</strong>
                 </motion.button>
                 <div className={styles.conteudo}>
@@ -22,12 +27,13 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                         width={72}
                         height={72}
                         className={styles.icone}
-                    />
+                        />
                     <h2>Adicionar novo</h2>
                     <div className={styles.botoes}>
                         <motion.button
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
+                            onClick={() => setPopUpNovoObjetivo(true)}
                         >
                             <div className={styles.containerBotoes}>
                                 Objetivo
@@ -37,13 +43,13 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                                     width={10}
                                     height={18}
                                     className={styles.iconeBotao}
-                                />
+                                    />
                             </div>
                         </motion.button>
                         <motion.button
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
-                        >
+                            >
                             <div className={styles.containerBotoes}>
                                 Categoria
                                 <Image 
@@ -52,12 +58,16 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                                     width={10}
                                     height={18}
                                     className={styles.iconeBotao}
-                                />
+                                    />
                             </div>
                         </motion.button>
                     </div>
                 </div>
             </div>
         </div>
+        {popUpNovoObjetivo && (
+            <AdicionarNovoObjetivo />
+        )}
+        </>
     );
 }
