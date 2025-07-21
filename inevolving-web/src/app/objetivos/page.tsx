@@ -147,7 +147,7 @@ export default function Categoria( ) {
                         </motion.button>
                         <motion.button 
                             className={
-                                filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
                             }
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
@@ -157,7 +157,7 @@ export default function Categoria( ) {
                         </motion.button>
                         <motion.button 
                             className={
-                                filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
                             } 
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}

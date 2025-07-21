@@ -3,10 +3,12 @@ import styles from "./adicionarNovoObjetivoOuCategoria.module.scss";
 import * as motion from "motion/react-client";
 import { useState } from "react";
 import AdicionarNovoObjetivo from "../adicionarNovoObjetivo";
+import AdicionarNovaCategoria from "../adicionarNovaCategoria";
 
 export default function AdicionarNovoObjetivoOuCategoria() {
 
     const [popUpNovoObjetivo, setPopUpNovoObjetivo] = useState(false);
+    const [popUpNovaCategoria, setPopUpNovaCategoria] = useState(false);
 
     return (
         <>
@@ -49,6 +51,7 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                         <motion.button
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
+                            onClick={() => setPopUpNovaCategoria(true)}
                             >
                             <div className={styles.containerBotoes}>
                                 Categoria
@@ -67,6 +70,9 @@ export default function AdicionarNovoObjetivoOuCategoria() {
         </div>
         {popUpNovoObjetivo && (
             <AdicionarNovoObjetivo />
+        )}
+        {popUpNovaCategoria && (
+            <AdicionarNovaCategoria />
         )}
         </>
     );
