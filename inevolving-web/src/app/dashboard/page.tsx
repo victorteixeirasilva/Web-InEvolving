@@ -11,6 +11,7 @@ import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
 import { useRouter } from 'next/navigation';
 import { Category } from '@/components/interfaces/Category';
+import EditarCategoria from '@/components/PopUp/editarCategoria';
 
 export default function Dashboard() {
     const constraintsRef = useRef<HTMLDivElement>(null)
@@ -69,15 +70,17 @@ export default function Dashboard() {
         window.open(urlVisionBord, '_blank');
     };
 
-    const router = useRouter();
+    // const router = useRouter();
             
-    const handleClick = (categoria:Category) => {
-        localStorage.setItem('categoriaAtual', JSON.stringify(categoria));
-        router.push('/dashboard/categoria');
-    };
+    // const handleClick = (categoria:Category) => {
+        // localStorage.setItem('categoriaAtual', JSON.stringify(categoria));
+    //     router.push('/dashboard/categoria');
+    // };
 
+    const [abrirEditarCategoria, setAbrirEditarCategoria] = useState(false);
 
     return (
+        <>
         <motion.div>
             <Menu />
             <motion.div
@@ -97,7 +100,7 @@ export default function Dashboard() {
                             height={1080}
                             alt="vision bord"
                             className={styles.visionboardImage}
-                        />
+                            />
                         <div className={styles.verVisionBoard}>
                             <button onClick={() => setShowVisionBoard(true)}>Ver Vision Board</button>
                         </div>
@@ -117,18 +120,20 @@ export default function Dashboard() {
                             whileTap={{ scale: 0.8 }} 
                             key={category.id} 
                             className={styles.categoria}
-                            onClick={() => handleClick(category)}
                         >
                             <motion.div
                                 className={styles.containerConteudoCategoria}
-                            >
+                                >
                                 <h2>{category.categoryName}</h2>
                                 <div className={styles.containerBotao}>
                                     <BotaoDashVerDatalhesCategoria categoria={category}/>
                                     <motion.a 
                                         whileHover={{ scale: 1.2 }}
                                         whileTap={{ scale: 0.8 }}
-                                        href="/desculpa"
+                                        onClick={() => {
+                                            localStorage.setItem('categoriaAtual', JSON.stringify(category));
+                                            setAbrirEditarCategoria(true);
+                                        }}
                                     >
                                         Editar
                                     </motion.a>
@@ -140,13 +145,13 @@ export default function Dashboard() {
             </motion.div>
             {!carregandoDash && showVisionBoard && (
                 <motion.div 
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                        duration: 0.4,
-                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                    }} 
-                    className={styles.overlay}>
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                    duration: 0.4,
+                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                }} 
+                className={styles.overlay}>
                     <div className={styles.popup}>
                         <div className={styles.containerBotoes}>
                             <motion.button
@@ -154,7 +159,7 @@ export default function Dashboard() {
                                 whileTap={{ scale: 0.8 }} 
                                 className={styles.botaoVoltar} 
                                 onClick={() => setShowVisionBoard(false)}
-                            >
+                                >
                                 Voltar
                             </motion.button>
                             <h2>Vision Board</h2>
@@ -163,13 +168,13 @@ export default function Dashboard() {
                                 whileTap={{ scale: 0.8 }} 
                                 className={styles.botaoVoltar} 
                                 onClick={handleOpenInNewTab}
-                            >
+                                >
                                 <Image 
                                     src='/iconeDownload.svg'
                                     alt='Icone Download'
                                     width={26}
                                     height={26}
-                                />
+                                    />
                             </motion.button>
                         </div>
                         <Image
@@ -178,10 +183,14 @@ export default function Dashboard() {
                             width={800}
                             height={450}
                             className={styles.popupImage}
-                        />
+                            />
                     </div>
                 </motion.div>
             )}
         </motion.div>
+            {abrirEditarCategoria && (
+                <EditarCategoria />
+            )}
+        </>
     );
 }
