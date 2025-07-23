@@ -7,6 +7,7 @@ import * as motion from "motion/react-client";
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { ClipLoader } from 'react-spinners';
 import AdicionarNovoObjetivoOuCategoria from '@/components/PopUp/adicionarNovoObjetivoOuCategoria';
+import EditarObjetivo from '@/components/PopUp/editarObjetivo';
 
 
 export default function Categoria( ) {
@@ -110,6 +111,8 @@ export default function Categoria( ) {
     }, [jwtToken]);
 
     const [popUpObjetivoECategoria, setPopUpObjetivoECategoria] = useState(false);
+    const [editarObjetivo, setEditarObjetivo] = useState(false);
+    const [objetivoAtual, setObjetivoAtual] = useState<Objetivo | null>(null);
 
     return (
         <>
@@ -173,16 +176,20 @@ export default function Categoria( ) {
                     )}
                     {!carregandoObjetivos && objetivos?.map((objetivo) => (
                         <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.4,
-                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                        }} 
-                        whileHover={{ scale: 1.03 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.objetivo}
-                        key={objetivo.id}
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                                duration: 0.4,
+                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                            }} 
+                            whileHover={{ scale: 1.03 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.objetivo}
+                            key={objetivo.id}
+                            onClick={() => {
+                                setObjetivoAtual(objetivo);
+                                setEditarObjetivo(true);
+                            }}
                         >
                             <h3>{objetivo.nameObjective}</h3>
                             <p
@@ -208,6 +215,9 @@ export default function Categoria( ) {
             >
                 <AdicionarNovoObjetivoOuCategoria/>
             </motion.div>    
+        )}
+        {editarObjetivo && objetivoAtual && (
+            <EditarObjetivo objetivo={objetivoAtual}/>
         )}
         </>
     );

@@ -9,8 +9,6 @@ import { useRef } from "react";
 import { ClipLoader } from 'react-spinners';
 import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
-import { useRouter } from 'next/navigation';
-import { Category } from '@/components/interfaces/Category';
 import EditarCategoria from '@/components/PopUp/editarCategoria';
 
 export default function Dashboard() {
@@ -107,7 +105,7 @@ export default function Dashboard() {
                     </div>
                 )}
                 <div className={styles.tituloContainer}>
-                    <h1>Métricas</h1>
+                    <h1>Dashboard</h1>
                 </div>
 
                 <motion.div ref={constraintsRef} className={styles.containerConteudo}>

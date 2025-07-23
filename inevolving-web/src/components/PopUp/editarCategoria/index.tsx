@@ -77,24 +77,6 @@ export default function EditarCategoria() {
             } catch (err) {
                 console.error('Erro ao processar remoção de objetivos:', err);
             }
-            
-            // objetivosSelecionados.forEach(async (ob) => {
-            //         const response2 = await fetch('http://127.0.0.1:2327/auth/api/categories/objective', {
-            //             method: 'POST',
-            //             headers: {
-            //                     'Content-Type': 'application/json',
-            //                     'Authorization': 'Bearer ' + jwtToken
-            //             },
-            //             body: JSON.stringify({
-            //                 idCategory: categoryId,
-            //                 idObjective: ob.id,
-            //             }),
-            //         });
-            //         if (!response2.ok) {
-            //             alert('Erro ao associar objetivo à categoria:' + ob.id);
-            //         } 
-            //     }
-            // );
         }
 
         if (objetivosParaRemover.length !== 0) {
@@ -373,26 +355,6 @@ export default function EditarCategoria() {
                                 );
                             })}
                         </div>
-                        {/* <motion.button
-                            whileHover={{ scale: 1.05 }} 
-                            whileTap={{ scale: 0.8 }}
-                            onClick={() => alert(objetivosSelecionados.length)}
-                        >
-                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                            <span 
-                                style={{ 
-                                    marginLeft: carregando ? '8px' : '0'
-                                }}
-                                ></span>
-                            Salvar
-                            <Image 
-                                className={styles.concluido}
-                                src="/checkIcon.svg"
-                                alt="Icone Check"
-                                width={23}
-                                height={18}
-                            />
-                        </motion.button> */}
                     </div>
                 </div>
             )}
