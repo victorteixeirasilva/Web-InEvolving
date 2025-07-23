@@ -87,7 +87,8 @@ export default function Categoria( ) {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + jwtToken
                 },
-            });
+            }
+        );
     
         const data: Objetivo[] = await response.json();
             

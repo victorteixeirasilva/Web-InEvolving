@@ -14,15 +14,40 @@
     width: calc(100% - 200px - 20%);
 }
 
-
 .tituloContainer {
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    margin: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     align-items: center;
+    justify-content: space-between;
 
     h1 {
         font-weight: 700;
         font-size: 40px;
+        margin-left: 50px;
+    }
+
+    .botaoNovo {
+        font-weight: 600;
+        font-size: 15px;
+        align-items: center;
+        align-content: center;
+        
+        color: #FFFFFF;
+        background-color: #E76148;
+        border-radius: 30px;
+        margin-right: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 30px;
+        border: none;
+        
+        strong {
+            margin-left: 10px;
+        }
+
     }
 }
 
@@ -36,4 +61,311 @@
     margin-right: 50px;
     margin-bottom: 150px;
 
+}
+
+.containerFiltroEBotao {
+    margin-top: 40px;
+    margin-left: 50px;
+    margin-right: 50px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+
+    .filtro {
+        display: flex;
+        flex-direction: row;
+
+        h3 {
+            margin-right: 30px;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .botaoFiltro {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #0B0E31;
+            background-color: #EFEFEF;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 10px;
+            border: none;
+        }
+
+        .botaoFiltro:hover{
+            color: #EFEFEF;
+            background-color: #0B0E31;
+        }
+
+        .botaoFiltroAtivo {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #EFEFEF;
+            background-color: #0B0E31;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 30px;
+            border: none;
+        }
+
+    }
+
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #D9D9D994;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    display: flex;
+    flex-direction: row;
+}
+
+.containerPopUp {
+    scale: 0.9;
+    width: 40%;
+    border-radius: 38px;
+    align-items: center;
+    align-content: center;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    color: #0B0E31;
+    font-weight: 800;
+    font-size: 32px;
+    
+    .conteudo {
+        padding: 30px;
+        
+        button {
+            color: white;
+            background-color: #E76148;
+            border: none;
+            width: 100%;
+            margin-top: 40px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+
+            .concluido {
+                margin: auto;
+                margin-top: 2px;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .icone {
+        width: 100%;
+    }
+
+
+    h2 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+        color: #0B0E31;
+    }
+
+}
+
+.botoesTopo {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lixeira {
+    scale: 0.7;
+    border: none;
+    background-color: transparent;
+    margin: 5px 15px;
+    padding: 10px;
+}
+
+.botaoVoltar {
+
+    border: none;
+    background-color: transparent;
+    margin: 4px 10px;
+    padding: 10px;
+
+}
+
+.botaoVoltar:hover {
+    background-color: rgb(255, 73, 73);
+    margin: 1px 1px;
+    padding: 20px 20px;
+    color: white;
+    border-radius: 38px 0px 38px 0px;
+    transition: 0.3s;
+}
+
+.conteudo {
+
+    h3 {
+        margin-top: 40px;
+        margin-bottom: 10px;
+        color: #0B0E31;
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+}
+
+.calendar {
+    margin: auto;
+    border: none;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+}
+
+:global(.react-calendar) {
+    background-color: transparent !important;
+    border: none !important;
+    width: 350px !important;
+    font-family: 'Inter', sans-serif !important;
+    line-height: 1.125em !important;
+    color: #0B0E31 !important;
+}
+:global(.react-calendar__navigation button:enabled:hover){
+    background-color: #0B0E31 !important;
+    color: white;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+:global(.react-calendar__navigation button:enabled:focus){
+    background-color: #0B0E31 !important;
+    color: white;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+:global(.react-calendar__navigation button:disabled) {
+    background-color: #0B0E31 !important;
+    color: white;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+:global(.react-calendar__month-view__weekdays) {
+    text-align: center;
+    text-transform: lowercase !important;
+    font: italic !important;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #B3B3B3;
+    text-decoration: none !important;
+}
+
+:global(.react-calendar__month-view__days__day--weekend) {
+    color: #0B0E31 !important;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth,
+.react-calendar__decade-view__years__year--neighboringDecade,
+.react-calendar__century-view__decades__decade--neighboringCentury {
+    color: #757575;
+}
+
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 2em 0.5em;
+}
+
+:global(.react-calendar__tile) {
+    max-width: 100%;
+    padding: 10px 3.6667px !important;
+    background: none;
+    text-align: center;
+    font: inherit;
+    font-size: 0.833em;
+    color: #0B0E31 !important;
+    border-radius: 30px !important;
+
+}
+
+.react-calendar__tile:disabled {
+  background-color: #f0f0f0;
+  color: #ababab;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth:disabled,
+.react-calendar__decade-view__years__year--neighboringDecade:disabled,
+.react-calendar__century-view__decades__decade--neighboringCentury:disabled {
+  color: #cdcdcd;
+}
+
+:global(.react-calendar__tile:enabled:focus) {
+    background-color: #e6e6e6;
+    background-color: #0B0E31 !important;
+    color: white !important;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+:global(.react-calendar__tile:enabled:hover) {
+    background-color: #e6e6e6;
+    background-color: #0B0E31 !important;
+    color: white !important;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+:global(.react-calendar__tile--now) {
+  background: #E76148 !important;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #E76148 !important;;
+}
+
+:global(.react-calendar__tile--hasActive) {
+    background: #76baff;
+}
+
+:global(.react-calendar__tile--hasActive:enabled:hover) {
+    background: #a9d4ff;
+}
+:global(.react-calendar__tile--hasActive:enabled:focus) {
+    background: #a9d4ff;
+}
+
+:global(.react-calendar__tile--active) {
+    background-color: #e6e6e6;
+    background-color: #0B0E31 !important;
+    color: white !important;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+:global(.react-calendar__tile--active:enabled:hover) {
+    background-color: #e6e6e6;
+    background-color: #0B0E31 !important;
+    color: white !important;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+:global(.react-calendar__tile--active:enabled:focus) {
+    background-color: #e6e6e6;
+    background-color: #0B0E31 !important;
+    color: white !important;
+    border-radius: 30px;
+    transition: 0.3s;
 }
