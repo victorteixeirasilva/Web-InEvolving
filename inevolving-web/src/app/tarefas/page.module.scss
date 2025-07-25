@@ -576,6 +576,7 @@
 }
 
 .diaDaSemana {
+    cursor: pointer;
     align-items: center;
     align-content: center;
     width: 100%;
@@ -586,6 +587,10 @@
     font-size: 18px;
     justify-content: space-between;
     display: flex;
+}
+
+.diaDaSemana:hover {
+    background-color: #F3F3F3;
 }
 
 .containerDataFinal {

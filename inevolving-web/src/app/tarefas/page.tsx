@@ -23,6 +23,7 @@ export default function Tarefas( ) {
     const [filtroAtivo, setFiltroAtivo] = useState(1);
     const [carregando, setCarregando] = useState(false);
     const [tarefasOutraData, setTarefasOutraData] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
+    const [tarefasDeHoje, setTarefasDeHoje] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
@@ -45,6 +46,34 @@ export default function Tarefas( ) {
             setSelectedDate(value[0]); // ou outro tratamento para intervalo
         }
     };
+
+    const pegarTarefasDeHoje = async () => {
+
+        setFiltroAtivo(1);
+        setCarregando(true);
+
+        const response = await fetch(
+            'http://127.0.0.1:2327/auth/api/tasks/'+ new Date().toISOString().split('T')[0], 
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+            }
+        );
+
+        const json: Tarefa_Modulo_Tarefas[] = await response.json();
+
+        if (!response.ok){
+            setCarregando(false);
+            alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+        }
+        
+        setTarefasDeHoje(json);
+        setCarregando(false);
+
+    }
 
     const filtrarPorData = async (data:string) => {
         setFiltroAtivo(4);
@@ -211,7 +240,8 @@ export default function Tarefas( ) {
                             } 
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
-                            >
+                            onClick={pegarTarefasDeHoje}
+                        >
                             Hoje
                         </motion.button>
                         <motion.button 
@@ -307,6 +337,55 @@ export default function Tarefas( ) {
                             </motion.div>
                         ))
                     )}
+                    {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
+                        tarefasDeHoje.map((tarefa) => (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.4,
+                                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                }} 
+                                whileHover={{ scale: 1.03 }} 
+                                whileTap={{ scale: 0.8 }} 
+                                key={tarefa.id} 
+                                className={styles.tarefa}
+                            >
+                                {tarefa?.nameTask}
+                                <p style={
+                                        tarefa?.status === "DONE" ? { color: '#319f43' } :
+                                        tarefa?.status === "IN_PROGRESS" ? { color: '#a0ff47' } :
+                                        tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
+                                        tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
+                                        tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
+                                    }
+                                >
+                                   {
+                                        tarefa?.status === "DONE" ? "Concluída" :
+                                        tarefa?.status === "IN_PROGRESS" ? "Em Progresso" :
+                                        tarefa?.status === "TODO" ? "Não Iniciada" :
+                                        tarefa?.status === "CANCELLED" ? "Cancelada" :
+                                        tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
+                                    }
+                                </p>
+                                <div className={styles.botoes}>
+                                    <motion.button
+                                        whileHover={{ scale: 1.2 }}
+                                        whileTap={{ scale: 0.8 }}
+                                        className={styles.botaoDetalhes}
+                                    >
+                                        Ver detalhes
+                                    </motion.button>
+                                    <motion.button
+                                        whileHover={{ scale: 1.2 }}
+                                        whileTap={{ scale: 0.8 }}
+                                        className={styles.botaoEditar}
+                                    >
+                                        Editar
+                                    </motion.button>
+                                </div>
+                            </motion.div>
+                    )))}
                 </motion.div>
             </motion.div>
         </motion.div>
