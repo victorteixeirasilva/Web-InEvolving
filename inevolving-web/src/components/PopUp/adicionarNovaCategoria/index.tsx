@@ -4,8 +4,10 @@ import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { Objetivo } from '@/components/interfaces/Objetivo';
+import { useRouter } from "next/navigation";
 
 export default function AdicionarNovaCategoria() {
+    const router = useRouter();
 
     const [nomeCategoria, setNomeCategoria] = useState("");
     const [descricaoObjetivo, setDescricaoObjetivo] = useState("");
@@ -132,6 +134,10 @@ export default function AdicionarNovaCategoria() {
                 setCarregando(false);
                 alert('Erro ao puxar objetivos');
                 console.error('Erro ao puxar objetivoss');
+            }
+
+            if(response.status === 401) {
+                router.push('/login');
             }
             
             setCarregando(false);

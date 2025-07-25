@@ -162,7 +162,7 @@ export default function MenuResumo() {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.8 }}
                             className={styles.botao}
-                            onClick={() => {router.push("/desculpa")}} 
+                            onClick={() => {router.push("/tarefas")}} 
                         >
                             Ver tarefas
                             <Image 
