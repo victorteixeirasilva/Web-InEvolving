@@ -327,6 +327,16 @@
     border: none;
     width: 100%;
     font-family: 'Inter', sans-serif;
+
+    button {
+        background-color: transparent !important;
+        border: none !important;
+        width: 90% !important;
+        font-family: 'Inter', sans-serif !important;
+        line-height: 1.125em !important;
+        color: #0B0E31 !important;
+    }
+
 }
 
 :global(.react-calendar) {
@@ -339,13 +349,13 @@
 }
 :global(.react-calendar__navigation button:enabled:hover){
     background-color: #0B0E31 !important;
-    color: white;
+    color: white !important;
     border-radius: 30px;
     transition: 0.3s;
 }
 :global(.react-calendar__navigation button:enabled:focus){
     background-color: #0B0E31 !important;
-    color: white;
+    color: white !important;
     border-radius: 30px;
     transition: 0.3s;
 }
@@ -592,7 +602,7 @@
         padding: 10px 20px;
         border-radius: 9px;
         background-color: #F3F3F3;
-        font-size: 25px;
+        font-size: 18px;
         color: #929292;
         
         strong {

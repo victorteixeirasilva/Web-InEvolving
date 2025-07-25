@@ -9,8 +9,10 @@ import { ClipLoader } from 'react-spinners';
 import { Tarefa_Modulo_Tarefas } from '@/components/interfaces/Tarefa_Modulo_Tarefas';
 import { Calendar, CalendarProps } from 'react-calendar';
 import { Objetivo } from '@/components/interfaces/Objetivo';
+import { useRouter } from 'next/navigation';
 
 export default function Tarefas( ) {
+    const router = useRouter();
     const [jwtToken, setJwtToken] = useState('');
 
     useEffect(() => {
@@ -24,6 +26,15 @@ export default function Tarefas( ) {
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
+    const [dataFinal, setDataFinal] = useState<Date | null>(new Date);
+
+    const SetDataFinal : CalendarProps['onChange'] = (value) => {
+        if (value instanceof Date) {
+            setDataFinal(value);
+        } else if (Array.isArray(value) && value[0] instanceof Date) {
+            setDataFinal(value[0]); // ou outro tratamento para intervalo
+        }
+    };
 
     const [escolherOutraData, setEscolherOutraData] = useState(false);
 
@@ -67,6 +78,7 @@ export default function Tarefas( ) {
     const [objetivos, setObjetivos] = useState<Objetivo[] | null>(null);
     const [objetivoSelecionado, setObjetivoSelecionado] = useState<Objetivo | null>(null);
     const [isTarefaFrequente, setIsTarefaFrequente] = useState(false);
+    const [exibirIsTarefaFrequente, setExibirIsTarefaFrequente] = useState(false);
     const [todoDomingo, setTodoDomingo] = useState(false);
     const [todaSegunda, setTodaSegunda] = useState(false);
     const [todaTerca, setTodaTerca] = useState(false);
@@ -74,6 +86,7 @@ export default function Tarefas( ) {
     const [todaQuinta, setTodaQuinta] = useState(false);
     const [todaSexta, setTodaSexta] = useState(false);
     const [todoSabado, setTodoSabado] = useState(false);
+    const [escolherDataFinal, setEscolherDataFinal] = useState(false);
     
     const pegarObjetivos = async () => {
             setCarregando(true);
@@ -98,6 +111,70 @@ export default function Tarefas( ) {
             setCarregando(false);
             setObjetivos(data);
     };
+
+    const [nomeDaTarefa, setNomeDaTarefa] = useState("");
+    const [descricaoDaTarefa, setDescricaoDaTarefa] = useState("");
+
+    const cadastrarNovaTarefa = async () => {
+        setCarregando(true);
+
+        const response = await fetch('http://127.0.0.1:2327/auth/api/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+                body: JSON.stringify({
+                    nameTask: nomeDaTarefa,
+                    descriptionTask: descricaoDaTarefa,
+                    dateTask: new Date().toISOString().split('T')[0],
+                    idObjective: objetivoSelecionado ? objetivoSelecionado.id : null,
+                }),
+        });
+
+            
+        if (response.status === 401){
+            setCarregando(false);
+            alert('Você não está logado, por favor faça login novamente.');
+            router.push('/login');
+        }
+
+        if(isTarefaFrequente && response.ok) {
+            const tarefaCadastrada: Tarefa_Modulo_Tarefas = await response.json();
+
+            const response2 = await fetch('http://127.0.0.1:2327/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+                body: JSON.stringify({
+                    monday: todaSegunda,
+                    tuesday: todaTerca,
+                    wednesday: todaQuarta,
+                    thursday: todaQuinta,
+                    friday: todaSexta,
+                    saturday: todoSabado,
+                    sunday: todoDomingo,
+                }),
+            });
+            
+            if (response2.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
+
+            if (!response2.ok){
+                alert("Erro: para repetir a tarefa (" + response2.url+ ")")
+                alert(response2.json)
+            }
+        }
+
+
+        setCarregando(false);
+        window.location.reload();
+    }
 
     return (
         <>
@@ -307,8 +384,8 @@ export default function Tarefas( ) {
                                     <input
                                         type="text"
                                         id="nomeTarefa"
-                                        // value={nomeObjetivo}
-                                        // onChange={(e) => setNomeObjetivo(e.target.value)}
+                                        value={nomeDaTarefa}
+                                        onChange={(e) => setNomeDaTarefa(e.target.value)}
                                         placeholder="Digite o nome da tarefa..."
                                     />
                                     <Image 
@@ -326,8 +403,8 @@ export default function Tarefas( ) {
                                     <input
                                         type="text"
                                         id="nomeTarefa"
-                                        // value={nomeObjetivo}
-                                        // onChange={(e) => setNomeObjetivo(e.target.value)}
+                                        value={descricaoDaTarefa}
+                                        onChange={(e) => setDescricaoDaTarefa(e.target.value)}
                                         placeholder="Escreva detalhes sobre a sua tarefa..."
                                     />
                                     <Image 
@@ -374,7 +451,10 @@ export default function Tarefas( ) {
                             
                             <div
                                 className={styles.botaoSimNao}
-                                onClick={() => setIsTarefaFrequente(!isTarefaFrequente)}
+                                onClick={() => {
+                                    setIsTarefaFrequente(!isTarefaFrequente);
+                                    setExibirIsTarefaFrequente(!exibirIsTarefaFrequente);
+                                }}
                             >
                                 <div className={styles.checkBox}>
                                     <div
@@ -387,7 +467,10 @@ export default function Tarefas( ) {
                             </div> 
                             <div
                                 className={styles.botaoSimNao}
-                                onClick={() => setIsTarefaFrequente(!isTarefaFrequente)}
+                                onClick={() => {
+                                    setIsTarefaFrequente(!isTarefaFrequente);
+                                    setExibirIsTarefaFrequente(!exibirIsTarefaFrequente);
+                                }}
                             >
                                 <div className={styles.checkBox}>
                                     <div                                     
@@ -403,6 +486,7 @@ export default function Tarefas( ) {
                         <motion.button
                             whileHover={{ scale: 1.05 }} 
                             whileTap={{ scale: 0.8 }}
+                            onClick={cadastrarNovaTarefa}
                         >
                             {carregando && <ClipLoader size={10} color="#0B0E31" />}
                             <span 
@@ -453,14 +537,17 @@ export default function Tarefas( ) {
                         </div>
                     </div>
                 )}
-                {isTarefaFrequente && (
+                {exibirIsTarefaFrequente && (
                     <div className={styles.containerPopUp}>
                         <motion.button
                             whileHover={{ scale: 1.06 }} 
                             whileTap={{ scale: 0.8 }}
                             className={styles.botaoVoltar} 
-                            onClick={() => setIsTarefaFrequente(false)}
-                            >
+                            onClick={() => {
+                                setExibirIsTarefaFrequente(false);
+                                setIsTarefaFrequente(false);
+                            }}
+                        >
                             <strong>Voltar - Tarefas</strong>
                         </motion.button>
                         <div className={styles.conteudo}>
@@ -557,12 +644,97 @@ export default function Tarefas( ) {
                             </div>
                             <div className={styles.containerDataFinal}>
                                 Repetir até a data:
-                                <div className={styles.inputDataFinal}>
-                                    <strong>16</strong> / <strong>12</strong> / <strong>2023</strong>
-                                </div>
+                                <motion.div 
+                                    className={styles.inputDataFinal}
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => setEscolherDataFinal(true)}
+                                >
+                                    {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
+                                </motion.div>
                             </div>
+                            <motion.button
+                                style={
+                                    !todoDomingo && 
+                                    !todaSegunda &&
+                                    !todaTerca &&
+                                    !todaQuarta &&
+                                    !todaQuinta &&
+                                    !todaSexta &&
+                                    !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
+                                }
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={
+                                    !todoDomingo && 
+                                    !todaSegunda &&
+                                    !todaTerca &&
+                                    !todaQuarta &&
+                                    !todaQuinta &&
+                                    !todaSexta &&
+                                    !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => setExibirIsTarefaFrequente(false)
+                                }
+                            >
+                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                            <span 
+                                style={{ 
+                                    marginLeft: carregando ? '8px' : '0'
+                                }}
+                            ></span>
+                            Salvar
+                            <Image 
+                                className={styles.concluido}
+                                src="/checkIcon.svg"
+                                alt="Icone Check"
+                                width={23}
+                                height={18}
+                            />
+                        </motion.button>
                         </div>
                     </div>
+                )}
+                {escolherDataFinal && (
+                    <div className={styles.containerPopUp}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => setEscolherDataFinal(false)}
+                            >
+                            <strong>Voltar</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            <Calendar
+                                className={styles.calendar}
+                                selectRange={false}
+                                value={dataFinal}
+                                onChange={SetDataFinal}
+                            />
+                            {dataFinal && (
+                                <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
+                            )}
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => setEscolherDataFinal(false)}
+                            >
+                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                            <span 
+                                style={{ 
+                                    marginLeft: carregando ? '8px' : '0'
+                                }}
+                            ></span>
+                            Selecionar
+                            <Image 
+                                className={styles.concluido}
+                                src="/checkIcon.svg"
+                                alt="Icone Check"
+                                width={23}
+                                height={18}
+                            />
+                        </motion.button>
+                    </div>
+                </div>
                 )}
             </div>
         )}
