@@ -21,9 +21,11 @@ export default function Tarefas( ) {
     }, []);
 
     const [filtroAtivo, setFiltroAtivo] = useState(1);
+    const [filtroAtivoStatus, setFiltroAtivoStatus] = useState(1);
     const [carregando, setCarregando] = useState(false);
     const [tarefasOutraData, setTarefasOutraData] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
     const [tarefasDeHoje, setTarefasDeHoje] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
+    const [tarefasAtrasadas, setTarefasAtrasadas] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
@@ -48,12 +50,138 @@ export default function Tarefas( ) {
     };
 
     const pegarTarefasDeHoje = async () => {
+        const hojeLocal = new Date();
+        const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
+
 
         setFiltroAtivo(1);
         setCarregando(true);
+        setTarefasDeHoje(null);
+
+        if (filtroAtivoStatus === 1) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/'+ dataFormatada, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (!response.ok){
+                setCarregando(false);
+                alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+                return;
+            }
+            
+            setTarefasDeHoje(json);
+            setCarregando(false);
+        
+        } else if (filtroAtivoStatus === 2) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/todo/'+ dataFormatada, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (!response.ok){
+                setCarregando(false);
+                return;
+                // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+            }
+            
+            setTarefasDeHoje(json);
+            setCarregando(false);
+        
+        } else if (filtroAtivoStatus === 3) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/progress/'+ dataFormatada, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (!response.ok){
+                setCarregando(false);
+                return;
+                // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+            }
+            
+            setTarefasDeHoje(json);
+            setCarregando(false);
+
+        } else if (filtroAtivoStatus === 4) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/done/'+ dataFormatada, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (!response.ok){
+                setCarregando(false);
+                return;
+                // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+            }
+            
+            setTarefasDeHoje(json);
+            setCarregando(false);
+        } else if (filtroAtivoStatus === 5) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/canceled/'+ dataFormatada, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (!response.ok){
+                setCarregando(false);
+                return;
+                // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+            }
+            
+            setTarefasDeHoje(json);
+            setCarregando(false);
+        }   
+
+    }
+
+    const pegarTarefasAtrasadas = async () => {
+        setFiltroAtivo(5);
+        setCarregando(true);
+        setTarefasAtrasadas(null);
 
         const response = await fetch(
-            'http://127.0.0.1:2327/auth/api/tasks/'+ new Date().toISOString().split('T')[0], 
+            'http://127.0.0.1:2327/auth/api/tasks/late', 
             {
                 method: 'GET',
                 headers: {
@@ -62,44 +190,171 @@ export default function Tarefas( ) {
                 },
             }
         );
-
+    
         const json: Tarefa_Modulo_Tarefas[] = await response.json();
-
+    
         if (!response.ok){
             setCarregando(false);
-            alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+            return;
+            // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
         }
-        
-        setTarefasDeHoje(json);
+            
+        setTarefasAtrasadas(json);
         setCarregando(false);
-
     }
 
     const filtrarPorData = async (data:string) => {
         setFiltroAtivo(4);
         setCarregando(true);
+        setTarefasOutraData(null);
 
-        const response = await fetch(
-            'http://127.0.0.1:2327/auth/api/tasks/'+ data, 
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + jwtToken
-                },
+        if (filtroAtivoStatus === 1) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/'+ data, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (response.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
             }
-        );
-
-        const json: Tarefa_Modulo_Tarefas[] = await response.json();
-
-        if (!response.ok){
+    
+            if (!response.ok){
+                setCarregando(false);
+                // alert('Erro ao tarefas, data: ' + data);
+                return;
+            }
+            
+            setTarefasOutraData(json);
             setCarregando(false);
-            alert('Erro ao tarefas, data: ' + data);
-        }
-        
-        setTarefasOutraData(json);
-        setCarregando(false);
+        } else if (filtroAtivoStatus === 2) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/todo/'+ data, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (response.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
+    
+            if (!response.ok){
+                setCarregando(false);
+                // alert('Erro ao tarefas, data: ' + data);
+                return;
+            }
+            
+            setTarefasOutraData(json);
+            setCarregando(false);
 
+        } else if (filtroAtivoStatus === 3) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/progress/'+ data, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (response.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
+    
+            if (!response.ok){
+                setCarregando(false);
+                // alert('Erro ao tarefas, data: ' + data);
+                return;
+            }
+            
+            setTarefasOutraData(json);
+            setCarregando(false);
+
+        } else if (filtroAtivoStatus === 4) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/done/'+ data, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (response.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
+    
+            if (!response.ok){
+                setCarregando(false);
+                // alert('Erro ao tarefas, data: ' + data);
+                return;
+            }
+            
+            setTarefasOutraData(json);
+            setCarregando(false);
+
+        } else if (filtroAtivoStatus === 5) {
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/status/canceled/'+ data, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (response.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
+    
+            if (!response.ok){
+                setCarregando(false);
+                // alert('Erro ao tarefas, data: ' + data);
+                return;
+            }
+            
+            setTarefasOutraData(json);
+            setCarregando(false);
+
+        }
+
+        
     }
 
     const [abrirNovaTarefa, setAbrirNovaTarefa] = useState(false);
@@ -131,6 +386,11 @@ export default function Tarefas( ) {
     
             const data: Objetivo[] = await response.json();
             
+            if (response.status === 401){
+               setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
     
             if (!response.ok){
                 setCarregando(false);
@@ -232,7 +492,69 @@ export default function Tarefas( ) {
                 <motion.div className={styles.containerFiltroEBotao}>
                     <motion.div className={styles.filtro}>
                         <h3>
-                            Filtrar:
+                            Filtrar Status:
+                        </h3>
+                        <motion.button 
+                            className={styles.botaoFiltroStatus}
+                            style={filtroAtivoStatus === 1 ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                            whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
+                            whileTap={{ scale: 0.8 }}
+                            onClick={() => {
+                                setFiltroAtivoStatus(1);
+                            }}
+                        >
+                            Todos
+                        </motion.button>    
+                        <motion.button 
+                            className={styles.botaoFiltroStatus}  
+                            style={filtroAtivoStatus === 2 ? {backgroundColor: '#6b6b6b', color: "#FFFF"} : {}}  
+                            whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: "#FFFF" }} 
+                            whileTap={{ scale: 0.8 }}
+                            onClick={() => {
+                                setFiltroAtivoStatus(2);
+                            }}
+                        >
+                            Não Iniciada
+                        </motion.button>
+                        <motion.button 
+                            className={styles.botaoFiltroStatus}
+                            style={filtroAtivoStatus === 3 ? {backgroundColor: '#a0ff47', color: "#0B0E31"} : {}}
+                            whileHover={{ scale: 1.1, backgroundColor: '#a0ff47', color: "#0B0E31" }} 
+                            whileTap={{ scale: 0.8 }}
+                            onClick={() => {
+                                setFiltroAtivoStatus(3);
+                            }}
+                        >
+                            Em Progresso
+                        </motion.button>
+                        <motion.button 
+                            className={styles.botaoFiltroStatus} 
+                            style={filtroAtivoStatus === 4 ? {backgroundColor: "#319f43", color: "#0B0E31"} : {}}
+                            whileHover={{ scale: 1.1, backgroundColor: "#319f43", color: "#0B0E31" }} 
+                            whileTap={{ scale: 0.8 }}
+                            onClick={() => {
+                                setFiltroAtivoStatus(4);
+                            }}
+                        >
+                            Concluída
+                        </motion.button>
+                        <motion.button 
+                            className={styles.botaoFiltroStatus} 
+                            style={filtroAtivoStatus === 5 ? {backgroundColor: '#ff0004', color: "#FFFF"} : {}}
+                            whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: "#FFFF" }} 
+                            whileTap={{ scale: 0.8 }}
+                            onClick={() => {
+                                setFiltroAtivoStatus(5);
+                            }}
+                        >
+                            Cancelada
+                        </motion.button>
+                    </motion.div>
+                </motion.div>
+                <motion.div className={styles.containerFiltroEBotao}>
+                    <motion.div className={styles.filtro}>
+                        <h3>
+                            Filtrar Data:
                         </h3>    
                         <motion.button 
                             className={
@@ -250,7 +572,8 @@ export default function Tarefas( ) {
                             }
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
-                            >
+                            onClick={() => router.push("/desculpa")}
+                        >
                             Mês
                         </motion.button>
                         <motion.button 
@@ -259,7 +582,8 @@ export default function Tarefas( ) {
                             } 
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
-                            >
+                            onClick={() => router.push("/desculpa")}
+                        >
                             Ano
                         </motion.button>
                         <motion.button 
@@ -278,7 +602,8 @@ export default function Tarefas( ) {
                             } 
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
-                            >
+                            onClick={pegarTarefasAtrasadas}
+                        >
                             Tarefas em Atraso
                         </motion.button>
                     </motion.div>
@@ -286,6 +611,40 @@ export default function Tarefas( ) {
                 <motion.div className={styles.containerConteudo}>
                     {carregando && (
                         <ClipLoader size={50} color="#0B0E31" />
+                    )}
+                    {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
+                        tarefasAtrasadas.map((tarefa) => (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.4,
+                                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                }} 
+                                whileHover={{ scale: 1.03 }} 
+                                whileTap={{ scale: 0.8 }} 
+                                key={tarefa.id} 
+                                className={styles.tarefa}
+                            >
+                                {tarefa?.nameTask}
+                                <p style={
+                                        tarefa?.status === "DONE" ? { color: '#319f43' } :
+                                        tarefa?.status === "IN_PROGRESS" ? { color: '#a0ff47' } :
+                                        tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
+                                        tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
+                                        tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
+                                    }
+                                >
+                                   {
+                                        tarefa?.status === "DONE" ? "Concluída" :
+                                        tarefa?.status === "IN_PROGRESS" ? "Em Progresso" :
+                                        tarefa?.status === "TODO" ? "Não Iniciada" :
+                                        tarefa?.status === "CANCELLED" ? "Cancelada" :
+                                        tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
+                                    }
+                                </p>
+                            </motion.div>
+                        ))
                     )}
                     {!carregando && tarefasOutraData && tarefasOutraData.length > 0 && filtroAtivo === 4 && (
                         tarefasOutraData.map((tarefa) => (
@@ -318,22 +677,6 @@ export default function Tarefas( ) {
                                         tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
                                     }
                                 </p>
-                                <div className={styles.botoes}>
-                                    <motion.button
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }}
-                                        className={styles.botaoDetalhes}
-                                    >
-                                        Ver detalhes
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }}
-                                        className={styles.botaoEditar}
-                                    >
-                                        Editar
-                                    </motion.button>
-                                </div>
                             </motion.div>
                         ))
                     )}
@@ -368,24 +711,17 @@ export default function Tarefas( ) {
                                         tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
                                     }
                                 </p>
-                                <div className={styles.botoes}>
-                                    <motion.button
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }}
-                                        className={styles.botaoDetalhes}
-                                    >
-                                        Ver detalhes
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }}
-                                        className={styles.botaoEditar}
-                                    >
-                                        Editar
-                                    </motion.button>
-                                </div>
                             </motion.div>
                     )))}
+                    {!carregando && filtroAtivo === 1 && !tarefasDeHoje && (
+                       <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                    )}
+                    {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
+                       <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                    )}
+                    {!carregando && filtroAtivo === 5 && !tarefasOutraData && (
+                       <h1>Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
+                    )}
                 </motion.div>
             </motion.div>
         </motion.div>
@@ -797,23 +1133,23 @@ export default function Tarefas( ) {
                                 whileTap={{ scale: 0.8 }}
                                 onClick={() => setEscolherDataFinal(false)}
                             >
-                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                            <span 
-                                style={{ 
-                                    marginLeft: carregando ? '8px' : '0'
-                                }}
-                            ></span>
-                            Selecionar
-                            <Image 
-                                className={styles.concluido}
-                                src="/checkIcon.svg"
-                                alt="Icone Check"
-                                width={23}
-                                height={18}
-                            />
-                        </motion.button>
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Selecionar
+                                <Image 
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
+                                />
+                            </motion.button>
+                        </div>
                     </div>
-                </div>
                 )}
             </div>
         )}

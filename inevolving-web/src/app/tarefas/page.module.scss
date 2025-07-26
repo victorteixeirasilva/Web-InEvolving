@@ -119,11 +119,30 @@
 
         h3 {
             margin-right: 30px;
+            font-size: 20px;
             font-weight: 700;
-            font-size: 15px;
+        }
+        
+        h4 {
+            font-weight: 700;
+            margin-right: 30px;
         }
 
         .botaoFiltro {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #0B0E31;
+            background-color: #EFEFEF;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 10px;
+            border: none;
+        }
+
+        .botaoFiltroStatus {
             font-weight: 600;
             font-size: 16px;
 
