@@ -10,8 +10,12 @@ import { Tarefa_Modulo_Tarefas } from '@/components/interfaces/Tarefa_Modulo_Tar
 import { Calendar, CalendarProps } from 'react-calendar';
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { useRouter } from 'next/navigation';
+import EditarTarefa from '@/components/PopUp/editarTarefa';
 
 export default function Tarefas( ) {
+
+    const [primeiroCarregamento, setPrimeiroCarregamento] = useState(true);
+
     const router = useRouter();
     const [jwtToken, setJwtToken] = useState('');
 
@@ -26,6 +30,8 @@ export default function Tarefas( ) {
     const [tarefasOutraData, setTarefasOutraData] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
     const [tarefasDeHoje, setTarefasDeHoje] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
     const [tarefasAtrasadas, setTarefasAtrasadas] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
+    const [tarefaAtual, setTarefaAual] = useState<Tarefa_Modulo_Tarefas | null>(null);
+    const [editarTarefaAtual, setEditarTarefaAtual] = useState(false);
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
@@ -53,7 +59,6 @@ export default function Tarefas( ) {
         const hojeLocal = new Date();
         const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
 
-
         setFiltroAtivo(1);
         setCarregando(true);
         setTarefasDeHoje(null);
@@ -74,8 +79,8 @@ export default function Tarefas( ) {
     
             if (!response.ok){
                 setCarregando(false);
-                alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
                 return;
+                // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
             }
             
             setTarefasDeHoje(json);
@@ -501,6 +506,7 @@ export default function Tarefas( ) {
                             whileTap={{ scale: 0.8 }}
                             onClick={() => {
                                 setFiltroAtivoStatus(1);
+                                setPrimeiroCarregamento(false);
                             }}
                         >
                             Todos
@@ -512,6 +518,7 @@ export default function Tarefas( ) {
                             whileTap={{ scale: 0.8 }}
                             onClick={() => {
                                 setFiltroAtivoStatus(2);
+                                setPrimeiroCarregamento(false);
                             }}
                         >
                             Não Iniciada
@@ -523,6 +530,7 @@ export default function Tarefas( ) {
                             whileTap={{ scale: 0.8 }}
                             onClick={() => {
                                 setFiltroAtivoStatus(3);
+                                setPrimeiroCarregamento(false);
                             }}
                         >
                             Em Progresso
@@ -534,6 +542,7 @@ export default function Tarefas( ) {
                             whileTap={{ scale: 0.8 }}
                             onClick={() => {
                                 setFiltroAtivoStatus(4);
+                                setPrimeiroCarregamento(false);
                             }}
                         >
                             Concluída
@@ -545,6 +554,7 @@ export default function Tarefas( ) {
                             whileTap={{ scale: 0.8 }}
                             onClick={() => {
                                 setFiltroAtivoStatus(5);
+                                setPrimeiroCarregamento(false);
                             }}
                         >
                             Cancelada
@@ -608,6 +618,18 @@ export default function Tarefas( ) {
                         </motion.button>
                     </motion.div>
                 </motion.div>
+                {!carregando && filtroAtivo === 1 && !tarefasDeHoje && primeiroCarregamento && (
+                    <h1>Selecione a configuração que deseja dos filtros para buscar as tarefas!</h1> 
+                )}
+                {!carregando && filtroAtivo === 1 && !tarefasDeHoje && !primeiroCarregamento &&(
+                    <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                )}
+                {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
+                    <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                )}
+                {!carregando && filtroAtivo === 5 && !tarefasOutraData && (
+                    <h1>Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
+                )}
                 <motion.div className={styles.containerConteudo}>
                     {carregando && (
                         <ClipLoader size={50} color="#0B0E31" />
@@ -615,6 +637,10 @@ export default function Tarefas( ) {
                     {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
                         tarefasAtrasadas.map((tarefa) => (
                             <motion.div
+                                onClick={() => {
+                                    setTarefaAual(tarefa);
+                                    setEditarTarefaAtual(true);
+                                }}
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
@@ -649,6 +675,10 @@ export default function Tarefas( ) {
                     {!carregando && tarefasOutraData && tarefasOutraData.length > 0 && filtroAtivo === 4 && (
                         tarefasOutraData.map((tarefa) => (
                             <motion.div
+                                onClick={() => {
+                                    setTarefaAual(tarefa);
+                                    setEditarTarefaAtual(true);
+                                }}
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
@@ -683,6 +713,10 @@ export default function Tarefas( ) {
                     {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
                         tarefasDeHoje.map((tarefa) => (
                             <motion.div
+                                onClick={() => {
+                                    setTarefaAual(tarefa);
+                                    setEditarTarefaAtual(true);
+                                }}
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
@@ -713,15 +747,6 @@ export default function Tarefas( ) {
                                 </p>
                             </motion.div>
                     )))}
-                    {!carregando && filtroAtivo === 1 && !tarefasDeHoje && (
-                       <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
-                    )}
-                    {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
-                       <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
-                    )}
-                    {!carregando && filtroAtivo === 5 && !tarefasOutraData && (
-                       <h1>Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
-                    )}
                 </motion.div>
             </motion.div>
         </motion.div>
@@ -1152,6 +1177,9 @@ export default function Tarefas( ) {
                     </div>
                 )}
             </div>
+        )}
+        {editarTarefaAtual && tarefaAtual &&(
+            <EditarTarefa tarefa={tarefaAtual}/>
         )}
         </>
     );

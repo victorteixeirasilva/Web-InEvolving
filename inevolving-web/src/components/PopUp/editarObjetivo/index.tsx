@@ -196,7 +196,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                         </motion.div>
                     </div>
                     <motion.button
-                        whileHover={{ scale: 1.1 }} 
+                        whileHover={{ scale: 1.05 }} 
                         whileTap={{ scale: 0.8 }}
                         onClick={salvarObjetivo}
                         style={
