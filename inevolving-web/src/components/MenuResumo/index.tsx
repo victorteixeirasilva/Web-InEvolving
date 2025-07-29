@@ -8,6 +8,7 @@ import { ClipLoader } from 'react-spinners';
 import IconeStatus from "../IconeStatus";
 import { Tarefa } from "../interfaces/Tarefa";
 import { useRouter } from "next/navigation";
+import EditarTarefa from "../PopUp/editarTarefa";
 
 
 export default function MenuResumo() {
@@ -50,8 +51,10 @@ export default function MenuResumo() {
         setJwtToken(token ?? '');
     }, []);
     
+    const [tarefaAtual, setTarefaAtual] = useState<Tarefa | null>(null);
     const [tarefasData, setTarefasData] = useState<Tarefa[] | null>(null);
     const [verTarefas, setVerTarefas] = useState(false);
+    const [editarTarefa, setEditarTarefa] = useState(false);
     
     useEffect(() => {
         if (selectedDate && jwtToken) {
@@ -87,12 +90,13 @@ export default function MenuResumo() {
     };
 
     return (
+        <>
         <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
-                    duration: 0.4,
-                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                duration: 0.4,
+                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }} 
             className={styles.containerMenuResumo}>
             <Calendar
@@ -108,7 +112,7 @@ export default function MenuResumo() {
                 )}
                 {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, limiteTarefas).map((tarefa) => (
                     <motion.div 
-                        key={tarefa.id}
+                    key={tarefa.id}
                         className={styles.tarefa}
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -118,7 +122,10 @@ export default function MenuResumo() {
                         }} 
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.8 }}
-                        onClick={() => {router.push("/desculpa")}} 
+                        onClick={() => {
+                            setTarefaAtual(tarefa);
+                            setEditarTarefa(true);
+                        }} 
                     >
                         <Image
                             className={styles.icone} 
@@ -126,27 +133,27 @@ export default function MenuResumo() {
                             alt="Icone da Tarefa"
                             width={16}
                             height={20}
-                        />
+                            />
                         <p>{tarefa.nameTask}</p>
                         <IconeStatus status={tarefa.status}/>
                     </motion.div>
                 ))}
                 {!carregandoTarefas && !verTarefas && (
                     <motion.div 
-                        className={styles.alerta}
-                        initial={{ opacity: 0, scale: 0 }}
+                    className={styles.alerta}
+                    initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{
                             duration: 0.4,
                             scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                         }} 
-                    >
+                        >
                         <Image
                             src="/iconeAlerta.svg"
                             alt="Icone Alerta"
                             width={100}
                             height={100}
-                        />
+                            />
                         <h3>Nenhuma tarefa para o dia selecionado!</h3>
                     </motion.div>
                 )}
@@ -163,7 +170,7 @@ export default function MenuResumo() {
                             whileTap={{ scale: 0.8 }}
                             className={styles.botao}
                             onClick={() => {router.push("/tarefas")}} 
-                        >
+                            >
                             Ver tarefas
                             <Image 
                                 src="/iconeSetaDireita.svg"
@@ -177,6 +184,10 @@ export default function MenuResumo() {
                 )}
             </div>
         </motion.div>
+        {editarTarefa && tarefaAtual &&(
+            <EditarTarefa tarefa={tarefaAtual} />
+        )}
+        </>
     );
 
 }

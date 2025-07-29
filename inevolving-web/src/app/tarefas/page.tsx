@@ -655,7 +655,7 @@ export default function Tarefas( ) {
                                 {tarefa?.nameTask}
                                 <p style={
                                         tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                        tarefa?.status === "IN_PROGRESS" ? { color: '#a0ff47' } :
+                                        tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
                                         tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
                                         tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
                                         tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
@@ -663,7 +663,7 @@ export default function Tarefas( ) {
                                 >
                                    {
                                         tarefa?.status === "DONE" ? "Concluída" :
-                                        tarefa?.status === "IN_PROGRESS" ? "Em Progresso" :
+                                        tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
                                         tarefa?.status === "TODO" ? "Não Iniciada" :
                                         tarefa?.status === "CANCELLED" ? "Cancelada" :
                                         tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
@@ -693,7 +693,7 @@ export default function Tarefas( ) {
                                 {tarefa?.nameTask}
                                 <p style={
                                         tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                        tarefa?.status === "IN_PROGRESS" ? { color: '#a0ff47' } :
+                                        tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
                                         tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
                                         tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
                                         tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
@@ -701,7 +701,7 @@ export default function Tarefas( ) {
                                 >
                                    {
                                         tarefa?.status === "DONE" ? "Concluída" :
-                                        tarefa?.status === "IN_PROGRESS" ? "Em Progresso" :
+                                        tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
                                         tarefa?.status === "TODO" ? "Não Iniciada" :
                                         tarefa?.status === "CANCELLED" ? "Cancelada" :
                                         tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
@@ -731,7 +731,7 @@ export default function Tarefas( ) {
                                 {tarefa?.nameTask}
                                 <p style={
                                         tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                        tarefa?.status === "IN_PROGRESS" ? { color: '#a0ff47' } :
+                                        tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
                                         tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
                                         tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
                                         tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
@@ -739,7 +739,7 @@ export default function Tarefas( ) {
                                 >
                                    {
                                         tarefa?.status === "DONE" ? "Concluída" :
-                                        tarefa?.status === "IN_PROGRESS" ? "Em Progresso" :
+                                        tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
                                         tarefa?.status === "TODO" ? "Não Iniciada" :
                                         tarefa?.status === "CANCELLED" ? "Cancelada" :
                                         tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"

@@ -6,16 +6,40 @@ import { ClipLoader } from 'react-spinners';
 import { useRouter } from "next/navigation";
 import { Tarefa_Modulo_Tarefas } from "@/components/interfaces/Tarefa_Modulo_Tarefas";
 import { Objetivo } from '@/components/interfaces/Objetivo';
-
+import { Calendar, CalendarProps } from 'react-calendar';
 
 export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefas } ) {
+    const [opcaoAtualizar, setOpcaoAtualizar] = useState(1);
+    const [opcaoDeletar, setOpcaoDeletar] = useState(1);
 
     const [nomeTarefa, setNomeTarefa] = useState(tarefa.nameTask);
+    const [motivos, setMotivos] = useState("");
     const [descricaoObjetivo, setDescricaoObjetivo] = useState(tarefa.descriptionTask);
     const [carregando, setCarregando] = useState(false);
     const [jwtToken, setJwtToken] = useState('');
     const [statusDaTarefa, setStatusDaTarefa] = useState(tarefa.status);
     const [verListaDeObjetivos, setVerListaDeObjetivos] = useState(false);
+    const [escolherDataFinal, setEscolherDataFinal] = useState(false);
+    const [dataFinal, setDataFinal] = useState<Date | null>(new Date);
+
+    const [exibirIsTarefaFrequente, setExibirIsTarefaFrequente] = useState(false);
+    const [todoDomingo, setTodoDomingo] = useState(false);
+    const [todaSegunda, setTodaSegunda] = useState(false);
+    const [todaTerca, setTodaTerca] = useState(false);
+    const [todaQuarta, setTodaQuarta] = useState(false);
+    const [todaQuinta, setTodaQuinta] = useState(false);
+    const [todaSexta, setTodaSexta] = useState(false);
+    const [todoSabado, setTodoSabado] = useState(false);
+
+    const [abrirInputMotivoDoCancelamento , setAbrirInputMotivoDoCancelamento] = useState(false);
+
+    const SetDataFinal : CalendarProps['onChange'] = (value) => {
+        if (value instanceof Date) {
+            setDataFinal(value);
+        } else if (Array.isArray(value) && value[0] instanceof Date) {
+            setDataFinal(value[0]); // ou outro tratamento para intervalo
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -23,25 +47,47 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
     }, []);
     
     const deletarTarefa = async () => {
-            setCarregando(true);
+        setCarregando(true);
+
+        if (opcaoDeletar === 1) {
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/tasks/'+tarefa?.id, 
+                'http://127.0.0.1:2327/auth/api/tasks/'+tarefa?.id, 
                 {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + jwtToken
                     },
-                });
+            });
     
             
+                if (!response.ok){
+                    setCarregando(false);
+                    alert('Erro ao deletar a tarefa');
+                }
+            
+        } else {
+
+            const response = await fetch(
+                'http://127.0.0.1:2327/auth/api/tasks/repeat/'+tarefa?.id+"/3000-01-01", 
+                {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+            });
+
+        
             if (!response.ok){
                 setCarregando(false);
                 alert('Erro ao deletar a tarefa');
             }
             
-            setCarregando(false);
-            window.location.reload();
+        }
+
+        setCarregando(false);
+        window.location.reload();
     };
 
     const router = useRouter();
@@ -114,7 +160,217 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
         pegarObjetivo();
     }, []);
 
+    // // Função para extrair motivos quando precisar enviar
+    // const motivosFormatados = motivos
+    //     .split(";")
+    //         .map((m) => m.trim())
+    //             .filter((m) => m.length > 0);
+
+    const motivosLimpos = motivos
+        .split(";")
+            .map((m) => m.trim())
+                .filter((m) => m.length > 0)
+                    .join(";");
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMotivos(e.target.value); // usuário pode digitar livremente
+    };
+
     const [verPopUpConfirmacao, setVerPopUpConfirmacao] = useState(false);
+    const [verPopUpConfirmacaoDelete, setVerPopUpConfirmacaoDelete] = useState(false);
+
+    const atualizarTarefa = async () => {
+            setCarregando(true);
+
+            if (opcaoAtualizar === 1) {
+
+                const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/'+tarefa.id, 
+                    {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                            body: JSON.stringify({
+                                nameTask: nomeTarefa,
+                                descriptionTask: descricaoObjetivo,
+                                idObjective: objetivoSelecionado?.id
+                            })
+                });
+            
+                    
+                if (response.status === 401){
+                    setCarregando(false);
+                    alert('Você não está logado, por favor faça login novamente.');
+                    router.push('/login');
+                }
+            
+                if (!response.ok){
+                    setCarregando(false);
+                    alert('Erro ao atualizar tarefa');
+                }
+                
+            } else {
+                const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/repeat/'+tarefa.id+"/"+dataFinal?.toISOString().split('T')[0], 
+                    {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                            body: JSON.stringify({
+                                nameTask: nomeTarefa,
+                                descriptionTask: descricaoObjetivo,
+                                idObjective: objetivoSelecionado?.id,
+                                daysOfTheWeekDTO: {
+                                    monday: todaSegunda,
+                                    tuesday: todaTerca,
+                                    wednesday: todaQuarta,
+                                    thursday: todaQuinta,
+                                    friday: todaSexta,
+                                    saturday: todoSabado,
+                                    sunday: todoDomingo
+                                }
+                            })
+                });
+            
+                    
+                if (response.status === 401){
+                    setCarregando(false);
+                    alert('Você não está logado, por favor faça login novamente.');
+                    router.push('/login');
+                }
+            
+                if (!response.ok){
+                    setCarregando(false);
+                    alert('Erro ao atualizar tarefa');
+                }
+            }
+
+            if (!(statusDaTarefa === tarefa.status)) {
+                if (statusDaTarefa === "TODO") {
+                    const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/status/todo/'+tarefa.id, 
+                    {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                    });
+                        
+                    if (response.status === 401){
+                        setCarregando(false);
+                        alert('Você não está logado, por favor faça login novamente.');
+                        router.push('/login');
+                    }
+                
+                    if (!response.ok){
+                        setCarregando(false);
+                        alert('Erro ao atualizar tarefa');
+                    }
+                    
+                } else if (statusDaTarefa === "IN PROGRESS") {
+                    const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/status/progress/'+tarefa.id, 
+                    {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                    });
+                        
+                    if (response.status === 401){
+                        setCarregando(false);
+                        alert('Você não está logado, por favor faça login novamente.');
+                        router.push('/login');
+                    }
+                
+                    if (!response.ok){
+                        setCarregando(false);
+                        alert('Erro ao atualizar tarefa');
+                    }
+                    
+                } if (statusDaTarefa === "DONE") {
+                    const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/status/done/'+tarefa.id, 
+                    {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                    });
+                        
+                    if (response.status === 401){
+                        setCarregando(false);
+                        alert('Você não está logado, por favor faça login novamente.');
+                        router.push('/login');
+                    }
+                
+                    if (!response.ok){
+                        setCarregando(false);
+                        alert('Erro ao atualizar tarefa');
+                    }
+                    
+                } if (statusDaTarefa === "LATE") {
+                    const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/status/late/'+tarefa.id, 
+                    {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                    });
+                        
+                    if (response.status === 401){
+                        setCarregando(false);
+                        alert('Você não está logado, por favor faça login novamente.');
+                        router.push('/login');
+                    }
+                
+                    if (!response.ok){
+                        setCarregando(false);
+                        alert('Erro ao atualizar tarefa');
+                    }
+                    
+                } if (statusDaTarefa === "CANCELLED") {
+                    const response = await fetch(
+                        'http://127.0.0.1:2327/auth/api/tasks/status/canceled', 
+                    {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                            },
+                            body: JSON.stringify({
+                                idTask: tarefa.id,
+                                cancellationReason: motivosLimpos
+                            })
+                    });
+                        
+                    if (response.status === 401){
+                        setCarregando(false);
+                        alert('Você não está logado, por favor faça login novamente.');
+                        router.push('/login');
+                    }
+                
+                    if (!response.ok){
+                        setCarregando(false);
+                        alert('Erro ao atualizar tarefa');
+                    }
+
+                }
+
+            }
+            
+            setCarregando(false);
+            window.location.reload();
+    }
 
     return (
         <>
@@ -135,7 +391,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                         className={styles.lixeira}
                         onClick={() => {
                                 if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
-                                    deletarTarefa();
+                                    setVerPopUpConfirmacaoDelete(true);
                                 }}}
                     >
                         <Image 
@@ -238,11 +494,11 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                                     Não Iniciada
                                 </motion.div>
                                 <motion.div
-                                    style={statusDaTarefa === "IN_PROGRESS" ? { backgroundColor: '#a0ff47' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+                                    style={statusDaTarefa === "IN PROGRESS" ? { backgroundColor: '#a0ff47' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
                                     className={styles.status}
                                     whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatusDaTarefa("IN_PROGRESS")}
+                                    onClick={() => setStatusDaTarefa("IN PROGRESS")}
                                 >
                                     Em Progresso
                                 </motion.div>
@@ -269,7 +525,10 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                                     className={styles.status}
                                     whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: '#FFF' }} 
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatusDaTarefa("CANCELLED")}
+                                    onClick={() => {
+                                        setStatusDaTarefa("CANCELLED");
+                                        setAbrirInputMotivoDoCancelamento(true);
+                                    }}
                                 >
                                     Cancelada
                                 </motion.div>
@@ -360,16 +619,323 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                                     className={styles.status}
                                     whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                     whileTap={{ scale: 0.95 }}
+                                    onClick={() => {
+                                        setOpcaoAtualizar(1);
+                                        atualizarTarefa();
+                                    }}
                             >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
                                 Está apenas!
                             </motion.div>
                             <motion.div
                                     className={styles.status}
                                     whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                     whileTap={{ scale: 0.95 }}
+                                    onClick={() => {
+                                        setOpcaoAtualizar(2);
+                                        setExibirIsTarefaFrequente(true);
+                                    }}
                             >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
                                 Essa e suas aparições futuras!
                             </motion.div>
+                        </div>
+                    </div>
+                )}
+                {verPopUpConfirmacaoDelete && (
+                    <div className={styles.containerPopUp}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => setVerPopUpConfirmacaoDelete(false)}
+                            >
+                            <strong>Voltar - Tarefa</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            <h4>Deseja deletar essa tarefa, ou deletar ela e suas repetições futuras?</h4>
+                            <motion.div
+                                    className={styles.status}
+                                    whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => {
+                                        setOpcaoDeletar(1);
+                                        deletarTarefa();
+                                    }}
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Está apenas!
+                            </motion.div>
+                            <motion.div
+                                    className={styles.status}
+                                    whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => {
+                                        setOpcaoDeletar(2);
+                                        deletarTarefa();
+                                    }}
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Essa e suas aparições futuras!
+                            </motion.div>
+                        </div>
+                    </div>
+                )}
+                {exibirIsTarefaFrequente && (
+                    <div className={styles.containerPopUp}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => {
+                                window.location.reload();
+                            }}
+                        >
+                            <strong>Voltar - Tarefas</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodoDomingo(!todoDomingo)}
+                            >
+                                Todo domingo
+                                <Image
+                                    style={{ visibility: todoDomingo ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodaSegunda(!todaSegunda)}
+                            >
+                                Toda segunda-feira
+                                <Image
+                                    style={{ visibility: todaSegunda ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodaTerca(!todaTerca)}
+                            >
+                                Toda terça-feira
+                                <Image
+                                    style={{ visibility: todaTerca ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodaQuarta(!todaQuarta)}
+                            >
+                                Toda quarta-feira
+                                <Image
+                                    style={{ visibility: todaQuarta ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodaQuinta(!todaQuinta)}
+                            >
+                                Toda quinta-feira
+                                <Image
+                                    style={{ visibility: todaQuinta ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodaSexta(!todaSexta)}
+                            >
+                                Toda sexta-feira
+                                <Image
+                                    style={{ visibility: todaSexta ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div 
+                                className={styles.diaDaSemana}
+                                onClick={() => setTodoSabado(!todoSabado)}
+                            >
+                                Todo sábado
+                                <Image
+                                    style={{ visibility: todoSabado ? 'visible' : 'hidden' }}
+                                    src="/checkIconAzul.svg"
+                                    alt="Icone Check Azul"
+                                    width={21}
+                                    height={16}
+                                />
+                            </div>
+                            <div className={styles.containerDataFinal}>
+                                Repetir até a data:
+                                <motion.div 
+                                    className={styles.inputDataFinal}
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => setEscolherDataFinal(true)}
+                                >
+                                    {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
+                                </motion.div>
+                            </div>
+                            <motion.button
+                                style={
+                                    !todoDomingo && 
+                                    !todaSegunda &&
+                                    !todaTerca &&
+                                    !todaQuarta &&
+                                    !todaQuinta &&
+                                    !todaSexta &&
+                                    !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
+                                }
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={
+                                    !todoDomingo && 
+                                    !todaSegunda &&
+                                    !todaTerca &&
+                                    !todaQuarta &&
+                                    !todaQuinta &&
+                                    !todaSexta &&
+                                    !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => atualizarTarefa()
+                                }
+                            >
+                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                            <span 
+                                style={{ 
+                                    marginLeft: carregando ? '8px' : '0'
+                                }}
+                            ></span>
+                            Salvar
+                            <Image 
+                                className={styles.concluido}
+                                src="/checkIcon.svg"
+                                alt="Icone Check"
+                                width={23}
+                                height={18}
+                            />
+                        </motion.button>
+                        </div>
+                    </div>
+                )}
+                {escolherDataFinal && (
+                    <div className={styles.containerPopUp}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => setEscolherDataFinal(false)}
+                            >
+                            <strong>Voltar</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            <h4>Data final das repetições!</h4>
+                            <Calendar
+                                className={styles.calendar}
+                                selectRange={false}
+                                value={dataFinal}
+                                onChange={SetDataFinal}
+                            />
+                            {dataFinal && (
+                                <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
+                            )}
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => setEscolherDataFinal(false)}
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Selecionar
+                                <Image 
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
+                                />
+                            </motion.button>
+                        </div>
+                    </div>
+                )}
+                {abrirInputMotivoDoCancelamento && (
+                    <div className={styles.containerPopUp}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => setAbrirInputMotivoDoCancelamento(false)}
+                        >
+                            <strong>Voltar - Tarefa</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            <h4 style={{fontSize: '18px'}}>
+                                Para te ajudar a estar sempre na sua velocidade e produtividade máxima, precisamos entender o por que não vai realizar essa tarefa hoje. 
+                                Separe os motivos por ponto e vírgula (;), exemplo: <strong>Imprevisto; Doente; Cansaço</strong>.
+                            </h4>
+                            <div className={styles.inputs}>
+                                <div className={styles.inputObjetivo}>
+                                    <h3>Motivos</h3>
+                                    <div className={styles.input}>
+                                    <input
+                                        type="text"
+                                        id="motivos"
+                                        value={motivos}
+                                        onChange={handleInputChange}
+                                        placeholder={"Informe os seus motivos para não realizar as tarefas..."}
+                                    />
+                                    <Image 
+                                        className={styles.lapis}
+                                        src="/iconeLapisCinza.svg"
+                                        alt="Icone Lapis"
+                                        width={15}
+                                        height={15}
+                                    />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
