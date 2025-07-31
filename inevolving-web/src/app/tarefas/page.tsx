@@ -619,16 +619,24 @@ export default function Tarefas( ) {
                     </motion.div>
                 </motion.div>
                 {!carregando && filtroAtivo === 1 && !tarefasDeHoje && primeiroCarregamento && (
-                    <h1>Selecione a configuração que deseja dos filtros para buscar as tarefas!</h1> 
+                    <h1
+                        style={{padding: '20px'}}
+                    >Selecione a configuração que deseja dos filtros para buscar as tarefas!</h1> 
                 )}
                 {!carregando && filtroAtivo === 1 && !tarefasDeHoje && !primeiroCarregamento &&(
-                    <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                    <h1
+                        style={{padding: '20px'}}
+                    >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
                 )}
                 {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
-                    <h1>Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                    <h1
+                        style={{padding: '20px'}}
+                    >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
                 )}
-                {!carregando && filtroAtivo === 5 && !tarefasOutraData && (
-                    <h1>Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
+                {!carregando && filtroAtivo === 5 && !tarefasAtrasadas && (
+                    <h1
+                        style={{padding: '20px'}}
+                    >Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
                 )}
                 <motion.div className={styles.containerConteudo}>
                     {carregando && (
@@ -644,7 +652,7 @@ export default function Tarefas( ) {
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
-                                    duration: 0.4,
+                                       duration: 0.4,
                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                 }} 
                                 whileHover={{ scale: 1.03 }} 

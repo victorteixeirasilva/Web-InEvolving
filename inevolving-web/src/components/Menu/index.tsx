@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./menu.module.scss";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import 'react-calendar/dist/Calendar.css'; // opcional, se quiser base
 import { motion } from "motion/react";
 import MenuResumo from "../MenuResumo";
@@ -16,6 +16,8 @@ export default function Menu() {
     const isActiveMotivacao = pathname === '/motivacao';
     const isActiveAjustes = pathname === '/ajustes';
     const isActiveAjuda = pathname === '/ajuda';
+
+    const router = useRouter();
         
     return (
         <>
@@ -29,7 +31,10 @@ export default function Menu() {
                 scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
             }}
             className={styles.container}>
-            <div className={styles.titulo}>
+            <div 
+                className={styles.titulo}
+                onClick={() => router.push("/")}
+            >
                 <Image 
                     src="/logo/logo-inovasoft-menu.svg"
                     alt="Logo InEvolving"
