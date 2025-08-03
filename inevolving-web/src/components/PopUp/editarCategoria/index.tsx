@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { Category } from "@/components/interfaces/Category";
+import { useRouter } from "next/navigation";
 
 export default function EditarCategoria() {
+    const router = useRouter();
 
     const [nomeCategoria, setNomeCategoria] = useState("");
     const [descricaoObjetivo, setDescricaoObjetivo] = useState("");
@@ -46,6 +48,12 @@ export default function EditarCategoria() {
 
         const data = await response.json();
 
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
         if (!response.ok){
             setCarregando(false);
             alert(data.message + " - AO adicionar a categoria");
@@ -69,6 +77,13 @@ export default function EditarCategoria() {
                             idObjective: ob.id,
                             }),
                         });
+
+                        if (response.status === 401){
+                            setCarregando(false);
+                            router.push('/login');
+                            alert('Você não está logado, por favor faça login novamente.');
+                        }
+
                         if (!response2.ok) {
                             alert('Erro ao associar objetivo à categoria:' + ob.id);
                         }
@@ -95,6 +110,12 @@ export default function EditarCategoria() {
                         },
                     }
                     );
+
+                    if (response.status === 401){
+                        setCarregando(false);
+                        router.push('/login');
+                        alert('Você não está logado, por favor faça login novamente.');
+                    }
 
                     if (!response2.ok) {
                     console.error('Erro ao remover objetivo:', ob.id);
@@ -148,6 +169,11 @@ export default function EditarCategoria() {
                     },
                 });
     
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
             
             if (!response.ok){
                 setCarregando(false);
@@ -173,6 +199,11 @@ export default function EditarCategoria() {
     
             const data: Objetivo[] = await response.json();
             
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
     
             if (!response.ok){
                 setCarregando(false);

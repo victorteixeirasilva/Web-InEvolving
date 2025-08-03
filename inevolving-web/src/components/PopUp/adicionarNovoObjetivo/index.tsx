@@ -3,8 +3,10 @@ import styles from "./adicionarNovoObjetivo.module.scss";
 import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
+import { useRouter } from "next/navigation";
 
 export default function AdicionarNovoObjetivo() {
+    const router = useRouter();
 
     const [nomeObjetivo, setNomeObjetivo] = useState("");
     const [descricaoObjetivo, setDescricaoObjetivo] = useState("");
@@ -32,6 +34,12 @@ export default function AdicionarNovoObjetivo() {
         });
 
         const data = await response.json();
+
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
 
         if (response.ok){
 

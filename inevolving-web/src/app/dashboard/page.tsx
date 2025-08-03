@@ -10,6 +10,7 @@ import { ClipLoader } from 'react-spinners';
 import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
 import EditarCategoria from '@/components/PopUp/editarCategoria';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
     const constraintsRef = useRef<HTMLDivElement>(null)
@@ -22,7 +23,7 @@ export default function Dashboard() {
 
     const [carregandoDash, setCarregandoDash] = useState(false);
 
-
+    const router = useRouter();
 
     useEffect(() => {
         const storedUrl = localStorage.getItem('visionBordUrl');
@@ -45,6 +46,10 @@ export default function Dashboard() {
 
         const data: ResponseDashboard = await response.json();
         
+        if (response.status === 401){
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
 
         if (!response.ok){
             setCarregandoDash(false);

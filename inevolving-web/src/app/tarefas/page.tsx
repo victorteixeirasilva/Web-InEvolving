@@ -77,6 +77,12 @@ export default function Tarefas( ) {
     
             const json: Tarefa_Modulo_Tarefas[] = await response.json();
     
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
+
             if (!response.ok){
                 setCarregando(false);
                 return;
@@ -99,6 +105,12 @@ export default function Tarefas( ) {
             );
     
             const json: Tarefa_Modulo_Tarefas[] = await response.json();
+
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
     
             if (!response.ok){
                 setCarregando(false);
@@ -122,7 +134,13 @@ export default function Tarefas( ) {
             );
     
             const json: Tarefa_Modulo_Tarefas[] = await response.json();
-    
+            
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
+
             if (!response.ok){
                 setCarregando(false);
                 return;
@@ -146,6 +164,12 @@ export default function Tarefas( ) {
     
             const json: Tarefa_Modulo_Tarefas[] = await response.json();
     
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
+
             if (!response.ok){
                 setCarregando(false);
                 return;
@@ -168,6 +192,12 @@ export default function Tarefas( ) {
     
             const json: Tarefa_Modulo_Tarefas[] = await response.json();
     
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
+
             if (!response.ok){
                 setCarregando(false);
                 return;
@@ -198,6 +228,12 @@ export default function Tarefas( ) {
     
         const json: Tarefa_Modulo_Tarefas[] = await response.json();
     
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
         if (!response.ok){
             setCarregando(false);
             return;
@@ -229,8 +265,8 @@ export default function Tarefas( ) {
     
             if (response.status === 401){
                 setCarregando(false);
-                alert('Você não está logado, por favor faça login novamente.');
                 router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
             }
     
             if (!response.ok){
@@ -286,8 +322,8 @@ export default function Tarefas( ) {
     
             if (response.status === 401){
                 setCarregando(false);
-                alert('Você não está logado, por favor faça login novamente.');
                 router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
             }
     
             if (!response.ok){
@@ -644,21 +680,37 @@ export default function Tarefas( ) {
                     )}
                     {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
                         tarefasAtrasadas.map((tarefa) => (
-                            <motion.div
+                             <motion.div
                                 onClick={() => {
-                                    setTarefaAual(tarefa);
-                                    setEditarTarefaAtual(true);
-                                }}
+                                    if (tarefa.blockedByObjective === null) {
+                                        setTarefaAual(tarefa);
+                                        setEditarTarefaAtual(true);
+                                    } else if (tarefa.blockedByObjective === true) {
+                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                    } else {
+                                        setTarefaAual(tarefa);
+                                        setEditarTarefaAtual(true);
+                                    }
+                                }} 
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
-                                       duration: 0.4,
+                                    duration: 0.4,
                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                 }} 
-                                whileHover={{ scale: 1.03 }} 
-                                whileTap={{ scale: 0.8 }} 
+                                whileHover={
+                                    tarefa.blockedByObjective === null ? { scale: 1.03 } :
+                                    tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
+                                } 
+                                whileTap={
+                                    tarefa.blockedByObjective === null ? { scale: 0.8 } :
+                                    tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
+                                } 
                                 key={tarefa.id} 
-                                className={styles.tarefa}
+                                className={ 
+                                    tarefa.blockedByObjective === null ? styles.tarefa :
+                                    tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
+                                }
                             >
                                 {tarefa?.nameTask}
                                 <p style={
@@ -684,19 +736,35 @@ export default function Tarefas( ) {
                         tarefasOutraData.map((tarefa) => (
                             <motion.div
                                 onClick={() => {
-                                    setTarefaAual(tarefa);
-                                    setEditarTarefaAtual(true);
-                                }}
+                                    if (tarefa.blockedByObjective === null) {
+                                        setTarefaAual(tarefa);
+                                        setEditarTarefaAtual(true);
+                                    } else if (tarefa.blockedByObjective === true) {
+                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                    } else {
+                                        setTarefaAual(tarefa);
+                                        setEditarTarefaAtual(true);
+                                    }
+                                }} 
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
                                     duration: 0.4,
                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                 }} 
-                                whileHover={{ scale: 1.03 }} 
-                                whileTap={{ scale: 0.8 }} 
+                                whileHover={
+                                    tarefa.blockedByObjective === null ? { scale: 1.03 } :
+                                    tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
+                                } 
+                                whileTap={
+                                    tarefa.blockedByObjective === null ? { scale: 0.8 } :
+                                    tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
+                                } 
                                 key={tarefa.id} 
-                                className={styles.tarefa}
+                                className={ 
+                                    tarefa.blockedByObjective === null ? styles.tarefa :
+                                    tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
+                                }
                             >
                                 {tarefa?.nameTask}
                                 <p style={
@@ -720,21 +788,37 @@ export default function Tarefas( ) {
                     )}
                     {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
                         tarefasDeHoje.map((tarefa) => (
-                            <motion.div
+                             <motion.div
                                 onClick={() => {
-                                    setTarefaAual(tarefa);
-                                    setEditarTarefaAtual(true);
-                                }}
+                                    if (tarefa.blockedByObjective === null) {
+                                        setTarefaAual(tarefa);
+                                        setEditarTarefaAtual(true);
+                                    } else if (tarefa.blockedByObjective === true) {
+                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                    } else {
+                                        setTarefaAual(tarefa);
+                                        setEditarTarefaAtual(true);
+                                    }
+                                }} 
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
                                     duration: 0.4,
                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                 }} 
-                                whileHover={{ scale: 1.03 }} 
-                                whileTap={{ scale: 0.8 }} 
+                                whileHover={
+                                    tarefa.blockedByObjective === null ? { scale: 1.03 } :
+                                    tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
+                                } 
+                                whileTap={
+                                    tarefa.blockedByObjective === null ? { scale: 0.8 } :
+                                    tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
+                                } 
                                 key={tarefa.id} 
-                                className={styles.tarefa}
+                                className={ 
+                                    tarefa.blockedByObjective === null ? styles.tarefa :
+                                    tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
+                                }
                             >
                                 {tarefa?.nameTask}
                                 <p style={

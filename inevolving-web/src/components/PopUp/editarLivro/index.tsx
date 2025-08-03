@@ -34,6 +34,11 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                 },
         });
 
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
     
         if (!response.ok){
             setCarregando(false);

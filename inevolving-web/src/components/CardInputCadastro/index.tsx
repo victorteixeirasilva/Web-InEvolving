@@ -29,6 +29,12 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
         });
 
         const data = await response.json();
+
+        if (response.status === 401){
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
         if (response.ok) {
             if (response.status === 200) {
                 router.push('/login');

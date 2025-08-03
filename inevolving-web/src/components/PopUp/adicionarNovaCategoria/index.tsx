@@ -37,6 +37,12 @@ export default function AdicionarNovaCategoria() {
 
         const data = await response.json();
 
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
         if (response.ok){
 
             setCarregando(false);
@@ -65,6 +71,12 @@ export default function AdicionarNovaCategoria() {
         });
 
         const data = await response.json();
+
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
 
         if (response.ok){
 
@@ -128,16 +140,18 @@ export default function AdicionarNovaCategoria() {
                 });
     
             const data: Objetivo[] = await response.json();
+
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
             
     
             if (!response.ok){
                 setCarregando(false);
                 alert('Erro ao puxar objetivos');
                 console.error('Erro ao puxar objetivoss');
-            }
-
-            if(response.status === 401) {
-                router.push('/login');
             }
             
             setCarregando(false);

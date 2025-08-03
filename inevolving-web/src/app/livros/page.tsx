@@ -48,8 +48,8 @@ export default function Categoria( ) {
             
         if (response.status === 401){
             serCarregando(false);
-            alert('Você não está logado, por favor faça login novamente.');
             router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
         }
 
         serCarregando(false);

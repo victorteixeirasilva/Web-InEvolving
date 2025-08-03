@@ -77,6 +77,12 @@ export default function MenuResumo() {
                 });
     
             const data: Tarefa[] = await response.json();
+
+            if (response.status === 401){
+                setCarregandoTarefas(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
                 
             if (!response.ok){
                 setVerTarefas(false);

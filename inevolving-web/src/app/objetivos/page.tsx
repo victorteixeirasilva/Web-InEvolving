@@ -8,9 +8,11 @@ import { Objetivo } from '@/components/interfaces/Objetivo';
 import { ClipLoader } from 'react-spinners';
 import AdicionarNovoObjetivoOuCategoria from '@/components/PopUp/adicionarNovoObjetivoOuCategoria';
 import EditarObjetivo from '@/components/PopUp/editarObjetivo';
+import { useRouter } from 'next/navigation';
 
 
 export default function Categoria( ) {
+    const router = useRouter();
     const [filtroAtivo, setFiltroAtivo] = useState(1);
 
 
@@ -52,6 +54,7 @@ export default function Categoria( ) {
     };
 
     const pegarObjetivosToDo = async () => {
+        setObjetivos(null);
         setCarregandoObjetivos(true);
         const response = await fetch(
             'http://127.0.0.1:2327/auth/api/objectives/status/todo/user', 
@@ -78,6 +81,7 @@ export default function Categoria( ) {
     };
 
     const pegarObjetivosDone = async () => {
+        setObjetivos(null);
         setCarregandoObjetivos(true);
         const response = await fetch(
             'http://127.0.0.1:2327/auth/api/objectives/status/done/user', 
@@ -91,12 +95,17 @@ export default function Categoria( ) {
         );
     
         const data: Objetivo[] = await response.json();
-            
+        
+        if (response.status === 401){
+            setCarregandoObjetivos(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
     
         if (!response.ok){
             setCarregandoObjetivos(false);
             alert('Erro ao puxar objetivos');
-            console.error('Erro ao puxar objetivoss');
+            return
         }
             
         setCarregandoObjetivos(false);
@@ -156,7 +165,7 @@ export default function Categoria( ) {
                             whileHover={{ scale: 1.1 }} 
                             whileTap={{ scale: 0.8 }}
                             onClick={pegarObjetivosDone}
-                            >
+                        >
                             Concluídos
                         </motion.button>
                         <motion.button 
@@ -175,33 +184,41 @@ export default function Categoria( ) {
                     {carregandoObjetivos && (
                         <ClipLoader size={50} color="#0B0E31" />
                     )}
-                    {!carregandoObjetivos && objetivos?.map((objetivo) => (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                            }} 
-                            whileHover={{ scale: 1.03 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.objetivo}
-                            key={objetivo.id}
-                            onClick={() => {
-                                setObjetivoAtual(objetivo);
-                                setEditarObjetivo(true);
-                            }}
-                        >
-                            <h3>{objetivo.nameObjective}</h3>
-                            <p
-                                className={
-                                    objetivo.statusObjective === "DONE" ? styles.ok : styles.p
-                                }
-                                >
-                                {objetivo.statusObjective === "TODO" ? "Em execução" : "Concluído"}
-                            </p>
-                        </motion.div>
-                    ))}
+                    {!carregandoObjetivos && objetivos?.length === 0 || !objetivos ? (
+                        <h3>
+                            Não existe nenhum objetivo cadastrado com o filtro selecionado
+                        </h3>
+                    ) : (
+
+                        objetivos?.map((objetivo) => (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.4,
+                                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                }} 
+                                whileHover={{ scale: 1.03 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.objetivo}
+                                key={objetivo.id}
+                                onClick={() => {
+                                    setObjetivoAtual(objetivo);
+                                    setEditarObjetivo(true);
+                                }}
+                            >
+                                <h3>{objetivo.nameObjective}</h3>
+                                <p
+                                    className={
+                                        objetivo.statusObjective === "DONE" ? styles.ok : styles.p
+                                    }
+                                    >
+                                    {objetivo.statusObjective === "TODO" ? "Em execução" : "Concluído"}
+                                </p>
+                            </motion.div>
+                            ))
+                        )
+                    }
                 </motion.div>
             </motion.div>
         </motion.div>

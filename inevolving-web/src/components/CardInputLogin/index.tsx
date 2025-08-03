@@ -27,6 +27,12 @@ export default function CardInputLogin() {
 
         const data = await response.json();
 
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
         if (response.ok){
 
             // Armazena no localStorage
