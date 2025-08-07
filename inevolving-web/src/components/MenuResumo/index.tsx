@@ -102,7 +102,7 @@ export default function MenuResumo() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{
                 duration: 0.4,
-                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
             }} 
             className={styles.containerMenuResumo}>
             <Calendar
