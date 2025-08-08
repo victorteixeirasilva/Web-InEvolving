@@ -66,7 +66,7 @@ export default function Categoria( ) {
 
             // alert(primeiroDiaDoMesAtual+ "/" +primeiroDiaDoMesSeguinte)
 
-            const response = await fetch('http://127.0.0.1:2327/auth/api/finance/'+primeiroDiaDoMesAtual+'/'+primeiroDiaDoMesSeguinte, {
+            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/'+primeiroDiaDoMesAtual+'/'+primeiroDiaDoMesSeguinte, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -105,9 +105,11 @@ export default function Categoria( ) {
     const [abrirInformativoEntradas, setAbrirInformativoEntradas] = useState(false);
     const [abrirInformativoTotal, setAbrirInformativoTotal] = useState(false);
     const [abrirNovaTransacao, setAbrirNovaTransacao] = useState(false);
+    const [verTodasAsTrasacoes, setVerTodasAsTrasacoes] = useState(false);
     const [salario, setSalario] = useState("");
     const [valorDaNovaTransacao, setValorDaNovaTransacao] = useState("");
     const [tipoDaNovaTransacao, setTipoDaNovaTransacao] = useState(0);
+    const [filtroAtivo, setFiltroAtivo] = useState(1);
     const [valorDaNovaTransacaoNumerico, setValorDaNovaTransacaoNumerico] = useState(0);
     const [descricaoNovaTransacao, setDescricaoNovaTransacao] = useState("");
     const [salarioNumerico, setSalarioNumerico] = useState(0);
@@ -174,7 +176,7 @@ export default function Categoria( ) {
 
         if (tipoDaNovaTransacao === 1) {
 
-            const response = await fetch('http://127.0.0.1:2327/auth/api/finance/transaction/cost_of_living', {
+            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/cost_of_living', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -195,7 +197,7 @@ export default function Categoria( ) {
             
         } else if (tipoDaNovaTransacao === 2) {
 
-            const response = await fetch('http://127.0.0.1:2327/auth/api/finance/transaction/investment', {
+            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/investment', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -216,7 +218,7 @@ export default function Categoria( ) {
             
         } else if (tipoDaNovaTransacao === 3) {
 
-            const response = await fetch('http://127.0.0.1:2327/auth/api/finance/transaction/extra_contribution', {
+            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/extra_contribution', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -252,7 +254,7 @@ export default function Categoria( ) {
             
             setCarregando(true);
    
-            const response = await fetch('http://127.0.0.1:2327/auth/api/finance/wage', {
+            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/wage', {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -982,6 +984,9 @@ export default function Categoria( ) {
                         className={styles.botaoVerTransacoes}
                         whileHover={{ scale: 1.05 }} 
                         whileTap={{ scale: 0.8 }}
+                        onClick={() => {
+                            setVerTodasAsTrasacoes(true); 
+                        }}
                     >
                         {carregando && <ClipLoader size={40} color="#ffffff" />}
                         <h2>Ver Todas as Transações desse Mês</h2>
@@ -1053,6 +1058,180 @@ export default function Categoria( ) {
                                     />
                                 </motion.button>
                             </div>
+                    </div>
+                </motion.div>
+            </motion.div>
+        )}
+        {verTodasAsTrasacoes && (
+            <motion.div className={styles.overlay}>
+                <motion.div 
+                    className={styles.containerPopUpEditTrasacoes}
+                >
+                    <div className={styles.botoesTopo}>
+                    <motion.button
+                        whileHover={{ scale: 1.1 }} 
+                        whileTap={{ scale: 0.8 }}
+                        className={styles.botaoVoltar} 
+                        onClick={() => setVerTodasAsTrasacoes(false)}
+                    >
+                        <strong>X</strong>
+                    </motion.button>
+                    </div>
+                    <div className={styles.conteudo}>
+                            <h3>
+                                Todas As Trasações!
+                            </h3>
+                            <motion.div className={styles.containerFiltroEBotao}>
+                                <motion.div className={styles.filtro}>
+                                    <h3>
+                                        Filtrar por:
+                                    </h3>
+                                    <motion.button 
+                                        className={styles.botaoFiltroStatus}
+                                        style={filtroAtivo === 1 ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                                        whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            setFiltroAtivo(1);
+                                        }}
+                                    >
+                                        Custo de Vida
+                                    </motion.button>
+                                    <motion.button 
+                                        className={styles.botaoFiltroStatus}
+                                        style={filtroAtivo === 2 ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                                        whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            setFiltroAtivo(2);
+                                        }}
+                                    >
+                                        Investimento
+                                    </motion.button>
+                                    <motion.button 
+                                        className={styles.botaoFiltroStatus}
+                                        style={filtroAtivo === 3 ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                                        whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            setFiltroAtivo(3);
+                                        }}
+                                    >
+                                        Entrada de Renda
+                                    </motion.button>
+                                </motion.div>
+                            </motion.div>
+                            {
+                            filtroAtivo === 1 &&
+                            Array.isArray(dadosDoMes?.transactionsCostOfLiving) && 
+                            dadosDoMes.transactionsCostOfLiving?.map((transacao) => (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                    }} 
+                                    className={styles.transacao}
+                                    key={transacao.id}
+                                
+                                >
+                                        <h4>{transacao.description}</h4>
+                                        <div className={styles.cotainerData}>
+                                            <h4>
+                                                {transacao.date}
+                                            </h4>
+                                        </div>
+                                        <div className={styles.cotainerTipo}>
+                                            <h4>
+                                                {transacao.value.toLocaleString("pt-BR", {
+                                                    style: "currency",
+                                                    currency: "BRL",
+                                                })}
+                                            </h4>
+                                        </div>
+                                        <div>
+                                            <h4>
+                                                Romover
+                                            </h4>
+                                        </div>
+                                </motion.div>
+                                ))
+                            }
+                            {
+                            filtroAtivo === 2 &&
+                            Array.isArray(dadosDoMes?.transactionsInvestment) && 
+                            dadosDoMes.transactionsInvestment?.map((transacao) => (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                    }} 
+                                    className={styles.transacao}
+                                    key={transacao.id}
+                                
+                                >
+                                        <h4>{transacao.description}</h4>
+                                        <div className={styles.cotainerData}>
+                                            <h4>
+                                                {transacao.date}
+                                            </h4>
+                                        </div>
+                                        <div className={styles.cotainerTipo}>
+                                            <h4>
+                                                {transacao.value.toLocaleString("pt-BR", {
+                                                    style: "currency",
+                                                    currency: "BRL",
+                                                })}
+                                            </h4>
+                                        </div>
+                                        <div>
+                                            <h4>
+                                                Romover
+                                            </h4>
+                                        </div>
+                                </motion.div>
+                                ))
+                            }
+                            {
+                            filtroAtivo === 3 &&
+                            Array.isArray(dadosDoMes?.transactionsExtraAdded) && 
+                            dadosDoMes.transactionsExtraAdded?.map((transacao) => (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                    }} 
+                                    className={styles.transacao}
+                                    key={transacao.id}
+                                
+                                >
+                                        <h4>{transacao.description}</h4>
+                                        <div className={styles.cotainerData}>
+                                            <h4>
+                                                {transacao.date}
+                                            </h4>
+                                        </div>
+                                        <div className={styles.cotainerTipo}>
+                                            <h4>
+                                                {transacao.value.toLocaleString("pt-BR", {
+                                                    style: "currency",
+                                                    currency: "BRL",
+                                                })}
+                                            </h4>
+                                        </div>
+                                        <div>
+                                            <h4>
+                                                Romover
+                                            </h4>
+                                        </div>
+                                </motion.div>
+                                ))
+                            }
                     </div>
                 </motion.div>
             </motion.div>

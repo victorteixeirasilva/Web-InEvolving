@@ -23,7 +23,7 @@ export default function AdicionarNovaCategoria() {
     const handleRegistrarCategoria = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/categories', {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/categories', {
             method: 'POST',
             headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function AdicionarNovaCategoria() {
     const handleRegistrarCategoriaComObjetivo = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/categories', {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/categories', {
             method: 'POST',
             headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function AdicionarNovaCategoria() {
             const categoryId = data.id;
 
             objetivosSelecionados.forEach(async (ob) => {
-                    const response2 = await fetch('http://127.0.0.1:2327/auth/api/categories/objective', {
+                    const response2 = await fetch('http://82.25.69.109:2327/auth/api/categories/objective', {
                         method: 'POST',
                         headers: {
                                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default function AdicionarNovaCategoria() {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/objectives/user', 
+                    'http://82.25.69.109:2327/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {

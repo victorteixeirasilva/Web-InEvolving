@@ -30,7 +30,7 @@ export default function Categoria( ) {
     const pegarObjetivos = async () => {
             setCarregandoObjetivos(true);
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/objectives/user', 
+                    'http://82.25.69.109:2327/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {
@@ -41,12 +41,17 @@ export default function Categoria( ) {
     
             const data: Objetivo[] = await response.json();
             
-    
-            if (!response.ok){
+            if (response.status === 401){
                 setCarregandoObjetivos(false);
-                alert('Erro ao puxar objetivos');
-                console.error('Erro ao puxar objetivoss');
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
             }
+    
+            // if (!response.ok){
+            //     setCarregandoObjetivos(false);
+            //     alert('Erro ao puxar objetivos');
+            //     console.error('Erro ao puxar objetivoss');
+            // }
             
             setCarregandoObjetivos(false);
             setObjetivos(data);
@@ -57,7 +62,7 @@ export default function Categoria( ) {
         setObjetivos(null);
         setCarregandoObjetivos(true);
         const response = await fetch(
-            'http://127.0.0.1:2327/auth/api/objectives/status/todo/user', 
+            'http://82.25.69.109:2327/auth/api/objectives/status/todo/user', 
             {
                 method: 'GET',
                 headers: {
@@ -68,12 +73,17 @@ export default function Categoria( ) {
     
         const data: Objetivo[] = await response.json();
             
-    
-        if (!response.ok){
+        if (response.status === 401){
             setCarregandoObjetivos(false);
-            alert('Erro ao puxar objetivos');
-            console.error('Erro ao puxar objetivoss');
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
         }
+
+        // if (!response.ok){
+        //     setCarregandoObjetivos(false);
+        //     alert('Erro ao puxar objetivos');
+        //     console.error('Erro ao puxar objetivoss');
+        // }
             
         setCarregandoObjetivos(false);
         setObjetivos(data);
@@ -84,7 +94,7 @@ export default function Categoria( ) {
         setObjetivos(null);
         setCarregandoObjetivos(true);
         const response = await fetch(
-            'http://127.0.0.1:2327/auth/api/objectives/status/done/user', 
+            'http://82.25.69.109:2327/auth/api/objectives/status/done/user', 
             {
                 method: 'GET',
                 headers: {
@@ -102,11 +112,11 @@ export default function Categoria( ) {
             alert('Você não está logado, por favor faça login novamente.');
         }
     
-        if (!response.ok){
-            setCarregandoObjetivos(false);
-            alert('Erro ao puxar objetivos');
-            return
-        }
+        // if (!response.ok){
+        //     setCarregandoObjetivos(false);
+        //     alert('Erro ao puxar objetivos');
+        //     return
+        // }
             
         setCarregandoObjetivos(false);
         setObjetivos(data);
@@ -184,13 +194,13 @@ export default function Categoria( ) {
                     {carregandoObjetivos && (
                         <ClipLoader size={50} color="#0B0E31" />
                     )}
-                    {!carregandoObjetivos && objetivos?.length === 0 || !objetivos ? (
+                    {!carregandoObjetivos && !Array.isArray(objetivos) || !objetivos ? (
                         <h3>
                             Não existe nenhum objetivo cadastrado com o filtro selecionado
                         </h3>
                     ) : (
 
-                        objetivos?.map((objetivo) => (
+                        Array.isArray(objetivos) && objetivos?.map((objetivo) => (
                             <motion.div
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}

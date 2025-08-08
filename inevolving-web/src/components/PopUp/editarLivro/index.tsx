@@ -25,7 +25,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
         setCarregando(true);
 
         const response = await fetch(
-            'http://127.0.0.1:2327/auth/api/books/'+livro?.id, 
+            'http://82.25.69.109:2327/auth/api/books/'+livro?.id, 
             {
                 method: 'DELETE',
                 headers: {
@@ -57,7 +57,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
 
 
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/books/'+livro.id, 
+                    'http://82.25.69.109:2327/auth/api/books/'+livro.id, 
                 {
                         method: 'PUT',
                         headers: {
@@ -90,7 +90,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
             if (!(status === livro.status)) {
                 if (status === "TO DO") {
                     const response = await fetch(
-                        'http://127.0.0.1:2327/auth/api/books/status/todo/'+livro.id, 
+                        'http://82.25.69.109:2327/auth/api/books/status/todo/'+livro.id, 
                     {
                             method: 'PATCH',
                             headers: {
@@ -112,7 +112,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                     
                 } else if (status === "IN PROGRESS") {
                     const response = await fetch(
-                        'http://127.0.0.1:2327/auth/api/books/status/progress/'+livro.id, 
+                        'http://82.25.69.109:2327/auth/api/books/status/progress/'+livro.id, 
                     {
                             method: 'PATCH',
                             headers: {
@@ -134,7 +134,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                     
                 } else if (status === "COMPLETED") {
                     const response = await fetch(
-                        'http://127.0.0.1:2327/auth/api/books/status/completed/'+livro.id, 
+                        'http://82.25.69.109:2327/auth/api/books/status/completed/'+livro.id, 
                     {
                             method: 'PATCH',
                             headers: {

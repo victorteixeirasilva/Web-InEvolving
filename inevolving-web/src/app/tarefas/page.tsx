@@ -65,7 +65,7 @@ export default function Tarefas( ) {
 
         if (filtroAtivoStatus === 1) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/'+ dataFormatada, 
+                'http://82.25.69.109:2327/auth/api/tasks/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -94,7 +94,7 @@ export default function Tarefas( ) {
         
         } else if (filtroAtivoStatus === 2) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/todo/'+ dataFormatada, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/todo/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -123,7 +123,7 @@ export default function Tarefas( ) {
         
         } else if (filtroAtivoStatus === 3) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/progress/'+ dataFormatada, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/progress/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -152,7 +152,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 4) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/done/'+ dataFormatada, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/done/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -180,7 +180,7 @@ export default function Tarefas( ) {
             setCarregando(false);
         } else if (filtroAtivoStatus === 5) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/canceled/'+ dataFormatada, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/canceled/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -216,7 +216,7 @@ export default function Tarefas( ) {
         setTarefasAtrasadas(null);
 
         const response = await fetch(
-            'http://127.0.0.1:2327/auth/api/tasks/late', 
+            'http://82.25.69.109:2327/auth/api/tasks/late', 
             {
                 method: 'GET',
                 headers: {
@@ -251,7 +251,7 @@ export default function Tarefas( ) {
 
         if (filtroAtivoStatus === 1) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/'+ data, 
+                'http://82.25.69.109:2327/auth/api/tasks/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -279,7 +279,7 @@ export default function Tarefas( ) {
             setCarregando(false);
         } else if (filtroAtivoStatus === 2) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/todo/'+ data, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/todo/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -308,7 +308,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 3) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/progress/'+ data, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/progress/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -337,7 +337,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 4) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/done/'+ data, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/done/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -366,7 +366,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 5) {
             const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/tasks/status/canceled/'+ data, 
+                'http://82.25.69.109:2327/auth/api/tasks/status/canceled/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -416,7 +416,7 @@ export default function Tarefas( ) {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/objectives/user', 
+                    'http://82.25.69.109:2327/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {
@@ -448,7 +448,7 @@ export default function Tarefas( ) {
     const cadastrarNovaTarefa = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/tasks', {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -472,7 +472,7 @@ export default function Tarefas( ) {
         if(isTarefaFrequente && response.ok) {
             const tarefaCadastrada: Tarefa_Modulo_Tarefas = await response.json();
 
-            const response2 = await fetch('http://127.0.0.1:2327/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
+            const response2 = await fetch('http://82.25.69.109:2327/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

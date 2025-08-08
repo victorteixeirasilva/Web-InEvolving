@@ -35,7 +35,7 @@ export default function Dashboard() {
     const getDashboard = async () => {
         setCarregandoDash(true);
         const response = await fetch(
-                'http://127.0.0.1:2327/auth/api/dashboard', 
+                'http://82.25.69.109:2327/auth/api/dashboard', 
             {
                 method: 'GET',
                 headers: {
@@ -51,14 +51,11 @@ export default function Dashboard() {
             alert('Você não está logado, por favor faça login novamente.');
         }
 
-        if (!response.ok){
-            setCarregandoDash(false);
-            alert('Erro ao puxar dashboard');
-            console.error('Erro ao puxar dashboard');
-        }
         
         setCarregandoDash(false);
-        setDashboardData(data);
+        if (response.ok) {
+            setDashboardData(data);
+        }
     };
 
     useEffect(() => {
@@ -116,6 +113,11 @@ export default function Dashboard() {
                 <motion.div ref={constraintsRef} className={styles.containerConteudo}>
                     {carregandoDash && (
                         <ClipLoader size={50} color="#0B0E31" />
+                    )}
+                    {!carregandoDash && !dashboardData && (
+                        <h3>
+                            Cadastre uma categoria no modulo de objetivos para ver seu dashboard!
+                        </h3>
                     )}
                     {!carregandoDash && dashboardData?.categoryDTOList.map((category) => (
                         <motion.div 

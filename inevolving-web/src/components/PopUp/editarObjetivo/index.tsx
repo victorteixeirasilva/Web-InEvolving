@@ -25,7 +25,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
     const salvarObjetivo = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/objectives/' + objetivo.id, {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/objectives/' + objetivo.id, {
             method: 'PUT',
             headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
         if (!(objetivoConcluidoInicial === objetivoConcluido) && (objetivoConcluido)) {
             const dataFormatada = new Date().toISOString().slice(0, 10);
 
-            const response = await fetch('http://127.0.0.1:2327/auth/api/objectives/' + objetivo.id + '/' + dataFormatada, {
+            const response = await fetch('http://82.25.69.109:2327/auth/api/objectives/' + objetivo.id + '/' + dataFormatada, {
                 method: 'PATCH',
                 headers: {
                         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
     // const deletarObjetivo = async () => {
     //         setCarregando(true);
     //         const response = await fetch(
-    //                 'http://127.0.0.1:2327/auth/api/categories/'+categoria?.id, 
+    //                 'http://82.25.69.109:2327/auth/api/categories/'+categoria?.id, 
     //             {
     //                 method: 'DELETE',
     //                 headers: {

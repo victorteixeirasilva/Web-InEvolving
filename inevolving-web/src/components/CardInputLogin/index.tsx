@@ -17,7 +17,7 @@ export default function CardInputLogin() {
     const handleLogin = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/api/authentication/login', {
+        const response = await fetch('http://82.25.69.109:2327/api/authentication/login', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

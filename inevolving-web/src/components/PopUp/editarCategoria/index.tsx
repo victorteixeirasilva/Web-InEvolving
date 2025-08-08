@@ -34,7 +34,7 @@ export default function EditarCategoria() {
     const handleSalvarCategoriaComObjetivos = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/categories/' + categoria?.id, {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/categories/' + categoria?.id, {
             method: 'PATCH',
             headers: {
                     'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export default function EditarCategoria() {
             try {
                 await Promise.all (
                     objetivosSelecionados.map(async (ob) => {
-                        const response2 = await fetch('http://127.0.0.1:2327/auth/api/categories/objective', {
+                        const response2 = await fetch('http://82.25.69.109:2327/auth/api/categories/objective', {
                         method: 'POST',
                         headers: {
                                 'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export default function EditarCategoria() {
                 await Promise.all(
                 objetivosParaRemover.map(async (ob) => {
                     const response2 = await fetch(
-                    `http://127.0.0.1:2327/auth/api/categories/objective/${categoryId}/${ob.id}`,
+                    `http://82.25.69.109:2327/auth/api/categories/objective/${categoryId}/${ob.id}`,
                     {
                         method: 'DELETE',
                         headers: {
@@ -160,7 +160,7 @@ export default function EditarCategoria() {
     const deletarCategoria = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/categories/'+categoria?.id, 
+                    'http://82.25.69.109:2327/auth/api/categories/'+categoria?.id, 
                 {
                     method: 'DELETE',
                     headers: {
@@ -188,7 +188,7 @@ export default function EditarCategoria() {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'http://127.0.0.1:2327/auth/api/objectives/user', 
+                    'http://82.25.69.109:2327/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {

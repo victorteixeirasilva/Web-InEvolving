@@ -20,7 +20,7 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
             alert('As senhas não coincidem');
             return;
         }
-        const response = await fetch('http://127.0.0.1:2327/api/authentication/register', {
+        const response = await fetch('http://82.25.69.109:2327/api/authentication/register', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

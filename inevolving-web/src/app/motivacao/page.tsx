@@ -28,7 +28,7 @@ export default function Categoria( ) {
         
         serCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/motivation/dreams', {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/motivation/dreams', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function Categoria( ) {
         
         serCarregando(true);
 
-        const response = await fetch('http://127.0.0.1:2327/auth/api/motivation/dreams/user', {
+        const response = await fetch('http://82.25.69.109:2327/auth/api/motivation/dreams/user', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
