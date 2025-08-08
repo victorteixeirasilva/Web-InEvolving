@@ -48,6 +48,27 @@ export default function Categoria( ) {
         }
     }
 
+    const deletarTransacao = async (id:string) => {
+        setCarregando(true);
+
+        const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/'+id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+        });
+
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+    
+        setCarregando(false);
+        window.location.reload();
+
+    }
 
     const pegarFinancas = async (anoAtual:number, mesAtual:number) => {
         setCarregando(true);
@@ -1150,11 +1171,18 @@ export default function Categoria( ) {
                                                 })}
                                             </h4>
                                         </div>
-                                        <div>
+                                        <motion.div
+                                            className={styles.remover}
+                                            whileHover={{ scale: 1.1 }} 
+                                            whileTap={{ scale: 0.8 }}
+                                            onClick={() => {
+                                                deletarTransacao(transacao.id);
+                                            }}
+                                        >
                                             <h4>
                                                 Romover
                                             </h4>
-                                        </div>
+                                        </motion.div>
                                 </motion.div>
                                 ))
                             }
@@ -1187,11 +1215,18 @@ export default function Categoria( ) {
                                                 })}
                                             </h4>
                                         </div>
-                                        <div>
+                                        <motion.div
+                                            className={styles.remover}
+                                            whileHover={{ scale: 1.1 }} 
+                                            whileTap={{ scale: 0.8 }}
+                                            onClick={() => {
+                                                deletarTransacao(transacao.id);
+                                            }}
+                                        >
                                             <h4>
                                                 Romover
                                             </h4>
-                                        </div>
+                                        </motion.div>
                                 </motion.div>
                                 ))
                             }
@@ -1224,11 +1259,18 @@ export default function Categoria( ) {
                                                 })}
                                             </h4>
                                         </div>
-                                        <div>
+                                        <motion.div
+                                            className={styles.remover}
+                                            whileHover={{ scale: 1.1 }} 
+                                            whileTap={{ scale: 0.8 }}
+                                            onClick={() => {
+                                                deletarTransacao(transacao.id);
+                                            }}
+                                        >
                                             <h4>
                                                 Romover
                                             </h4>
-                                        </div>
+                                        </motion.div>
                                 </motion.div>
                                 ))
                             }

@@ -732,9 +732,12 @@
     }
 }
 
-
-
-
+.remover {
+    cursor: pointer;
+    h4 {
+        text-decoration: underline;
+    }
+}
 
 
 
