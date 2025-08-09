@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./EditarObjetivo.module.scss";
 import * as motion from "motion/react-client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { useRouter } from "next/navigation";
 import { Tarefa_Modulo_Tarefas } from "@/components/interfaces/Tarefa_Modulo_Tarefas";
@@ -126,7 +126,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
 
     const [objetivoSelecionado, setObjetivoSelecionado] = useState<Objetivo | null>();
 
-    const pegarObjetivo = async () => {
+    const pegarObjetivo = useCallback( async () => {
             setCarregando(true);
 
             const response = await fetch(
@@ -154,11 +154,11 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                 
             setCarregando(false);
             setObjetivoSelecionado(data);
-    };
+    }, [router, tarefa.idObjective]);
 
     useEffect(() => {
         pegarObjetivo();
-    }, []);
+    }, [pegarObjetivo]);
 
     // // Função para extrair motivos quando precisar enviar
     // const motivosFormatados = motivos

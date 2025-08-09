@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
@@ -57,7 +57,7 @@ export default function Categoria( ) {
 
     }
 
-    const pegarLivrosTodo = async () => {
+    const pegarLivrosTodo = useCallback(async () => {
         
         serCarregando(true);
 
@@ -82,9 +82,9 @@ export default function Categoria( ) {
 
         serCarregando(false);
 
-    }
+    }, [router])
 
-    const pegarLivrosProgress = async () => {
+    const pegarLivrosProgress = useCallback(async () => {
         
         serCarregando(true);
 
@@ -108,9 +108,9 @@ export default function Categoria( ) {
         }
 
         serCarregando(false);
-    }
+    }, [router])
 
-    const pegarLivrosDone = async () => {
+    const pegarLivrosDone = useCallback(async () => {
         
         serCarregando(true);
 
@@ -134,13 +134,13 @@ export default function Categoria( ) {
         }
 
         serCarregando(false);
-    }
+    }, [router])
 
     useEffect(() => {
         pegarLivrosTodo();
         pegarLivrosProgress();
         pegarLivrosDone();
-    }, []);
+    }, [pegarLivrosDone, pegarLivrosProgress, pegarLivrosTodo]);
 
     return (
         <>
@@ -225,6 +225,7 @@ export default function Categoria( ) {
                                         setEditarLivro(true);
                                     }}
                                 >
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img 
                                         src={livro.coverImage} 
                                         alt={livro.title}
@@ -256,6 +257,7 @@ export default function Categoria( ) {
                                         setEditarLivro(true);
                                     }}
                                 >
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img 
                                         src={livro.coverImage} 
                                         alt={livro.title}
@@ -287,6 +289,7 @@ export default function Categoria( ) {
                                         setEditarLivro(true);
                                     }}
                                 >
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img 
                                         src={livro.coverImage} 
                                         alt={livro.title}

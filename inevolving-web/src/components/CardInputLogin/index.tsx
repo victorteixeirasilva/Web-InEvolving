@@ -86,6 +86,7 @@ export default function CardInputLogin() {
                 <div className={styles.naoTemConta}>
                     Não tem uma conta? 
                     <strong>
+                        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                         <a href="/">
                             Cadastre-se
                         </a>

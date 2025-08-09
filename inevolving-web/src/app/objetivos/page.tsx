@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import * as motion from "motion/react-client";
@@ -27,7 +27,7 @@ export default function Categoria( ) {
 
     const [objetivos, setObjetivos] = useState<Objetivo[] | null>(null);
 
-    const pegarObjetivos = async () => {
+    const pegarObjetivos = useCallback( async () => {
             setCarregandoObjetivos(true);
             const response = await fetch(
                     'http://82.25.69.109:2327/auth/api/objectives/user', 
@@ -56,7 +56,7 @@ export default function Categoria( ) {
             setCarregandoObjetivos(false);
             setObjetivos(data);
             setFiltroAtivo(1);
-    };
+    }, [jwtToken, router]);
 
     const pegarObjetivosToDo = async () => {
         setObjetivos(null);
@@ -128,7 +128,7 @@ export default function Categoria( ) {
         if (jwtToken) {
             pegarObjetivos();
         }
-    }, [jwtToken]);
+    }, [jwtToken, pegarObjetivos]);
 
     const [popUpObjetivoECategoria, setPopUpObjetivoECategoria] = useState(false);
     const [editarObjetivo, setEditarObjetivo] = useState(false);

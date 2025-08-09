@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
@@ -32,7 +32,7 @@ export default function Dashboard() {
         setJwtToken(token ?? '');
     }, []);
 
-    const getDashboard = async () => {
+    const getDashboard = useCallback(async () => {
         setCarregandoDash(true);
         const response = await fetch(
                 'http://82.25.69.109:2327/auth/api/dashboard', 
@@ -56,13 +56,13 @@ export default function Dashboard() {
         if (response.ok) {
             setDashboardData(data);
         }
-    };
+    }, [jwtToken, router])
 
     useEffect(() => {
         if (jwtToken) {
             getDashboard();
         }
-    }, [jwtToken]);
+    }, [jwtToken, getDashboard]);
 
 
     const handleOpenInNewTab = () => {

@@ -35,7 +35,7 @@ export default function AdicionarNovaCategoria() {
             }),
         });
 
-        const data = await response.json();
+        // const data = await response.json();
 
         if (response.status === 401){
             setCarregando(false);
@@ -49,8 +49,8 @@ export default function AdicionarNovaCategoria() {
             window.location.reload();
         } else {
             setCarregando(false);
-            alert(data.message);
-            console.error('Erro ao salvar:', data.message);
+            // alert(data.message);
+            // console.error('Erro ao salvar:', data.message);
             // console.error('Erro ao salvar:');
         }
     };
@@ -58,7 +58,7 @@ export default function AdicionarNovaCategoria() {
     const handleRegistrarCategoriaComObjetivo = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/categories', {
+        const response = await fetch('http://127.0.0.1:2327/auth/api/categories', {
             method: 'POST',
             headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function AdicionarNovaCategoria() {
             const categoryId = data.id;
 
             objetivosSelecionados.forEach(async (ob) => {
-                    const response2 = await fetch('http://82.25.69.109:2327/auth/api/categories/objective', {
+                    const response2 = await fetch('http://127.0.0.1:2327/auth/api/categories/objective', {
                         method: 'POST',
                         headers: {
                                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default function AdicionarNovaCategoria() {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'http://82.25.69.109:2327/auth/api/objectives/user', 
+                    'http://127.0.0.1:2327/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {
@@ -151,7 +151,8 @@ export default function AdicionarNovaCategoria() {
             if (!response.ok){
                 setCarregando(false);
                 alert('Erro ao puxar objetivos');
-                console.error('Erro ao puxar objetivoss');
+                return
+                // console.error('Erro ao puxar objetivoss');
             }
             
             setCarregando(false);

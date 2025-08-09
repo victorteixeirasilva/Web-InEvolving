@@ -1,7 +1,7 @@
 import Image from "next/image";
 import  styles  from "./menuResumo.module.scss"
 import { Calendar, CalendarProps } from 'react-calendar';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import 'react-calendar/dist/Calendar.css'; // opcional, se quiser base
 import { motion } from "motion/react";
 import { ClipLoader } from 'react-spinners';
@@ -56,13 +56,7 @@ export default function MenuResumo() {
     const [verTarefas, setVerTarefas] = useState(false);
     const [editarTarefa, setEditarTarefa] = useState(false);
     
-    useEffect(() => {
-        if (selectedDate && jwtToken) {
-            pegarTarefasDoDia();
-        }
-    }, [selectedDate, jwtToken]);
-    
-    const pegarTarefasDoDia = async () => {
+    const pegarTarefasDoDia = useCallback( async () => {
             if (!selectedDate) return;
             setCarregandoTarefas(true);
             const dateFormatted = selectedDate?.toISOString().split('T')[0];
@@ -93,7 +87,14 @@ export default function MenuResumo() {
             setCarregandoTarefas(false);
             setVerTarefas(true);
             setTarefasData(data);
-    };
+    }, [jwtToken, router, selectedDate]);
+
+    useEffect(() => {
+        if (selectedDate && jwtToken) {
+            pegarTarefasDoDia();
+        }
+    }, [selectedDate, jwtToken, pegarTarefasDoDia]);
+    
 
     return (
         <>

@@ -32,6 +32,9 @@ export default function Tarefas( ) {
     const [tarefasAtrasadas, setTarefasAtrasadas] = useState<Tarefa_Modulo_Tarefas[] | null>(null);
     const [tarefaAtual, setTarefaAual] = useState<Tarefa_Modulo_Tarefas | null>(null);
     const [editarTarefaAtual, setEditarTarefaAtual] = useState(false);
+    const [escolherDataDaNovaTarefa, setEscolherDataDaNovaTarefa] = useState(false);
+    const [dataNovaTarefa, setDataNovaTarefa] = useState<Date | null>(new Date);
+
 
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
@@ -42,6 +45,14 @@ export default function Tarefas( ) {
             setDataFinal(value);
         } else if (Array.isArray(value) && value[0] instanceof Date) {
             setDataFinal(value[0]); // ou outro tratamento para intervalo
+        }
+    };
+
+    const SetDataNovaTarefa : CalendarProps['onChange'] = (value) => {
+        if (value instanceof Date) {
+            setDataNovaTarefa(value);
+        } else if (Array.isArray(value) && value[0] instanceof Date) {
+            setDataNovaTarefa(value[0]); // ou outro tratamento para intervalo
         }
     };
 
@@ -457,7 +468,7 @@ export default function Tarefas( ) {
                 body: JSON.stringify({
                     nameTask: nomeDaTarefa,
                     descriptionTask: descricaoDaTarefa,
-                    dateTask: new Date().toISOString().split('T')[0],
+                    dateTask: dataNovaTarefa?.toISOString().split('T')[0] || new Date().toISOString().split('T')[0],
                     idObjective: objetivoSelecionado ? objetivoSelecionado.id : null,
                 }),
         });
@@ -976,6 +987,18 @@ export default function Tarefas( ) {
                                 />
                             </div>
                         </motion.div>
+                            <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
+                            <div className={styles.containerDataFinal}>
+                                <motion.div 
+                                    className={styles.inputDataFinal}
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    style={{marginTop: '0px'}}
+                                    onClick={() => setEscolherDataDaNovaTarefa(true)}
+                                >
+                                    {dataNovaTarefa && (<strong>{dataNovaTarefa.toLocaleDateString()}</strong>)} 
+                                </motion.div>
+                            </div>
                         <div className={styles.containerInputData}
                             onClick={() => setIsTarefaFrequente(!isTarefaFrequente)}
                         >
@@ -996,7 +1019,8 @@ export default function Tarefas( ) {
                                         className={styles.marcador}></div>
                                 </div>
                                 Sim
-                            </div> 
+                        </div>
+
                             <div
                                 className={styles.botaoSimNao}
                                 onClick={() => {
@@ -1038,6 +1062,50 @@ export default function Tarefas( ) {
                         </div>
                     </div>
                 </div>
+                {escolherDataDaNovaTarefa && (
+                    <div className={styles.containerPopUpEdit}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => setEscolherDataDaNovaTarefa(false)}
+                        >
+                            <strong>Voltar</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            {/* <h4>Data final das repetições!</h4> */}
+                            <Calendar
+                                className={styles.calendar}
+                                selectRange={false}
+                                value={dataNovaTarefa}
+                                onChange={SetDataNovaTarefa}
+                            />
+                            {dataNovaTarefa && (
+                                <h3>Data selecionada: {dataNovaTarefa.toLocaleDateString()}</h3>
+                            )}
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => setEscolherDataDaNovaTarefa(false)}
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Selecionar
+                                <Image 
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
+                                />
+                            </motion.button>
+                        </div>
+                    </div>
+                )}
                 {verListaDeObjetivos && (
                     <div className={styles.containerPopUp}>
                         <motion.button

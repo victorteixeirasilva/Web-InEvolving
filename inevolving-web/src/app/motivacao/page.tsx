@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
@@ -53,7 +53,7 @@ export default function Categoria( ) {
 
     }
 
-    const pegarSonhos = async () => {
+    const pegarSonhos = useCallback(async () => {
         
         serCarregando(true);
 
@@ -78,12 +78,12 @@ export default function Categoria( ) {
 
         serCarregando(false);
 
-    }
+    }, [router])
 
 
     useEffect(() => {
         pegarSonhos();
-    }, []);
+    }, [pegarSonhos]);
 
     return (
         <>
@@ -132,6 +132,7 @@ export default function Categoria( ) {
                                         setEditarSonho(true);
                                     }}
                                 >
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img 
                                         src={sonho.urlImage} 
                                         alt={sonho.name}

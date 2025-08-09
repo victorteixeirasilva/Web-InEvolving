@@ -247,6 +247,23 @@
 }
 
 .containerPopUp {
+    max-height: 100%; // define a altura da área visível
+    overflow-y: auto;  // ativa a rolagem vertical
+    padding-right: 8px; // evita scroll invisível
+
+    // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
     scale: 0.9;
     width: 40%;
     border-radius: 38px;
@@ -327,6 +344,90 @@
     color: white;
     border-radius: 38px 0px 38px 0px;
     transition: 0.3s;
+}
+
+.containerPopUpEdit {
+
+    max-height: 100%; // define a altura da área visível
+    overflow-y: auto;  // ativa a rolagem vertical
+    padding-right: 8px; // evita scroll invisível
+
+    // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+
+    scale: 0.9;
+    width: 40%;
+    border-radius: 38px;
+    align-items: center;
+    align-content: center;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    color: #0B0E31;
+    font-weight: 800;
+    font-size: 32px;
+    
+    .conteudo {
+        padding: 30px;
+        
+        button {
+            color: white;
+            background-color: #E76148;
+            border: none;
+            width: 100%;
+            margin-top: 40px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+
+            .concluido {
+                margin: auto;
+                margin-top: 2px;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .icone {
+        width: 100%;
+    }
+
+
+    h2 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+        color: #0B0E31;
+    }
+
+    h3 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        color: #0B0E31;
+    }
+
+    .botaoVoltar {
+        color: #0B0E31;
+        border: none;
+        background-color: transparent;
+        margin: 4px 10px;
+        padding: 10px;
+
+    }
+
 }
 
 .conteudo {

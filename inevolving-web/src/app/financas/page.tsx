@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
@@ -70,7 +70,7 @@ export default function Categoria( ) {
 
     }
 
-    const pegarFinancas = async (anoAtual:number, mesAtual:number) => {
+    const pegarFinancas = useCallback(async (anoAtual:number, mesAtual:number) => {
         setCarregando(true);
    
             const primeiroDiaDoMesAtual =
@@ -110,14 +110,14 @@ export default function Categoria( ) {
             }
     
             setCarregando(false);
-    }
+    }, [router])
 
     useEffect(() => {
         const hoje = new Date();
         pegarFinancas(hoje.getFullYear(), hoje.getMonth() + 1)
         setMesAtual(hoje.getMonth() + 1);
         setAnoAtual(hoje.getFullYear())
-    }, []);
+    }, [pegarFinancas]);
 
     const [primeiroLogin, setPrimeiroLogin] = useState(false);
     const [abrirEditarSalario, setAbrirEditarSalario] = useState(false);
@@ -328,14 +328,14 @@ export default function Categoria( ) {
                         />
                         <h2>Primeiros passos para o controle total das suas finanças!</h2>
                         <p>
-                            Neste aplicativo, você será guiado por uma estratégia milenar, simples e poderosa: a regra 90-10, inspirada no clássico livro "O Homem Mais Rico da Babilônia".
+                            Neste aplicativo, você será guiado por uma estratégia milenar, simples e poderosa: a regra 90-10, inspirada no clássico livro &quot;O Homem Mais Rico da Babilônia&quot;.
                         </p>
                         <p>
                             <h3>📜 Por mais de mil</h3> anos, essa filosofia tem ajudado pessoas a construir riqueza de forma consistente. A ideia é clara: <br/>
                             - Guarde 10% de tudo o que você ganha. Viva com os 90% restantes.
                         </p>
                         <p>
-                            Antes de mergulhar nos gráficos e relatórios, aqui vai um spoiler da filosofia que guia este software: a estratégia 90-10, baseada no clássico "O Homem Mais Rico da Babilônia" — um best-seller que já ensinava finanças antes mesmo de existirem bancos digitais (ou boletos, infelizmente).
+                            Antes de mergulhar nos gráficos e relatórios, aqui vai um spoiler da filosofia que guia este software: a estratégia 90-10, baseada no clássico &quot;O Homem Mais Rico da Babilônia&quot; — um best-seller que já ensinava finanças antes mesmo de existirem bancos digitais (ou boletos, infelizmente).
                         </p>
                         <p>
                             <h3>🔍 Como funciona?</h3> <br/>
@@ -924,7 +924,7 @@ export default function Categoria( ) {
                             </div>
                         </motion.div>
                         <motion.div
-                            style={dadosDoMes && dadosDoMes.availableCostOfLivingBalance < 0 ? { backgroundColor: '#880000'} : {}}
+                            style={dadosDoMes && dadosDoMes.balanceAvailableToInvest < 0 ? { backgroundColor: '#880000'} : {}}
                             whileHover={{ scale: 1.01 }} 
                             whileTap={{ scale: 0.9 }}
                             onClick={() => {
@@ -935,7 +935,7 @@ export default function Categoria( ) {
                                 Investimento
                             </h2>
                             <div
-                                style={dadosDoMes && dadosDoMes.availableCostOfLivingBalance < 0 ? { backgroundColor: '#e09393'} : {}} 
+                                style={dadosDoMes && dadosDoMes.balanceAvailableToInvest < 0 ? { backgroundColor: '#e09393'} : {}} 
                                 className={styles.valorDisponivel}
                             >
                                 <p>
