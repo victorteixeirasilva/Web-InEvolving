@@ -8,7 +8,7 @@ import { Tarefa_Modulo_Tarefas } from "@/components/interfaces/Tarefa_Modulo_Tar
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { Calendar, CalendarProps } from 'react-calendar';
 
-export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefas } ) {
+export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modulo_Tarefas; voltar:() => void } ) {
     const [opcaoAtualizar, setOpcaoAtualizar] = useState(1);
     const [opcaoDeletar, setOpcaoDeletar] = useState(1);
 
@@ -369,7 +369,8 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
             }
             
             setCarregando(false);
-            window.location.reload();
+            // window.location.reload();
+            voltar();
     }
 
     return (
@@ -381,7 +382,8 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                         whileHover={{ scale: 1.1 }} 
                         whileTap={{ scale: 0.8 }}
                         className={styles.botaoVoltar} 
-                        onClick={() => window.location.reload()}
+                        // onClick={() => window.location.reload()}
+                        onClick={voltar}
                     >
                         <strong>X</strong>
                     </motion.button>

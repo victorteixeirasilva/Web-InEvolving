@@ -197,6 +197,11 @@
         align-content: center;
         width: 100%;
         height: 100%;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 2; // número de linhas visíveis
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 

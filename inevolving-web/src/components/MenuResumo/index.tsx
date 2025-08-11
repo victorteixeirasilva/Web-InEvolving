@@ -119,7 +119,7 @@ export default function MenuResumo() {
                 )}
                 {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, limiteTarefas).map((tarefa) => (
                     <motion.div 
-                    key={tarefa.id}
+                        key={tarefa.id}
                         className={styles.tarefa}
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}

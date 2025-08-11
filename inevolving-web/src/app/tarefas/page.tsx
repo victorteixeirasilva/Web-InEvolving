@@ -1339,7 +1339,19 @@ export default function Tarefas( ) {
             </div>
         )}
         {editarTarefaAtual && tarefaAtual &&(
-            <EditarTarefa tarefa={tarefaAtual}/>
+            <EditarTarefa tarefa={tarefaAtual} voltar={
+                () => {
+                    setEditarTarefaAtual(true);
+                    setTarefaAual(null);
+                    if (filtroAtivo === 1) {
+                        pegarTarefasDeHoje();
+                    } else if (filtroAtivo === 4) {
+                        setEscolherOutraData(true);
+                    } else if (filtroAtivo === 5) {
+                        pegarTarefasAtrasadas();
+                    }
+                }
+            }/>
         )}
         </>
     );
