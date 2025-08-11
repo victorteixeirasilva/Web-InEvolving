@@ -23,7 +23,7 @@ export default function AdicionarNovaCategoria() {
     const handleRegistrarCategoria = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/categories', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/categories', {
             method: 'POST',
             headers: {
                     'Content-Type': 'application/json',

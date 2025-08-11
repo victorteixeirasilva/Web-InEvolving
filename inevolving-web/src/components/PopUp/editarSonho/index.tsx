@@ -17,7 +17,7 @@ export default function EditarSonho( { sonho }: { sonho: Sonho } ) {
         setCarregando(true);
 
         const response = await fetch(
-            'http://82.25.69.109:2327/auth/api/motivation/dreams/'+sonho.id, 
+            'https://api.inevolving.inovasoft.tech/auth/api/motivation/dreams/'+sonho.id, 
             {
                 method: 'DELETE',
                 headers: {
@@ -48,7 +48,7 @@ export default function EditarSonho( { sonho }: { sonho: Sonho } ) {
             setCarregando(true);
 
             const response = await fetch(
-                    'http://82.25.69.109:2327/auth/api/motivation/dreams', 
+                    'https://api.inevolving.inovasoft.tech/auth/api/motivation/dreams', 
                 {
                         method: 'PATCH',
                         headers: {

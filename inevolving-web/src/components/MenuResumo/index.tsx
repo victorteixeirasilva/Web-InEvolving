@@ -61,7 +61,7 @@ export default function MenuResumo() {
             setCarregandoTarefas(true);
             const dateFormatted = selectedDate?.toISOString().split('T')[0];
             const response = await fetch(
-                    'http://82.25.69.109:2327/auth/api/tasks/' + dateFormatted, 
+                    'https://api.inevolving.inovasoft.tech/auth/api/tasks/' + dateFormatted, 
                 {
                     method: 'GET',
                     headers: {

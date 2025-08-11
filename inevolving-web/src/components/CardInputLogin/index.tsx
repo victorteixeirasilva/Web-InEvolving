@@ -17,7 +17,7 @@ export default function CardInputLogin() {
     const handleLogin = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/api/authentication/login', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/api/authentication/login', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function CardInputLogin() {
                         Preencha com seus dados
                     </p>
                     <Image 
-                        src="dados.svg"
+                        src="/dados.svg"
                         alt='Selo de dados'
                         width={11}
                         height={13}

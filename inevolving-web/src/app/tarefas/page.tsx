@@ -76,7 +76,7 @@ export default function Tarefas( ) {
 
         if (filtroAtivoStatus === 1) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/'+ dataFormatada, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -105,7 +105,7 @@ export default function Tarefas( ) {
         
         } else if (filtroAtivoStatus === 2) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/todo/'+ dataFormatada, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/todo/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -134,7 +134,7 @@ export default function Tarefas( ) {
         
         } else if (filtroAtivoStatus === 3) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/progress/'+ dataFormatada, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/progress/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -163,7 +163,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 4) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/done/'+ dataFormatada, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/done/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -191,7 +191,7 @@ export default function Tarefas( ) {
             setCarregando(false);
         } else if (filtroAtivoStatus === 5) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/canceled/'+ dataFormatada, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/canceled/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -227,7 +227,7 @@ export default function Tarefas( ) {
         setTarefasAtrasadas(null);
 
         const response = await fetch(
-            'http://82.25.69.109:2327/auth/api/tasks/late', 
+            'https://api.inevolving.inovasoft.tech/auth/api/tasks/late', 
             {
                 method: 'GET',
                 headers: {
@@ -262,7 +262,7 @@ export default function Tarefas( ) {
 
         if (filtroAtivoStatus === 1) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/'+ data, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -290,7 +290,7 @@ export default function Tarefas( ) {
             setCarregando(false);
         } else if (filtroAtivoStatus === 2) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/todo/'+ data, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/todo/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -319,7 +319,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 3) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/progress/'+ data, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/progress/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -348,7 +348,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 4) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/done/'+ data, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/done/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -377,7 +377,7 @@ export default function Tarefas( ) {
 
         } else if (filtroAtivoStatus === 5) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/status/canceled/'+ data, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/canceled/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -427,7 +427,7 @@ export default function Tarefas( ) {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'http://82.25.69.109:2327/auth/api/objectives/user', 
+                    'https://api.inevolving.inovasoft.tech/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {
@@ -459,7 +459,7 @@ export default function Tarefas( ) {
     const cadastrarNovaTarefa = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/tasks', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -483,7 +483,7 @@ export default function Tarefas( ) {
         if(isTarefaFrequente && response.ok) {
             const tarefaCadastrada: Tarefa_Modulo_Tarefas = await response.json();
 
-            const response2 = await fetch('http://82.25.69.109:2327/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
+            const response2 = await fetch('https://api.inevolving.inovasoft.tech/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

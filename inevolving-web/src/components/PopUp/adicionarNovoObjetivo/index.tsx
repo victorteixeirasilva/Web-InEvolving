@@ -21,7 +21,7 @@ export default function AdicionarNovoObjetivo() {
     const handleRegistrarObjetivo = async () => {
         setCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/objectives', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/objectives', {
             method: 'POST',
             headers: {
                     'Content-Type': 'application/json',

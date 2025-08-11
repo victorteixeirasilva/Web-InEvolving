@@ -6,7 +6,7 @@ export default function CardTextoImagem( { texto }: { texto: React.ReactNode } )
         <div className={styles.cardLogin}>
         <div className={styles.containerCardLogin}>                
             <Image 
-                src="logo/logo-inovasoft-bege 1.svg"
+                src="/logo/logo-inovasoft-bege1.svg"
                 alt='logo'
                 width={86}
                 height={86}

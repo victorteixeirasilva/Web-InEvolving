@@ -30,7 +30,7 @@ export default function Categoria( ) {
     const pegarObjetivos = useCallback( async () => {
             setCarregandoObjetivos(true);
             const response = await fetch(
-                    'http://82.25.69.109:2327/auth/api/objectives/user', 
+                    'https://api.inevolving.inovasoft.tech/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {
@@ -62,7 +62,7 @@ export default function Categoria( ) {
         setObjetivos(null);
         setCarregandoObjetivos(true);
         const response = await fetch(
-            'http://82.25.69.109:2327/auth/api/objectives/status/todo/user', 
+            'https://api.inevolving.inovasoft.tech/auth/api/objectives/status/todo/user', 
             {
                 method: 'GET',
                 headers: {
@@ -94,7 +94,7 @@ export default function Categoria( ) {
         setObjetivos(null);
         setCarregandoObjetivos(true);
         const response = await fetch(
-            'http://82.25.69.109:2327/auth/api/objectives/status/done/user', 
+            'https://api.inevolving.inovasoft.tech/auth/api/objectives/status/done/user', 
             {
                 method: 'GET',
                 headers: {

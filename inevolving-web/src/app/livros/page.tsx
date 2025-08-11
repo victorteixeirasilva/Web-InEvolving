@@ -31,7 +31,7 @@ export default function Categoria( ) {
         
         serCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/books', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/books', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default function Categoria( ) {
         
         serCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/books/status/todo', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/books/status/todo', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export default function Categoria( ) {
         
         serCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/books/status/progress', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/books/status/progress', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ export default function Categoria( ) {
         
         serCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/books/status/completed', {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/books/status/completed', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

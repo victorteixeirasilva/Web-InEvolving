@@ -35,7 +35,7 @@ export default function Dashboard() {
     const getDashboard = useCallback(async () => {
         setCarregandoDash(true);
         const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/dashboard', 
+                'https://api.inevolving.inovasoft.tech/auth/api/dashboard', 
             {
                 method: 'GET',
                 headers: {

@@ -51,7 +51,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
 
         if (opcaoDeletar === 1) {
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/'+tarefa?.id, 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+tarefa?.id, 
                 {
                     method: 'DELETE',
                     headers: {
@@ -69,7 +69,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
         } else {
 
             const response = await fetch(
-                'http://82.25.69.109:2327/auth/api/tasks/repeat/'+tarefa?.id+"/3000-01-01", 
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/repeat/'+tarefa?.id+"/3000-01-01", 
                 {
                 method: 'DELETE',
                 headers: {
@@ -97,7 +97,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
     const pegarObjetivos = async () => {
                 setCarregando(true);
                 const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/objectives/user', 
+                        'https://api.inevolving.inovasoft.tech/auth/api/objectives/user', 
                     {
                         method: 'GET',
                         headers: {
@@ -130,7 +130,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
             setCarregando(true);
 
             const response = await fetch(
-                    'http://82.25.69.109:2327/auth/api/objectives/'+tarefa.idObjective, 
+                    'https://api.inevolving.inovasoft.tech/auth/api/objectives/'+tarefa.idObjective, 
                 {
                         method: 'GET',
                         headers: {
@@ -185,7 +185,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
             if (opcaoAtualizar === 1) {
 
                 const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/'+tarefa.id, 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+tarefa.id, 
                     {
                             method: 'PUT',
                             headers: {
@@ -213,7 +213,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                 
             } else {
                 const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/repeat/'+tarefa.id+"/"+dataFinal?.toISOString().split('T')[0], 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/repeat/'+tarefa.id+"/"+dataFinal?.toISOString().split('T')[0], 
                     {
                             method: 'PUT',
                             headers: {
@@ -252,7 +252,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
             if (!(statusDaTarefa === tarefa.status)) {
                 if (statusDaTarefa === "TODO") {
                     const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/status/todo/'+tarefa.id, 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/todo/'+tarefa.id, 
                     {
                             method: 'PATCH',
                             headers: {
@@ -274,7 +274,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                     
                 } else if (statusDaTarefa === "IN PROGRESS") {
                     const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/status/progress/'+tarefa.id, 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/progress/'+tarefa.id, 
                     {
                             method: 'PATCH',
                             headers: {
@@ -296,7 +296,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                     
                 } if (statusDaTarefa === "DONE") {
                     const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/status/done/'+tarefa.id, 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/done/'+tarefa.id, 
                     {
                             method: 'PATCH',
                             headers: {
@@ -318,7 +318,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                     
                 } if (statusDaTarefa === "LATE") {
                     const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/status/late/'+tarefa.id, 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/late/'+tarefa.id, 
                     {
                             method: 'PATCH',
                             headers: {
@@ -340,7 +340,7 @@ export default function EditarTarefa( { tarefa }: { tarefa: Tarefa_Modulo_Tarefa
                     
                 } if (statusDaTarefa === "CANCELLED") {
                     const response = await fetch(
-                        'http://82.25.69.109:2327/auth/api/tasks/status/canceled', 
+                        'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/canceled', 
                     {
                             method: 'PATCH',
                             headers: {

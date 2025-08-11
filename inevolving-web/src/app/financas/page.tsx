@@ -51,7 +51,7 @@ export default function Categoria( ) {
     const deletarTransacao = async (id:string) => {
         setCarregando(true);
 
-        const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/'+id, {
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/finance/transaction/'+id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export default function Categoria( ) {
 
             // alert(primeiroDiaDoMesAtual+ "/" +primeiroDiaDoMesSeguinte)
 
-            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/'+primeiroDiaDoMesAtual+'/'+primeiroDiaDoMesSeguinte, {
+            const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/finance/'+primeiroDiaDoMesAtual+'/'+primeiroDiaDoMesSeguinte, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export default function Categoria( ) {
 
         if (tipoDaNovaTransacao === 1) {
 
-            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/cost_of_living', {
+            const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/finance/transaction/cost_of_living', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -218,7 +218,7 @@ export default function Categoria( ) {
             
         } else if (tipoDaNovaTransacao === 2) {
 
-            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/investment', {
+            const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/finance/transaction/investment', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -239,7 +239,7 @@ export default function Categoria( ) {
             
         } else if (tipoDaNovaTransacao === 3) {
 
-            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/transaction/extra_contribution', {
+            const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/finance/transaction/extra_contribution', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -275,7 +275,7 @@ export default function Categoria( ) {
             
             setCarregando(true);
    
-            const response = await fetch('http://82.25.69.109:2327/auth/api/finance/wage', {
+            const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/finance/wage', {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
