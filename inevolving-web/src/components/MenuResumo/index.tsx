@@ -192,7 +192,16 @@ export default function MenuResumo() {
             </div>
         </motion.div>
         {editarTarefa && tarefaAtual &&(
-            <EditarTarefa tarefa={tarefaAtual} />
+            <EditarTarefa 
+                tarefa={tarefaAtual} 
+                voltar={
+                    () => {
+                        setEditarTarefa(false);
+                        setTarefaAtual(null);
+                        pegarTarefasDoDia();
+                    }
+                }
+            />
         )}
         </>
     );

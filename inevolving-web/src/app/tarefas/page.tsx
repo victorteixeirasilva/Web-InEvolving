@@ -514,7 +514,23 @@ export default function Tarefas( ) {
 
 
         setCarregando(false);
-        window.location.reload();
+        // window.location.reload();
+
+        setAbrirNovaTarefa(false);
+        setNomeDaTarefa("");
+        setDescricaoDaTarefa("");
+        setObjetivoSelecionado(null);
+        setDataNovaTarefa(new Date);
+        setIsTarefaFrequente(false);
+        setExibirIsTarefaFrequente(false);
+
+        if (filtroAtivo === 1) {
+            pegarTarefasDeHoje();
+        } else if (filtroAtivo === 4) {
+            setEscolherOutraData(true);
+        } else if (filtroAtivo === 5) {
+            pegarTarefasAtrasadas();
+        }
     }
 
     return (
@@ -907,7 +923,17 @@ export default function Tarefas( ) {
                         whileHover={{ scale: 1.1 }} 
                         whileTap={{ scale: 0.8 }}
                         className={styles.botaoVoltar} 
-                        onClick={() => window.location.reload()}
+                        onClick={() => {
+                            setAbrirNovaTarefa(false);
+                            // window.location.reload()
+                             if (filtroAtivo === 1) {
+                                pegarTarefasDeHoje();
+                            } else if (filtroAtivo === 4) {
+                                setEscolherOutraData(true);
+                            } else if (filtroAtivo === 5) {
+                                pegarTarefasAtrasadas();
+                            }
+                        }}
                     >
                         <strong>X</strong>
                     </motion.button>
