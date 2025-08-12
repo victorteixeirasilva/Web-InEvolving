@@ -706,7 +706,10 @@ export default function Tarefas( ) {
                         <ClipLoader size={50} color="#0B0E31" />
                     )}
                     {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
-                        tarefasAtrasadas.map((tarefa) => (
+                        tarefasAtrasadas
+                            .slice() // cria uma cópia para não alterar o original
+                            .sort((a, b) => a.nameTask.localeCompare(b.nameTask))
+                            .map((tarefa) => (
                              <motion.div
                                 onClick={() => {
                                     if (tarefa.blockedByObjective === null) {
@@ -924,8 +927,7 @@ export default function Tarefas( ) {
                         whileTap={{ scale: 0.8 }}
                         className={styles.botaoVoltar} 
                         onClick={() => {
-                            setAbrirNovaTarefa(false);
-                            // window.location.reload()
+                            setAbrirNovaTarefa(false);  
                              if (filtroAtivo === 1) {
                                 pegarTarefasDeHoje();
                             } else if (filtroAtivo === 4) {
