@@ -16,3 +16,17 @@
     align-items: center;
     margin: auto;
 }
+
+.topo {
+    position: fixed;
+    background-color: #F2EAE3;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+    img {
+        width: 100%;
+    }
+
+}

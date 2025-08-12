@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './cardInputLogin.module.scss';
 import BotaoLogin from '../BotaoLogin';
@@ -8,6 +8,13 @@ import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
 
 export default function CardInputLogin() {
+    const [isMobile, setIsMobile] = useState(false);
+    
+    useEffect(() => {
+        const largura = window.innerWidth;
+        setIsMobile(largura <= 1024);
+    }, []);
+
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const router = useRouter();
@@ -49,50 +56,89 @@ export default function CardInputLogin() {
     };
 
     return (
-        <div className={styles.cardRegistro}>
-            <div className={styles.container}>
-                <h1>
-                    Login
-                </h1>
-                <div className={styles.subtitulo}>
-                    <p>       
-                        Preencha com seus dados
-                    </p>
-                    <Image 
-                        src="/dados.svg"
-                        alt='Selo de dados'
-                        width={11}
-                        height={13}
-                    />
-                </div>
-                
-                <InputEmail tema="escuro" tipo="email" value={email} onChange={setEmail} />
-                
-                <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
-                
-                <div className={styles.esqueciSenhaContainer}>
-                    <a href="/desculpa">
-                        Esqueci minha senha
-                    </a>
-                </div>
-
-                <BotaoLogin 
-                    carregando={carregando} 
-                    texto={carregando ? 'Entrando...' : 'Entrar'} 
-                    tipo='3' 
-                    onClick={handleLogin}
-                />
-
-                <div className={styles.naoTemConta}>
-                    Não tem uma conta? 
-                    <strong>
-                        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                        <a href="/">
-                            Cadastre-se
+        <>
+        {!isMobile && (
+            <div className={styles.cardRegistro}>
+                <div className={styles.container}>
+                    <h1>
+                        Login
+                    </h1>
+                    <div className={styles.subtitulo}>
+                        <p>       
+                            Preencha com seus dados
+                        </p>
+                        <Image 
+                            src="/dados.svg"
+                            alt='Selo de dados'
+                            width={11}
+                            height={13}
+                        />
+                    </div>
+                    
+                    <InputEmail tema="escuro" tipo="email" value={email} onChange={setEmail} />
+                    
+                    <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
+                    
+                    <div className={styles.esqueciSenhaContainer}>
+                        <a href="/desculpa">
+                            Esqueci minha senha
                         </a>
-                    </strong>
+                    </div>
+
+                    <BotaoLogin 
+                        carregando={carregando} 
+                        texto={carregando ? 'Entrando...' : 'Entrar'} 
+                        tipo='3' 
+                        onClick={handleLogin}
+                    />
+
+                    <div className={styles.naoTemConta}>
+                        Não tem uma conta? 
+                        <strong>
+                            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                            <a href="/">
+                                Cadastre-se
+                            </a>
+                        </strong>
+                    </div>
                 </div>
             </div>
-        </div>
+        )}
+        {isMobile && (
+            <div className={styles.mobile}>
+                <div className={styles.container}>
+                    <h1>
+                        Login
+                    </h1>
+                    
+                    <InputEmail tema="escuro" tipo="email" value={email} onChange={setEmail} />
+                    
+                    <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
+                    
+                    <div className={styles.esqueciSenhaContainer}>
+                        <a href="/desculpa">
+                            Esqueci minha senha
+                        </a>
+                    </div>
+
+                    <BotaoLogin 
+                        carregando={carregando} 
+                        texto={carregando ? 'Entrando...' : 'Entrar'} 
+                        tipo='3' 
+                        onClick={handleLogin}
+                    />
+
+                    <div className={styles.naoTemConta}>
+                        Não tem uma conta? 
+                        <strong>
+                            <a href="/cadastro">
+                                Cadastre-se
+                            </a>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        )}
+        </>
     );
 } 

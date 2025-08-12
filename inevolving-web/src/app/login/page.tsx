@@ -5,6 +5,7 @@ import styles from "./page.module.scss";
 import CardInputLogin from "@/components/CardInputLogin";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Login() {
 
@@ -46,8 +47,16 @@ export default function Login() {
             </div>
         )}
         {isMobile && (
-            <div>
-                
+            <div className={styles.topo}>
+                <div className={styles.logo}>
+                    <Image 
+                        src="/mobile/LogoPequenoLogin.svg"
+                        alt=""
+                        width={86}
+                        height={86}
+                    />
+                </div>
+               <CardInputLogin/> 
             </div>
         )}
         </>

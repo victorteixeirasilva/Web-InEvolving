@@ -68,3 +68,45 @@
 .inputEmail2:focus {
     outline: none;
 }
+
+.mobile {
+
+    img {
+        width: 10%;
+    }
+
+    .container2 {
+        background-color: #E7E2D6;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 383px;
+        height: 46px;
+        border-radius: 50px;
+        font-family: 'Inter', sans-serif;
+        margin: 10px;
+    }
+
+    .iconEmail2 {
+        margin-left: 20px;
+        margin-right: 10px;
+    }
+
+    .inputEmail2 {
+        color: #0C4F64;
+        font-size: 15px;
+        border: none;
+        background-color: transparent;
+        width: 85%;
+        height: 85%;
+
+        &::placeholder {
+            color: #0C4F64;
+        }
+
+    }
+
+    .inputEmail2:focus {
+        outline: none;
+    }
+}

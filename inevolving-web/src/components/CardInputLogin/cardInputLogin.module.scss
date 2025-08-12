@@ -73,3 +73,44 @@
         margin-left: 10px;
     }
 }
+
+.mobile {
+    position: fixed;
+    overflow: hidden;
+    margin-top: 50px;
+    background-color: #0B0E31;
+    width: 100vw;
+    height: 100vh;
+    border-top-left-radius: 70px;
+    border-top-right-radius: 70px;
+
+    
+    .container{
+        display: flex;
+        height: 50%;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding-left: 30px;
+        padding-right: 30px;
+
+        h1 {
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            // font-size: 32px;
+            margin: 0;
+        }
+
+    }
+    
+    a {
+        color: white;
+    }
+
+    .naoTemConta {
+        color: white;
+
+    }
+}
