@@ -4,8 +4,18 @@ import CardTextoImagem from "@/components/CardTextoImagem";
 import styles from "./page.module.scss";
 import CardInputLogin from "@/components/CardInputLogin";
 import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 export default function Login() {
+    
+    const [isMobile, setIsMobile] = useState(false);
+    
+    useEffect(() => {
+        const largura = window.innerWidth;
+        setIsMobile(largura <= 1024);
+    }, []);
+
+
     return (
         <div 
             className={styles.background}
