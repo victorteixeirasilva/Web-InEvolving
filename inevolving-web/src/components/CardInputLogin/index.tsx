@@ -6,6 +6,9 @@ import styles from './cardInputLogin.module.scss';
 import BotaoLogin from '../BotaoLogin';
 import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
+import { ClipLoader } from 'react-spinners';
+import { motion } from "motion/react";
+
 
 export default function CardInputLogin() {
     const [isMobile, setIsMobile] = useState(false);
@@ -121,12 +124,22 @@ export default function CardInputLogin() {
                         </a>
                     </div>
 
-                    <BotaoLogin 
-                        carregando={carregando} 
-                        texto={carregando ? 'Entrando...' : 'Entrar'} 
-                        tipo='3' 
+                    <motion.button 
+                        whileTap={{ scale: 0.8 }}
+                        disabled={carregando} 
+                        type="submit" 
+                        className={styles.botaoGrande} 
                         onClick={handleLogin}
-                    />
+                    >
+                        {carregando && <ClipLoader size={10} color="#ffffff" />}
+                        <span 
+                            style={{ 
+                                marginLeft: carregando ? '8px' : '0'
+                            }}
+                        >
+                            {carregando ? 'Entrando...' : 'Entrar'}
+                        </span>
+                    </motion.button>
 
                     <div className={styles.naoTemConta}>
                         Não tem uma conta? 

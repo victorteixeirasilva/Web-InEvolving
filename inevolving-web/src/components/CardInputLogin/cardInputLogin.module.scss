@@ -113,4 +113,24 @@
         color: white;
 
     }
+
+    .botaoGrande{
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        background-color: #E76148;
+        border: none;
+        color: white;
+        width: 90vw;
+        padding: 15px 90px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 30px;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+
 }
