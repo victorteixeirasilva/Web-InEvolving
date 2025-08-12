@@ -8,14 +8,14 @@ import MenuResumo from "../MenuResumo";
 
 export default function Menu() {
     const pathname = usePathname();
-    const isActiveDashboard = pathname === '/dashboard';
-    const isActiveObjetivos = pathname === '/objetivos';
-    const isActiveTarefas = pathname === '/tarefas';
-    const isActiveFinancas = pathname === '/financas';
-    const isActiveLivros = pathname === '/livros';
-    const isActiveMotivacao = pathname === '/motivacao';
-    const isActiveAjustes = pathname === '/ajustes';
-    const isActiveAjuda = pathname === '/ajuda';
+    const isActiveDashboard = pathname === '/dashboard/';
+    const isActiveObjetivos = pathname === '/objetivos/';
+    const isActiveTarefas = pathname === '/tarefas/';
+    const isActiveFinancas = pathname === '/financas/';
+    const isActiveLivros = pathname === '/livros/';
+    const isActiveMotivacao = pathname === '/motivacao/';
+    const isActiveAjustes = pathname === '/ajustes/';
+    const isActiveAjuda = pathname === '/ajuda/';
 
     const router = useRouter();
         
