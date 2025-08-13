@@ -131,3 +131,139 @@
     margin: auto;
     margin-right: 20px;
 }
+
+.mob {
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #D9D9D994;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+    
+    .containerPopUp {
+        width: 95%;
+        height: 95%;
+        border-radius: 38px;
+        align-items: center;
+        align-content: center;
+        background-color: #FFFFFF;
+        font-family: 'Inter', sans-serif;
+        color: #0B0E31;
+        font-weight: 800;
+        font-size: 32px;
+        
+        .conteudo {
+            padding: 20px;
+            
+            button {
+                color: white;
+                background-color: #E76148;
+                border: none;
+                width: 100%;
+                margin-top: 40px;
+                height: 40px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 16px;
+    
+                .concluido {
+                    margin: auto;
+                    margin-top: 2px;
+                    margin-left: 10px;
+                }
+            }
+        }
+    
+        .icone {
+            width: 100%;
+        }
+    
+    
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 22px;
+            text-align: center;
+            color: #0B0E31;
+        }
+    
+    }
+    
+    .botaoVoltar {
+    
+        border: none;
+        background-color: transparent;
+        margin: 4px 10px;
+        padding: 10px;
+    
+    }
+    
+    .botaoVoltar:hover {
+        background-color: rgb(255, 73, 73);
+        margin: 1px 1px;
+        padding: 20px 20px;
+        color: white;
+        border-radius: 38px 0px 38px 0px;
+        transition: 0.3s;
+    }
+    
+    .conteudo {
+    
+        h3 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            color: #0B0E31;
+            font-weight: 600;
+            font-size: 16px;
+        }
+    
+    }
+    
+    .inputs {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+    }
+    
+    .input {
+        width: 100%;
+        height: 40px;
+        background-color: #F4F4FE;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    
+        input{
+            font-weight: 600;
+            font-size: 12px;
+            margin-left: 20px;
+            color: #0B0E31;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+        }
+    
+        input:focus {
+            outline: none;
+            border: none;
+            background-color: transparent;
+        }
+    
+    }
+    
+    .lapis {
+        margin: auto;
+        margin-right: 20px;
+    }
+
+}
