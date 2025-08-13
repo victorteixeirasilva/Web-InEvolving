@@ -3,12 +3,19 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import { Objective } from '../interfaces/Objective';
 import styles from "./GraficoStatusTarefas.module.scss";
+import { useEffect, useState } from 'react';
 Chart.register(ArcElement, Tooltip, Legend);
 
 
 
 
 export default function GraficoStatusTarefas({objetivo}: {objetivo:Objective}) {
+    const [isMobile, setIsMobile] = useState(false);
+    
+    useEffect(() => {
+        const largura = window.innerWidth;
+        setIsMobile(largura <= 1024);
+    }, []);
 
     const dados = {
         labels: ['Concluídas', 'Em Progresso', 'Atrasadas', 'Pendentes'],
@@ -40,9 +47,20 @@ export default function GraficoStatusTarefas({objetivo}: {objetivo:Objective}) {
         },
     };
 
-    return (
-        <div className={styles.grafico}>
-            <Doughnut data={dados} options={options} />
-        </div>
-    );
+    if (isMobile) {
+        return (
+            <div className={styles.mob}>
+                <div className={styles.grafico}>
+                    <Doughnut data={dados} options={options} />
+                </div>
+            </div>
+        );
+    } else {
+        return (
+            <div className={styles.grafico}>
+                <Doughnut data={dados} options={options} />
+            </div>
+        );
+    }
+
 }
