@@ -69,22 +69,46 @@ export default function Home() {
       </div>
     )}
     {isMobile && animacaoFinalizada && (
-      <div className={styles.mobileOnlyInicio}>
+      <motion.div 
+        className={styles.mobileOnlyInicio}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+            duration: 0.05,
+            delay: 0.0,
+            ease: [0, 0.71, 0.2, 1.01],
+        }}
+      >
         <div className={styles.espaco}>
 
         </div>
-        <h1>
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+              duration: 0.5,
+              delay: 0.05,
+              ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
           Boas-Vindas ao <br/>
           <strong>InEvolving</strong>
-        </h1>
+        </motion.h1>
         <motion.div 
           whileTap={{ scale: 0.8 }}
           className={styles.comecar}
           onClick={() => router.push("/login")}
-          >
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+              duration: 0.5,
+              delay: 0.05,
+              ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
           Começar
         </motion.div>
-      </div>
+      </motion.div>
     )}
     </>
   );

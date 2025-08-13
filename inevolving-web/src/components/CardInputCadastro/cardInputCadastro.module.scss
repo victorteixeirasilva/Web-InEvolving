@@ -73,3 +73,95 @@
         margin-left: 10px;
     }
 }
+
+.mob {
+    overflow: hidden;
+    position: fixed;
+    margin-top: -620px;
+    height: 100vh;
+    background-color: #0B0E31;
+    border-top-left-radius: 70px;
+    width: 100vw;
+    border-top-right-radius: 70px;
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+
+        h1 {
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            // font-size: 32px;
+            margin: 0;
+            margin-top: 50px;
+        }
+
+    }
+
+    .subtitulo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;;
+        margin-top: -5px;
+
+        p {
+            margin-right: 5px;
+            color: #0B0E31;
+            font-weight: 500;
+            font-size: 19px;
+        }
+    }
+
+    .email{
+        margin: 0;
+    }
+
+
+    .esqueciSenhaContainer{
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: flex-end;
+
+        a {
+            font-family: 'Inter', sans-serif;
+            color: #0B0E31;
+        }
+    }
+
+
+    .naoTemConta {
+        margin: 20px;
+        font-family: 'Inter', sans-serif;
+        color: #0B0E31;
+
+        a {
+            color: #0B0E31;
+            margin-left: 10px;
+        }
+    }
+
+    .botaoGrande{
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        background-color: #E76148;
+        border: none;
+        color: white;
+        width: 90vw;
+        padding: 15px 90px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 30px;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+}

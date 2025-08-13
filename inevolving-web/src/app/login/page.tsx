@@ -48,14 +48,23 @@ export default function Login() {
         )}
         {isMobile && (
             <div className={styles.topo}>
-                <div className={styles.logo}>
+                <motion.div 
+                    className={styles.logo}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.5,
+                        delay: 0.00,
+                        ease: [0, 0.71, 0.2, 1.01],
+                    }}
+                >
                     <Image 
                         src="/mobile/LogoPequenoLogin.svg"
                         alt=""
                         width={86}
                         height={86}
                     />
-                </div>
+                </motion.div>
                <CardInputLogin/> 
             </div>
         )}

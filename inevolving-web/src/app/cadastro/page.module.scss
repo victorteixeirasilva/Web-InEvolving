@@ -16,3 +16,38 @@
     align-items: center;
     margin: auto;
 }
+
+.mob {
+    overflow: hidden;
+
+    .wave {
+        position: fixed;
+    }
+    
+    .inputs {
+        overflow: hidden;
+        position: fixed;
+        margin-top: -620px;
+        height: 100vh;
+        background-color: #0B0E31;
+        border-top-left-radius: 70px;
+        width: 100vw;
+        border-top-right-radius: 70px;
+
+    }
+}
+
+.topo {
+    // position: fixed;
+    background-color: #F2EAE3;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+    img {
+        position: fixed;
+        width: 100%;
+    }
+
+}

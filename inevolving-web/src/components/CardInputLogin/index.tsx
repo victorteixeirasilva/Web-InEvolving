@@ -108,8 +108,19 @@ export default function CardInputLogin() {
             </div>
         )}
         {isMobile && (
-            <div className={styles.mobile}>
-                <div className={styles.container}>
+            <motion.div 
+                className={styles.mobile}
+            >
+                <motion.div 
+                    className={styles.container}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.5,
+                        delay: 0.05,
+                        ease: [0, 0.71, 0.2, 1.01],
+                    }}
+                >
                     <h1>
                         Login
                     </h1>
@@ -149,8 +160,8 @@ export default function CardInputLogin() {
                             </a>
                         </strong>
                     </div>
-                </div>
-            </div>
+                </motion.div>
+            </motion.div>
         )}
         </>
     );
