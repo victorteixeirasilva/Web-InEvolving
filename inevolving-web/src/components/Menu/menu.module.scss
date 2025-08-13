@@ -131,5 +131,116 @@
         color: white;
         justify-content: space-between;
     }
+
+    .linha {
+        position: fixed;
+        background-color: #0B0E31;
+        width: 100%;
+        height: 100vh;
+        z-index: 2;
+    }
+
+    .container {
+        margin-top: 0px;
+        font-family: 'Inter', sans-serif;
+        color: #E7E2D6;
+        background-color: #0B0E31;
+        width: 100vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    .titulo{    
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .logo {
+        margin-top: 0px;
+        margin-right: 10px;
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        height: 50px;
+        padding-left: 10px;
+        margin-bottom: 15px;
+        
+    a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 20px;
+            height: 100%;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        a:hover {
+            .marcador {
+                visibility: visible;
+                opacity: 1;
+                transition: 0.3s;
+            }
+        }
+
+        a:active {
+            .marcador {
+                visibility: visible;
+                transition: 0.1s;
+            }
+        }
+
+    }
+
+
+    .marcador {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        left: 129px;
+        top: 0;
+        width: 12px;
+        height: 100%;
+        background-color: white;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .ativo {
+        position: absolute;
+        left: 129px;
+        top: 0;
+        width: 12px;
+        height: 100%;
+        background-color: white;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .ajuste {
+        margin-top: 20px;
+    }
+
+    .esp {
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 }
 
