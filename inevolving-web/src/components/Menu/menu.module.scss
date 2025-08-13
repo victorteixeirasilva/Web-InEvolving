@@ -113,3 +113,23 @@
     justify-content: space-between;
 }
 
+
+.mob {
+    background-color: #0B0E31;
+    width: 100vw;
+    height: 200px;
+
+    position: fixed;
+    background-color: #0B0E31;
+    z-index: 2;
+    
+    .topo {
+        align-items: center;
+        padding: 20px 50px;
+        display: flex;
+        flex-direction: row;
+        color: white;
+        justify-content: space-between;
+    }
+}
+
