@@ -234,7 +234,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                         whileTap={{ scale: 0.5 }}
                         className={styles.voltar}
                     >
-                        <h2>Voltar</h2>
+                        <h2 onClick={voltar}>Voltar</h2>
                     </motion.div>
                     <Calendar
                         className={styles.calendar}

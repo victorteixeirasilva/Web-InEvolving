@@ -126,15 +126,15 @@ body {
 }
 
 .react-calendar__tile--hasActive {
-    background: #76baff;
+    color: #0B0E31 !important;
 }
 
 .react-calendar__tile--hasActive:enabled:hover {
-    background: #a9d4ff;
+    color: #0B0E31 !important;
 }
 
 .react-calendar__tile--hasActive:enabled:focus {
-    background: #a9d4ff;
+    color: #0B0E31 !important;
 }
 
 .react-calendar__tile--active {

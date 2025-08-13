@@ -235,6 +235,7 @@
         justify-content: space-between;
 
         button{
+            width: 100%;
             cursor: pointer;
             border: none;
             background-color: transparent;
@@ -274,8 +275,8 @@
         column-gap: 30px;
         row-gap: 30px;  
         margin-top: 40px;
-        margin-left: 50px;
-        margin-right: 50px;
+        margin-left: 20px;
+        margin-right: 20px;
         margin-bottom: 150px;
         
         .categoria {
@@ -313,15 +314,15 @@
             border-radius: 7px;
 
             color: #ACACAC;
-            font-weight: 500;
-            font-size: 18px;
+            font-weight: 700;
+            font-size: 12px;
         }
 
         a {
             text-decoration: none;
             color: #ACACAC;
-            font-weight: 500;
-            font-size: 18px;
+            font-weight: 700;
+            font-size: 12px;
         }
     }
 
