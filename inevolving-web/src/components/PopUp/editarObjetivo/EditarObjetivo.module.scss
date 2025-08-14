@@ -290,6 +290,8 @@
 }
 
 .mob {
+    color: #0B0E31 !important;
+
     .overlay {
         position: fixed;
         top: 0;
@@ -325,8 +327,8 @@
         }
 
         scale: 1;
-        width: 95%;
-        height: 95%;
+        width: 90%;
+        height: 70%;
         border-radius: 38px;
         align-items: center;
         align-content: center;
@@ -374,6 +376,7 @@
     }
     
     .botoesTopo {
+        color: #0B0E31 !important;
         width: 100%;
         margin: 0;
         display: flex;
