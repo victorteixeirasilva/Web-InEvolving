@@ -1740,7 +1740,7 @@ export default function Tarefas( ) {
                                     className={styles.botaoVoltar} 
                                     onClick={() => setEscolherOutraData(false)}
                                 >
-                                    <strong>X</strong>
+                                    <strong style={{color: '#0B0E31'}}>X</strong>
                                 </motion.button>
                             </div>
                             <Calendar
@@ -1796,7 +1796,7 @@ export default function Tarefas( ) {
                                     }
                                 }}
                             >
-                                <strong>X</strong>
+                                <strong style={{color: '#0B0E31'}}>X</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <Image 
@@ -1959,7 +1959,7 @@ export default function Tarefas( ) {
                                     className={styles.botaoVoltar} 
                                     onClick={() => setVerListaDeObjetivos(false)}
                                     >
-                                    <strong>Voltar - Tarefas</strong>
+                                    <strong style={{color: '#0B0E31'}}>Voltar - Tarefas</strong>
                                 </motion.button>
                                 <div className={styles.conteudo}>
                                     <div className={styles.containerScroll}>
@@ -1992,7 +1992,7 @@ export default function Tarefas( ) {
                                     className={styles.botaoVoltar} 
                                     onClick={() => setEscolherDataDaNovaTarefa(false)}
                                 >
-                                    <strong>Voltar</strong>
+                                    <strong style={{color: '#0B0E31'}}>Voltar</strong>
                                 </motion.button>
                                 <div className={styles.conteudo}>
                                     {/* <h4>Data final das repetições!</h4> */}
@@ -2043,7 +2043,7 @@ export default function Tarefas( ) {
                                     setIsTarefaFrequente(false);
                                 }}
                             >
-                                <strong>Voltar - Tarefas</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar - Tarefas</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <div 
@@ -2198,7 +2198,7 @@ export default function Tarefas( ) {
                                 className={styles.botaoVoltar} 
                                 onClick={() => setEscolherDataFinal(false)}
                                 >
-                                <strong>Voltar</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <Calendar

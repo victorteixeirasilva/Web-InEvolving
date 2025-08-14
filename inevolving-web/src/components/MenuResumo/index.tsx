@@ -228,6 +228,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                         scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
                     }} 
                     className={styles.containerMenuResumo}
+                    style={{color: '#0B0E31'}}
                 >
                     <motion.div
                         onClick={voltar}

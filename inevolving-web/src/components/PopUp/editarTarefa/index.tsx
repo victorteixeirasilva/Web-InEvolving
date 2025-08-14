@@ -959,7 +959,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 // onClick={() => window.location.reload()}
                                 onClick={voltar}
                             >
-                                <strong>X</strong>
+                                <strong style={{color: '#0B0E31'}}>X</strong>
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.2 }} 
@@ -1157,7 +1157,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     className={styles.botaoVoltar} 
                                     onClick={() => setVerListaDeObjetivos(false)}
                                     >
-                                    <strong>Voltar - Tarefa</strong>
+                                    <strong style={{color: '#0B0E31'}}>Voltar - Tarefa</strong>
                                 </motion.button>
                                 <div className={styles.conteudo}>
                                     <div className={styles.containerScroll}>
@@ -1190,7 +1190,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 className={styles.botaoVoltar} 
                                 onClick={() => setVerPopUpConfirmacao(false)}
                                 >
-                                <strong>Voltar - Tarefa</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar - Tarefa</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <h4>Deseja atualizar essa tarefa, ou atualizar ela e suas repetições futuras?</h4>
@@ -1241,7 +1241,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 className={styles.botaoVoltar} 
                                 onClick={() => setVerPopUpConfirmacaoDelete(false)}
                                 >
-                                <strong>Voltar - Tarefa</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar - Tarefa</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <h4>Deseja deletar essa tarefa, ou deletar ela e suas repetições futuras?</h4>
@@ -1294,7 +1294,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     window.location.reload();
                                 }}
                             >
-                                <strong>Voltar - Tarefas</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar - Tarefas</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <div 
@@ -1449,7 +1449,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 className={styles.botaoVoltar} 
                                 onClick={() => setEscolherDataFinal(false)}
                                 >
-                                <strong>Voltar</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <h4>Data final das repetições!</h4>
@@ -1495,7 +1495,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 className={styles.botaoVoltar} 
                                 onClick={() => setAbrirInputMotivoDoCancelamento(false)}
                             >
-                                <strong>Voltar - Tarefa</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar - Tarefa</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <h4 style={{fontSize: '18px'}}>

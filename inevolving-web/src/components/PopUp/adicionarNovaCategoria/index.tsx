@@ -345,7 +345,7 @@ export default function AdicionarNovaCategoria() {
                             className={styles.botaoVoltar} 
                             onClick={() => window.location.reload()}
                         >
-                            <strong>X</strong>
+                            <strong style={{color: '#0B0E31'}}>X</strong>
                         </motion.button>
                         <div className={styles.conteudo}>
                             <Image 
@@ -451,7 +451,7 @@ export default function AdicionarNovaCategoria() {
                                 className={styles.botaoVoltar} 
                                 onClick={() => setVerListaDeObjetivos(false)}
                                 >
-                                <strong>Voltar - Objetivos</strong>
+                                <strong style={{color: '#0B0E31'}}>Voltar - Objetivos</strong>
                             </motion.button>
                             <div className={styles.conteudo}>
                                 <div className={styles.containerScroll}>

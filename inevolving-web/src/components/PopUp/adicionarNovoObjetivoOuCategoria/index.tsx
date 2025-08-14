@@ -27,7 +27,7 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                         className={styles.botaoVoltar} 
                         onClick={() => window.location.reload()}
                         >
-                        <strong>X</strong>
+                        <strong style={{color: '#0B0E31'}}>X</strong>
                     </motion.button>
                     <div className={styles.conteudo}>
                         <Image 
@@ -43,6 +43,7 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                                 whileHover={{ scale: 1.1 }} 
                                 whileTap={{ scale: 0.8 }}
                                 onClick={() => setPopUpNovoObjetivo(true)}
+                                style={{color: '#0B0E31'}}
                             >
                                 <div className={styles.containerBotoes}>
                                     Objetivo
@@ -59,7 +60,8 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                                 whileHover={{ scale: 1.1 }} 
                                 whileTap={{ scale: 0.8 }}
                                 onClick={() => setPopUpNovaCategoria(true)}
-                                >
+                                style={{color: '#0B0E31'}}
+                            >
                                 <div className={styles.containerBotoes}>
                                     Categoria
                                     <Image 
@@ -110,6 +112,7 @@ export default function AdicionarNovoObjetivoOuCategoria() {
                                     whileHover={{ scale: 1.1 }} 
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => setPopUpNovoObjetivo(true)}
+                                    style={{color: '#0B0E31'}}
                                 >
                                     <div className={styles.containerBotoes}>
                                         Objetivo

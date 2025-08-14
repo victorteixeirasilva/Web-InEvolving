@@ -148,6 +148,7 @@ export default function Objetivo() {
                                         router.push("/desculpa")
                                     }}
                                     className={styles.botao}
+                                    style={{color: '#0B0E31'}}
                                 >
                                     Obter Dicas da IA
                                 </motion.button>

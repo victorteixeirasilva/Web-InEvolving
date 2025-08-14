@@ -223,7 +223,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                                 className={styles.botaoVoltar} 
                                 onClick={() => window.location.reload()}
                             >
-                                <strong>X</strong>
+                                <strong style={{color: '#0B0E31'}}>X</strong>
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.2 }} 

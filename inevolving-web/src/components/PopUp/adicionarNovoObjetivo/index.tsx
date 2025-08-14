@@ -156,7 +156,7 @@ export default function AdicionarNovoObjetivo() {
                             className={styles.botaoVoltar} 
                             onClick={() => window.location.reload()}
                         >
-                            <strong>X</strong>
+                            <strong style={{color: '#0B0E31'}}>X</strong>
                         </motion.button>
                         <div className={styles.conteudo}>
                             <Image 
