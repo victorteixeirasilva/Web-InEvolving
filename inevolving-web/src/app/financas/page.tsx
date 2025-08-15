@@ -72,11 +72,11 @@ export default function Categoria() {
             alert('Você não está logado, por favor faça login novamente.');
         }
         
-        if (!response.ok) {
-            setCarregando(false);
-            router.push('/login');
-            alert('Você não está logado, por favor faça login novamente.');
-        }
+        // if (!response.ok) {
+        //     setCarregando(false);
+        //     router.push('/login');
+        //     alert('Você não está logado, por favor faça login novamente.');
+        // }
     
         setCarregando(false);
         window.location.reload();
@@ -123,7 +123,7 @@ export default function Categoria() {
             } else {
                 setCarregando(false);
                 router.push('/login');
-                alert('Você não está logado, por favor faça login novamente.');
+                alert('Aconteceu algum problema ao pegar as informações de finanças, por favor faça login novamente.');
             }
     
             setCarregando(false);
@@ -227,7 +227,7 @@ export default function Categoria() {
                     }),
             });
     
-            if (!response.ok){
+            if (response.status === 401){
                 setCarregando(false);
                 router.push('/login');
                 alert('Você não está logado, por favor faça login novamente.');
@@ -248,7 +248,7 @@ export default function Categoria() {
                     }),
             });
     
-            if (!response.ok){
+            if (response.status === 401){
                 setCarregando(false);
                 router.push('/login');
                 alert('Você não está logado, por favor faça login novamente.');
@@ -269,7 +269,7 @@ export default function Categoria() {
                     }),
             });
     
-            if (!response.ok){
+            if (response.status === 401){
                 setCarregando(false);
                 router.push('/login');
                 alert('Você não está logado, por favor faça login novamente.');

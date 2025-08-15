@@ -58,6 +58,10 @@ export default function Dashboard() {
             router.push('/login');
             alert('Você não está logado, por favor faça login novamente.');
         }
+        if (!response.ok){
+            router.push('/login');
+            alert('Aconteceu algum problema ao recuperar os dados do Dashboard.');
+        }
 
         
         setCarregandoDash(false);

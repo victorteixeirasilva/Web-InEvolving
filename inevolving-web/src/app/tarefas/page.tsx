@@ -453,6 +453,8 @@ export default function Tarefas( ) {
             if (!response.ok){
                 setCarregando(false);
                 alert('Erro ao puxar objetivos');
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
             }
             
             setCarregando(false);

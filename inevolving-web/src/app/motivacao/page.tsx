@@ -81,6 +81,10 @@ export default function Categoria( ) {
         if (response.ok) {
             const data:Sonho[] = await response.json();
             setSonhos(data);
+        } else {
+            serCarregando(false);
+            alert('Aconteceu algum problema ao pegas os dados dos sonhos, por favor faça login novamente.');
+            router.push('/login');
         }
 
         serCarregando(false);

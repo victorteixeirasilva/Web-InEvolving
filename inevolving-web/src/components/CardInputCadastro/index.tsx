@@ -7,10 +7,12 @@ import BotaoLogin from '../BotaoLogin';
 import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
 import { motion } from "motion/react";
+import { ClipLoader } from 'react-spinners';
 
 
 export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
     const [isMobile, setIsMobile] = useState(false);
+    const [carregando, setCarregando] = useState(false);
         
     useEffect(() => {
         const largura = window.innerWidth;
@@ -25,8 +27,10 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
     const router = useRouter();
 
     const handleCadastro = async () => {
+        setCarregando(true);
         if (senha !== confirmarSenha) {
             alert('As senhas não coincidem');
+            setCarregando(false);
             return;
         }
         const response = await fetch('https://api.inevolving.inovasoft.tech/api/authentication/register', {
@@ -47,8 +51,10 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
         if (response.ok) {
             if (response.status === 200) {
                 router.push('/login');
+                setCarregando(false);
             }
         } else {
+            setCarregando(false);
             alert(`Erro: ${data.message || 'Erro ao cadastrar'}`);
         }
 
@@ -91,14 +97,14 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
                             className={styles.botaoGrande} 
                             onClick={handleCadastro}
                         >
-                        {/* {carregando && <ClipLoader size={10} color="#ffffff" />} */}
-                        {/* <span 
+                        {carregando && <ClipLoader size={10} color="#ffffff" />}
+                        <span 
                             style={{ 
                                 marginLeft: carregando ? '8px' : '0'
                             }}
                         >
                             {carregando ? 'Entrando...' : 'Entrar'}
-                        </span> */}
+                        </span>
                         Concluido
                     </motion.button>
                         

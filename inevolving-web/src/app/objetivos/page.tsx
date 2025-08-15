@@ -48,7 +48,7 @@ export default function Categoria( ) {
     
             const data: Objetivo[] = await response.json();
             
-            if (response.status === 401){
+            if (!response.ok){
                 setCarregandoObjetivos(false);
                 router.push('/login');
                 alert('Você não está logado, por favor faça login novamente.');
@@ -75,7 +75,7 @@ export default function Categoria( ) {
     
         const data: Objetivo[] = await response.json();
             
-        if (response.status === 401){
+        if (!response.ok){
             setCarregandoObjetivos(false);
             router.push('/login');
             alert('Você não está logado, por favor faça login novamente.');
@@ -102,7 +102,7 @@ export default function Categoria( ) {
     
         const data: Objetivo[] = await response.json();
         
-        if (response.status === 401){
+        if (!response.ok){
             setCarregandoObjetivos(false);
             router.push('/login');
             alert('Você não está logado, por favor faça login novamente.');
