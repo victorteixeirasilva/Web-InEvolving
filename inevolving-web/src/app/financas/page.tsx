@@ -71,6 +71,12 @@ export default function Categoria() {
             router.push('/login');
             alert('Você não está logado, por favor faça login novamente.');
         }
+        
+        if (!response.ok) {
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
     
         setCarregando(false);
         window.location.reload();
@@ -114,6 +120,10 @@ export default function Categoria() {
                 if (data.wage === 0) {
                     setPrimeiroLogin(true);
                 }
+            } else {
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
             }
     
             setCarregando(false);
@@ -1733,6 +1743,7 @@ export default function Categoria() {
                         </div>
                     </div>
                     {escolherDataFinal && (
+                    <div className={styles.overlay}>
                         <div className={styles.containerPopUpEdit}>
                             <motion.button
                                 whileHover={{ scale: 1.06 }} 
@@ -1775,6 +1786,7 @@ export default function Categoria() {
                                 </motion.button>
                             </div>
                         </div>
+                    </div>
                     )}
                 </div>
             )}

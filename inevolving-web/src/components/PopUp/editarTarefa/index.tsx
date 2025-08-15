@@ -965,10 +965,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 whileHover={{ scale: 1.2 }} 
                                 whileTap={{ scale: 0.8 }}
                                 className={styles.lixeira}
-                                onClick={() => {
-                                        if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
-                                            setVerPopUpConfirmacaoDelete(true);
-                                        }}}
+                                onClick={() => {setVerPopUpConfirmacaoDelete(true);}}
                             >
                                 <Image 
                                     src="/lixeiraIcon.svg"

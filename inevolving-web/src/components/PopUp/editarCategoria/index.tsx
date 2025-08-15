@@ -418,10 +418,7 @@ export default function EditarCategoria() {
                                 whileHover={{ scale: 1.2 }} 
                                 whileTap={{ scale: 0.8 }}
                                 className={styles.lixeira}
-                                onClick={() => {
-                                        if (confirm('Tem certeza que deseja excluir esta categoria?')) {
-                                            deletarCategoria();
-                                        }}}
+                                onClick={() => {deletarCategoria();}}
                             >
                                 <Image 
                                     src="/lixeiraIcon.svg"

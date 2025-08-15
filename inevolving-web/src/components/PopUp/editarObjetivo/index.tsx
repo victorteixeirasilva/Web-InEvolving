@@ -229,10 +229,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                                 whileHover={{ scale: 1.2 }} 
                                 whileTap={{ scale: 0.8 }}
                                 className={styles.lixeira}
-                                onClick={() => {
-                                        if (confirm('Tem certeza que deseja excluir esta categoria?')) {
-                                            router.push('/desculpa');
-                                        }}}
+                                onClick={() => {router.push('/desculpa');}}
                             >
                                 <Image 
                                     src="/lixeiraIcon.svg"
