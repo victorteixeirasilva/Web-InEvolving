@@ -72,11 +72,7 @@ export default function Categoria() {
             alert('Você não está logado, por favor faça login novamente.');
         }
         
-        // if (!response.ok) {
-        //     setCarregando(false);
-        //     router.push('/login');
-        //     alert('Você não está logado, por favor faça login novamente.');
-        // }
+
     
         setCarregando(false);
         window.location.reload();
