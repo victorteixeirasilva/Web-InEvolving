@@ -77,11 +77,11 @@ export default function Categoria( ) {
                 },
         });
 
-        // if (!response.ok){
-        //     serCarregando(false);
-        //     router.push('/login');
-        //     alert('Aconteceu algum problema para pegar as informações dos livros Pendentes, por favor faça login novamente.');
-        // }
+        if (response.status === 401){
+            serCarregando(false);
+            router.push('/login');
+            alert('Aconteceu algum problema para pegar as informações dos livros Pendentes, por favor faça login novamente.');
+        }
 
         if (response.ok) {
             const data:Livro[] = await response.json();
@@ -104,11 +104,11 @@ export default function Categoria( ) {
                 },
         });
 
-        // if (!response.ok){
-        //     serCarregando(false);
-        //     router.push('/login');
-        //     alert('Aconteceu algum problema para pegar as informações dos livros em progresso, por favor faça login novamente.');
-        // }
+        if (response.status === 401){
+            serCarregando(false);
+            router.push('/login');
+            alert('Aconteceu algum problema para pegar as informações dos livros em progresso, por favor faça login novamente.');
+        }
 
         if (response.ok) {
             const data:Livro[] = await response.json();
@@ -130,11 +130,11 @@ export default function Categoria( ) {
                 },
         });
 
-        // if (!response.ok){
-        //     serCarregando(false);
-        //     router.push('/login');
-        //     alert('Aconteceu algum problema para pegar as informações dos livros em concluidos, por favor faça login novamente.');
-        // }
+        if (response.status === 401){
+            serCarregando(false);
+            router.push('/login');
+            alert('Aconteceu algum problema para pegar as informações dos livros em concluidos, por favor faça login novamente.');
+        }
 
         if (response.ok) {
             const data:Livro[] = await response.json();

@@ -1,6 +1,7 @@
 'use client';
+export const dynamic = "force-dynamic";
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import * as motion from "motion/react-client";
 import styles from "./page.module.scss";
@@ -9,18 +10,28 @@ import { ClipLoader } from 'react-spinners';
 
 
 export default function RedefinirSenha() {
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
-  const [isMobile, setIsMobile] = useState(false);
-  const [carregando, setCarregando] = useState(false);
-  const router = useRouter();
-  const [novaSenha, setNovaSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
+ 
+    const [token, setToken] = useState<string | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+    const [carregando, setCarregando] = useState(false);
+    const router = useRouter();
+    const [novaSenha, setNovaSenha] = useState("");
+    const [confirmarSenha, setConfirmarSenha] = useState("");
 
-  useEffect(() => {
-      const largura = window.innerWidth;
-      setIsMobile(largura <= 1024);
-  }, []);
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const tokenParam = params.get('token');
+        setToken(tokenParam);
+        if (!tokenParam) {
+            router.push("/login");
+        }
+    }, [router]);
+
+
+    useEffect(() => {
+        const largura = window.innerWidth;
+        setIsMobile(largura <= 1024);
+    }, []);
 
   const alterarSenha = async () => {
         setCarregando(true);
@@ -49,7 +60,7 @@ export default function RedefinirSenha() {
 
       if (!isMobile) {
         return (
-            <>
+        <>
             <div className={styles.overlay}>
                 <div className={styles.containerPopUp}>
                     <div className={styles.conteudo}>
