@@ -8,6 +8,7 @@ import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
 import { ClipLoader } from 'react-spinners';
 import { motion } from "motion/react";
+import EsqueciSenha from '../PopUp/esqueciSenha';
 
 
 export default function CardInputLogin() {
@@ -22,6 +23,7 @@ export default function CardInputLogin() {
     const [senha, setSenha] = useState('');
     const router = useRouter();
     const [carregando, setCarregando] = useState(false);
+    const [verPopUpEsqueceuSenha, setVerPopUpEsqueceuSenha] = useState(false);
 
 
     const handleLogin = async () => {
@@ -61,6 +63,7 @@ export default function CardInputLogin() {
     return (
         <>
         {!isMobile && (
+            <>
             <div className={styles.cardRegistro}>
                 <div className={styles.container}>
                     <h1>
@@ -75,7 +78,7 @@ export default function CardInputLogin() {
                             alt='Selo de dados'
                             width={11}
                             height={13}
-                        />
+                            />
                     </div>
                     
                     <InputEmail tema="escuro" tipo="email" value={email} onChange={setEmail} />
@@ -83,7 +86,11 @@ export default function CardInputLogin() {
                     <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
                     
                     <div className={styles.esqueciSenhaContainer}>
-                        <a href="/desculpa">
+                        <a onClick={
+                            () => {
+                               setVerPopUpEsqueceuSenha(true); 
+                            }
+                        }>
                             Esqueci minha senha
                         </a>
                     </div>
@@ -93,7 +100,7 @@ export default function CardInputLogin() {
                         texto={carregando ? 'Entrando...' : 'Entrar'} 
                         tipo='3' 
                         onClick={handleLogin}
-                    />
+                        />
 
                     <div className={styles.naoTemConta}>
                         Não tem uma conta? 
@@ -106,8 +113,13 @@ export default function CardInputLogin() {
                     </div>
                 </div>
             </div>
+            {verPopUpEsqueceuSenha && (
+                <EsqueciSenha voltar={() => setVerPopUpEsqueceuSenha(false)}/>
+            )}
+            </>
         )}
         {isMobile && (
+            <>
             <motion.div 
                 className={styles.mobile}
             >
@@ -130,7 +142,11 @@ export default function CardInputLogin() {
                     <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
                     
                     <div className={styles.esqueciSenhaContainer}>
-                        <a href="/desculpa">
+                        <a onClick={
+                            () => {
+                               setVerPopUpEsqueceuSenha(true); 
+                            }
+                        }>
                             Esqueci minha senha
                         </a>
                     </div>
@@ -162,6 +178,10 @@ export default function CardInputLogin() {
                     </div>
                 </motion.div>
             </motion.div>
+            {verPopUpEsqueceuSenha && (
+                <EsqueciSenha voltar={() => setVerPopUpEsqueceuSenha(false)}/>
+            )}
+            </>
         )}
         </>
     );

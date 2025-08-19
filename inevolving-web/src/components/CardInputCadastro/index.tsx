@@ -92,7 +92,7 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
 
                         <motion.button 
                             whileTap={{ scale: 0.8 }}
-                            // disabled={carregando} 
+                            disabled={carregando} 
                             type="submit" 
                             className={styles.botaoGrande} 
                             onClick={handleCadastro}

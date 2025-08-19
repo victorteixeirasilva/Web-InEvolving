@@ -5,9 +5,14 @@
 import Image from 'next/image';
 import styles from './cardLogin.module.scss';
 import BotaoLogin from '../BotaoLogin';
+import { useState } from 'react';
+import EsqueciSenha from '../PopUp/esqueciSenha';
 
 export default function CardLogin() {
+    const [verPopUpEsqueceuSenha, setVerPopUpEsqueceuSenha] = useState(false);
+
   return (
+    <>
     <div className={styles.cardLogin}>
         <div className={styles.containerCardLogin}>                
             <Image 
@@ -26,9 +31,19 @@ export default function CardLogin() {
             </p>
             <div className={styles.containerBotaoLogin}>
                 <BotaoLogin texto='Entrar' tipo='1' />
-                <a href='/desculpa'>Esqueceu a senha?</a>
+                <a onClick={
+                    () => {
+                        setVerPopUpEsqueceuSenha(true); 
+                    }
+                }>
+                    Esqueci minha senha
+                </a>
             </div>
         </div>
     </div>
+    {verPopUpEsqueceuSenha && (
+        <EsqueciSenha voltar={() => setVerPopUpEsqueceuSenha(false)}/>
+    )}
+    </>
   );
 }
