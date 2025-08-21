@@ -164,37 +164,39 @@ export default function Jarvas( { voltar, objetivo }: { voltar:() => void, objet
                                         </>
                                     ) : (
                                         <>
-                                            <h3>
-                                                Hmmmm... Deixa eu ver...
-                                            </h3>
-                                            <p>
-                                                <br />
-                                                <br />
-                                                Eu posso te ajudar a melhorar sua produtividade, e evoluir no seu objetivo ({objetivo.nameObjective}).
-                                                <br />
-                                                <br />
-                                                Só preciso que você use uma das suas NeuroKeys para desbloquear a analise, estou ansioso para te ajudar!
-                                            </p>
-                                            <div className={styles.cardNeuroKey}>
+                                                <h3>
+                                                    Hmmmm... Deixa eu ver...
+                                                </h3>
                                                 <p>
-                                                    Você possui: {neuroKeys/2} NeuroKeys
-                                                </p> 
-                                            </div>
-                                            <motion.div 
-                                                whileHover={{ scale: 1.1 }} 
-                                                whileTap={{ scale: 0.8 }}
-                                                className={styles.IniciarAnalise}
-                                                onClick={handleIniciarAnalise}
-                                            >
-                                                <p>
-                                                    Clique aqui para iniciar!
-                                                </p> 
-                                            </motion.div>
+                                                    <br />
+                                                    <br />
+                                                    Eu posso te ajudar a melhorar sua produtividade, e evoluir no seu objetivo ({objetivo.nameObjective}).
+                                                    <br />
+                                                    <br />
+                                                    Só preciso que você use uma das suas NeuroKeys para desbloquear a analise, estou ansioso para te ajudar!
+                                                </p>
+                                                <div className={styles.cardNeuroKey}>
+                                                    <p>
+                                                        Você possui: {neuroKeys/2} NeuroKeys
+                                                    </p> 
+                                                </div>
+                                                <motion.div 
+                                                    whileHover={{ scale: 1.1 }} 
+                                                    whileTap={{ scale: 0.8 }}
+                                                    className={styles.IniciarAnalise}
+                                                    onClick={handleIniciarAnalise}
+                                                >
+                                                    <p>
+                                                        Clique aqui para iniciar!
+                                                    </p> 
+                                                </motion.div>
                                         </>
                                     )}
                                 </>
-                            ): (
+                            ) : (
                                 <>
+                                {!carregando && (
+                                    <>
                                     <h3>
                                         Hmmmm... Deixa eu ver...
                                     </h3>
@@ -229,6 +231,8 @@ export default function Jarvas( { voltar, objetivo }: { voltar:() => void, objet
                                             Compre NeuroKeys!
                                         </div>
                                     </motion.div>
+                                    </>
+                                )}
                                 </>
                             )}
                         </div>

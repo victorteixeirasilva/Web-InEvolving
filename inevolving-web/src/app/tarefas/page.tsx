@@ -21,6 +21,7 @@ export default function Tarefas( ) {
     }, []);
 
     const [primeiroCarregamento, setPrimeiroCarregamento] = useState(true);
+    const [primeiroCarregamentoStatus, setPrimeiroCarregamentoStatus] = useState(true);
 
     const router = useRouter();
     const [jwtToken, setJwtToken] = useState('');
@@ -463,6 +464,9 @@ export default function Tarefas( ) {
 
     const [nomeDaTarefa, setNomeDaTarefa] = useState("");
     const [descricaoDaTarefa, setDescricaoDaTarefa] = useState("");
+    
+    const [abrirFiltroDeStatus, setAbrirFiltroDeStatus] = useState(false);
+    
 
     const cadastrarNovaTarefa = async () => {
         setCarregando(true);
@@ -573,12 +577,14 @@ export default function Tarefas( ) {
                             </h3>
                             <motion.button 
                                 className={styles.botaoFiltroStatus}
-                                style={filtroAtivoStatus === 1 ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                                style={filtroAtivoStatus === 1 && !primeiroCarregamento ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
                                 whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
                                 whileTap={{ scale: 0.8 }}
                                 onClick={() => {
                                     setFiltroAtivoStatus(1);
                                     setPrimeiroCarregamento(false);
+                                    setAbrirFiltroDeStatus(true);
+                                    setPrimeiroCarregamentoStatus(true);
                                 }}
                             >
                                 Todos
@@ -591,6 +597,8 @@ export default function Tarefas( ) {
                                 onClick={() => {
                                     setFiltroAtivoStatus(2);
                                     setPrimeiroCarregamento(false);
+                                    setAbrirFiltroDeStatus(true);
+                                    setPrimeiroCarregamentoStatus(true);
                                 }}
                             >
                                 Não Iniciada
@@ -603,6 +611,8 @@ export default function Tarefas( ) {
                                 onClick={() => {
                                     setFiltroAtivoStatus(3);
                                     setPrimeiroCarregamento(false);
+                                    setAbrirFiltroDeStatus(true);
+                                    setPrimeiroCarregamentoStatus(true);
                                 }}
                             >
                                 Em Progresso
@@ -615,6 +625,8 @@ export default function Tarefas( ) {
                                 onClick={() => {
                                     setFiltroAtivoStatus(4);
                                     setPrimeiroCarregamento(false);
+                                    setAbrirFiltroDeStatus(true);
+                                    setPrimeiroCarregamentoStatus(true);
                                 }}
                             >
                                 Concluída
@@ -627,69 +639,82 @@ export default function Tarefas( ) {
                                 onClick={() => {
                                     setFiltroAtivoStatus(5);
                                     setPrimeiroCarregamento(false);
+                                    setAbrirFiltroDeStatus(true);
+                                    setPrimeiroCarregamentoStatus(true);
                                 }}
                             >
                                 Cancelada
                             </motion.button>
                         </motion.div>
                     </motion.div>
-                    <motion.div className={styles.containerFiltroEBotao}>
-                        <motion.div className={styles.filtro}>
-                            <h3>
-                                Filtrar Data:
-                            </h3>    
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 1 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                } 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={pegarTarefasDeHoje}
-                            >
-                                Hoje
-                            </motion.button>
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                }
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => router.push("/desculpa")}
-                            >
-                                Mês
-                            </motion.button>
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                } 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => router.push("/desculpa")}
-                            >
-                                Ano
-                            </motion.button>
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 4 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                } 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => setEscolherOutraData(true)}
+                    {abrirFiltroDeStatus && (
+                        <motion.div className={styles.containerFiltroEBotao}>
+                            <motion.div className={styles.filtro}>
+                                <h3>
+                                    Filtrar Data:
+                                </h3>    
+                                <motion.button 
+                                    className={
+                                        filtroAtivo === 1 && !primeiroCarregamentoStatus ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    } 
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => {
+                                        pegarTarefasDeHoje();
+                                        setPrimeiroCarregamentoStatus(false);
+                                    }}
                                 >
-                                Outra Data
-                            </motion.button>
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                } 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={pegarTarefasAtrasadas}
-                            >
-                                Tarefas em Atraso
-                            </motion.button>
+                                    Hoje
+                                </motion.button>
+                                {/* <motion.button 
+                                    className={
+                                        filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    }
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => router.push("/desculpa")}
+                                >
+                                    Mês
+                                </motion.button> */}
+                                {/* <motion.button 
+                                    className={
+                                        filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    } 
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => router.push("/desculpa")}
+                                >
+                                    Ano
+                                </motion.button> */}
+                                <motion.button 
+                                    className={
+                                        filtroAtivo === 4 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    } 
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => {
+                                        setEscolherOutraData(true);
+                                        setPrimeiroCarregamentoStatus(false);
+                                    }}
+                                >
+                                    Outra Data
+                                </motion.button>
+                                <motion.button 
+                                    className={
+                                        filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    } 
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => {
+                                        pegarTarefasAtrasadas();
+                                        setPrimeiroCarregamentoStatus(false);
+                                    }}
+                                >
+                                    Tarefas em Atraso
+                                </motion.button>
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
+                    )}
                     {!carregando && filtroAtivo === 1 && !tarefasDeHoje && primeiroCarregamento && (
                         <h1
                             style={{padding: '20px'}}
@@ -1424,12 +1449,13 @@ export default function Tarefas( ) {
                                 </h3>
                                 <motion.button 
                                     className={styles.botaoFiltroStatus}
-                                    style={filtroAtivoStatus === 1 ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                                    style={filtroAtivoStatus === 1 && !primeiroCarregamentoStatus ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
                                     whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
                                         setFiltroAtivoStatus(1);
-                                        setPrimeiroCarregamento(false);
+                                        setPrimeiroCarregamentoStatus(false);
+                                        setPrimeiroCarregamento(true);
                                     }}
                                 >
                                     Todos
@@ -1441,7 +1467,8 @@ export default function Tarefas( ) {
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
                                         setFiltroAtivoStatus(2);
-                                        setPrimeiroCarregamento(false);
+                                        setPrimeiroCarregamentoStatus(false);
+                                        setPrimeiroCarregamento(true);
                                     }}
                                 >
                                     Não Iniciada
@@ -1453,7 +1480,8 @@ export default function Tarefas( ) {
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
                                         setFiltroAtivoStatus(3);
-                                        setPrimeiroCarregamento(false);
+                                        setPrimeiroCarregamentoStatus(false);
+                                        setPrimeiroCarregamento(true);
                                     }}
                                 >
                                     Em Progresso
@@ -1465,7 +1493,8 @@ export default function Tarefas( ) {
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
                                         setFiltroAtivoStatus(4);
-                                        setPrimeiroCarregamento(false);
+                                        setPrimeiroCarregamentoStatus(false);
+                                        setPrimeiroCarregamento(true);
                                     }}
                                 >
                                     Concluída
@@ -1477,7 +1506,8 @@ export default function Tarefas( ) {
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
                                         setFiltroAtivoStatus(5);
-                                        setPrimeiroCarregamento(false);
+                                        setPrimeiroCarregamentoStatus(false);
+                                        setPrimeiroCarregamento(true);
                                     }}
                                 >
                                     Cancelada
@@ -1491,15 +1521,18 @@ export default function Tarefas( ) {
                                 </h3>    
                                 <motion.button 
                                     className={
-                                        filtroAtivo === 1 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                        filtroAtivo === 1 && !primeiroCarregamento ? styles.botaoFiltroAtivo : styles.botaoFiltro
                                     } 
                                     whileHover={{ scale: 1.1 }} 
                                     whileTap={{ scale: 0.8 }}
-                                    onClick={pegarTarefasDeHoje}
+                                    onClick={() => {
+                                        pegarTarefasDeHoje();
+                                        setPrimeiroCarregamento(false);
+                                    }}
                                 >
                                     Hoje
                                 </motion.button>
-                                <motion.button 
+                                {/* <motion.button 
                                     className={
                                         filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
                                     }
@@ -1508,8 +1541,8 @@ export default function Tarefas( ) {
                                     onClick={() => router.push("/desculpa")}
                                 >
                                     Mês
-                                </motion.button>
-                                <motion.button 
+                                </motion.button> */}
+                                {/* <motion.button 
                                     className={
                                         filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
                                     } 
@@ -1518,15 +1551,18 @@ export default function Tarefas( ) {
                                     onClick={() => router.push("/desculpa")}
                                 >
                                     Ano
-                                </motion.button>
+                                </motion.button> */}
                                 <motion.button 
                                     className={
                                         filtroAtivo === 4 ? styles.botaoFiltroAtivo : styles.botaoFiltro
                                     } 
                                     whileHover={{ scale: 1.1 }} 
                                     whileTap={{ scale: 0.8 }}
-                                    onClick={() => setEscolherOutraData(true)}
-                                    >
+                                    onClick={() => {
+                                        setEscolherOutraData(true);
+                                        setPrimeiroCarregamento(false);
+                                    }}
+                                >
                                     Outra Data
                                 </motion.button>
                                 <motion.button 
@@ -1535,7 +1571,10 @@ export default function Tarefas( ) {
                                     } 
                                     whileHover={{ scale: 1.1 }} 
                                     whileTap={{ scale: 0.8 }}
-                                    onClick={pegarTarefasAtrasadas}
+                                    onClick={() => {
+                                        pegarTarefasAtrasadas();
+                                        setPrimeiroCarregamento(false);
+                                    }}
                                 >
                                     Tarefas em Atraso
                                 </motion.button>

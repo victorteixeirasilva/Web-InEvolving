@@ -130,7 +130,7 @@ export default function Dashboard() {
                         {!carregandoDash && dashboardData?.categoryDTOList.map((category) => (
                             <motion.div 
                                 whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.8 }} 
+                                // whileTap={{ scale: 0.8 }} 
                                 key={category.id} 
                                 className={styles.categoria}
                             >
@@ -140,16 +140,17 @@ export default function Dashboard() {
                                     <h2>{category.categoryName}</h2>
                                     <div className={styles.containerBotao}>
                                         <BotaoDashVerDatalhesCategoria categoria={category}/>
-                                        <motion.a 
+                                        <motion.div
                                             whileHover={{ scale: 1.2 }}
                                             whileTap={{ scale: 0.8 }}
                                             onClick={() => {
-                                                localStorage.setItem('categoriaAtual', JSON.stringify(category));
-                                                setAbrirEditarCategoria(true);
+                                                    localStorage.setItem('categoriaAtual', JSON.stringify(category));
+                                                    setAbrirEditarCategoria(true);
                                             }}
+                                            className={styles.botaoEditar}
                                         >
                                             Editar
-                                        </motion.a>
+                                        </motion.div>
                                     </div>
                                 </motion.div>
                             </motion.div>
@@ -267,6 +268,10 @@ export default function Dashboard() {
                                             <motion.a 
                                                 whileHover={{ scale: 1.2 }}
                                                 whileTap={{ scale: 0.8 }}
+                                                onClick={() => {
+                                                    localStorage.setItem('categoriaAtual', JSON.stringify(category));
+                                                    setAbrirEditarCategoria(true);
+                                                }}
                                             >
                                                 Editar
                                             </motion.a>

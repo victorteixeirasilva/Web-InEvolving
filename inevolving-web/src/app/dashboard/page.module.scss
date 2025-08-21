@@ -110,17 +110,14 @@
     flex-direction: row;
     justify-content: space-between;
 
-    button {
-        cursor: pointer;
-        background-color: white;
-        border: none;
-        width: 119px;
-        height: 27px;
-        border-radius: 7px;
-
+    .botaoEditar {
+        text-decoration: none;
         color: #ACACAC;
         font-weight: 500;
         font-size: 18px;
+        cursor: pointer;
+        padding: 5px 20px;
+        // background-color: yellow;
     }
 
     a {
@@ -319,6 +316,7 @@
         }
 
         a {
+            width: 119px;
             text-decoration: none;
             color: #ACACAC;
             font-weight: 700;
