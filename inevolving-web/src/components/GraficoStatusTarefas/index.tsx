@@ -18,11 +18,11 @@ export default function GraficoStatusTarefas({objetivo}: {objetivo:Objective}) {
     }, []);
 
     const dados = {
-        labels: ['Concluídas', 'Em Progresso', 'Atrasadas', 'Pendentes'],
+        labels: ['Concluídas', 'Em Progresso', 'Atrasadas', 'Pendentes', 'Canceladas'],
         datasets: [
             {
-                data: [objetivo.numberTasksDone, objetivo.numberTasksInProgress, objetivo.numberTasksOverdue, objetivo.numberTasksToDo], // valores em porcentagem ou quantidade
-                backgroundColor: ['#45C17F', '#1A8EE1', '#FFC93C', '#a1a1a1'],
+                data: [objetivo.numberTasksDone, objetivo.numberTasksInProgress, objetivo.numberTasksOverdue, objetivo.numberTasksToDo, objetivo.numberTasksCancelled], // valores em porcentagem ou quantidade
+                backgroundColor: ['#45C17F', '#1A8EE1', '#FFC93C', '#a1a1a1', '#FF6B6B'],
                 borderWidth: 2,
             },
         ],

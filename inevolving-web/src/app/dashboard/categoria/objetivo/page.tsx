@@ -5,8 +5,10 @@ import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import * as motion from "motion/react-client";
 import { Objective } from '@/components/interfaces/Objective';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import GraficoStatusTarefas from '@/components/GraficoStatusTarefas';
+import GraficoMotivosTarefas from '@/components/GraficoMotivosTarefas/GraficoMotivosTarefas';
+import Jarvas from '@/components/PopUp/Jarvas';
 
 export default function Objetivo() {
     const [isMobile, setIsMobile] = useState(false);
@@ -26,10 +28,12 @@ export default function Objetivo() {
         }
     }, []);
 
-    const router = useRouter();
+    // const router = useRouter();
+    const [abrirJarvas, setAbrirJarvas] = useState(false);
 
     if (!isMobile) {
         return (
+            <>
             <motion.div>
                 <Menu />
                 <motion.div
@@ -59,7 +63,7 @@ export default function Objetivo() {
                             whileTap={{ scale: 0.8 }}  
                             className={styles.containerIA}
                             onClick={() => {
-                                router.push("/desculpa")
+                                setAbrirJarvas(true);
                             }}
                         >
                             <div className={styles.textoIA}>
@@ -67,14 +71,17 @@ export default function Objetivo() {
                                     Quer turbinar seus resultados com nossa IA? 🚀
                                 </h3>
                                 <p>
-                                    Nossa inteligência artificial analisa seus dados de produtividade e te oferece sugestões práticas para alcançar seus objetivos com mais foco e eficiência.
+                                    Nossa inteligência artificial analisa seus dados de produtividade do seu objetivo e te oferece sugestões práticas para alcançar seus objetivos com mais foco e eficiência.
+                                </p>
+                                <p>
+                                    Ela vai direto ao ponto: identifica os obstáculos que estão travando seu progresso e propõe soluções personalizadas para superar cada um deles. Com o poder das suas NeuroKeys, você desbloqueia o melhor da sua performance e recebe dicas exclusivas do Jarvas para transformar intenção em ação.
                                 </p>
                             </div>
                             <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.8 }}  
                                 onClick={() => {
-                                    router.push("/desculpa")
+                                    setAbrirJarvas(true);
                                 }}
                                 className={styles.botao}
                             >
@@ -95,11 +102,21 @@ export default function Objetivo() {
                             </>
                         )}
                     </motion.div>
+                    <motion.div className={styles.containerGrafico}>
+                        {objetivo && (
+                            <GraficoMotivosTarefas objetivo={objetivo}/>
+                        )}
+                    </motion.div>
                 </motion.div>
             </motion.div>
+            {abrirJarvas && objetivo && (
+                <Jarvas voltar={() => setAbrirJarvas(false)} objetivo={objetivo}/>
+            )}
+            </>
         );
     } else {
         return (
+            <>
             <div className={styles.mob}>
                 <motion.div>
                     <Menu />
@@ -130,7 +147,7 @@ export default function Objetivo() {
                                 whileTap={{ scale: 0.8 }}  
                                 className={styles.containerIA}
                                 onClick={() => {
-                                    router.push("/desculpa")
+                                    setAbrirJarvas(true);
                                 }}
                             >
                                 <div className={styles.textoIA}>
@@ -138,14 +155,17 @@ export default function Objetivo() {
                                         Quer turbinar seus resultados com nossa IA? 🚀
                                     </h3>
                                     <p>
-                                        Nossa inteligência artificial analisa seus dados de produtividade e te oferece sugestões práticas para alcançar seus objetivos com mais foco e eficiência.
+                                        Nossa inteligência artificial analisa seus dados de produtividade do seu objetivo e te oferece sugestões práticas para alcançar seus objetivos com mais foco e eficiência.
+                                    </p>
+                                    <p>
+                                        Ela vai direto ao ponto: identifica os obstáculos que estão travando seu progresso e propõe soluções personalizadas para superar cada um deles. Com o poder das suas NeuroKeys, você desbloqueia o melhor da sua performance e recebe dicas exclusivas do Jarvas para transformar intenção em ação.
                                     </p>
                                 </div>
                                 <motion.button
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.8 }}  
                                     onClick={() => {
-                                        router.push("/desculpa")
+                                        setAbrirJarvas(true);
                                     }}
                                     className={styles.botao}
                                     style={{color: '#0B0E31'}}
@@ -167,9 +187,20 @@ export default function Objetivo() {
                                 </>
                             )}
                         </motion.div>
+                        <motion.div className={styles.containerGrafico}>
+                            {objetivo && (
+                                <GraficoMotivosTarefas objetivo={objetivo}/>
+                            )}
+                        </motion.div>
+                        <div style={{ height: '200px' }}></div>
+
                     </motion.div>
                 </motion.div>
             </div>
+            {abrirJarvas && objetivo && (
+                <Jarvas voltar={() => setAbrirJarvas(false)} objetivo={objetivo}/>
+            )}
+            </>
         );
     }
     

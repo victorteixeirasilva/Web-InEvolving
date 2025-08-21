@@ -10,8 +10,10 @@ export interface Objective {
   numberTasksDone: number;
   numberTasksInProgress: number;
   numberTasksOverdue: number;
+  numberTasksCancelled: number;
   percentageTasksToDo: number;
   percentageTasksDone: number;
   percentageTasksInProgress: number;
   percentageTasksOverdue: number;
+  percentageTasksCancelled: number;
 }
