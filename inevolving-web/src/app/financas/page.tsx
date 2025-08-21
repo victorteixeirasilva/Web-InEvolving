@@ -1156,9 +1156,11 @@ export default function Categoria() {
                                     </motion.div>
                                 </motion.div>
                                 {
-                                filtroAtivo === 1 &&
-                                Array.isArray(dadosDoMes?.transactionsCostOfLiving) && 
-                                dadosDoMes.transactionsCostOfLiving?.map((transacao) => (
+                                    filtroAtivo === 1 &&
+                                    Array.isArray(dadosDoMes?.transactionsCostOfLiving) &&
+                                    dadosDoMes.transactionsCostOfLiving?.slice()
+                                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // ordena da mais recente para a mais antiga
+                                        .map((transacao) => (
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0 }}
                                         animate={{ opacity: 1, scale: 1 }}
@@ -2142,9 +2144,11 @@ export default function Categoria() {
                                     </motion.div>
                                 </motion.div>
                                 {
-                                filtroAtivo === 1 &&
-                                Array.isArray(dadosDoMes?.transactionsCostOfLiving) && 
-                                dadosDoMes.transactionsCostOfLiving?.map((transacao) => (
+                                    filtroAtivo === 1 &&
+                                    Array.isArray(dadosDoMes?.transactionsCostOfLiving) && 
+                                    dadosDoMes.transactionsCostOfLiving?.slice()
+                                        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // ordena da mais recente para a mais antiga
+                                            .map((transacao) => (
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0 }}
                                         animate={{ opacity: 1, scale: 1 }}

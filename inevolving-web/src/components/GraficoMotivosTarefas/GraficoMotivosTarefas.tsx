@@ -118,7 +118,7 @@ export default function GraficoMotivosTarefas({objetivo}: {objetivo:Objective}){
   };
 
   const pieOptions: ChartOptions<'pie'> = {
-    responsive: true,
+    responsive: false,
     layout: {
         padding: {
             top: 0,

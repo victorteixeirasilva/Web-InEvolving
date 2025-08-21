@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { useRouter } from "next/navigation";
+import VerListaDeTarefas from "../VerListaDeTarefas";
 
 export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
     const [isMobile, setIsMobile] = useState(false);
@@ -17,6 +18,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
     const [nomeObjetivo, setNomeObjetivo] = useState(objetivo.nameObjective);
     const [descricaoObjetivo, setDescricaoObjetivo] = useState(objetivo.descriptionObjective);
     const [carregando, setCarregando] = useState(false);
+    const [verTarefas, setVerTarefas] = useState(false);
     const [jwtToken, setJwtToken] = useState('');
 
     useEffect(() => {
@@ -76,6 +78,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
     };
 
     const router = useRouter();
+
 
     if (!isMobile) {
         return (
@@ -179,6 +182,20 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                                 </div>
                             </motion.div>
                         </div>
+                        <motion.div 
+                                className={styles.inputDescrição}
+                                whileHover={{ scale: 1.02 }} 
+                                whileTap={{ scale: 0.95 }}   
+                                onClick={() => {
+                                        setVerTarefas(true);
+                                    }
+                                }     
+                        >
+                                <h3>Tarefas</h3>
+                                <div className={styles.input}>
+                                    <p className={styles.place}>Clique para ver tarefas do objetivo</p>
+                                </div>
+                            </motion.div>
                         <motion.button
                             whileHover={{ scale: 1.05 }} 
                             whileTap={{ scale: 0.8 }}
@@ -209,6 +226,11 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                     </div>
                 </div>
             </div>
+            {verTarefas && (
+                <>
+                  <VerListaDeTarefas voltar={() => setVerTarefas(false)} objetivoId={objetivo.id} />
+                </>
+            )}
             </>
         );
     } else {

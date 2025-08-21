@@ -150,7 +150,17 @@ export default function Jarvas( { voltar, objetivo }: { voltar:() => void, objet
                             />
                         </div>
                         <div>
-                            {carregando && <ClipLoader size={60} color="#0B0E31" />}
+                            {carregando && (
+                                <>
+                                    <ClipLoader size={60} color="#0B0E31" />
+                                    <h2>
+                                        Analisando... Aguarde um momento!
+                                    </h2>
+                                    <p>
+                                        Isso pode levar alguns segundos, dependendo do tamanho do seu objetivo.
+                                    </p>
+                                </>
+                            )}
                             {!carregando && neuroKeys >= 1 ? (
                                 <>
                                     {conteudo ? (
@@ -240,6 +250,133 @@ export default function Jarvas( { voltar, objetivo }: { voltar:() => void, objet
                 </div>
             </div>
             </>
+        );
+    } else {
+        return (
+            <div className={styles.mob}>
+                <div className={styles.overlay}>
+                    <div className={styles.containerPopUp}>
+                        <div className={styles.botoesTopo}>
+                            <motion.button
+                                whileHover={{ scale: 1.1 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.botaoVoltar} 
+                                onClick={voltar}
+                            >
+                                <strong>X</strong>
+                            </motion.button>
+                        </div>
+                        <h2>Olá eu sou o Jarvas!</h2>
+                        <div className={styles.conteudo}>
+                            <div>
+                                <Image
+                                    src="/AvatarDoJarvas.png"
+                                    alt="Jarvas"
+                                    width={150}
+                                    height={300}
+                                />
+                                <div>
+                                    {carregando && (
+                                        <>
+                                            <ClipLoader size={60} color="#0B0E31" />
+                                            <h2>
+                                                Analisando... Aguarde um momento!
+                                            </h2>
+                                            <p>
+                                                Isso pode levar alguns segundos, dependendo do tamanho do seu objetivo.
+                                            </p>
+                                        </>
+                                    )}
+                                    {!carregando && neuroKeys >= 1 ? (
+                                        <>
+                                            {conteudo ? (
+                                                <>
+                                                    {carregando && <ClipLoader size={60} color="#0B0E31" />}
+                                                    <div className={styles.conteudoJarvas}>
+                                                        <section className={styles.cardJarvas}>
+                                                            <ReactMarkdown>{conteudo}</ReactMarkdown>
+                                                        </section>
+                                                    </div>                                            
+                                                </>
+                                            ) : (
+                                                <>
+                                                        <h3>
+                                                            Hmmmm... Deixa eu ver...
+                                                        </h3>
+                                                        <p>
+                                                            <br />
+                                                            <br />
+                                                            Eu posso te ajudar a melhorar sua produtividade, e evoluir no seu objetivo ({objetivo.nameObjective}).
+                                                            <br />
+                                                            <br />
+                                                            Só preciso que você use uma das suas NeuroKeys para desbloquear a analise, estou ansioso para te ajudar!
+                                                        </p>
+                                                        <div className={styles.cardNeuroKey}>
+                                                            <p>
+                                                                Você possui: {neuroKeys/2} NeuroKeys
+                                                            </p> 
+                                                        </div>
+                                                        <motion.div 
+                                                            whileHover={{ scale: 1.1 }} 
+                                                            whileTap={{ scale: 0.8 }}
+                                                            className={styles.IniciarAnalise}
+                                                            onClick={handleIniciarAnalise}
+                                                        >
+                                                            <p>
+                                                                Clique aqui para iniciar!
+                                                            </p> 
+                                                        </motion.div>
+                                                </>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <>
+                                        {!carregando && (
+                                            <>
+                                            <h3>
+                                                Hmmmm... Deixa eu ver...
+                                            </h3>
+                                            <p>
+                                                <br />
+                                                <br />
+                                                Eu posso te ajudar a melhorar sua produtividade, e evoluir no seu objetivo ({objetivo.nameObjective}).
+                                                <br />
+                                                <br />
+                                                Só preciso que você use uma das suas NeuroKeys para desbloquear a analise, estou ansioso para te ajudar!
+                                                Mas infelizmente você não possui NeuroKeys suficientes, você precisa de pelo menos 1 NeuroKey para iniciar a analise.
+                                            </p>
+                                            <motion.div
+                                                whileHover={{ scale: 1.1 }} 
+                                                whileTap={{ scale: 0.8 }} 
+                                                className={styles.containerBotao}
+                                                onClick={() => {
+                                                    window.open(
+                                                        "https://api.whatsapp.com/send/?phone=%2B5511963695485&text&type=phone_number&app_absent=0",
+                                                        "_blank"
+                                                    );
+                                                }}
+                                            >
+                                                <Image 
+                                                    src="/ic_baseline-whatsapp-branco.svg"
+                                                    alt="Icone Wpp"
+                                                    width={70}
+                                                    height={70}
+                                                    className={styles.icon}
+                                                />
+                                                <div className={styles.botao}>
+                                                    Compre NeuroKeys!
+                                                </div>
+                                            </motion.div>
+                                            </>
+                                        )}
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

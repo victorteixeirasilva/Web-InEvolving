@@ -68,10 +68,21 @@
     font-size: 32px;
     
     .conteudo {
+
         padding: 30px;
         margin: auto;
         display: flex;
         flex-direction: row;
+
+        ol {
+            list-style-type: decimal-leading-zero; /* 01, 02, 03... */
+            font-size: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
 
         div {
             display: flex;
@@ -457,40 +468,6 @@
         font-size: 24px;
         
         .conteudo {
-
-            .cardJarvas {
-                font-weight: 600;
-                font-size: 16px;
-                color: #0B0E31;
-            }
-            
-            p {
-                font-weight: 600;
-                font-size: 14px;
-                color: #0B0E31;
-            }
-            
-            .cardNeuroKey {
-                margin: 20px;
-                width: 100%;
-                border-radius: 50px;
-                padding: 10px;
-                box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
-            }
-
-            .IniciarAnalise {
-                margin: 20px;
-                width: 100%;
-                border-radius: 50px;
-                padding: 10px;
-                background-color: #0B0E31;
-                
-                p {
-                    color: white;
-                }
-                // box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
-            }
-
             padding: 30px;
             
             button {
