@@ -11,6 +11,7 @@ import { Calendar, CalendarProps } from 'react-calendar';
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { useRouter } from 'next/navigation';
 import EditarTarefa from '@/components/PopUp/editarTarefa';
+import { isArray } from 'chart.js/helpers';
 
 export default function Tarefas( ) {
     const [isMobile, setIsMobile] = useState(false);
@@ -450,6 +451,12 @@ export default function Tarefas( ) {
                 alert('Você não está logado, por favor faça login novamente.');
                 router.push('/login');
             }
+
+            if (response.status === 404) {
+                setCarregando(false);
+                alert('Nenhum objetivo encontrado, por favor crie um objetivo antes de criar uma tarefa vinculada a um objetivo.');
+                return;
+            }
     
             if (!response.ok){
                 setCarregando(false);
@@ -467,6 +474,7 @@ export default function Tarefas( ) {
     
     const [abrirFiltroDeStatus, setAbrirFiltroDeStatus] = useState(false);
     
+    const [opcaoDeVisualizacao, setOpcaoDeVisualizacao] = useState(1);
 
     const cadastrarNovaTarefa = async () => {
         setCarregando(true);
@@ -570,340 +578,553 @@ export default function Tarefas( ) {
                             Adicionar Novo <strong>+</strong>
                         </motion.button>
                     </div>
-                    <motion.div className={styles.containerFiltroEBotao}>
-                        <motion.div className={styles.filtro}>
-                            <h3>
-                                Filtrar Status:
-                            </h3>
-                            <motion.button 
-                                className={styles.botaoFiltroStatus}
-                                style={filtroAtivoStatus === 1 && !primeiroCarregamento ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
-                                whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => {
-                                    setFiltroAtivoStatus(1);
-                                    setPrimeiroCarregamento(false);
-                                    setAbrirFiltroDeStatus(true);
-                                    setPrimeiroCarregamentoStatus(true);
-                                }}
-                            >
-                                Todos
-                            </motion.button>    
-                            <motion.button 
-                                className={styles.botaoFiltroStatus}  
-                                style={filtroAtivoStatus === 2 ? {backgroundColor: '#6b6b6b', color: "#FFFF"} : {}}  
-                                whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: "#FFFF" }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => {
-                                    setFiltroAtivoStatus(2);
-                                    setPrimeiroCarregamento(false);
-                                    setAbrirFiltroDeStatus(true);
-                                    setPrimeiroCarregamentoStatus(true);
-                                }}
-                            >
-                                Não Iniciada
-                            </motion.button>
-                            <motion.button 
-                                className={styles.botaoFiltroStatus}
-                                style={filtroAtivoStatus === 3 ? {backgroundColor: '#a0ff47', color: "#0B0E31"} : {}}
-                                whileHover={{ scale: 1.1, backgroundColor: '#a0ff47', color: "#0B0E31" }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => {
-                                    setFiltroAtivoStatus(3);
-                                    setPrimeiroCarregamento(false);
-                                    setAbrirFiltroDeStatus(true);
-                                    setPrimeiroCarregamentoStatus(true);
-                                }}
-                            >
-                                Em Progresso
-                            </motion.button>
-                            <motion.button 
-                                className={styles.botaoFiltroStatus} 
-                                style={filtroAtivoStatus === 4 ? {backgroundColor: "#319f43", color: "#0B0E31"} : {}}
-                                whileHover={{ scale: 1.1, backgroundColor: "#319f43", color: "#0B0E31" }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => {
-                                    setFiltroAtivoStatus(4);
-                                    setPrimeiroCarregamento(false);
-                                    setAbrirFiltroDeStatus(true);
-                                    setPrimeiroCarregamentoStatus(true);
-                                }}
-                            >
-                                Concluída
-                            </motion.button>
-                            <motion.button 
-                                className={styles.botaoFiltroStatus} 
-                                style={filtroAtivoStatus === 5 ? {backgroundColor: '#ff0004', color: "#FFFF"} : {}}
-                                whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: "#FFFF" }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => {
-                                    setFiltroAtivoStatus(5);
-                                    setPrimeiroCarregamento(false);
-                                    setAbrirFiltroDeStatus(true);
-                                    setPrimeiroCarregamentoStatus(true);
-                                }}
-                            >
-                                Cancelada
-                            </motion.button>
-                        </motion.div>
-                    </motion.div>
-                    {abrirFiltroDeStatus && (
+                    {opcaoDeVisualizacao === 1 && (
+                        <>
                         <motion.div className={styles.containerFiltroEBotao}>
                             <motion.div className={styles.filtro}>
                                 <h3>
-                                    Filtrar Data:
-                                </h3>    
+                                    Filtrar Status:
+                                </h3>
                                 <motion.button 
-                                    className={
-                                        filtroAtivo === 1 && !primeiroCarregamentoStatus ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
+                                    className={styles.botaoFiltroStatus}
+                                    style={filtroAtivoStatus === 1 && !primeiroCarregamento ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
+                                    whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
-                                        pegarTarefasDeHoje();
-                                        setPrimeiroCarregamentoStatus(false);
+                                        setFiltroAtivoStatus(1);
+                                        setPrimeiroCarregamento(false);
+                                        setAbrirFiltroDeStatus(true);
+                                        setPrimeiroCarregamentoStatus(true);
                                     }}
                                 >
-                                    Hoje
-                                </motion.button>
-                                {/* <motion.button 
-                                    className={
-                                        filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    }
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => router.push("/desculpa")}
-                                >
-                                    Mês
-                                </motion.button> */}
-                                {/* <motion.button 
-                                    className={
-                                        filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => router.push("/desculpa")}
-                                >
-                                    Ano
-                                </motion.button> */}
+                                    Todos
+                                </motion.button>    
                                 <motion.button 
-                                    className={
-                                        filtroAtivo === 4 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
+                                    className={styles.botaoFiltroStatus}  
+                                    style={filtroAtivoStatus === 2 ? {backgroundColor: '#6b6b6b', color: "#FFFF"} : {}}  
+                                    whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: "#FFFF" }} 
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
-                                        setEscolherOutraData(true);
-                                        setPrimeiroCarregamentoStatus(false);
+                                        setFiltroAtivoStatus(2);
+                                        setPrimeiroCarregamento(false);
+                                        setAbrirFiltroDeStatus(true);
+                                        setPrimeiroCarregamentoStatus(true);
                                     }}
                                 >
-                                    Outra Data
+                                    Não Iniciada
                                 </motion.button>
                                 <motion.button 
-                                    className={
-                                        filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
+                                    className={styles.botaoFiltroStatus}
+                                    style={filtroAtivoStatus === 3 ? {backgroundColor: '#a0ff47', color: "#0B0E31"} : {}}
+                                    whileHover={{ scale: 1.1, backgroundColor: '#a0ff47', color: "#0B0E31" }} 
                                     whileTap={{ scale: 0.8 }}
                                     onClick={() => {
-                                        pegarTarefasAtrasadas();
-                                        setPrimeiroCarregamentoStatus(false);
+                                        setFiltroAtivoStatus(3);
+                                        setPrimeiroCarregamento(false);
+                                        setAbrirFiltroDeStatus(true);
+                                        setPrimeiroCarregamentoStatus(true);
                                     }}
                                 >
-                                    Tarefas em Atraso
+                                    Em Progresso
+                                </motion.button>
+                                <motion.button 
+                                    className={styles.botaoFiltroStatus} 
+                                    style={filtroAtivoStatus === 4 ? {backgroundColor: "#319f43", color: "#0B0E31"} : {}}
+                                    whileHover={{ scale: 1.1, backgroundColor: "#319f43", color: "#0B0E31" }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => {
+                                        setFiltroAtivoStatus(4);
+                                        setPrimeiroCarregamento(false);
+                                        setAbrirFiltroDeStatus(true);
+                                        setPrimeiroCarregamentoStatus(true);
+                                    }}
+                                >
+                                    Concluída
+                                </motion.button>
+                                <motion.button 
+                                    className={styles.botaoFiltroStatus} 
+                                    style={filtroAtivoStatus === 5 ? {backgroundColor: '#ff0004', color: "#FFFF"} : {}}
+                                    whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: "#FFFF" }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => {
+                                        setFiltroAtivoStatus(5);
+                                        setPrimeiroCarregamento(false);
+                                        setAbrirFiltroDeStatus(true);
+                                        setPrimeiroCarregamentoStatus(true);
+                                    }}
+                                >
+                                    Cancelada
                                 </motion.button>
                             </motion.div>
                         </motion.div>
-                    )}
-                    {!carregando && filtroAtivo === 1 && !tarefasDeHoje && primeiroCarregamento && (
-                        <h1
-                            style={{padding: '20px'}}
-                        >Selecione a configuração que deseja dos filtros para buscar as tarefas!</h1> 
-                    )}
-                    {!carregando && filtroAtivo === 1 && !tarefasDeHoje && !primeiroCarregamento &&(
-                        <h1
-                            style={{padding: '20px'}}
-                        >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
-                    )}
-                    {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
-                        <h1
-                            style={{padding: '20px'}}
-                        >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
-                    )}
-                    {!carregando && filtroAtivo === 5 && !tarefasAtrasadas && (
-                        <h1
-                            style={{padding: '20px'}}
-                        >Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
-                    )}
-                    <motion.div className={styles.containerConteudo}>
-                        {carregando && (
-                            <ClipLoader size={50} color="#0B0E31" />
-                        )}
-                        {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
-                            tarefasAtrasadas
-                                .slice() // cria uma cópia para não alterar o original
-                                .sort((a, b) => a.nameTask.localeCompare(b.nameTask))
-                                .map((tarefa) => (
-                                 <motion.div
-                                    onClick={() => {
-                                        if (tarefa.blockedByObjective === null) {
-                                            setTarefaAual(tarefa);
-                                            setEditarTarefaAtual(true);
-                                        } else if (tarefa.blockedByObjective === true) {
-                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                        } else {
-                                            setTarefaAual(tarefa);
-                                            setEditarTarefaAtual(true);
-                                        }
-                                    }} 
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                    }} 
-                                    whileHover={
-                                        tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                        tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                    } 
-                                    whileTap={
-                                        tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                        tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                    } 
-                                    key={tarefa.id} 
-                                    className={ 
-                                        tarefa.blockedByObjective === null ? styles.tarefa :
-                                        tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                    }
-                                >
-                                    {tarefa?.nameTask}
-                                    <p style={
-                                            tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                            tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                            tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                            tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                            tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                        }
+                        {abrirFiltroDeStatus && (
+                            <motion.div className={styles.containerFiltroEBotao}>
+                                <motion.div className={styles.filtro}>
+                                    <h3>
+                                        Filtrar Data:
+                                    </h3>    
+                                    <motion.button 
+                                        className={
+                                            filtroAtivo === 1 && !primeiroCarregamentoStatus ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                        } 
+                                        whileHover={{ scale: 1.1 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            pegarTarefasDeHoje();
+                                            setPrimeiroCarregamentoStatus(false);
+                                        }}
                                     >
-                                       {
-                                            tarefa?.status === "DONE" ? "Concluída" :
-                                            tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                            tarefa?.status === "TODO" ? "Não Iniciada" :
-                                            tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                            tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                        }
-                                    </p>
-                                </motion.div>
-                            ))
-                        )}
-                        {!carregando && tarefasOutraData && tarefasOutraData.length > 0 && filtroAtivo === 4 && (
-                            tarefasOutraData.map((tarefa) => (
-                                <motion.div
-                                    onClick={() => {
-                                        if (tarefa.blockedByObjective === null) {
-                                            setTarefaAual(tarefa);
-                                            setEditarTarefaAtual(true);
-                                        } else if (tarefa.blockedByObjective === true) {
-                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                        } else {
-                                            setTarefaAual(tarefa);
-                                            setEditarTarefaAtual(true);
-                                        }
-                                    }} 
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                    }} 
-                                    whileHover={
-                                        tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                        tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                    } 
-                                    whileTap={
-                                        tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                        tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                    } 
-                                    key={tarefa.id} 
-                                    className={ 
-                                        tarefa.blockedByObjective === null ? styles.tarefa :
-                                        tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                    }
-                                >
-                                    {tarefa?.nameTask}
-                                    <p style={
-                                            tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                            tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                            tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                            tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                            tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                        }
+                                        Hoje
+                                    </motion.button>
+                                    <motion.button 
+                                        className={
+                                            filtroAtivo === 4 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                        } 
+                                        whileHover={{ scale: 1.1 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            setEscolherOutraData(true);
+                                            setPrimeiroCarregamentoStatus(false);
+                                        }}
                                     >
-                                       {
-                                            tarefa?.status === "DONE" ? "Concluída" :
-                                            tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                            tarefa?.status === "TODO" ? "Não Iniciada" :
-                                            tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                            tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                        }
-                                    </p>
-                                </motion.div>
-                            ))
-                        )}
-                        {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
-                            tarefasDeHoje.map((tarefa) => (
-                                 <motion.div
-                                    onClick={() => {
-                                        if (tarefa.blockedByObjective === null) {
-                                            setTarefaAual(tarefa);
-                                            setEditarTarefaAtual(true);
-                                        } else if (tarefa.blockedByObjective === true) {
-                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                        } else {
-                                            setTarefaAual(tarefa);
-                                            setEditarTarefaAtual(true);
-                                        }
-                                    }} 
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                    }} 
-                                    whileHover={
-                                        tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                        tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                    } 
-                                    whileTap={
-                                        tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                        tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                    } 
-                                    key={tarefa.id} 
-                                    className={ 
-                                        tarefa.blockedByObjective === null ? styles.tarefa :
-                                        tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                    }
-                                >
-                                    {tarefa?.nameTask}
-                                    <p style={
-                                            tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                            tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                            tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                            tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                            tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                        }
+                                        Outra Data
+                                    </motion.button>
+                                    <motion.button 
+                                        className={
+                                            filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                        } 
+                                        whileHover={{ scale: 1.1 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            pegarTarefasAtrasadas();
+                                            setPrimeiroCarregamentoStatus(false);
+                                        }}
                                     >
-                                       {
-                                            tarefa?.status === "DONE" ? "Concluída" :
-                                            tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                            tarefa?.status === "TODO" ? "Não Iniciada" :
-                                            tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                            tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                        }
-                                    </p>
+                                        Tarefas em Atraso
+                                    </motion.button>
                                 </motion.div>
-                        )))}
+                            </motion.div>
+                        )}
+                        </>
+                    )}
+                    <motion.div className={styles.containerFiltroEBotao}>
+                        <motion.div className={styles.filtro}>
+                            <motion.button 
+                                className={
+                                    opcaoDeVisualizacao === 1 ? styles.botaoFiltroKAtivo : styles.botaoFiltroK
+                                } 
+                                whileHover={{ scale: 1.1 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => setOpcaoDeVisualizacao(1)}
+                            >
+                                <Image 
+                                    src="../icons8-lista-100.png"
+                                    alt='Icone Lista'
+                                    width={35}
+                                    height={35}
+                                />
+                            </motion.button>
+                            <motion.button 
+                                className={
+                                    opcaoDeVisualizacao === 2 ? styles.botaoFiltroKAtivo : styles.botaoFiltroK
+                                } 
+                                whileHover={{ scale: 1.1 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => {
+                                    setOpcaoDeVisualizacao(2);
+                                    setFiltroAtivoStatus(1);
+                                    setFiltroAtivo(1);
+                                    pegarTarefasDeHoje();
+                                }}
+                            >
+                                <Image 
+                                    src="../icons8-kanban-100.png"
+                                    alt='Icone Kanban'
+                                    width={30}
+                                    height={30}
+                                />
+                            </motion.button>
+                        </motion.div>
                     </motion.div>
+                    {opcaoDeVisualizacao === 1 && (
+                        <div>
+                            {!carregando && filtroAtivo === 1 && !tarefasDeHoje && primeiroCarregamento && (
+                                <h1
+                                    style={{padding: '20px'}}
+                                >Selecione a configuração que deseja dos filtros para buscar as tarefas!</h1> 
+                            )}
+                            {!carregando && filtroAtivo === 1 && !tarefasDeHoje && !primeiroCarregamento &&(
+                                <h1
+                                    style={{padding: '20px'}}
+                                >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                            )}
+                            {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
+                                <h1
+                                    style={{padding: '20px'}}
+                                >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
+                            )}
+                            {!carregando && filtroAtivo === 5 && !tarefasAtrasadas && (
+                                <h1
+                                    style={{padding: '20px'}}
+                                >Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
+                            )}
+                            <motion.div className={styles.containerConteudo}>
+                                {carregando && (
+                                    <ClipLoader size={50} color="#0B0E31" />
+                                )}
+                                {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
+                                    tarefasAtrasadas
+                                        .slice() // cria uma cópia para não alterar o original
+                                        .sort((a, b) => a.nameTask.localeCompare(b.nameTask))
+                                        .map((tarefa) => (
+                                        <motion.div
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.4,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }} 
+                                            whileHover={
+                                                tarefa.blockedByObjective === null ? { scale: 1.03 } :
+                                                tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
+                                            } 
+                                            whileTap={
+                                                tarefa.blockedByObjective === null ? { scale: 0.8 } :
+                                                tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
+                                            } 
+                                            key={tarefa.id} 
+                                            className={ 
+                                                tarefa.blockedByObjective === null ? styles.tarefa :
+                                                tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
+                                            }
+                                        >
+                                            {tarefa?.nameTask}
+                                            <p style={
+                                                    tarefa?.status === "DONE" ? { color: '#319f43' } :
+                                                    tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
+                                                    tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
+                                                    tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
+                                                    tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
+                                                }
+                                            >
+                                            {
+                                                    tarefa?.status === "DONE" ? "Concluída" :
+                                                    tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
+                                                    tarefa?.status === "TODO" ? "Não Iniciada" :
+                                                    tarefa?.status === "CANCELLED" ? "Cancelada" :
+                                                    tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
+                                                }
+                                            </p>
+                                        </motion.div>
+                                    ))
+                                )}
+                                {!carregando && tarefasOutraData && tarefasOutraData.length > 0 && filtroAtivo === 4 && (
+                                    tarefasOutraData.map((tarefa) => (
+                                        <motion.div
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.4,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }} 
+                                            whileHover={
+                                                tarefa.blockedByObjective === null ? { scale: 1.03 } :
+                                                tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
+                                            } 
+                                            whileTap={
+                                                tarefa.blockedByObjective === null ? { scale: 0.8 } :
+                                                tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
+                                            } 
+                                            key={tarefa.id} 
+                                            className={ 
+                                                tarefa.blockedByObjective === null ? styles.tarefa :
+                                                tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
+                                            }
+                                        >
+                                            {tarefa?.nameTask}
+                                            <p style={
+                                                    tarefa?.status === "DONE" ? { color: '#319f43' } :
+                                                    tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
+                                                    tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
+                                                    tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
+                                                    tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
+                                                }
+                                            >
+                                            {
+                                                    tarefa?.status === "DONE" ? "Concluída" :
+                                                    tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
+                                                    tarefa?.status === "TODO" ? "Não Iniciada" :
+                                                    tarefa?.status === "CANCELLED" ? "Cancelada" :
+                                                    tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
+                                                }
+                                            </p>
+                                        </motion.div>
+                                    ))
+                                )}
+                                {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
+                                    tarefasDeHoje.map((tarefa) => (
+                                        <motion.div
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.4,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }} 
+                                            whileHover={
+                                                tarefa.blockedByObjective === null ? { scale: 1.03 } :
+                                                tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
+                                            } 
+                                            whileTap={
+                                                tarefa.blockedByObjective === null ? { scale: 0.8 } :
+                                                tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
+                                            } 
+                                            key={tarefa.id} 
+                                            className={ 
+                                                tarefa.blockedByObjective === null ? styles.tarefa :
+                                                tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
+                                            }
+                                        >
+                                            {tarefa?.nameTask}
+                                            <p style={
+                                                    tarefa?.status === "DONE" ? { color: '#319f43' } :
+                                                    tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
+                                                    tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
+                                                    tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
+                                                    tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
+                                                }
+                                            >
+                                            {
+                                                    tarefa?.status === "DONE" ? "Concluída" :
+                                                    tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
+                                                    tarefa?.status === "TODO" ? "Não Iniciada" :
+                                                    tarefa?.status === "CANCELLED" ? "Cancelada" :
+                                                    tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
+                                                }
+                                            </p>
+                                        </motion.div>
+                                )))}
+                            </motion.div>
+                        </div>
+                    )}
+                    {opcaoDeVisualizacao === 2 && (
+                        <div className={styles.kanban}>
+                        <motion.div className={styles.containerConteudo}>
+                            <div className={styles.coluna}>
+                                <div className={styles.tituloColuna} style={{backgroundColor: '#6b6b6b', color: "#FFFF"}}>
+                                    <h3>Não Iniciadas</h3>
+                                </div>
+                                {(tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "TODO"))?.length === 0 && (
+                                    <div className={styles.livro}>
+                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                    </div>
+                                )}
+                                {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "TODO"))?.length >= 1 && (
+                                    tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "TODO").map((tarefa) => (
+                                        <motion.div 
+                                            whileHover={{ scale: 1.05 }} 
+                                            whileTap={{ scale: 0.9 }}
+                                            key={tarefa.id} 
+                                            className={styles.livro}
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                        >
+                                            <h3>{tarefa.nameTask}</h3>
+                                        </motion.div>
+                                    ))
+                                )}
+                            </div>
+                            <div className={styles.coluna}>
+                                <div className={styles.tituloColuna} style={{backgroundColor: '#a0ff47', color: "#0B0E31"}}>
+                                    <h3>Em Progresso</h3>
+                                </div>
+                                {(tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length === 0 && (
+                                    <div className={styles.livro}>
+                                        <h3>No momento você não tem tarefas em progresso</h3>
+                                    </div>
+                                )}
+                                {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length >= 1 && (
+                                    tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "IN PROGRESS").map((tarefa) => (
+                                        <motion.div 
+                                            whileHover={{ scale: 1.05 }} 
+                                            whileTap={{ scale: 0.9 }}
+                                            key={tarefa.id} 
+                                            className={styles.livro}
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                        >
+                                            <h3>{tarefa.nameTask}</h3>
+                                        </motion.div>
+                                    ))
+                                )}
+                            </div>
+                            <div className={styles.coluna}>
+                                <div className={styles.tituloColuna} style={{backgroundColor: "#319f43", color: "#0B0E31"}}>
+                                    <h3>Concluídas</h3>
+                                </div>
+                                {(tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "DONE"))?.length === 0 && (
+                                    <div className={styles.livro}>
+                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                    </div>
+                                )}
+                                {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "DONE"))?.length >= 1 && (
+                                    tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "DONE").map((tarefa) => (
+                                        <motion.div 
+                                            whileHover={{ scale: 1.05 }} 
+                                            whileTap={{ scale: 0.9 }}
+                                            key={tarefa.id} 
+                                            className={styles.livro}
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                        >
+                                            <h3>{tarefa.nameTask}</h3>
+                                        </motion.div>
+                                    ))
+                                )}
+                            </div>
+                            <div className={styles.coluna}>
+                                <div className={styles.tituloColuna} style={{backgroundColor: '#ffbf00', color: "#FFFF"}}>
+                                    <h3>Atrasadas</h3>
+                                </div>
+                                {(tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "LATE"))?.length === 0 && (
+                                    <div className={styles.livro}>
+                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                    </div>
+                                )}
+                                {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "LATE"))?.length >= 1 && (
+                                    tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "LATE").map((tarefa) => (
+                                        <motion.div 
+                                            whileHover={{ scale: 1.05 }} 
+                                            whileTap={{ scale: 0.9 }}
+                                            key={tarefa.id} 
+                                            className={styles.livro}
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                        >
+                                            <h3>{tarefa.nameTask}</h3>
+                                        </motion.div>
+                                    ))
+                                )}
+                            </div>
+                            <div className={styles.coluna}>
+                                <div className={styles.tituloColuna} style={{backgroundColor: '#ff0004', color: "#FFFF"}}>
+                                    <h3>Canceladas</h3>
+                                </div>
+                                {(tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "CANCELLED"))?.length === 0 && (
+                                    <div className={styles.livro}>
+                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                    </div>
+                                )}
+                                {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "CANCELLED"))?.length >= 1 && (
+                                    tarefasDeHoje?.slice()
+                                    .filter((tarefa) => tarefa.status === "CANCELLED").map((tarefa) => (
+                                        <motion.div 
+                                            whileHover={{ scale: 1.05 }} 
+                                            whileTap={{ scale: 0.9 }}
+                                            key={tarefa.id} 
+                                            className={styles.livro}
+                                            onClick={() => {
+                                                if (tarefa.blockedByObjective === null) {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                } else if (tarefa.blockedByObjective === true) {
+                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                } else {
+                                                    setTarefaAual(tarefa);
+                                                    setEditarTarefaAtual(true);
+                                                }
+                                            }} 
+                                        >
+                                            <h3>{tarefa.nameTask}</h3>
+                                        </motion.div>
+                                    ))
+                                )}
+                            </div>
+                        </motion.div>
+                        </div>
+                    )}
                 </motion.div>
             </motion.div>
             {escolherOutraData && (

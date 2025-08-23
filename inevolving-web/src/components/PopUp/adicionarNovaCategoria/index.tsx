@@ -154,6 +154,11 @@ export default function AdicionarNovaCategoria() {
                 alert('Você não está logado, por favor faça login novamente.');
             }
             
+            if (response.status === 404) {
+                setCarregando(false);
+                alert('Nenhum objetivo encontrado, por favor crie um objetivo antes de criar uma tarefa vinculada a um objetivo.');
+                return;
+            }
     
             if (!response.ok){
                 setCarregando(false);
