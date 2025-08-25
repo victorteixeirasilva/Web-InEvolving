@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './cardInputCadastro.module.scss';
-import BotaoLogin from '../BotaoLogin';
 import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
 import { motion } from "motion/react";
@@ -142,7 +141,24 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
                         
                     </p>
     
-                    <BotaoLogin texto='Concluido' tipo='3' onClick={handleCadastro}/>
+                    {/* <BotaoLogin texto='Concluido' tipo='3' onClick={handleCadastro}/> */}
+                    <motion.button 
+                            whileTap={{ scale: 0.8 }}
+                            disabled={carregando} 
+                            type="submit" 
+                            className={styles.botaoGrande} 
+                            onClick={handleCadastro}
+                    >
+                        {carregando && <ClipLoader size={10} color="#ffffff" />}
+                        <span 
+                            style={{ 
+                                marginLeft: carregando ? '8px' : '0'
+                            }}
+                        >
+                            {carregando ? 'Cadastrando...' : 'Cadastrar'}
+                        </span>
+                        {/* Concluido */}
+                    </motion.button>
                     
                 </div>
             </div>

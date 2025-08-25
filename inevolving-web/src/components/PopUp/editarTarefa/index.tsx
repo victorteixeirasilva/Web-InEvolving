@@ -369,10 +369,47 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
 
             }
             
+            if (tarefa.dateTask !== dataTarefa?.toISOString()) {
+                const response = await fetch(
+                    'https://api.inevolving.inovasoft.tech/auth/api/tasks/date/'+tarefa.id+'/'+dataTarefa?.toISOString().split('T')[0], 
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        },
+                    });
+            
+                    
+                if (response.status === 401){
+                    setCarregando(false);
+                    alert('Você não está logado, por favor faça login novamente.');
+                    router.push('/login');
+                }
+            
+                if (!response.ok){
+                    setCarregando(false);
+                    alert('Erro ao atualizar data da tarefa');
+                }
+
+            }
+            
             setCarregando(false);
             // window.location.reload();
             voltar();
     }
+
+    const [dataTarefa, setDataTarefa] = useState<Date | null>(new Date);
+    const [escolherDataTarefa, setEscolherDataTarefa] = useState(false);
+    
+    const SetDataNovaTarefa : CalendarProps['onChange'] = (value) => {
+        if (value instanceof Date) {
+            setDataTarefa(value);
+        } else if (Array.isArray(value) && value[0] instanceof Date) {
+            setDataTarefa(value[0]); // ou outro tratamento para intervalo
+        }
+    };
+    
 
     if (!isMobile) {
         return (
@@ -481,6 +518,18 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     />
                                 </div>
                             </motion.div>
+                            <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
+                            <div className={styles.containerDataFinal}>
+                                <motion.div 
+                                        className={styles.inputDataFinal}
+                                        whileHover={{ scale: 1.06 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        style={{marginTop: '0px'}}
+                                        onClick={() => setEscolherDataTarefa(true)}
+                                    >
+                                        Escolher Data 
+                                </motion.div>
+                            </div>
                             <motion.div 
                                 className={styles.inputDescrição}
                                 // whileHover={{ scale: 1.02 }} 
@@ -943,6 +992,49 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                         </div>
                     </div>
                 )}
+                {escolherDataTarefa && (
+                    <div className={styles.containerPopUp}>
+                        <motion.button
+                            whileHover={{ scale: 1.06 }} 
+                            whileTap={{ scale: 0.8 }}
+                            className={styles.botaoVoltar} 
+                            onClick={() => setEscolherDataTarefa(false)}
+                        >
+                            <strong>Voltar</strong>
+                        </motion.button>
+                        <div className={styles.conteudo}>
+                            <Calendar
+                                className={styles.calendar}
+                                selectRange={false}
+                                value={dataTarefa}
+                                onChange={SetDataNovaTarefa}
+                            />
+                            {dataTarefa && (
+                                <h3>Data selecionada: {dataTarefa.toLocaleDateString()}</h3>
+                            )}
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                onClick={() => setEscolherDataTarefa(false)}
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Selecionar
+                                <Image 
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
+                                />
+                            </motion.button>
+                        </div>
+                    </div>
+                )}
             </div>
             </>
         );
@@ -1050,6 +1142,18 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         />
                                     </div>
                                 </motion.div>
+                                <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
+                                <div className={styles.containerDataFinal}>
+                                    <motion.div 
+                                        className={styles.inputDataFinal}
+                                        whileHover={{ scale: 1.06 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        style={{marginTop: '0px'}}
+                                        onClick={() => setEscolherDataTarefa(true)}
+                                    >
+                                        Escolher Data
+                                    </motion.div>
+                                </div>
                                 <motion.div 
                                     className={styles.inputDescrição}
                                     // whileHover={{ scale: 1.02 }} 
@@ -1523,6 +1627,49 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                             </div>
                         </div>
                     </div>
+                    )}
+                    {escolherDataTarefa && (
+                        <div className={styles.containerPopUpEdit}>
+                            <motion.button
+                                whileHover={{ scale: 1.06 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.botaoVoltar} 
+                                onClick={() => setEscolherDataTarefa(false)}
+                            >
+                                <strong>Voltar</strong>
+                            </motion.button>
+                            <div className={styles.conteudo}>
+                                <Calendar
+                                    className={styles.calendar}
+                                    selectRange={false}
+                                    value={dataTarefa}
+                                    onChange={SetDataNovaTarefa}
+                                />
+                                {dataTarefa && (
+                                    <h3>Data selecionada: {dataTarefa.toLocaleDateString()}</h3>
+                                )}
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => setEscolherDataTarefa(false)}
+                                >
+                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                    <span 
+                                        style={{ 
+                                            marginLeft: carregando ? '8px' : '0'
+                                        }}
+                                    ></span>
+                                    Selecionar
+                                    <Image 
+                                        className={styles.concluido}
+                                        src="/checkIcon.svg"
+                                        alt="Icone Check"
+                                        width={23}
+                                        height={18}
+                                    />
+                                </motion.button>
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>

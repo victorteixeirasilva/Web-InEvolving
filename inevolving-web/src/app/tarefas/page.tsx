@@ -74,6 +74,45 @@ export default function Tarefas( ) {
         }
     };
 
+    const pegarTarefasDeHojeKanban = async () => {
+        const hojeLocal = new Date();
+        const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
+
+        setCarregando(true);
+        setTarefasDeHoje(null);
+
+        const response = await fetch(
+                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+ dataFormatada, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                }
+            );
+    
+            const json: Tarefa_Modulo_Tarefas[] = await response.json();
+    
+            if (response.status === 401){
+                setCarregando(false);
+                router.push('/login');
+                alert('Você não está logado, por favor faça login novamente.');
+            }
+
+            if (!response.ok){
+                setCarregando(false);
+                return;
+                // alert('Erro ao tarefas, data: ' + new Date().toISOString().split('T')[0]);
+            }
+            
+            setTarefasDeHoje(json);
+            setCarregando(false);
+
+
+
+    }
+
     const pegarTarefasDeHoje = async () => {
         const hojeLocal = new Date();
         const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
@@ -454,7 +493,7 @@ export default function Tarefas( ) {
 
             if (response.status === 404) {
                 setCarregando(false);
-                alert('Nenhum objetivo encontrado, por favor crie um objetivo antes de criar uma tarefa vinculada a um objetivo.');
+                alert('Nenhum objetivo encontrado, por favor crie um objetivo antes de criar uma tarefa.');
                 return;
             }
     
@@ -550,6 +589,8 @@ export default function Tarefas( ) {
             setEscolherOutraData(true);
         } else if (filtroAtivo === 5) {
             pegarTarefasAtrasadas();
+        } else if (opcaoDeVisualizacao === 2) {
+            pegarTarefasDeHojeKanban();
         }
     }
 
@@ -732,9 +773,7 @@ export default function Tarefas( ) {
                                 whileTap={{ scale: 0.8 }}
                                 onClick={() => {
                                     setOpcaoDeVisualizacao(2);
-                                    setFiltroAtivoStatus(1);
-                                    setFiltroAtivo(1);
-                                    pegarTarefasDeHoje();
+                                    pegarTarefasDeHojeKanban();
                                 }}
                             >
                                 <Image 
@@ -949,7 +988,8 @@ export default function Tarefas( ) {
                                 {(tarefasDeHoje?.slice()
                                     .filter((tarefa) => tarefa.status === "TODO"))?.length === 0 && (
                                     <div className={styles.livro}>
-                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                        {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                        <h3>---</h3>
                                     </div>
                                 )}
                                 {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
@@ -985,7 +1025,8 @@ export default function Tarefas( ) {
                                 {(tarefasDeHoje?.slice()
                                     .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length === 0 && (
                                     <div className={styles.livro}>
-                                        <h3>No momento você não tem tarefas em progresso</h3>
+                                        {/* <h3>No momento você não tem tarefas em progresso</h3> */}
+                                        <h3>---</h3>
                                     </div>
                                 )}
                                 {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
@@ -1021,7 +1062,8 @@ export default function Tarefas( ) {
                                 {(tarefasDeHoje?.slice()
                                     .filter((tarefa) => tarefa.status === "DONE"))?.length === 0 && (
                                     <div className={styles.livro}>
-                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                        {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                        <h3>---</h3>
                                     </div>
                                 )}
                                 {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
@@ -1057,7 +1099,8 @@ export default function Tarefas( ) {
                                 {(tarefasDeHoje?.slice()
                                     .filter((tarefa) => tarefa.status === "LATE"))?.length === 0 && (
                                     <div className={styles.livro}>
-                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                        {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                        <h3>---</h3>
                                     </div>
                                 )}
                                 {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
@@ -1093,7 +1136,8 @@ export default function Tarefas( ) {
                                 {(tarefasDeHoje?.slice()
                                     .filter((tarefa) => tarefa.status === "CANCELLED"))?.length === 0 && (
                                     <div className={styles.livro}>
-                                        <h3>No momento você não tem tarefas não iniciadas</h3>
+                                        {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                        <h3>---</h3>
                                     </div>
                                 )}
                                 {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
@@ -1189,6 +1233,8 @@ export default function Tarefas( ) {
                                     setEscolherOutraData(true);
                                 } else if (filtroAtivo === 5) {
                                     pegarTarefasAtrasadas();
+                                } else if (opcaoDeVisualizacao === 2) {
+                                    pegarTarefasDeHojeKanban();
                                 }
                             }}
                         >
@@ -1270,18 +1316,18 @@ export default function Tarefas( ) {
                                     />
                                 </div>
                             </motion.div>
-                                <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
-                                <div className={styles.containerDataFinal}>
-                                    <motion.div 
-                                        className={styles.inputDataFinal}
-                                        whileHover={{ scale: 1.06 }} 
-                                        whileTap={{ scale: 0.8 }}
-                                        style={{marginTop: '0px'}}
-                                        onClick={() => setEscolherDataDaNovaTarefa(true)}
-                                    >
-                                        {dataNovaTarefa && (<strong>{dataNovaTarefa.toLocaleDateString()}</strong>)} 
-                                    </motion.div>
-                                </div>
+                            <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
+                            <div className={styles.containerDataFinal}>
+                                <motion.div 
+                                    className={styles.inputDataFinal}
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    style={{marginTop: '0px'}}
+                                    onClick={() => setEscolherDataDaNovaTarefa(true)}
+                                >
+                                    {dataNovaTarefa && (<strong>{dataNovaTarefa.toLocaleDateString()}</strong>)} 
+                                </motion.div>
+                            </div>
                             <div className={styles.containerInputData}
                                 onClick={() => setIsTarefaFrequente(!isTarefaFrequente)}
                             >
@@ -1626,6 +1672,11 @@ export default function Tarefas( ) {
                     () => {
                         setEditarTarefaAtual(true);
                         setTarefaAual(null);
+
+                        if (opcaoDeVisualizacao === 2) {
+                            pegarTarefasDeHojeKanban();
+                        }
+
                         if (filtroAtivo === 1) {
                             pegarTarefasDeHoje();
                         } else if (filtroAtivo === 4) {

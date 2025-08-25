@@ -156,7 +156,7 @@ export default function AdicionarNovaCategoria() {
             
             if (response.status === 404) {
                 setCarregando(false);
-                alert('Nenhum objetivo encontrado, por favor crie um objetivo antes de criar uma tarefa vinculada a um objetivo.');
+                alert('Nenhum objetivo encontrado, por favor crie um objetivo antes de vincular eles a uma categoria.');
                 return;
             }
     

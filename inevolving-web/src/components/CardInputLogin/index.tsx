@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { ClipLoader } from 'react-spinners';
 import { motion } from "motion/react";
 import EsqueciSenha from '../PopUp/esqueciSenha';
+import ConfirmeEmail from '../PopUp/confirmeEmail';
 
 
 export default function CardInputLogin() {
@@ -24,6 +25,7 @@ export default function CardInputLogin() {
     const router = useRouter();
     const [carregando, setCarregando] = useState(false);
     const [verPopUpEsqueceuSenha, setVerPopUpEsqueceuSenha] = useState(false);
+    const [verPopUpConfrimEmail, setVerPopUpConfrimEmail] = useState(false);
 
 
     const handleLogin = async () => {
@@ -39,11 +41,11 @@ export default function CardInputLogin() {
 
         const data = await response.json();
 
-        if (response.status === 401){
-            setCarregando(false);
-            router.push('/login');
-            alert('Você não está logado, por favor faça login novamente.');
-        }
+        // if (response.status === 401){
+        //     setCarregando(false);
+        //     router.push('/login');
+        //     // alert('Você não está logado, por favor faça login novamente.');
+        // }
 
         if (response.ok){
 
@@ -55,8 +57,11 @@ export default function CardInputLogin() {
             setCarregando(false);
             router.push('/dashboard');
         } else {
-            alert(data.message);
-            console.error('Erro no login:', data.message);
+            // alert(data.message);
+            // console.error('Erro no login:', data.message);
+            if (data.message === "Confirme seu email, para fazer login.") {
+                setVerPopUpConfrimEmail(true);
+            }
         }
     };
 
@@ -115,6 +120,9 @@ export default function CardInputLogin() {
             </div>
             {verPopUpEsqueceuSenha && (
                 <EsqueciSenha voltar={() => setVerPopUpEsqueceuSenha(false)}/>
+            )}
+            {verPopUpConfrimEmail && (
+                <ConfirmeEmail voltar={() => setVerPopUpConfrimEmail(false)}/>
             )}
             </>
         )}
@@ -180,6 +188,9 @@ export default function CardInputLogin() {
             </motion.div>
             {verPopUpEsqueceuSenha && (
                 <EsqueciSenha voltar={() => setVerPopUpEsqueceuSenha(false)}/>
+            )}
+            {verPopUpConfrimEmail && (
+                <ConfirmeEmail voltar={() => setVerPopUpConfrimEmail(false)}/>
             )}
             </>
         )}
