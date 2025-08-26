@@ -13,8 +13,17 @@ import EditarTarefa from "../PopUp/editarTarefa";
 
 export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
 
-    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
-        parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
+    const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
+
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setTipoMenuDesk(
+                localStorage.getItem('tipoMenuDesk') ? 
+                parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+        }
+    }, []);
 
     const [isMobile, setIsMobile] = useState(false);
     

@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = "force-dynamic";
+
 // import { useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
@@ -11,17 +13,20 @@ import { useEffect, useState } from "react";
 
 export default function Categoria( ) {
     const [isMobile, setIsMobile] = useState(false);
-    const [tipoMenuDesk, setTipoMenuDesk] = useState(1);
-        // const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
-        // parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
+    const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
+
     
     useEffect(() => {
-        const largura = window.innerWidth;
-        setIsMobile(largura <= 1024);
-        setTipoMenuDesk(
-            localStorage.getItem('tipoMenuDesk') ? 
-            parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
-        );
+        if (typeof window !== 'undefined') {
+
+            const largura = window.innerWidth;
+            setIsMobile(largura <= 1024);
+
+            setTipoMenuDesk(
+                localStorage.getItem('tipoMenuDesk') ? 
+                parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+        }
     }, []);
 
 

@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
@@ -16,8 +18,16 @@ import { isArray } from 'chart.js/helpers';
 export default function Tarefas( ) {
     const [isMobile, setIsMobile] = useState(false);
 
-    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
-        parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
+    const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setTipoMenuDesk(
+                localStorage.getItem('tipoMenuDesk') ? 
+                parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+        }
+    }, []);
     
     useEffect(() => {
         const largura = window.innerWidth;

@@ -28,8 +28,17 @@ export default function Menu() {
     const router = useRouter();
     const [verMenu, setVerMenu] = useState(false);
     const [verMenuResumo, setVerMenuResumo] = useState(false);
-    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
-        parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
+    const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
+
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setTipoMenuDesk(
+                localStorage.getItem('tipoMenuDesk') ? 
+                parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+        }
+    }, []);
     
 
     if (!isMobile) {
