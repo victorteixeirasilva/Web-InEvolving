@@ -13,6 +13,9 @@ import { Objective } from '@/components/interfaces/Objective';
 
 export default function Categoria( ) {
     const [isMobile, setIsMobile] = useState(false);
+
+    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
+    parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
     
     useEffect(() => {
         const largura = window.innerWidth;
@@ -38,7 +41,7 @@ export default function Categoria( ) {
 
     if (!isMobile) {
         return (
-            <motion.div>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}

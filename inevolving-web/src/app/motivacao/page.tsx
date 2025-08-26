@@ -92,10 +92,13 @@ export default function Categoria( ) {
         pegarSonhos();
     }, [pegarSonhos]);
 
+    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
+    parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
+
     if (!isMobile) {
         return (
             <>
-            <motion.div>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}

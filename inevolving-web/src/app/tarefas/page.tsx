@@ -15,6 +15,9 @@ import { isArray } from 'chart.js/helpers';
 
 export default function Tarefas( ) {
     const [isMobile, setIsMobile] = useState(false);
+
+    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
+        parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
     
     useEffect(() => {
         const largura = window.innerWidth;
@@ -597,7 +600,7 @@ export default function Tarefas( ) {
     if (!isMobile) {
         return (
             <>
-            <motion.div>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}

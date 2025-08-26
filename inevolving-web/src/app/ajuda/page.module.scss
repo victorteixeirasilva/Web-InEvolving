@@ -219,3 +219,20 @@
     }
 
 }
+
+.containerTipoMenu2 {
+    .container {
+        overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
+
+        position: fixed;
+        z-index: 3;
+        margin-top: 70px;
+        margin-left: 0px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+    }
+}

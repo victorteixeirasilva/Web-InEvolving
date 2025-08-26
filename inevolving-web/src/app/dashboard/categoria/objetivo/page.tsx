@@ -5,13 +5,15 @@ import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import * as motion from "motion/react-client";
 import { Objective } from '@/components/interfaces/Objective';
-// import { useRouter } from 'next/navigation';
 import GraficoStatusTarefas from '@/components/GraficoStatusTarefas';
 import GraficoMotivosTarefas from '@/components/GraficoMotivosTarefas/GraficoMotivosTarefas';
 import Jarvas from '@/components/PopUp/Jarvas';
 
 export default function Objetivo() {
     const [isMobile, setIsMobile] = useState(false);
+
+    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
+    parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
     
     useEffect(() => {
         const largura = window.innerWidth;
@@ -34,7 +36,7 @@ export default function Objetivo() {
     if (!isMobile) {
         return (
             <>
-            <motion.div>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}

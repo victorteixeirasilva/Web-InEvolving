@@ -263,3 +263,147 @@
     }
 
 }
+
+.containerTipoMenu2 {
+
+    .calendar {
+        scale: 1;
+        border: none;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .containerMenuResumo {
+        margin-top: 0px;
+        position: fixed;       
+        top: 0;                
+        right: 0;              
+        width: 100%;
+        height: 100%;         
+        background-color: #F4F4FE;
+        z-index: 4;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .voltar {
+            width: 5%;
+            height: 100%;
+            margin: 0px;
+            margin-top: 20px;
+            padding: 10px;
+            // background-color: #0B0E31;
+            text-align: center;
+            align-content: top;
+            cursor: pointer;
+        }
+
+        h2 {
+            cursor: pointer;
+            scale: 1;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            color: #0B0E31;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+
+    .containerTarefasDoDia {
+        scale: 1;
+        width: 50%;
+        padding: 20px;
+    }
+
+    .tarefa {
+        margin-top: 10px;
+        padding: 0px 0px 0px 0px;
+        display: flex;
+        flex-direction: row;
+        // width: 170px;
+        width: 100%;
+        height: 60px;
+        border-radius: 20px;
+        background-color: #FFFFFF;
+        align-items: center;
+        align-content: center;
+        box-shadow: 0px 0px 8.7px 0px #00000040;
+
+        .icone {
+            margin-right: 10px;
+            margin-left: 20px;
+        }
+
+        p {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            align-items: center;
+            align-content: center;
+            width: 100%;
+            height: 100%;
+            // display: -webkit-box;
+            // -webkit-line-clamp: 2; // número de linhas visíveis
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .alerta {
+        margin: auto;
+        margin-top: 15px;
+        padding: 20px 20px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        width: 170px;
+        height: 170px;
+        border-radius: 20px;
+        background-color: #FFFFFF;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        box-shadow: 0px 0px 8.7px 0px #00000040;
+
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            align-items: center;
+            align-content: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .verTarefas {
+        margin-top: 15px;
+        width: 100%;
+        position: relative;       
+        top: 0;                
+        
+        .botao{
+            border-radius: 20px;
+            background-color: #FBF7ED;
+            padding: 10px 10px;
+            border: none;
+            color: #0B0E31;
+            width: 60%;
+            margin-left: 40%;
+            margin-bottom: 30px;
+
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .seta {
+            margin-left: 5px;
+        }
+
+    }
+
+}

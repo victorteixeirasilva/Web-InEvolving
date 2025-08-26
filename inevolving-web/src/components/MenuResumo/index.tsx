@@ -13,6 +13,9 @@ import EditarTarefa from "../PopUp/editarTarefa";
 
 export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
 
+    const tipoMenuDesk = localStorage.getItem('tipoMenuDesk') ? 
+        parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1;
+
     const [isMobile, setIsMobile] = useState(false);
     
     useEffect(() => {
@@ -34,13 +37,17 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
             } else {
                 setLimiteTarefas(6);
             }
+
+            if (tipoMenuDesk === 2) {
+                setLimiteTarefas(6);
+            }
         };
 
         atualizarLimite(); // define ao carregar
         window.addEventListener('resize', atualizarLimite); // atualiza ao redimensionar
 
         return () => window.removeEventListener('resize', atualizarLimite);
-    }, []);
+    }, [tipoMenuDesk]);
 
     const handleDateChange : CalendarProps['onChange'] = (value) => {
         if (value instanceof Date) {
@@ -102,83 +109,35 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
             pegarTarefasDoDia();
         }
     }, [selectedDate, jwtToken, pegarTarefasDoDia]);
-
-
     
 
     if (!isMobile) {
-
-        return (
-            <>
-            <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                    duration: 0.4,
-                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
-                }} 
-                className={styles.containerMenuResumo}>
-                <Calendar
-                    className={styles.calendar}
-                    selectRange={false}
-                    onChange={handleDateChange}
-                    value={selectedDate}
-                />
-                <h2>Tarefas do Dia</h2>
-                <div className={styles.containerTarefasDoDia}>
-                    {carregandoTarefas && (
-                        <ClipLoader size={35} color="#0B0E31" />
-                    )}
-                    {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, limiteTarefas).map((tarefa) => (
-                        <motion.div 
-                            key={tarefa.id}
-                            className={styles.tarefa}
-                            initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                            }} 
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.8 }}
-                            onClick={() => {
-                                setTarefaAtual(tarefa);
-                                setEditarTarefa(true);
-                            }} 
-                        >
-                            <Image
-                                className={styles.icone} 
-                                src="/iconeTarefasAzul.svg"
-                                alt="Icone da Tarefa"
-                                width={16}
-                                height={20}
-                                />
-                            <p>{tarefa.nameTask}</p>
-                            <IconeStatus status={tarefa.status}/>
-                        </motion.div>
-                    ))}
-                    {!carregandoTarefas && !verTarefas && (
-                        <motion.div 
-                        className={styles.alerta}
-                        initial={{ opacity: 0, scale: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                            }} 
-                            >
-                            <Image
-                                src="/iconeAlerta.svg"
-                                alt="Icone Alerta"
-                                width={100}
-                                height={100}
-                                />
-                            <h3>Nenhuma tarefa para o dia selecionado!</h3>
-                        </motion.div>
-                    )}
-                    {verTarefas && (
-                        <div className={styles.verTarefas}>
-                            <motion.button 
+        if (tipoMenuDesk === 1) {
+            return (
+                <>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.4,
+                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
+                    }} 
+                    className={styles.containerMenuResumo}>
+                    <Calendar
+                        className={styles.calendar}
+                        selectRange={false}
+                        onChange={handleDateChange}
+                        value={selectedDate}
+                    />
+                    <h2>Tarefas do Dia</h2>
+                    <div className={styles.containerTarefasDoDia}>
+                        {carregandoTarefas && (
+                            <ClipLoader size={35} color="#0B0E31" />
+                        )}
+                        {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, limiteTarefas).map((tarefa) => (
+                            <motion.div 
+                                key={tarefa.id}
+                                className={styles.tarefa}
                                 initial={{ opacity: 0, scale: 0 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
@@ -187,36 +146,208 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                                 }} 
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.8 }}
-                                className={styles.botao}
-                                onClick={() => {router.push("/tarefas")}} 
+                                onClick={() => {
+                                    setTarefaAtual(tarefa);
+                                    setEditarTarefa(true);
+                                }} 
+                            >
+                                <Image
+                                    className={styles.icone} 
+                                    src="/iconeTarefasAzul.svg"
+                                    alt="Icone da Tarefa"
+                                    width={16}
+                                    height={20}
+                                    />
+                                <p>{tarefa.nameTask}</p>
+                                <IconeStatus status={tarefa.status}/>
+                            </motion.div>
+                        ))}
+                        {!carregandoTarefas && !verTarefas && (
+                            <motion.div 
+                            className={styles.alerta}
+                            initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.4,
+                                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                }} 
                                 >
-                                Ver tarefas
-                                <Image 
-                                    src="/iconeSetaDireita.svg"
-                                    alt="seta para direita"
-                                    width={6}
-                                    height={10}
-                                    className={styles.seta}
-                                />    
-                            </motion.button>
+                                <Image
+                                    src="/iconeAlerta.svg"
+                                    alt="Icone Alerta"
+                                    width={100}
+                                    height={100}
+                                    />
+                                <h3>Nenhuma tarefa para o dia selecionado!</h3>
+                            </motion.div>
+                        )}
+                        {verTarefas && (
+                            <div className={styles.verTarefas}>
+                                <motion.button 
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                    }} 
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.8 }}
+                                    className={styles.botao}
+                                    onClick={() => {router.push("/tarefas")}} 
+                                    >
+                                    Ver tarefas
+                                    <Image 
+                                        src="/iconeSetaDireita.svg"
+                                        alt="seta para direita"
+                                        width={6}
+                                        height={10}
+                                        className={styles.seta}
+                                    />    
+                                </motion.button>
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+                {editarTarefa && tarefaAtual &&(
+                    <EditarTarefa 
+                        tarefa={tarefaAtual} 
+                        voltar={
+                            () => {
+                                setEditarTarefa(false);
+                                setTarefaAtual(null);
+                                pegarTarefasDoDia();
+                            }
+                        }
+                    />
+                )}
+                </>
+            );
+        } else if (tipoMenuDesk === 2) {
+            return (
+                <div className={styles.containerTipoMenu2}>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
+                        }} 
+                        className={styles.containerMenuResumo}
+                    >
+                        <motion.div
+                            onClick={voltar}
+                            className={styles.voltar}
+                        >
+                            <motion.h2 
+                                onClick={voltar}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.5 }}
+                            >
+                                Voltar
+                            </motion.h2>
+                        </motion.div>
+                        <div>
+                            <Calendar
+                                className={styles.calendar}
+                                selectRange={false}
+                                onChange={handleDateChange}
+                                value={selectedDate}
+                            />
                         </div>
+                            <div className={styles.containerTarefasDoDia}>
+                                {carregandoTarefas && (
+                                    <ClipLoader size={35} color="#0B0E31" />
+                                )}
+                                <h2>Tarefas do Dia</h2>
+                                {!carregandoTarefas && verTarefas && tarefasData && tarefasData.length !== 0 && tarefasData?.slice(0, limiteTarefas).map((tarefa) => (
+                                    <motion.div 
+                                        key={tarefa.id}
+                                        className={styles.tarefa}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.4,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }} 
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            setTarefaAtual(tarefa);
+                                            setEditarTarefa(true);
+                                        }} 
+                                    >
+                                        <Image
+                                            className={styles.icone} 
+                                            src="/iconeTarefasAzul.svg"
+                                            alt="Icone da Tarefa"
+                                            width={16}
+                                            height={20}
+                                            />
+                                        <p>{tarefa.nameTask}</p>
+                                        <IconeStatus status={tarefa.status}/>
+                                    </motion.div>
+                                ))}
+                                {!carregandoTarefas && !verTarefas && (
+                                    <motion.div 
+                                    className={styles.alerta}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.4,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }} 
+                                        >
+                                        <Image
+                                            src="/iconeAlerta.svg"
+                                            alt="Icone Alerta"
+                                            width={100}
+                                            height={100}
+                                            />
+                                        <h3>Nenhuma tarefa para o dia selecionado!</h3>
+                                    </motion.div>
+                                )}
+                                {verTarefas && (
+                                    <div className={styles.verTarefas}>
+                                        <motion.button 
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.4,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }} 
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.8 }}
+                                            className={styles.botao}
+                                            onClick={() => {router.push("/tarefas")}} 
+                                            >
+                                            Ver tarefas
+                                            <Image 
+                                                src="/iconeSetaDireita.svg"
+                                                alt="seta para direita"
+                                                width={6}
+                                                height={10}
+                                                className={styles.seta}
+                                            />    
+                                        </motion.button>
+                                    </div>
+                                )}
+                        </div>
+                    </motion.div>
+                    {editarTarefa && tarefaAtual &&(
+                        <EditarTarefa 
+                            tarefa={tarefaAtual} 
+                            voltar={
+                                () => {
+                                    setEditarTarefa(false);
+                                    setTarefaAtual(null);
+                                    pegarTarefasDoDia();
+                                }
+                            }
+                        />
                     )}
                 </div>
-            </motion.div>
-            {editarTarefa && tarefaAtual &&(
-                <EditarTarefa 
-                    tarefa={tarefaAtual} 
-                    voltar={
-                        () => {
-                            setEditarTarefa(false);
-                            setTarefaAtual(null);
-                            pegarTarefasDoDia();
-                        }
-                    }
-                />
-            )}
-            </>
-        );
+            );
+        }
     } else {
         return (
             <div className={styles.mob}>
