@@ -4,7 +4,7 @@ import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { Objetivo } from '@/components/interfaces/Objetivo';
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import VerListaDeTarefas from "../VerListaDeTarefas";
 
 export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
@@ -77,7 +77,30 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
         window.location.reload();
     };
 
-    const router = useRouter();
+    const removerObjetivo = async () => {
+        setCarregando(true);
+
+        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/objectives/' + objetivo.id, {
+            method: 'DELETE',
+            headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok){
+            setCarregando(false);
+            alert(data.message + " - AO remover objetivo");
+            // console.error('Erro ao salvar:', data.message);
+        }
+
+        setCarregando(false);
+        window.location.reload();
+    };
+
+    // const router = useRouter();
 
 
     if (!isMobile) {
@@ -99,8 +122,8 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                             whileTap={{ scale: 0.8 }}
                             className={styles.lixeira}
                             onClick={() => {
-                                    if (confirm('Tem certeza que deseja excluir esta categoria?')) {
-                                        router.push('/desculpa');
+                                    if (confirm('Tem certeza que deseja excluir este objetivo?')) {
+                                        removerObjetivo();
                                     }}}
                         >
                             <Image 
@@ -251,7 +274,9 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
                                 whileHover={{ scale: 1.2 }} 
                                 whileTap={{ scale: 0.8 }}
                                 className={styles.lixeira}
-                                onClick={() => {router.push('/desculpa');}}
+                                onClick={() => {
+                                    removerObjetivo();
+                                }}
                             >
                                 <Image 
                                     src="/lixeiraIcon.svg"
