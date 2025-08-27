@@ -13,7 +13,7 @@ import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
 import EditarCategoria from '@/components/PopUp/editarCategoria';
 import { useRouter } from 'next/navigation';
-import { linkApiDashboard } from '../page';
+import { linkApi } from '../page';
 
 export default function Dashboard() {
 
@@ -59,7 +59,7 @@ export default function Dashboard() {
     const getDashboard = useCallback(async () => {
         setCarregandoDash(true);
         const response = await fetch(
-                linkApiDashboard, 
+                linkApi + "/auth/api/dashboard", 
             {
                 method: 'GET',
                 headers: {
