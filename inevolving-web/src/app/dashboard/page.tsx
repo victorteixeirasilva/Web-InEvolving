@@ -13,6 +13,7 @@ import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
 import EditarCategoria from '@/components/PopUp/editarCategoria';
 import { useRouter } from 'next/navigation';
+import { linkApiDashboard } from '../page';
 
 export default function Dashboard() {
 
@@ -58,7 +59,7 @@ export default function Dashboard() {
     const getDashboard = useCallback(async () => {
         setCarregandoDash(true);
         const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/dashboard', 
+                linkApiDashboard, 
             {
                 method: 'GET',
                 headers: {
