@@ -154,9 +154,9 @@ export default function Categoria( ) {
         pegarLivrosDone();
     }, [pegarLivrosDone, pegarLivrosProgress, pegarLivrosTodo]);
 
-    const [isVisiblePendentes, setIsVisiblePendentes] = useState(false);
-    const [isVisibleLendo, setIsVisibleLendo] = useState(false);
-    const [isVisibleConcluido, setIsVisibleConcluido] = useState(false);
+    const [isVisiblePendentes, setIsVisiblePendentes] = useState(isMobile ? false : true);
+    const [isVisibleLendo, setIsVisibleLendo] = useState(isMobile ? false : true);
+    const [isVisibleConcluido, setIsVisibleConcluido] = useState(isMobile ? false : true);
 
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     
