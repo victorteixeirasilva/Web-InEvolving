@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import EditarTarefa from '@/components/PopUp/editarTarefa';
 import { isArray } from 'chart.js/helpers';
 
-export default function Tarefas( ) {
+export default function Tarefas() {
     const [isMobile, setIsMobile] = useState(false);
 
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
@@ -607,10 +607,28 @@ export default function Tarefas( ) {
         }
     }
 
-    if (!isMobile) {
-        return (
-            <>
-            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+    const voltar = () => {
+        setEditarTarefaAtual(true);
+        setTarefaAual(null);
+
+        if (opcaoDeVisualizacao === 2) {
+            pegarTarefasDeHojeKanban();
+        }
+
+        if (filtroAtivo === 1) {
+            pegarTarefasDeHoje();
+        } else if (filtroAtivo === 4) {
+            setEscolherOutraData(true);
+        } else if (filtroAtivo === 5) {
+            pegarTarefasAtrasadas();
+        } else if (opcaoDeVisualizacao === 2) {
+            pegarTarefasDeHojeKanban();
+        }
+    }
+
+    return (
+        <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+            <motion.div>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}
@@ -761,7 +779,9 @@ export default function Tarefas( ) {
                         )}
                         </>
                     )}
-                    <motion.div className={styles.containerFiltroEBotao}>
+                    <motion.div className={styles.containerFiltroEBotao}
+                        style={isMobile ? {display: 'none'} : {}}
+                    >
                         <motion.div className={styles.filtro}>
                             <motion.button 
                                 className={
@@ -1240,7 +1260,7 @@ export default function Tarefas( ) {
                             className={styles.botaoVoltar} 
                             onClick={() => {
                                 setAbrirNovaTarefa(false);  
-                                 if (filtroAtivo === 1) {
+                                if (filtroAtivo === 1) {
                                     pegarTarefasDeHoje();
                                 } else if (filtroAtivo === 4) {
                                     setEscolherOutraData(true);
@@ -1405,911 +1425,6 @@ export default function Tarefas( ) {
                         </div>
                     </div>
                     {escolherDataDaNovaTarefa && (
-                        <div className={styles.containerPopUpEdit}>
-                            <motion.button
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => setEscolherDataDaNovaTarefa(false)}
-                            >
-                                <strong>Voltar</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                {/* <h4>Data final das repetições!</h4> */}
-                                <Calendar
-                                    className={styles.calendar}
-                                    selectRange={false}
-                                    value={dataNovaTarefa}
-                                    onChange={SetDataNovaTarefa}
-                                />
-                                {dataNovaTarefa && (
-                                    <h3>Data selecionada: {dataNovaTarefa.toLocaleDateString()}</h3>
-                                )}
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => setEscolherDataDaNovaTarefa(false)}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    <span 
-                                        style={{ 
-                                            marginLeft: carregando ? '8px' : '0'
-                                        }}
-                                    ></span>
-                                    Selecionar
-                                    <Image 
-                                        className={styles.concluido}
-                                        src="/checkIcon.svg"
-                                        alt="Icone Check"
-                                        width={23}
-                                        height={18}
-                                    />
-                                </motion.button>
-                            </div>
-                        </div>
-                    )}
-                    {verListaDeObjetivos && (
-                        <div className={styles.containerPopUp}>
-                            <motion.button
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => setVerListaDeObjetivos(false)}
-                                >
-                                <strong>Voltar - Tarefas</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                <div className={styles.containerScroll}>
-                                    {objetivos && objetivos.map((objetivo) => {
-                                        return (
-                                            <div
-                                                key={objetivo.id}
-                                                className={styles.objetivo}
-                                                onClick={() => {
-                                                    setObjetivoSelecionado(objetivo);
-                                                    setVerListaDeObjetivos(false);
-                                                }}
-                                                style={{ cursor: 'pointer' }}
-                                            >
-                                            <h4>{objetivo.nameObjective}</h4>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    {exibirIsTarefaFrequente && (
-                        <div className={styles.containerPopUp}>
-                            <motion.button
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => {
-                                    setExibirIsTarefaFrequente(false);
-                                    setIsTarefaFrequente(false);
-                                }}
-                            >
-                                <strong>Voltar - Tarefas</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodoDomingo(!todoDomingo)}
-                                >
-                                    Todo domingo
-                                    <Image
-                                        style={{ visibility: todoDomingo ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaSegunda(!todaSegunda)}
-                                >
-                                    Toda segunda-feira
-                                    <Image
-                                        style={{ visibility: todaSegunda ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaTerca(!todaTerca)}
-                                >
-                                    Toda terça-feira
-                                    <Image
-                                        style={{ visibility: todaTerca ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaQuarta(!todaQuarta)}
-                                >
-                                    Toda quarta-feira
-                                    <Image
-                                        style={{ visibility: todaQuarta ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaQuinta(!todaQuinta)}
-                                >
-                                    Toda quinta-feira
-                                    <Image
-                                        style={{ visibility: todaQuinta ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaSexta(!todaSexta)}
-                                >
-                                    Toda sexta-feira
-                                    <Image
-                                        style={{ visibility: todaSexta ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodoSabado(!todoSabado)}
-                                >
-                                    Todo sábado
-                                    <Image
-                                        style={{ visibility: todoSabado ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div className={styles.containerDataFinal}>
-                                    Repetir até a data:
-                                    <motion.div 
-                                        className={styles.inputDataFinal}
-                                        whileHover={{ scale: 1.06 }} 
-                                        whileTap={{ scale: 0.8 }}
-                                        onClick={() => setEscolherDataFinal(true)}
-                                    >
-                                        {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
-                                    </motion.div>
-                                </div>
-                                <motion.button
-                                    style={
-                                        !todoDomingo && 
-                                        !todaSegunda &&
-                                        !todaTerca &&
-                                        !todaQuarta &&
-                                        !todaQuinta &&
-                                        !todaSexta &&
-                                        !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
-                                    }
-                                    whileHover={{ scale: 1.05 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={
-                                        !todoDomingo && 
-                                        !todaSegunda &&
-                                        !todaTerca &&
-                                        !todaQuarta &&
-                                        !todaQuinta &&
-                                        !todaSexta &&
-                                        !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => setExibirIsTarefaFrequente(false)
-                                    }
-                                >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Salvar
-                                <Image 
-                                    className={styles.concluido}
-                                    src="/checkIcon.svg"
-                                    alt="Icone Check"
-                                    width={23}
-                                    height={18}
-                                />
-                            </motion.button>
-                            </div>
-                        </div>
-                    )}
-                    {escolherDataFinal && (
-                        <div className={styles.containerPopUp}>
-                            <motion.button
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => setEscolherDataFinal(false)}
-                                >
-                                <strong>Voltar</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                <Calendar
-                                    className={styles.calendar}
-                                    selectRange={false}
-                                    value={dataFinal}
-                                    onChange={SetDataFinal}
-                                />
-                                {dataFinal && (
-                                    <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
-                                )}
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => setEscolherDataFinal(false)}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    <span 
-                                        style={{ 
-                                            marginLeft: carregando ? '8px' : '0'
-                                        }}
-                                    ></span>
-                                    Selecionar
-                                    <Image 
-                                        className={styles.concluido}
-                                        src="/checkIcon.svg"
-                                        alt="Icone Check"
-                                        width={23}
-                                        height={18}
-                                    />
-                                </motion.button>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
-            {editarTarefaAtual && tarefaAtual &&(
-                <EditarTarefa tarefa={tarefaAtual} voltar={
-                    () => {
-                        setEditarTarefaAtual(true);
-                        setTarefaAual(null);
-
-                        if (opcaoDeVisualizacao === 2) {
-                            pegarTarefasDeHojeKanban();
-                        }
-
-                        if (filtroAtivo === 1) {
-                            pegarTarefasDeHoje();
-                        } else if (filtroAtivo === 4) {
-                            setEscolherOutraData(true);
-                        } else if (filtroAtivo === 5) {
-                            pegarTarefasAtrasadas();
-                        }
-                    }
-                }/>
-            )}
-            </>
-        );
-    } else {
-        return (
-            <div className={styles.mob}>
-                <motion.div>
-                    <Menu />
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                            duration: 0.4,
-                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                        }} 
-                        className={styles.container}
-                    >
-                        <div className={styles.tituloContainer}>
-                            <h1>Tarefas</h1>
-                            <motion.button 
-                                className={styles.botaoNovo} 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }} 
-                                onClick={() => setAbrirNovaTarefa(true)}
-                                >
-                                Adicionar Novo <strong>+</strong>
-                            </motion.button>
-                        </div>
-                        <motion.div className={styles.containerFiltroEBotao}>
-                            <motion.div className={styles.filtro}>
-                                <h3>
-                                    Filtrar Status:
-                                </h3>
-                                <motion.button 
-                                    className={styles.botaoFiltroStatus}
-                                    style={filtroAtivoStatus === 1 && !primeiroCarregamentoStatus ? {backgroundColor: "#0B0E31", color: "#FFFF"} : {}}  
-                                    whileHover={{ scale: 1.1, backgroundColor: "#0B0E31", color: "#FFFF" }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        setFiltroAtivoStatus(1);
-                                        setPrimeiroCarregamentoStatus(false);
-                                        setPrimeiroCarregamento(true);
-                                    }}
-                                >
-                                    Todos
-                                </motion.button>    
-                                <motion.button 
-                                    className={styles.botaoFiltroStatus}  
-                                    style={filtroAtivoStatus === 2 ? {backgroundColor: '#6b6b6b', color: "#FFFF"} : {}}  
-                                    whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: "#FFFF" }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        setFiltroAtivoStatus(2);
-                                        setPrimeiroCarregamentoStatus(false);
-                                        setPrimeiroCarregamento(true);
-                                    }}
-                                >
-                                    Não Iniciada
-                                </motion.button>
-                                <motion.button 
-                                    className={styles.botaoFiltroStatus}
-                                    style={filtroAtivoStatus === 3 ? {backgroundColor: '#a0ff47', color: "#0B0E31"} : {}}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#a0ff47', color: "#0B0E31" }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        setFiltroAtivoStatus(3);
-                                        setPrimeiroCarregamentoStatus(false);
-                                        setPrimeiroCarregamento(true);
-                                    }}
-                                >
-                                    Em Progresso
-                                </motion.button>
-                                <motion.button 
-                                    className={styles.botaoFiltroStatus} 
-                                    style={filtroAtivoStatus === 4 ? {backgroundColor: "#319f43", color: "#0B0E31"} : {}}
-                                    whileHover={{ scale: 1.1, backgroundColor: "#319f43", color: "#0B0E31" }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        setFiltroAtivoStatus(4);
-                                        setPrimeiroCarregamentoStatus(false);
-                                        setPrimeiroCarregamento(true);
-                                    }}
-                                >
-                                    Concluída
-                                </motion.button>
-                                <motion.button 
-                                    className={styles.botaoFiltroStatus} 
-                                    style={filtroAtivoStatus === 5 ? {backgroundColor: '#ff0004', color: "#FFFF"} : {}}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: "#FFFF" }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        setFiltroAtivoStatus(5);
-                                        setPrimeiroCarregamentoStatus(false);
-                                        setPrimeiroCarregamento(true);
-                                    }}
-                                >
-                                    Cancelada
-                                </motion.button>
-                            </motion.div>
-                        </motion.div>
-                        <motion.div className={styles.containerFiltroEBotao}>
-                            <motion.div className={styles.filtro}>
-                                <h3>
-                                    Filtrar Data:
-                                </h3>    
-                                <motion.button 
-                                    className={
-                                        filtroAtivo === 1 && !primeiroCarregamento ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        pegarTarefasDeHoje();
-                                        setPrimeiroCarregamento(false);
-                                    }}
-                                >
-                                    Hoje
-                                </motion.button>
-                                {/* <motion.button 
-                                    className={
-                                        filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    }
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => router.push("/desculpa")}
-                                >
-                                    Mês
-                                </motion.button> */}
-                                {/* <motion.button 
-                                    className={
-                                        filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => router.push("/desculpa")}
-                                >
-                                    Ano
-                                </motion.button> */}
-                                <motion.button 
-                                    className={
-                                        filtroAtivo === 4 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        setEscolherOutraData(true);
-                                        setPrimeiroCarregamento(false);
-                                    }}
-                                >
-                                    Outra Data
-                                </motion.button>
-                                <motion.button 
-                                    className={
-                                        filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                    } 
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        pegarTarefasAtrasadas();
-                                        setPrimeiroCarregamento(false);
-                                    }}
-                                >
-                                    Tarefas em Atraso
-                                </motion.button>
-                            </motion.div>
-                        </motion.div>
-                        {!carregando && filtroAtivo === 1 && !tarefasDeHoje && primeiroCarregamento && (
-                            <h1
-                                style={{padding: '20px'}}
-                            >Selecione a configuração que deseja dos filtros para buscar as tarefas!</h1> 
-                        )}
-                        {!carregando && filtroAtivo === 1 && !tarefasDeHoje && !primeiroCarregamento &&(
-                            <h1
-                                style={{padding: '20px'}}
-                            >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
-                        )}
-                        {!carregando && filtroAtivo === 4 && !tarefasOutraData && (
-                            <h1
-                                style={{padding: '20px'}}
-                            >Infelizmente, nenhuma tarefa foi encontrada para esse filtro que selecionou!</h1> 
-                        )}
-                        {!carregando && filtroAtivo === 5 && !tarefasAtrasadas && (
-                            <h1
-                                style={{padding: '20px'}}
-                            >Meus Parabéns estamos muito orgulhosos, você não possui tarefas atrasadas!</h1> 
-                        )}
-                        <motion.div className={styles.containerConteudo}>
-                            {carregando && (
-                                <ClipLoader size={50} color="#0B0E31" />
-                            )}
-                            {!carregando && tarefasAtrasadas && tarefasAtrasadas.length > 0 && filtroAtivo === 5 && (
-                                tarefasAtrasadas
-                                    .slice() // cria uma cópia para não alterar o original
-                                    .sort((a, b) => a.nameTask.localeCompare(b.nameTask))
-                                    .map((tarefa) => (
-                                    <motion.div
-                                        onClick={() => {
-                                            if (tarefa.blockedByObjective === null) {
-                                                setTarefaAual(tarefa);
-                                                setEditarTarefaAtual(true);
-                                            } else if (tarefa.blockedByObjective === true) {
-                                                alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                            } else {
-                                                setTarefaAual(tarefa);
-                                                setEditarTarefaAtual(true);
-                                            }
-                                        }} 
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{
-                                            duration: 0.4,
-                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                        }} 
-                                        whileHover={
-                                            tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                            tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                        } 
-                                        whileTap={
-                                            tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                            tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                        } 
-                                        key={tarefa.id} 
-                                        className={ 
-                                            tarefa.blockedByObjective === null ? styles.tarefa :
-                                            tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                        }
-                                    >
-                                        {tarefa?.nameTask}
-                                        <p style={
-                                                tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                                tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                                tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                                tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                                tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                            }
-                                        >
-                                        {
-                                                tarefa?.status === "DONE" ? "Concluída" :
-                                                tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                                tarefa?.status === "TODO" ? "Não Iniciada" :
-                                                tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                                tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                            }
-                                        </p>
-                                    </motion.div>
-                                ))
-                            )}
-                            {!carregando && tarefasOutraData && tarefasOutraData.length > 0 && filtroAtivo === 4 && (
-                                tarefasOutraData.map((tarefa) => (
-                                    <motion.div
-                                        onClick={() => {
-                                            if (tarefa.blockedByObjective === null) {
-                                                setTarefaAual(tarefa);
-                                                setEditarTarefaAtual(true);
-                                            } else if (tarefa.blockedByObjective === true) {
-                                                alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                            } else {
-                                                setTarefaAual(tarefa);
-                                                setEditarTarefaAtual(true);
-                                            }
-                                        }} 
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{
-                                            duration: 0.4,
-                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                        }} 
-                                        whileHover={
-                                            tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                            tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                        } 
-                                        whileTap={
-                                            tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                            tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                        } 
-                                        key={tarefa.id} 
-                                        className={ 
-                                            tarefa.blockedByObjective === null ? styles.tarefa :
-                                            tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                        }
-                                    >
-                                        {tarefa?.nameTask}
-                                        <p style={
-                                                tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                                tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                                tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                                tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                                tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                            }
-                                        >
-                                        {
-                                                tarefa?.status === "DONE" ? "Concluída" :
-                                                tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                                tarefa?.status === "TODO" ? "Não Iniciada" :
-                                                tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                                tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                            }
-                                        </p>
-                                    </motion.div>
-                                ))
-                            )}
-                            {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
-                                tarefasDeHoje.map((tarefa) => (
-                                    <motion.div
-                                        onClick={() => {
-                                            if (tarefa.blockedByObjective === null) {
-                                                setTarefaAual(tarefa);
-                                                setEditarTarefaAtual(true);
-                                            } else if (tarefa.blockedByObjective === true) {
-                                                alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                            } else {
-                                                setTarefaAual(tarefa);
-                                                setEditarTarefaAtual(true);
-                                            }
-                                        }} 
-                                        initial={{ opacity: 0, scale: 0 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{
-                                            duration: 0.4,
-                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                        }} 
-                                        whileHover={
-                                            tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                            tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                        } 
-                                        whileTap={
-                                            tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                            tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                        } 
-                                        key={tarefa.id} 
-                                        className={ 
-                                            tarefa.blockedByObjective === null ? styles.tarefa :
-                                            tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                        }
-                                    >
-                                        {tarefa?.nameTask}
-                                        <p style={
-                                                tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                                tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                                tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                                tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                                tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                            }
-                                        >
-                                        {
-                                                tarefa?.status === "DONE" ? "Concluída" :
-                                                tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                                tarefa?.status === "TODO" ? "Não Iniciada" :
-                                                tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                                tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                            }
-                                        </p>
-                                    </motion.div>
-                            )))}
-                        </motion.div>
-                    </motion.div>
-                </motion.div>
-                {escolherOutraData && (
-                    <div className={styles.overlay}>
-                        <div className={styles.containerPopUp}>
-                            <div className={styles.botoesTopo}>
-                                <motion.button
-                                    whileHover={{ scale: 1.1 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    className={styles.botaoVoltar} 
-                                    onClick={() => setEscolherOutraData(false)}
-                                >
-                                    <strong style={{color: '#0B0E31'}}>X</strong>
-                                </motion.button>
-                            </div>
-                            <Calendar
-                                className={styles.calendar}
-                                selectRange={false}
-                                onChange={handleDateChange}
-                                value={selectedDate}
-                            />
-                            <div className={styles.conteudo}>
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={() => {
-                                        filtrarPorData(selectedDate?.toISOString().split('T')[0] || '');
-                                        setEscolherOutraData(false);
-                                    }}
-                                >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Buscar
-                                <Image 
-                                    className={styles.concluido}
-                                    src="/checkIcon.svg"
-                                    alt="Icone Check"
-                                    width={23}
-                                    height={18}
-                                />
-                            </motion.button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {abrirNovaTarefa && (
-                    <>
-                    <div className={styles.overlay}>
-                        <div className={styles.containerPopUp}>
-                            <motion.button
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => {
-                                    setAbrirNovaTarefa(false);  
-                                    if (filtroAtivo === 1) {
-                                        pegarTarefasDeHoje();
-                                    } else if (filtroAtivo === 4) {
-                                        setEscolherOutraData(true);
-                                    } else if (filtroAtivo === 5) {
-                                        pegarTarefasAtrasadas();
-                                    }
-                                }}
-                            >
-                                <strong style={{color: '#0B0E31'}}>X</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                <Image 
-                                    src="/iconeObjetivo-NovoObjetivo.svg"
-                                    alt="Icone Objetivo"
-                                    width={72}
-                                    height={72}
-                                    className={styles.icone}
-                                />
-                                <h2>Nova Tarefa</h2>
-                                <div className={styles.inputs}>
-                                    <div>
-                                        <h3>Nome da Tarefa</h3>
-                                        <div className={styles.input}>
-                                            <input
-                                                type="text"
-                                                id="nomeTarefa"
-                                                value={nomeDaTarefa}
-                                                onChange={(e) => setNomeDaTarefa(e.target.value)}
-                                                placeholder="Digite o nome da tarefa..."
-                                            />
-                                            <Image 
-                                                className={styles.lapis}
-                                                src="/iconeLapisCinza.svg"
-                                                alt="Icone Lapis"
-                                                width={15}
-                                                height={15}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3>Descrição</h3>
-                                        <div className={styles.input}>
-                                            <input
-                                                type="text"
-                                                id="nomeTarefa"
-                                                value={descricaoDaTarefa}
-                                                onChange={(e) => setDescricaoDaTarefa(e.target.value)}
-                                                placeholder="Escreva detalhes sobre a sua tarefa..."
-                                            />
-                                            <Image 
-                                                className={styles.lapis}
-                                                src="/iconeLapisCinza.svg"
-                                                alt="Icone Lapis"
-                                                width={15}
-                                                height={15}
-                                            />
-                                        </div>
-                                    </div>
-                                    <motion.div
-                                        whileHover={{ scale: 1.02 }} 
-                                        whileTap={{ scale: 0.95 }}   
-                                        onClick={() => {
-                                                setVerListaDeObjetivos(true);
-                                                pegarObjetivos();
-                                            }
-                                        }     
-                                    >
-                                    <h3>Selecionar Objetivo Relacionado</h3>
-                                    <div className={styles.input}>
-                                        <p 
-                                            className={styles.place}
-                                            style={{ 
-                                                color: objetivoSelecionado ? '#0B0E31' : '#999999'
-                                            }}
-                                        >
-                                            {objetivoSelecionado ? objetivoSelecionado.nameObjective : "Selecione o objetivo a ser relacionado..."}
-                                        </p>
-                                        <Image
-                                            className={styles.lapis} 
-                                            src="/iconeLapisCinza.svg"
-                                            alt="Icone Lapis"
-                                            width={15}
-                                            height={15}
-                                        />
-                                    </div>
-                                </motion.div>
-                                    <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
-                                    <div className={styles.containerDataFinal}>
-                                        <motion.div 
-                                            className={styles.inputDataFinal}
-                                            whileHover={{ scale: 1.06 }} 
-                                            whileTap={{ scale: 0.8 }}
-                                            style={{marginTop: '0px'}}
-                                            onClick={() => setEscolherDataDaNovaTarefa(true)}
-                                        >
-                                            {dataNovaTarefa && (<strong>{dataNovaTarefa.toLocaleDateString()}</strong>)} 
-                                        </motion.div>
-                                    </div>
-                                <div className={styles.containerInputData}
-                                    onClick={() => setIsTarefaFrequente(!isTarefaFrequente)}
-                                >
-                                    <h3>Tarefa frequente:</h3>
-                                    
-                                    <div
-                                        className={styles.botaoSimNao}
-                                        onClick={() => {
-                                            setIsTarefaFrequente(!isTarefaFrequente);
-                                            setExibirIsTarefaFrequente(!exibirIsTarefaFrequente);
-                                        }}
-                                    >
-                                        <div className={styles.checkBox}>
-                                            <div
-                                                style={{ 
-                                                    backgroundColor: isTarefaFrequente ? '' : 'transparent'
-                                                }}  
-                                                className={styles.marcador}></div>
-                                        </div>
-                                        Sim
-                                </div>
-        
-                                    <div
-                                        className={styles.botaoSimNao}
-                                        onClick={() => {
-                                            setIsTarefaFrequente(!isTarefaFrequente);
-                                            setExibirIsTarefaFrequente(!exibirIsTarefaFrequente);
-                                        }}
-                                    >
-                                        <div className={styles.checkBox}>
-                                            <div                                     
-                                                style={{ 
-                                                    backgroundColor: !isTarefaFrequente ? '' : 'transparent'
-                                                }} 
-                                                className={styles.marcador}
-                                            ></div>
-                                        </div>
-                                        Não
-                                    </div> 
-                                </div>
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    onClick={cadastrarNovaTarefa}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    <span 
-                                        style={{ 
-                                            marginLeft: carregando ? '8px' : '0'
-                                        }}
-                                        ></span>
-                                    Concluído
-                                    <Image 
-                                        className={styles.concluido}
-                                        src="/checkIcon.svg"
-                                        alt="Icone Check"
-                                        width={23}
-                                        height={18}
-                                    />
-                                </motion.button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {verListaDeObjetivos && (
-                        <div className={styles.overlay}>
-                            <div className={styles.containerPopUp}>
-                                <motion.button
-                                    whileHover={{ scale: 1.06 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    className={styles.botaoVoltar} 
-                                    onClick={() => setVerListaDeObjetivos(false)}
-                                    >
-                                    <strong style={{color: '#0B0E31'}}>Voltar - Tarefas</strong>
-                                </motion.button>
-                                <div className={styles.conteudo}>
-                                    <div className={styles.containerScroll}>
-                                        {objetivos && objetivos.map((objetivo) => {
-                                            return (
-                                                <div
-                                                    key={objetivo.id}
-                                                    className={styles.objetivo}
-                                                    onClick={() => {
-                                                        setObjetivoSelecionado(objetivo);
-                                                        setVerListaDeObjetivos(false);
-                                                    }}
-                                                    style={{ cursor: 'pointer' }}
-                                                >
-                                                <h4>{objetivo.nameObjective}</h4>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    {escolherDataDaNovaTarefa && (
                         <div className={styles.overlay}>
                             <div className={styles.containerPopUpEdit}>
                                 <motion.button
@@ -2318,7 +1433,7 @@ export default function Tarefas( ) {
                                     className={styles.botaoVoltar} 
                                     onClick={() => setEscolherDataDaNovaTarefa(false)}
                                 >
-                                    <strong style={{color: '#0B0E31'}}>Voltar</strong>
+                                    <strong>Voltar</strong>
                                 </motion.button>
                                 <div className={styles.conteudo}>
                                     {/* <h4>Data final das repetições!</h4> */}
@@ -2354,200 +1469,186 @@ export default function Tarefas( ) {
                                 </div>
                             </div>
                         </div>
-                        )}
-                    </>
-                )}
-                {exibirIsTarefaFrequente && (
-                    <div className={styles.overlay}>                    
-                        <div className={styles.containerPopUp}>
-                            <motion.button
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => {
-                                    setExibirIsTarefaFrequente(false);
-                                    setIsTarefaFrequente(false);
-                                }}
-                            >
-                                <strong style={{color: '#0B0E31'}}>Voltar - Tarefas</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodoDomingo(!todoDomingo)}
-                                >
-                                    Todo domingo
-                                    <Image
-                                        style={{ visibility: todoDomingo ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaSegunda(!todaSegunda)}
-                                >
-                                    Toda segunda-feira
-                                    <Image
-                                        style={{ visibility: todaSegunda ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaTerca(!todaTerca)}
-                                >
-                                    Toda terça-feira
-                                    <Image
-                                        style={{ visibility: todaTerca ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaQuarta(!todaQuarta)}
-                                >
-                                    Toda quarta-feira
-                                    <Image
-                                        style={{ visibility: todaQuarta ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaQuinta(!todaQuinta)}
-                                >
-                                    Toda quinta-feira
-                                    <Image
-                                        style={{ visibility: todaQuinta ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodaSexta(!todaSexta)}
-                                >
-                                    Toda sexta-feira
-                                    <Image
-                                        style={{ visibility: todaSexta ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div 
-                                    className={styles.diaDaSemana}
-                                    onClick={() => setTodoSabado(!todoSabado)}
-                                >
-                                    Todo sábado
-                                    <Image
-                                        style={{ visibility: todoSabado ? 'visible' : 'hidden' }}
-                                        src="/checkIconAzul.svg"
-                                        alt="Icone Check Azul"
-                                        width={21}
-                                        height={16}
-                                    />
-                                </div>
-                                <div className={styles.containerDataFinal}>
-                                    Repetir até a data:
-                                    <motion.div 
-                                        className={styles.inputDataFinal}
-                                        whileHover={{ scale: 1.06 }} 
-                                        whileTap={{ scale: 0.8 }}
-                                        onClick={() => setEscolherDataFinal(true)}
-                                    >
-                                        {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
-                                    </motion.div>
-                                </div>
+                    )}
+                    {verListaDeObjetivos && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
                                 <motion.button
-                                    style={
-                                        !todoDomingo && 
-                                        !todaSegunda &&
-                                        !todaTerca &&
-                                        !todaQuarta &&
-                                        !todaQuinta &&
-                                        !todaSexta &&
-                                        !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
-                                    }
-                                    whileHover={{ scale: 1.05 }} 
+                                    whileHover={{ scale: 1.06 }} 
                                     whileTap={{ scale: 0.8 }}
-                                    onClick={
-                                        !todoDomingo && 
-                                        !todaSegunda &&
-                                        !todaTerca &&
-                                        !todaQuarta &&
-                                        !todaQuinta &&
-                                        !todaSexta &&
-                                        !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => setExibirIsTarefaFrequente(false)
-                                    }
-                                >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Salvar
-                                <Image 
-                                    className={styles.concluido}
-                                    src="/checkIcon.svg"
-                                    alt="Icone Check"
-                                    width={23}
-                                    height={18}
-                                />
-                            </motion.button>
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setVerListaDeObjetivos(false)}
+                                    >
+                                    <strong>Voltar - Tarefas</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <div className={styles.containerScroll}>
+                                        {objetivos && objetivos.map((objetivo) => {
+                                            return (
+                                                <div
+                                                    key={objetivo.id}
+                                                    className={styles.objetivo}
+                                                    onClick={() => {
+                                                        setObjetivoSelecionado(objetivo);
+                                                        setVerListaDeObjetivos(false);
+                                                    }}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                <h4>{objetivo.nameObjective}</h4>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-                {escolherDataFinal && (
-                    <div className={styles.overlay}>                    
-                        <div className={styles.containerPopUp}>
-                            <motion.button
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => setEscolherDataFinal(false)}
-                                >
-                                <strong style={{color: '#0B0E31'}}>Voltar</strong>
-                            </motion.button>
-                            <div className={styles.conteudo}>
-                                <Calendar
-                                    className={styles.calendar}
-                                    selectRange={false}
-                                    value={dataFinal}
-                                    onChange={SetDataFinal}
-                                />
-                                {dataFinal && (
-                                    <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
-                                )}
+                    )}
+                    {exibirIsTarefaFrequente && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }} 
+                                    whileHover={{ scale: 1.06 }} 
                                     whileTap={{ scale: 0.8 }}
-                                    onClick={() => setEscolherDataFinal(false)}
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => {
+                                        setExibirIsTarefaFrequente(false);
+                                        setIsTarefaFrequente(false);
+                                    }}
                                 >
+                                    <strong>Voltar - Tarefas</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodoDomingo(!todoDomingo)}
+                                    >
+                                        Todo domingo
+                                        <Image
+                                            style={{ visibility: todoDomingo ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodaSegunda(!todaSegunda)}
+                                    >
+                                        Toda segunda-feira
+                                        <Image
+                                            style={{ visibility: todaSegunda ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodaTerca(!todaTerca)}
+                                    >
+                                        Toda terça-feira
+                                        <Image
+                                            style={{ visibility: todaTerca ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodaQuarta(!todaQuarta)}
+                                    >
+                                        Toda quarta-feira
+                                        <Image
+                                            style={{ visibility: todaQuarta ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodaQuinta(!todaQuinta)}
+                                    >
+                                        Toda quinta-feira
+                                        <Image
+                                            style={{ visibility: todaQuinta ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodaSexta(!todaSexta)}
+                                    >
+                                        Toda sexta-feira
+                                        <Image
+                                            style={{ visibility: todaSexta ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div 
+                                        className={styles.diaDaSemana}
+                                        onClick={() => setTodoSabado(!todoSabado)}
+                                    >
+                                        Todo sábado
+                                        <Image
+                                            style={{ visibility: todoSabado ? 'visible' : 'hidden' }}
+                                            src="/checkIconAzul.svg"
+                                            alt="Icone Check Azul"
+                                            width={21}
+                                            height={16}
+                                        />
+                                    </div>
+                                    <div className={styles.containerDataFinal}>
+                                        Repetir até a data:
+                                        <motion.div 
+                                            className={styles.inputDataFinal}
+                                            whileHover={{ scale: 1.06 }} 
+                                            whileTap={{ scale: 0.8 }}
+                                            onClick={() => setEscolherDataFinal(true)}
+                                        >
+                                            {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
+                                        </motion.div>
+                                    </div>
+                                    <motion.button
+                                        style={
+                                            !todoDomingo && 
+                                            !todaSegunda &&
+                                            !todaTerca &&
+                                            !todaQuarta &&
+                                            !todaQuinta &&
+                                            !todaSexta &&
+                                            !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
+                                        }
+                                        whileHover={{ scale: 1.05 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={
+                                            !todoDomingo && 
+                                            !todaSegunda &&
+                                            !todaTerca &&
+                                            !todaQuarta &&
+                                            !todaQuinta &&
+                                            !todaSexta &&
+                                            !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => setExibirIsTarefaFrequente(false)
+                                        }
+                                    >
                                     {carregando && <ClipLoader size={10} color="#0B0E31" />}
                                     <span 
                                         style={{ 
                                             marginLeft: carregando ? '8px' : '0'
                                         }}
                                     ></span>
-                                    Selecionar
+                                    Salvar
                                     <Image 
                                         className={styles.concluido}
                                         src="/checkIcon.svg"
@@ -2556,26 +1657,61 @@ export default function Tarefas( ) {
                                         height={18}
                                     />
                                 </motion.button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
-                {editarTarefaAtual && tarefaAtual &&(
-                    <EditarTarefa tarefa={tarefaAtual} voltar={
-                        () => {
-                            setEditarTarefaAtual(true);
-                            setTarefaAual(null);
-                            if (filtroAtivo === 1) {
-                                pegarTarefasDeHoje();
-                            } else if (filtroAtivo === 4) {
-                                setEscolherOutraData(true);
-                            } else if (filtroAtivo === 5) {
-                                pegarTarefasAtrasadas();
-                            }
-                        }
-                    }/>
-                )}
-            </div>
-        );
-    }
+                    )}
+                    {escolherDataFinal && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
+                                <motion.button
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setEscolherDataFinal(false)}
+                                    >
+                                    <strong>Voltar</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <Calendar
+                                        className={styles.calendar}
+                                        selectRange={false}
+                                        value={dataFinal}
+                                        onChange={SetDataFinal}
+                                    />
+                                    {dataFinal && (
+                                        <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
+                                    )}
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => setEscolherDataFinal(false)}
+                                    >
+                                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                        <span 
+                                            style={{ 
+                                                marginLeft: carregando ? '8px' : '0'
+                                            }}
+                                        ></span>
+                                        Selecionar
+                                        <Image 
+                                            className={styles.concluido}
+                                            src="/checkIcon.svg"
+                                            alt="Icone Check"
+                                            width={23}
+                                            height={18}
+                                        />
+                                    </motion.button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+            {editarTarefaAtual && tarefaAtual &&(
+                <EditarTarefa tarefa={tarefaAtual} voltar={voltar}/>
+            )}
+        </motion.div>
+    );
+
 }
