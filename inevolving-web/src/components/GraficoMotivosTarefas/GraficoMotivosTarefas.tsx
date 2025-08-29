@@ -11,6 +11,7 @@ import type { ChartOptions, TooltipItem } from 'chart.js';
 import { useCallback, useEffect, useState } from 'react';
 import styles from './GraficoMotivosTarefas.module.scss';
 import { Objective } from "../interfaces/Objective";
+import { linkApi } from '@/app/page';
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -30,14 +31,15 @@ export default function GraficoMotivosTarefas({objetivo}: {objetivo:Objective}){
 
   const getDashboard = useCallback(async () => {
           const response = await fetch(
-                  'https://api.inevolving.inovasoft.tech/auth/api/dashboard/cancellation-reason/{idObjective}?idObjective=' + objetivo.id,
-              {
-                  method: 'GET',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + localStorage.getItem('token')
-                  },
-              });
+            linkApi + '/auth/api/dashboard/cancellation-reason/{idObjective}?idObjective=' + objetivo.id,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+            }
+          );
   
           const data: AnaliseMotivos = await response.json();
           

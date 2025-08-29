@@ -2,6 +2,7 @@ import { Objective } from "../interfaces/Objective";
 import styles from "./CardRendimentoDoObjetivoDashboard.module.scss"
 
 export default function CardRendimentoDoObjetivoDashboard( { objetivo }: { objetivo:Objective } ) {
+    
     const rendimento = () => {
         if (objetivo.percentageTasksDone < 50) {
             return (
