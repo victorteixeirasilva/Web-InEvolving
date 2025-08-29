@@ -15,6 +15,23 @@
 }
 
 .containerPopUp {
+    max-height: 100%; // define a altura da área visível
+    overflow-y: auto;  // ativa a rolagem vertical
+    padding-right: 8px; // evita scroll invisível
+
+    // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
     width: 40%;
     border-radius: 38px;
     align-items: center;
