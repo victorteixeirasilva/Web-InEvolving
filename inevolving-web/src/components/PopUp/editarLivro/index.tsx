@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { useRouter } from "next/navigation";
 import { Livro } from "@/components/interfaces/Livro";
+import { linkApi } from "@/app/page";
 
 export default function EditarLivro( { livro }: { livro: Livro } ) {
     const [isMobile, setIsMobile] = useState(false);
@@ -31,14 +32,15 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
         setCarregando(true);
 
         const response = await fetch(
-            'https://api.inevolving.inovasoft.tech/auth/api/books/'+livro?.id, 
+            linkApi + '/auth/api/books/'+livro?.id, 
             {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + jwtToken
                 },
-        });
+            }
+        );
 
         if (response.status === 401){
             setCarregando(false);
@@ -60,7 +62,6 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
     const atualizarLivro = async () => {
 
             setCarregando(true);
-
 
             const response = await fetch(
                     'https://api.inevolving.inovasoft.tech/auth/api/books/'+livro.id, 
@@ -91,19 +92,18 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                 alert('Erro ao atualizar livro');
             }
 
-            
-
             if (!(status === livro.status)) {
                 if (status === "TO DO") {
                     const response = await fetch(
-                        'https://api.inevolving.inovasoft.tech/auth/api/books/status/todo/'+livro.id, 
-                    {
+                        linkApi + '/auth/api/books/status/todo/'+livro.id, 
+                        {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Bearer ' + localStorage.getItem('token')
                             },
-                    });
+                        }
+                    );
                         
                     if (response.status === 401){
                         setCarregando(false);
@@ -118,14 +118,15 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                     
                 } else if (status === "IN PROGRESS") {
                     const response = await fetch(
-                        'https://api.inevolving.inovasoft.tech/auth/api/books/status/progress/'+livro.id, 
-                    {
+                        linkApi + '/auth/api/books/status/progress/'+livro.id, 
+                        {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Bearer ' + localStorage.getItem('token')
                             },
-                    });
+                        }
+                    );
                         
                     if (response.status === 401){
                         setCarregando(false);
@@ -140,14 +141,15 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                     
                 } else if (status === "COMPLETED") {
                     const response = await fetch(
-                        'https://api.inevolving.inovasoft.tech/auth/api/books/status/completed/'+livro.id, 
-                    {
+                        linkApi+'/auth/api/books/status/completed/'+livro.id, 
+                        {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Bearer ' + localStorage.getItem('token')
                             },
-                    });
+                        }
+                    );
                         
                     if (response.status === 401){
                         setCarregando(false);
@@ -167,8 +169,8 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
             window.location.reload();
     }
 
-    if (!isMobile) {
-        return (
+    return (
+        <div className={isMobile ? styles.mob : ''}>
             <div className={styles.overlay}>
                 <div className={styles.containerPopUp}>
                     <div className={styles.botoesTopo}>
@@ -184,10 +186,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                             whileHover={{ scale: 1.2 }} 
                             whileTap={{ scale: 0.8 }}
                             className={styles.lixeira}
-                            onClick={() => {
-                                    if (confirm('Tem certeza que deseja excluir este livro?')) {
-                                        deletarLivro();
-                                    }}}
+                            onClick={() => {deletarLivro();}}
                         >
                             <Image 
                                 src="/lixeiraIcon.svg"
@@ -225,7 +224,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                                         height={15}
                                         />
                                 </div>
-                                </div>
+                            </div>
                             <div className={styles.inputDescrição}>
                                 <h3>Autor</h3>
                                 <div className={styles.input}>
@@ -283,9 +282,7 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                                         />
                                 </div>
                             </div>
-                            <motion.div 
-                                className={styles.inputDescrição}
-                            >
+                            <motion.div className={styles.inputDescrição}>
                                 <h3>Status do Livro</h3>
                                 <div className={styles.containerStatus}>
                                     <motion.div
@@ -358,198 +355,202 @@ export default function EditarLivro( { livro }: { livro: Livro } ) {
                     </div>
                 </div>
             </div>
-        );
-    } else {
-        return (
-            <div className={styles.mob}>
-                <div className={styles.overlay}>
-                    <div className={styles.containerPopUp}>
-                        <div className={styles.botoesTopo}>
-                            <motion.button
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.botaoVoltar} 
-                                onClick={() => window.location.reload()}
-                            >
-                                <strong>X</strong>
-                            </motion.button>
-                            <motion.button
-                                whileHover={{ scale: 1.2 }} 
-                                whileTap={{ scale: 0.8 }}
-                                className={styles.lixeira}
-                                onClick={() => {deletarLivro();}}
-                            >
-                                <Image 
-                                    src="/lixeiraIcon.svg"
-                                    alt="Icone Lixeira"
-                                    width={27}
-                                    height={29}
-                                />
-                            </motion.button>
-                        </div>
-                        <div className={styles.conteudo}>
-                            <Image 
-                                src="/IconeNovoLivro.svg"
-                                alt="Icone Novo Livro"
-                                width={72}
-                                height={72}
-                                className={styles.icone}
-                            />
-                            <h2>Editar Livro</h2>
-                            <div className={styles.inputs}>
-                                <div className={styles.inputObjetivo}>
-                                    <h3>Título</h3>
-                                    <div className={styles.input}>
-                                        <input
-                                            type="text"
-                                            id="tituloLivro"
-                                            value={tituloLivro}
-                                            onChange={(e) => setTituloLivro(e.target.value)}
-                                            placeholder={livro ? livro.title : "Digite o título do livro..."}
-                                        />
-                                        <Image 
-                                            className={styles.lapis}
-                                            src="/iconeLapisCinza.svg"
-                                            alt="Icone Lapis"
-                                            width={15}
-                                            height={15}
-                                            />
-                                    </div>
-                                    </div>
-                                <div className={styles.inputDescrição}>
-                                    <h3>Autor</h3>
-                                    <div className={styles.input}>
-                                        <input 
-                                            type="text"
-                                            id="autorLivro"
-                                            value={autorLivro}
-                                            onChange={(e) => setAutorLivro(e.target.value)}
-                                            placeholder={livro ? livro.author : "Escreva o nome do autor do Livro..."}
-                                        />
-                                        <Image
-                                            className={styles.lapis} 
-                                            src="/iconeLapisCinza.svg"
-                                            alt="Icone Lapis"
-                                            width={15}
-                                            height={15}
-                                            />
-                                    </div>
-                                </div>
-                                <div className={styles.inputDescrição}>
-                                    <h3>Tema</h3>
-                                    <div className={styles.input}>
-                                        <input 
-                                            type="text"
-                                            id="temaLivro"
-                                            value={temaLivro}
-                                            onChange={(e) => setTemaLivro(e.target.value)}
-                                            placeholder={livro ? livro.theme : "Escreva o nome do tema do Livro..."}
-                                        />
-                                        <Image
-                                            className={styles.lapis} 
-                                            src="/iconeLapisCinza.svg"
-                                            alt="Icone Lapis"
-                                            width={15}
-                                            height={15}
-                                            />
-                                    </div>
-                                </div>
-                                <div className={styles.inputDescrição}>
-                                    <h3>Url da Imagem de Capa</h3>
-                                    <div className={styles.input}>
-                                        <input 
-                                            type="text"
-                                            id="temaLivro"
-                                            value={coverImage}
-                                            onChange={(e) => setCoverImage(e.target.value)}
-                                            placeholder={livro ? livro.coverImage : "Escreva a url da imagem..."}
-                                        />
-                                        <Image
-                                            className={styles.lapis} 
-                                            src="/iconeLapisCinza.svg"
-                                            alt="Icone Lapis"
-                                            width={15}
-                                            height={15}
-                                            />
-                                    </div>
-                                </div>
-                                <motion.div 
-                                    className={styles.inputDescrição}
-                                >
-                                    <h3>Status do Livro</h3>
-                                    <div className={styles.containerStatus}>
-                                        <motion.div
-                                            style={status === "TO DO" ? { backgroundColor: '#6b6b6b', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                            className={styles.status}
-                                            whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: '#FFF' }} 
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={() => setStatus("TO DO")}
-                                        >
-                                            Leitura Pendente
-                                        </motion.div>
-                                        <motion.div
-                                            style={status === "IN PROGRESS" ? { backgroundColor: '#a0ff47' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                            className={styles.status}
-                                            whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={() => setStatus("IN PROGRESS")}
-                                        >
-                                            Lendo
-                                        </motion.div>
-                                        <motion.div 
-                                            style={status === "COMPLETED" ? { backgroundColor: '#319f43', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                            className={styles.status}
-                                            whileHover={{ scale: 1.1, backgroundColor: '#319f43', color: '#FFF' }} 
-                                            whileTap={{ scale: 0.95 }}
-                                            onClick={() => setStatus("COMPLETED")}
-                                        >
-                                            Leitura Finalizada
-                                        </motion.div>
-                                    </div>
-                                </motion.div>
-                            </div>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }} 
-                                whileTap={{ scale: 0.8 }}
-                                style={ 
-                                        tituloLivro === livro.title && 
-                                        autorLivro === livro.author &&
-                                        temaLivro === livro.theme &&
-                                        coverImage === livro.coverImage &&
-                                        livro.status === status ? 
-                                        { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
-                                        {}
-                                }
-                                onClick={() => 
-                                        tituloLivro === livro.title && 
-                                        autorLivro === livro.author &&
-                                        temaLivro === livro.theme &&
-                                        coverImage === livro.coverImage &&
-                                        livro.status === status ? 
-                                        undefined :
-                                        atualizarLivro()
-                                }
-                            >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Salvar
-                                <Image 
-                                    className={styles.concluido}
-                                    src="/checkIcon.svg"
-                                    alt="Icone Check"
-                                    width={23}
-                                    height={18}
-                                />
-                            </motion.button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+        </div>
+    );
+
+    // if (!isMobile) {
+    //     return (
+    //         <div className={styles.overlay}>
+    //             <div className={styles.containerPopUp}>
+    //                 <div className={styles.botoesTopo}>
+    //                     <motion.button
+    //                         whileHover={{ scale: 1.1 }} 
+    //                         whileTap={{ scale: 0.8 }}
+    //                         className={styles.botaoVoltar} 
+    //                         onClick={() => window.location.reload()}
+    //                     >
+    //                         <strong>X</strong>
+    //                     </motion.button>
+    //                     <motion.button
+    //                         whileHover={{ scale: 1.2 }} 
+    //                         whileTap={{ scale: 0.8 }}
+    //                         className={styles.lixeira}
+    //                         onClick={() => {
+    //                                 if (confirm('Tem certeza que deseja excluir este livro?')) {
+    //                                     deletarLivro();
+    //                                 }}}
+    //                     >
+    //                         <Image 
+    //                             src="/lixeiraIcon.svg"
+    //                             alt="Icone Lixeira"
+    //                             width={27}
+    //                             height={29}
+    //                         />
+    //                     </motion.button>
+    //                 </div>
+    //                 <div className={styles.conteudo}>
+    //                     <Image 
+    //                         src="/IconeNovoLivro.svg"
+    //                         alt="Icone Novo Livro"
+    //                         width={72}
+    //                         height={72}
+    //                         className={styles.icone}
+    //                     />
+    //                     <h2>Editar Livro</h2>
+    //                     <div className={styles.inputs}>
+    //                         <div className={styles.inputObjetivo}>
+    //                             <h3>Título</h3>
+    //                             <div className={styles.input}>
+    //                                 <input
+    //                                     type="text"
+    //                                     id="tituloLivro"
+    //                                     value={tituloLivro}
+    //                                     onChange={(e) => setTituloLivro(e.target.value)}
+    //                                     placeholder={livro ? livro.title : "Digite o título do livro..."}
+    //                                 />
+    //                                 <Image 
+    //                                     className={styles.lapis}
+    //                                     src="/iconeLapisCinza.svg"
+    //                                     alt="Icone Lapis"
+    //                                     width={15}
+    //                                     height={15}
+    //                                     />
+    //                             </div>
+    //                             </div>
+    //                         <div className={styles.inputDescrição}>
+    //                             <h3>Autor</h3>
+    //                             <div className={styles.input}>
+    //                                 <input 
+    //                                     type="text"
+    //                                     id="autorLivro"
+    //                                     value={autorLivro}
+    //                                     onChange={(e) => setAutorLivro(e.target.value)}
+    //                                     placeholder={livro ? livro.author : "Escreva o nome do autor do Livro..."}
+    //                                 />
+    //                                 <Image
+    //                                     className={styles.lapis} 
+    //                                     src="/iconeLapisCinza.svg"
+    //                                     alt="Icone Lapis"
+    //                                     width={15}
+    //                                     height={15}
+    //                                     />
+    //                             </div>
+    //                         </div>
+    //                         <div className={styles.inputDescrição}>
+    //                             <h3>Tema</h3>
+    //                             <div className={styles.input}>
+    //                                 <input 
+    //                                     type="text"
+    //                                     id="temaLivro"
+    //                                     value={temaLivro}
+    //                                     onChange={(e) => setTemaLivro(e.target.value)}
+    //                                     placeholder={livro ? livro.theme : "Escreva o nome do tema do Livro..."}
+    //                                 />
+    //                                 <Image
+    //                                     className={styles.lapis} 
+    //                                     src="/iconeLapisCinza.svg"
+    //                                     alt="Icone Lapis"
+    //                                     width={15}
+    //                                     height={15}
+    //                                     />
+    //                             </div>
+    //                         </div>
+    //                         <div className={styles.inputDescrição}>
+    //                             <h3>Url da Imagem de Capa</h3>
+    //                             <div className={styles.input}>
+    //                                 <input 
+    //                                     type="text"
+    //                                     id="temaLivro"
+    //                                     value={coverImage}
+    //                                     onChange={(e) => setCoverImage(e.target.value)}
+    //                                     placeholder={livro ? livro.coverImage : "Escreva a url da imagem..."}
+    //                                 />
+    //                                 <Image
+    //                                     className={styles.lapis} 
+    //                                     src="/iconeLapisCinza.svg"
+    //                                     alt="Icone Lapis"
+    //                                     width={15}
+    //                                     height={15}
+    //                                     />
+    //                             </div>
+    //                         </div>
+    //                         <motion.div 
+    //                             className={styles.inputDescrição}
+    //                         >
+    //                             <h3>Status do Livro</h3>
+    //                             <div className={styles.containerStatus}>
+    //                                 <motion.div
+    //                                     style={status === "TO DO" ? { backgroundColor: '#6b6b6b', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+    //                                     className={styles.status}
+    //                                     whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: '#FFF' }} 
+    //                                     whileTap={{ scale: 0.95 }}
+    //                                     onClick={() => setStatus("TO DO")}
+    //                                 >
+    //                                     Leitura Pendente
+    //                                 </motion.div>
+    //                                 <motion.div
+    //                                     style={status === "IN PROGRESS" ? { backgroundColor: '#a0ff47' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+    //                                     className={styles.status}
+    //                                     whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
+    //                                     whileTap={{ scale: 0.95 }}
+    //                                     onClick={() => setStatus("IN PROGRESS")}
+    //                                 >
+    //                                     Lendo
+    //                                 </motion.div>
+    //                                 <motion.div 
+    //                                     style={status === "COMPLETED" ? { backgroundColor: '#319f43', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+    //                                     className={styles.status}
+    //                                     whileHover={{ scale: 1.1, backgroundColor: '#319f43', color: '#FFF' }} 
+    //                                     whileTap={{ scale: 0.95 }}
+    //                                     onClick={() => setStatus("COMPLETED")}
+    //                                 >
+    //                                     Leitura Finalizada
+    //                                 </motion.div>
+    //                             </div>
+    //                         </motion.div>
+    //                     </div>
+    //                     <motion.button
+    //                         whileHover={{ scale: 1.05 }} 
+    //                         whileTap={{ scale: 0.8 }}
+    //                         style={ 
+    //                                 tituloLivro === livro.title && 
+    //                                 autorLivro === livro.author &&
+    //                                 temaLivro === livro.theme &&
+    //                                 coverImage === livro.coverImage &&
+    //                                 livro.status === status ? 
+    //                                 { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
+    //                                 {}
+    //                         }
+    //                         onClick={() => 
+    //                                 tituloLivro === livro.title && 
+    //                                 autorLivro === livro.author &&
+    //                                 temaLivro === livro.theme &&
+    //                                 coverImage === livro.coverImage &&
+    //                                 livro.status === status ? 
+    //                                 undefined :
+    //                                 atualizarLivro()
+    //                         }
+    //                     >
+    //                         {carregando && <ClipLoader size={10} color="#0B0E31" />}
+    //                         <span 
+    //                             style={{ 
+    //                                 marginLeft: carregando ? '8px' : '0'
+    //                             }}
+    //                         ></span>
+    //                         Salvar
+    //                         <Image 
+    //                             className={styles.concluido}
+    //                             src="/checkIcon.svg"
+    //                             alt="Icone Check"
+    //                             width={23}
+    //                             height={18}
+    //                         />
+    //                     </motion.button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     );
+    // } else {
+    // }
 
 }
