@@ -9,13 +9,13 @@ import IconeStatus from "../IconeStatus";
 import { Tarefa } from "../interfaces/Tarefa";
 import { useRouter } from "next/navigation";
 import EditarTarefa from "../PopUp/editarTarefa";
+import { linkApi } from "@/app/page";
 
 
 export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
 
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
 
-    
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setTipoMenuDesk(
@@ -85,14 +85,15 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
             setCarregandoTarefas(true);
             const dateFormatted = selectedDate?.toISOString().split('T')[0];
             const response = await fetch(
-                    'https://api.inevolving.inovasoft.tech/auth/api/tasks/' + dateFormatted, 
+                linkApi + '/auth/api/tasks/' + dateFormatted, 
                 {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + jwtToken
                     },
-                });
+                }
+            );
     
             const data: Tarefa[] = await response.json();
 
