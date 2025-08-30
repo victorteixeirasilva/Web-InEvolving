@@ -8,6 +8,7 @@ import { Livro } from "@/components/interfaces/Livro";
 import { linkApi } from "@/app/page";
 
 export default function EditarLivro( { livro }: { livro: Livro } ) {
+    
     const [isMobile, setIsMobile] = useState(false);
     
     useEffect(() => {
