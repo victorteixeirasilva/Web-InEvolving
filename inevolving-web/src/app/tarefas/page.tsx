@@ -14,6 +14,7 @@ import { Objetivo } from '@/components/interfaces/Objetivo';
 import { useRouter } from 'next/navigation';
 import EditarTarefa from '@/components/PopUp/editarTarefa';
 import { isArray } from 'chart.js/helpers';
+import { linkApi } from '../page';
 
 export default function Tarefas() {
     const [isMobile, setIsMobile] = useState(false);
@@ -95,7 +96,7 @@ export default function Tarefas() {
         setTarefasDeHoje(null);
 
         const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+ dataFormatada, 
+                linkApi+'/auth/api/tasks/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -136,7 +137,7 @@ export default function Tarefas() {
 
         if (filtroAtivoStatus === 1) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+ dataFormatada, 
+                linkApi+'/auth/api/tasks/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -165,7 +166,7 @@ export default function Tarefas() {
         
         } else if (filtroAtivoStatus === 2) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/todo/'+ dataFormatada, 
+                linkApi+'/auth/api/tasks/status/todo/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -194,7 +195,7 @@ export default function Tarefas() {
         
         } else if (filtroAtivoStatus === 3) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/progress/'+ dataFormatada, 
+                linkApi+'/auth/api/tasks/status/progress/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -223,7 +224,7 @@ export default function Tarefas() {
 
         } else if (filtroAtivoStatus === 4) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/done/'+ dataFormatada, 
+                linkApi+'/auth/api/tasks/status/done/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -251,7 +252,7 @@ export default function Tarefas() {
             setCarregando(false);
         } else if (filtroAtivoStatus === 5) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/canceled/'+ dataFormatada, 
+                linkApi+'/auth/api/tasks/status/canceled/'+ dataFormatada, 
                 {
                     method: 'GET',
                     headers: {
@@ -287,7 +288,7 @@ export default function Tarefas() {
         setTarefasAtrasadas(null);
 
         const response = await fetch(
-            'https://api.inevolving.inovasoft.tech/auth/api/tasks/late', 
+            linkApi+'/auth/api/tasks/late', 
             {
                 method: 'GET',
                 headers: {
@@ -322,7 +323,7 @@ export default function Tarefas() {
 
         if (filtroAtivoStatus === 1) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/'+ data, 
+                linkApi+'/auth/api/tasks/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -350,7 +351,7 @@ export default function Tarefas() {
             setCarregando(false);
         } else if (filtroAtivoStatus === 2) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/todo/'+ data, 
+                linkApi+'/auth/api/tasks/status/todo/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -379,7 +380,7 @@ export default function Tarefas() {
 
         } else if (filtroAtivoStatus === 3) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/progress/'+ data, 
+                linkApi+'/auth/api/tasks/status/progress/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -408,7 +409,7 @@ export default function Tarefas() {
 
         } else if (filtroAtivoStatus === 4) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/done/'+ data, 
+                linkApi+'/auth/api/tasks/status/done/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -437,7 +438,7 @@ export default function Tarefas() {
 
         } else if (filtroAtivoStatus === 5) {
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/auth/api/tasks/status/canceled/'+ data, 
+                linkApi+'/auth/api/tasks/status/canceled/'+ data, 
                 {
                     method: 'GET',
                     headers: {
@@ -487,7 +488,7 @@ export default function Tarefas() {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    'https://api.inevolving.inovasoft.tech/auth/api/objectives/user', 
+                    linkApi+'/auth/api/objectives/user', 
                 {
                     method: 'GET',
                     headers: {
@@ -531,7 +532,7 @@ export default function Tarefas() {
     const cadastrarNovaTarefa = async () => {
         setCarregando(true);
 
-        const response = await fetch('https://api.inevolving.inovasoft.tech/auth/api/tasks', {
+        const response = await fetch(linkApi+'/auth/api/tasks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -555,7 +556,7 @@ export default function Tarefas() {
         if(isTarefaFrequente && response.ok) {
             const tarefaCadastrada: Tarefa_Modulo_Tarefas = await response.json();
 
-            const response2 = await fetch('https://api.inevolving.inovasoft.tech/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
+            const response2 = await fetch(linkApi+'/auth/api/tasks/repeat/'+tarefaCadastrada.id+'/'+tarefaCadastrada.dateTask+'/'+dataFinal?.toISOString().split('T')[0], {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -727,6 +728,19 @@ export default function Tarefas() {
                                 >
                                     Cancelada
                                 </motion.button>
+                                <motion.button 
+                                        className={
+                                            filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                        } 
+                                        whileHover={{ scale: 1.1 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => {
+                                            pegarTarefasAtrasadas();
+                                            setPrimeiroCarregamentoStatus(false);
+                                        }}
+                                    >
+                                        Tarefas em Atraso
+                                </motion.button>
                             </motion.div>
                         </motion.div>
                         {abrirFiltroDeStatus && (
@@ -760,19 +774,6 @@ export default function Tarefas() {
                                         }}
                                     >
                                         Outra Data
-                                    </motion.button>
-                                    <motion.button 
-                                        className={
-                                            filtroAtivo === 5 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                        } 
-                                        whileHover={{ scale: 1.1 }} 
-                                        whileTap={{ scale: 0.8 }}
-                                        onClick={() => {
-                                            pegarTarefasAtrasadas();
-                                            setPrimeiroCarregamentoStatus(false);
-                                        }}
-                                    >
-                                        Tarefas em Atraso
                                     </motion.button>
                                 </motion.div>
                             </motion.div>

@@ -3,6 +3,7 @@ import * as motion from "motion/react-client";
 import { useCallback, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { Tarefa_Modulo_Tarefas } from "@/components/interfaces/Tarefa_Modulo_Tarefas";
+import { linkApi } from "@/app/page";
 
 
 export default function VerListaDeTarefas( { voltar, objetivoId }: { voltar:() => void, objetivoId:string } ) {
@@ -21,7 +22,7 @@ export default function VerListaDeTarefas( { voltar, objetivoId }: { voltar:() =
         setCarregando(true);
 
         const response = await fetch(
-            'https://api.inevolving.inovasoft.tech/auth/api/tasks/objective/' + objetivoId, 
+            linkApi+'/auth/api/tasks/objective/'+objetivoId, 
         {
                 method: 'GET',
                 headers: {
@@ -89,47 +90,4 @@ export default function VerListaDeTarefas( { voltar, objetivoId }: { voltar:() =
         </div>
     );
 
-    // if (!isMobile) {
-    //     return (
-    //         <>
-    //         <div className={styles.overlay}>
-    //             <div className={styles.containerPopUp}>
-    //                 <div className={styles.botoesTopo}>
-    //                     <motion.button
-    //                         whileHover={{ scale: 1.1 }} 
-    //                         whileTap={{ scale: 0.8 }}
-    //                         className={styles.botaoVoltar} 
-    //                         onClick={voltar}
-    //                     >
-    //                         <strong>X</strong>
-    //                     </motion.button>
-    //                 </div>
-    //                 <h2>Essas são as tarefas do seu objetivo!</h2>
-    //                 <div className={styles.conteudo}>
-    //                     {carregando && <ClipLoader size={60} color="#0B0E31" />}
-    //                     {!carregando && tarefas.length === 0 && (
-    //                         <p className={styles.semTarefas}>Nenhuma tarefa encontrada para este objetivo.</p>
-    //                     )}
-    //                     {!carregando && tarefas.length > 0 && (
-    //                         <ol className={styles.listaTarefas}>
-    //                             {tarefas
-    //                                 .slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse() // ordena da mais recente para a mais antiga
-    //                                 .map((tarefa) => (
-    //                                 <li key={tarefa.id} className={styles.tarefaItem}>
-    //                                     <h3>{tarefa.nameTask}</h3>
-    //                                     <p>{tarefa.descriptionTask}</p>
-    //                                     <p>
-    //                                         {new Date(tarefa.dateTask).toLocaleDateString('pt-BR')}
-    //                                     </p>
-    //                                 </li>
-    //                             ))}
-    //                         </ol>
-    //                     )}
-    //                 </div>
-    //             </div>
-    //         </div>
-    //         </>
-    //     );
-    // } else {
-    // }
 }
