@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Objective } from '@/components/interfaces/Objective';
 import { ClipLoader } from "react-spinners";
 import ReactMarkdown from 'react-markdown';
-import { linkApi, linkWpp } from "@/app/page";
+import { linkApi, linkWpp } from "@/constants";
 
 
 export default function Jarvas( { voltar, objetivo }: { voltar:() => void, objetivo:Objective } ) {

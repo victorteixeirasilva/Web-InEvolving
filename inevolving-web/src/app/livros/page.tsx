@@ -13,7 +13,7 @@ import { Livro } from '@/components/interfaces/Livro';
 import { ClipLoader } from 'react-spinners';
 import EditarLivro from '@/components/PopUp/editarLivro';
 import { AnimatePresence } from 'framer-motion';
-import { linkApi } from '../page';
+import { linkApi } from '../../constants';
 
 export default function Categoria( ) {
     const [isMobile, setIsMobile] = useState(false);

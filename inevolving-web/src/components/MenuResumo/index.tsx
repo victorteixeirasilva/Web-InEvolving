@@ -9,7 +9,7 @@ import IconeStatus from "../IconeStatus";
 import { Tarefa } from "../interfaces/Tarefa";
 import { useRouter } from "next/navigation";
 import EditarTarefa from "../PopUp/editarTarefa";
-import { linkApi } from "@/app/page";
+import { linkApi } from "../../constants";
 
 
 export default function MenuResumo( {voltar} : {voltar?:()=>void}) {

@@ -7,7 +7,7 @@ import styles from './page.module.scss';
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { linkWpp } from "../page";
+import { linkWpp } from "../../constants";
 
 export default function Page( ) {
     const [isMobile, setIsMobile] = useState(false);

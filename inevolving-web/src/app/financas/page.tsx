@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { ResponseFinancas } from '@/components/interfaces/ResponseFinancas';
 import { ClipLoader } from 'react-spinners';
 import { Calendar, CalendarProps } from 'react-calendar';
-import { linkApi } from '../page';
+import { linkApi } from '../../constants';
 
 export default function Categoria() {
     const [isMobile, setIsMobile] = useState(false);

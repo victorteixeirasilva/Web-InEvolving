@@ -1,0 +1,2165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.containerTipoMenu2 {
+    .container {
+        overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
+
+        position: fixed;
+        z-index: 3;
+        margin-top: 70px;
+        margin-left: 0px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.container {
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+
+    position: fixed;
+    z-index: 3;
+    margin-top: 30px;
+    margin-left: 200px;
+    border-top-left-radius: 50px;
+    background-color: white;
+    height: 100%;
+    width: calc(100% - 200px - 20%);
+}
+
+.tituloContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    align-items: center;
+    justify-content: space-between;
+
+    h1 {
+        font-weight: 700;
+        font-size: 40px;
+        margin-left: 50px;
+    }
+
+    .botaoNovo {
+        font-weight: 600;
+        font-size: 15px;
+        align-items: center;
+        align-content: center;
+        
+        color: #FFFFFF;
+        background-color: #E76148;
+        border-radius: 30px;
+        margin-right: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 30px;
+        border: none;
+        
+        strong {
+            margin-left: 10px;
+        }
+
+    }
+}
+
+.containerConteudo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 30px;
+    row-gap: 30px;  
+    margin-top: 40px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 150px;
+
+}
+
+.containerScroll {
+  max-height: 500px; // define a altura da área visível
+  overflow-y: auto;  // ativa a rolagem vertical
+  padding-right: 8px; // evita scroll invisível
+  margin-top: 16px;
+
+  // rolagem personalizada (opcional)
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+}
+
+.objetivo {
+    display: flex;
+    flex-direction: row;
+    border-bottom: solid 2px #F3F3F3;
+    padding: 3px 20px;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+
+    h4 {
+        font-weight: 600;
+        font-size: 18px;
+        color: #0B0E31;
+    }
+}
+
+.objetivo:hover {
+    background-color: #F3F3F3;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.containerFiltroEBotao {
+    margin-top: 40px;
+    margin-left: 50px;
+    margin-right: 50px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+
+    .filtro {
+        display: flex;
+        flex-direction: row;
+
+        h3 {
+            margin-right: 30px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        h4 {
+            font-weight: 700;
+            margin-right: 30px;
+        }
+
+        .botaoFiltroK {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #0B0E31;
+            background-color: #EFEFEF;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 10px;
+            border: none;
+        }
+
+        .botaoFiltro {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #0B0E31;
+            background-color: #EFEFEF;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 10px;
+            border: none;
+        }
+
+        .botaoFiltroK:hover{
+            border: solid 2px #0B0E31;
+            box-shadow: 0px 1px 10.2px 0px #0b0e3189;
+        }
+
+        .botaoFiltroKAtivo {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #0B0E31;
+            background-color: #EFEFEF;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 10px;
+            border: none;
+
+            border: solid 2px #0B0E31;
+            box-shadow: 0px 1px 10.2px 0px #0b0e315b;
+        }
+
+        .botaoFiltroStatus {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #0B0E31;
+            background-color: #EFEFEF;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 10px;
+            border: none;
+        }
+
+        .botaoFiltro:hover{
+            color: #EFEFEF;
+            background-color: #0B0E31;
+        }
+
+        .botaoFiltroAtivo {
+            font-weight: 600;
+            font-size: 16px;
+
+            color: #EFEFEF;
+            background-color: #0B0E31;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 0px 30px;
+            border: none;
+        }
+
+    }
+
+}
+
+.inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    background-color: #F4F4FE;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    input{
+        font-weight: 600;
+        font-size: 15px;
+        margin-left: 20px;
+        color: #0B0E31;
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: transparent;
+    }
+
+    input:focus {
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+
+}
+
+.lapis {
+    margin: auto;
+    margin-right: 20px;
+}
+
+.place {
+    margin: auto;
+    font-weight: 600;
+    font-size: 15px;
+    margin-left: 20px;
+    color: #999999;
+    width: 100%;
+    border: none;
+    background-color: transparent; 
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #D9D9D994;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    display: flex;
+    flex-direction: row;
+}
+
+.containerPopUp {
+    max-height: 100%; // define a altura da área visível
+    overflow-y: auto;  // ativa a rolagem vertical
+    padding-right: 8px; // evita scroll invisível
+
+    // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+    scale: 0.9;
+    width: 40%;
+    border-radius: 38px;
+    align-items: center;
+    align-content: center;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    color: #0B0E31;
+    font-weight: 800;
+    font-size: 32px;
+    
+    .conteudo {
+        padding: 30px;
+        
+        button {
+            color: white;
+            background-color: #E76148;
+            border: none;
+            width: 100%;
+            margin-top: 40px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+
+            .concluido {
+                margin: auto;
+                margin-top: 2px;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .icone {
+        width: 100%;
+    }
+
+
+    h2 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+        color: #0B0E31;
+    }
+
+}
+
+.botoesTopo {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.lixeira {
+    scale: 0.7;
+    border: none;
+    background-color: transparent;
+    margin: 5px 15px;
+    padding: 10px;
+}
+
+.botaoVoltar {
+
+    border: none;
+    background-color: transparent;
+    margin: 4px 10px;
+    padding: 10px;
+
+}
+
+.botaoVoltar:hover {
+    background-color: rgb(255, 73, 73);
+    margin: 1px 1px;
+    padding: 20px 20px;
+    color: white;
+    border-radius: 38px 0px 38px 0px;
+    transition: 0.3s;
+}
+
+.containerPopUpEdit {
+
+    max-height: 100%; // define a altura da área visível
+    overflow-y: auto;  // ativa a rolagem vertical
+    padding-right: 8px; // evita scroll invisível
+
+    // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+
+    scale: 0.9;
+    width: 40%;
+    border-radius: 38px;
+    align-items: center;
+    align-content: center;
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    color: #0B0E31;
+    font-weight: 800;
+    font-size: 32px;
+    
+    .conteudo {
+        padding: 30px;
+        
+        button {
+            color: white;
+            background-color: #E76148;
+            border: none;
+            width: 100%;
+            margin-top: 40px;
+            height: 40px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+
+            .concluido {
+                margin: auto;
+                margin-top: 2px;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .icone {
+        width: 100%;
+    }
+
+
+    h2 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        text-align: center;
+        color: #0B0E31;
+    }
+
+    h3 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        color: #0B0E31;
+    }
+
+    .botaoVoltar {
+        color: #0B0E31;
+        border: none;
+        background-color: transparent;
+        margin: 4px 10px;
+        padding: 10px;
+
+    }
+
+}
+
+.conteudo {
+
+    h3 {
+        margin-top: 40px;
+        margin-bottom: 10px;
+        color: #0B0E31;
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+}
+
+.calendar {
+    margin: auto;
+    border: none;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+
+    button {
+        background-color: transparent !important;
+        border: none !important;
+        width: 90% !important;
+        font-family: 'Inter', sans-serif !important;
+        line-height: 1.125em !important;
+        color: #0B0E31 !important;
+    }
+
+}
+
+
+.tarefa {
+    background-color: #F4F4FE;
+    box-shadow: 0px 1px 10.2px 0px #00000040;
+    padding: 40px;
+    color: #0B0E31;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 22px;
+    cursor: pointer;
+
+    p {
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 16px;
+    }
+
+    .botoes {
+        display: flex;
+        margin-top: 30px;
+        justify-content: space-between;
+    }    
+
+    .botaoDetalhes {
+        border: none;
+        background-color: #FFFFFF;
+        border-radius: 7px;
+        padding: 5px 10px;
+        color: #ACACAC;
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 15px;
+    }
+
+    .botaoEditar {
+        border: none;
+        background-color: transparent;
+        color: #ACACAC;
+        font-weight: 500;
+        font-size: 15px;
+        text-align: center;
+    }
+
+
+
+}
+
+.tarefaBloqueada {
+    background-color: #dbdbdb;
+    box-shadow: 0px 1px 10.2px 0px #00000040;
+    padding: 40px;
+    color: #0b0e317c;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 22px;
+    cursor: not-allowed;
+
+
+    p {
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 16px;
+    }
+
+    .botoes {
+        display: flex;
+        margin-top: 30px;
+        justify-content: space-between;
+    }    
+
+    .botaoDetalhes {
+        border: none;
+        background-color: #ffffff86;
+        border-radius: 7px;
+        padding: 5px 10px;
+        color: #acacac79;
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 15px;
+    }
+
+    .botaoEditar {
+        border: none;
+        background-color: transparent;
+        color: #acacac79;
+        font-weight: 500;
+        font-size: 15px;
+        text-align: center;
+    }
+
+
+
+}
+
+.containerInputData {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    height: 100%;
+    margin-top: 40px;
+
+    h3 {
+        align-content: center;
+        align-items: center;
+        width: 60%;
+        margin: 0 0 0 0 !important;
+    }
+    
+
+    .botaoSimNao {
+        display: flex;
+        flex-direction: row;
+        width: 20% !important;
+        height: 100% !important;
+        margin: 0px 0px 0px 0px !important;
+        padding: none !important;
+        border: none !important;
+        background-color: transparent !important;
+        color: #0B0E31 !important;
+        align-items: center;
+
+        font-weight: 600;
+        font-size: 18px;
+
+    }
+
+    .checkBox {
+        margin: 0;
+        margin-right: 10px;
+        padding: 3px;
+        height: 10px;
+        width: 10px;
+        border: solid 3px #0B0E31;
+        border-radius: 100%;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .marcador {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background-color: #E76148;
+    }
+
+}
+
+.diaDaSemana {
+    cursor: pointer;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: 60px;
+    border-bottom: solid 2px #F3F3F3;
+    color: #0B0E31;
+    font-weight: 600;
+    font-size: 18px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.diaDaSemana:hover {
+    background-color: #F3F3F3;
+}
+
+.containerDataFinal {
+    margin-top: 40px;
+    font-weight: 600;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 18px;
+    align-items: center;
+    
+    .inputDataFinal {
+        padding: 10px 20px;
+        border-radius: 9px;
+        background-color: #F3F3F3;
+        font-size: 18px;
+        color: #929292;
+        
+        strong {
+            color: #0B0E31;
+        }
+    }
+}
+
+.mob {
+
+    .container {
+        overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
+    
+        position: fixed;
+        z-index: 3;
+        margin: auto;
+        margin-top: 70px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        background-color: white;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .tituloContainer {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        align-content: center;
+    
+        h1 {
+            margin: 0;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+            font-size: 30px;
+            // margin-left: 50px;
+        }
+    
+        .botaoNovo {
+            margin: 0;
+            font-weight: 600;
+            font-size: 12px;
+            align-items: center;
+            align-content: center;
+            
+            color: #FFFFFF;
+            background-color: #E76148;
+            border-radius: 30px;
+            // margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px 30px;
+            border: none;
+            
+            strong {
+                margin-left: 10px;
+            }
+    
+        }
+    }
+    
+    .containerConteudo {
+        display: flex;
+        flex-direction: column;
+        margin-top: 40px;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 150px;
+    
+    }
+    
+    .containerScroll {
+      max-height: 500px; // define a altura da área visível
+      overflow-y: auto;  // ativa a rolagem vertical
+      padding-right: 8px; // evita scroll invisível
+      margin-top: 16px;
+    
+      // rolagem personalizada (opcional)
+      scrollbar-width: thin;
+      scrollbar-color: #ccc transparent;
+    
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+      }
+    }
+    
+    .objetivo {
+        display: flex;
+        flex-direction: row;
+        border-bottom: solid 2px #F3F3F3;
+        padding: 3px 20px;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+    
+        h4 {
+            font-weight: 600;
+            font-size: 18px;
+            color: #0B0E31;
+        }
+    }
+    
+    .objetivo:hover {
+        background-color: #F3F3F3;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    
+    .containerFiltroEBotao {
+        margin-top: 40px;
+        margin-left: 50px;
+        margin-right: 50px;
+        display: flex;
+        flex-direction: column;
+    
+        .filtro {
+            display: flex;
+            flex-direction: column;
+    
+            h3 {
+                margin-right: 20px;
+                font-size: 20px;
+                font-weight: 700;
+            }
+            
+            h4 {
+                font-weight: 700;
+                margin-right: 20px;
+            }
+    
+            .botaoFiltro {
+                font-weight: 600;
+                font-size: 16px;
+    
+                color: #0B0E31;
+                background-color: #EFEFEF;
+                border-radius: 30px;
+                // margin-right: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                // margin: 0;
+                padding: 10px 20px;
+                border: none;
+            }
+    
+            .botaoFiltroStatus {
+                font-weight: 600;
+                font-size: 16px;
+    
+                color: #0B0E31;
+                background-color: #EFEFEF;
+                border-radius: 30px;
+                margin-right: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 10px 10px;
+                border: none;
+            }
+    
+            .botaoFiltro:hover{
+                color: #EFEFEF;
+                background-color: #0B0E31;
+            }
+    
+            .botaoFiltroAtivo {
+                font-weight: 600;
+                font-size: 16px;
+    
+                color: #EFEFEF;
+                background-color: #0B0E31;
+                border-radius: 30px;
+                margin-right: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 10px 30px;
+                border: none;
+            }
+    
+        }
+    
+    }
+    
+    .inputs {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+    }
+    
+    .input {
+        width: 100%;
+        height: 40px;
+        background-color: #F4F4FE;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    
+        input{
+            font-weight: 600;
+            font-size: 15px;
+            margin-left: 20px;
+            color: #0B0E31;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+        }
+    
+        input:focus {
+            outline: none;
+            border: none;
+            background-color: transparent;
+        }
+    
+    }
+    
+    .lapis {
+        margin: auto;
+        margin-right: 20px;
+    }
+    
+    .place {
+        margin: auto;
+        font-weight: 600;
+        font-size: 15px;
+        margin-left: 20px;
+        color: #999999;
+        width: 100%;
+        border: none;
+        background-color: transparent; 
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #D9D9D994;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .containerPopUp {
+        max-height: 70%; // define a altura da área visível
+        overflow-y: auto;  // ativa a rolagem vertical
+        padding-right: 8px; // evita scroll invisível
+    
+        // rolagem personalizada (opcional)
+        scrollbar-width: thin;
+        scrollbar-color: #ccc transparent;
+    
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        &::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+    
+        scale: 1;
+        width: 95%;
+        height: 70%;
+        border-radius: 38px;
+        align-items: center;
+        align-content: center;
+        background-color: #FFFFFF;
+        font-family: 'Inter', sans-serif;
+        color: #0B0E31;
+        font-weight: 800;
+        font-size: 26px;
+        
+        .conteudo {
+            padding: 10px;
+            
+            button {
+                color: white;
+                background-color: #E76148;
+                border: none;
+                width: 100%;
+                margin-top: 40px;
+                height: 40px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 18px;
+    
+                .concluido {
+                    margin: auto;
+                    margin-top: 2px;
+                    margin-left: 10px;
+                }
+            }
+        }
+    
+        .icone {
+            width: 100%;
+        }
+    
+    
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            text-align: center;
+            color: #0B0E31;
+        }
+    
+    }
+    
+    .botoesTopo {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .lixeira {
+        scale: 0.7;
+        border: none;
+        background-color: transparent;
+        margin: 5px 15px;
+        padding: 10px;
+    }
+    
+    .botaoVoltar {
+    
+        border: none;
+        background-color: transparent;
+        margin: 4px 10px;
+        padding: 10px;
+    
+    }
+    
+    .botaoVoltar:hover {
+        background-color: rgb(255, 73, 73);
+        margin: 1px 1px;
+        padding: 20px 20px;
+        color: white;
+        border-radius: 38px 0px 38px 0px;
+        transition: 0.3s;
+    }
+    
+    .containerPopUpEdit {
+    
+        max-height: 70%; // define a altura da área visível
+        overflow-y: auto;  // ativa a rolagem vertical
+        padding-right: 8px; // evita scroll invisível
+    
+        // rolagem personalizada (opcional)
+        scrollbar-width: thin;
+        scrollbar-color: #ccc transparent;
+    
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        &::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+    
+    
+        scale: 0.9;
+        width: 95%;
+        border-radius: 38px;
+        align-items: center;
+        align-content: center;
+        background-color: #FFFFFF;
+        font-family: 'Inter', sans-serif;
+        color: #0B0E31;
+        font-weight: 800;
+        font-size: 32px;
+        
+        .conteudo {
+            padding: 30px;
+            
+            button {
+                color: white;
+                background-color: #E76148;
+                border: none;
+                width: 100%;
+                margin-top: 40px;
+                height: 40px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 18px;
+    
+                .concluido {
+                    margin: auto;
+                    margin-top: 2px;
+                    margin-left: 10px;
+                }
+            }
+        }
+    
+        .icone {
+            width: 100%;
+        }
+    
+    
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            text-align: center;
+            color: #0B0E31;
+        }
+    
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            color: #0B0E31;
+        }
+    
+        .botaoVoltar {
+            color: #0B0E31;
+            border: none;
+            background-color: transparent;
+            margin: 4px 10px;
+            padding: 10px;
+    
+        }
+    
+    }
+    
+    .conteudo {
+    
+        h3 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            color: #0B0E31;
+            font-weight: 600;
+            font-size: 18px;
+        }
+    
+    }
+    
+    .calendar {
+        margin: auto;
+        border: none;
+        width: 100%;
+        font-family: 'Inter', sans-serif;
+    
+        button {
+            background-color: transparent !important;
+            border: none !important;
+            width: 90% !important;
+            font-family: 'Inter', sans-serif !important;
+            line-height: 1.125em !important;
+            color: #0B0E31 !important;
+        }
+    
+    }
+    
+    
+    .tarefa {
+        background-color: #F4F4FE;
+        box-shadow: 0px 1px 10.2px 0px #00000040;
+        padding: 40px;
+        color: #0B0E31;
+        font-weight: 600;
+        font-size: 18px;
+        border-radius: 22px;
+        cursor: pointer;
+    
+        p {
+            font-weight: 500;
+            font-style: Medium;
+            font-size: 16px;
+        }
+    
+        .botoes {
+            display: flex;
+            margin-top: 30px;
+            justify-content: space-between;
+        }    
+    
+        .botaoDetalhes {
+            border: none;
+            background-color: #FFFFFF;
+            border-radius: 7px;
+            padding: 5px 10px;
+            color: #ACACAC;
+            font-weight: 500;
+            font-style: Medium;
+            font-size: 15px;
+        }
+    
+        .botaoEditar {
+            border: none;
+            background-color: transparent;
+            color: #ACACAC;
+            font-weight: 500;
+            font-size: 15px;
+            text-align: center;
+        }
+    
+    
+    
+    }
+    
+    .tarefaBloqueada {
+        background-color: #dbdbdb;
+        box-shadow: 0px 1px 10.2px 0px #00000040;
+        padding: 40px;
+        color: #0b0e317c;
+        font-weight: 600;
+        font-size: 18px;
+        border-radius: 22px;
+        cursor: not-allowed;
+    
+    
+        p {
+            font-weight: 500;
+            font-style: Medium;
+            font-size: 16px;
+        }
+    
+        .botoes {
+            display: flex;
+            margin-top: 30px;
+            justify-content: space-between;
+        }    
+    
+        .botaoDetalhes {
+            border: none;
+            background-color: #ffffff86;
+            border-radius: 7px;
+            padding: 5px 10px;
+            color: #acacac79;
+            font-weight: 500;
+            font-style: Medium;
+            font-size: 15px;
+        }
+    
+        .botaoEditar {
+            border: none;
+            background-color: transparent;
+            color: #acacac79;
+            font-weight: 500;
+            font-size: 15px;
+            text-align: center;
+        }
+    
+    
+    
+    }
+    
+    .containerInputData {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        height: 100%;
+        margin-top: 40px;
+    
+        h3 {
+            align-content: center;
+            align-items: center;
+            width: 60%;
+            margin: 0 0 0 0 !important;
+        }
+        
+    
+        .botaoSimNao {
+            display: flex;
+            flex-direction: row;
+            width: 30% !important;
+            height: 100% !important;
+            margin: 0px 0px 0px 0px !important;
+            padding: none !important;
+            border: none !important;
+            background-color: transparent !important;
+            color: #0B0E31 !important;
+            align-items: center;
+    
+            font-weight: 600;
+            font-size: 18px;
+    
+        }
+    
+        .checkBox {
+            margin: 0;
+            margin-right: 10px;
+            padding: 3px;
+            height: 10px;
+            width: 10px;
+            border: solid 3px #0B0E31;
+            border-radius: 100%;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+    
+        .marcador {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-color: #E76148;
+        }
+    
+    }
+    
+    .diaDaSemana {
+        cursor: pointer;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        height: 60px;
+        border-bottom: solid 2px #F3F3F3;
+        color: #0B0E31;
+        font-weight: 600;
+        font-size: 18px;
+        justify-content: space-between;
+        display: flex;
+    }
+    
+    .diaDaSemana:hover {
+        background-color: #F3F3F3;
+    }
+    
+    .containerDataFinal {
+        margin-top: 40px;
+        font-weight: 600;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 18px;
+        align-items: center;
+        
+        .inputDataFinal {
+            padding: 10px 20px;
+            border-radius: 9px;
+            background-color: #F3F3F3;
+            font-size: 18px;
+            color: #929292;
+            
+            strong {
+                color: #0B0E31;
+            }
+        }
+    }
+
+}
+
+.kanban {
+
+    .container {
+        overflow-x: hidden;
+        font-family: 'Inter', sans-serif;
+
+        position: fixed;
+        z-index: 3;
+        margin-top: 30px;
+        margin-left: 200px;
+        border-top-left-radius: 50px;
+        background-color: white;
+        height: 100%;
+        width: calc(100% - 200px - 20%);
+    }
+
+
+    .tituloContainer {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+            font-weight: 700;
+            font-size: 40px;
+            margin-left: 50px;
+
+            p {
+                color: #C0C0C0;
+
+                font-weight: 700;
+                font-size: 16px;
+            }
+        }
+
+        .botaoNovo {
+            font-weight: 600;
+            font-size: 15px;
+            align-items: center;
+            align-content: center;
+            
+            color: #FFFFFF;
+            background-color: #E76148;
+            border-radius: 30px;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px 30px;
+            border: none;
+            
+            strong {
+                margin-left: 10px;
+            }
+
+        }
+    }
+
+    .containerFiltroEBotao {
+        margin-top: 40px;
+        margin-left: 50px;
+        margin-right: 50px;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+
+        .filtro {
+            display: flex;
+            flex-direction: row;
+
+            h3 {
+                margin-right: 30px;
+                font-size: 20px;
+                font-weight: 700;
+            }
+            
+            h4 {
+                font-weight: 700;
+                margin-right: 30px;
+            }
+
+            .botaoFiltro {
+                font-weight: 600;
+                font-size: 16px;
+
+                color: #0B0E31;
+                background-color: #EFEFEF;
+                border-radius: 30px;
+                margin-right: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 0px 10px;
+                border: none;
+            }
+
+            .botaoFiltroStatus {
+                font-weight: 600;
+                font-size: 16px;
+
+                color: #0B0E31;
+                background-color: #EFEFEF;
+                border-radius: 30px;
+                margin-right: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 0px 10px;
+                border: none;
+            }
+
+            .botaoFiltro:hover{
+                color: #EFEFEF;
+                background-color: #0B0E31;
+            }
+
+            .botaoFiltroAtivo {
+                font-weight: 600;
+                font-size: 16px;
+
+                color: #EFEFEF;
+                background-color: #0B0E31;
+                border-radius: 30px;
+                margin-right: 30px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 0px 30px;
+                border: none;
+            }
+
+        }
+
+    }
+
+    .containerConteudo {
+        // display: grid;
+        // // grid-template-columns: repeat(3, 1fr);
+        // column-gap: 30px;
+        // row-gap: 30px;  
+        display: flex;
+        flex-direction: row;
+        margin-top: 40px;
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-bottom: 150px;
+
+    }
+
+    .coluna {
+        width: 100%;
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 0px;
+
+        .tituloColuna {
+            color: #0B0E31;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 1px 0px;
+
+            border-radius: 20px;
+            background-color: #EFEFEF;
+            box-shadow: 0px 1px 10.2px 0px #00000040;
+        }
+    }
+
+
+
+    .inputs {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+    }
+
+    .input {
+        width: 100%;
+        height: 40px;
+        background-color: #F4F4FE;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        input{
+            font-weight: 600;
+            font-size: 15px;
+            margin-left: 20px;
+            color: #0B0E31;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+        }
+
+        input:focus {
+            outline: none;
+            border: none;
+            background-color: transparent;
+        }
+
+    }
+
+    .lapis {
+        margin: auto;
+        margin-right: 20px;
+    }
+
+    .place {
+        margin: auto;
+        font-weight: 600;
+        font-size: 15px;
+        margin-left: 20px;
+        color: #999999;
+        width: 100%;
+        border: none;
+        background-color: transparent; 
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #D9D9D994;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .containerPopUp {
+        max-height: 100%; // define a altura da área visível
+        overflow-y: auto;  // ativa a rolagem vertical
+        padding-right: 8px; // evita scroll invisível
+
+        // rolagem personalizada (opcional)
+        scrollbar-width: thin;
+        scrollbar-color: #ccc transparent;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+
+
+        scale: 0.9;
+        width: 40%;
+        border-radius: 38px;
+        align-items: center;
+        align-content: center;
+        background-color: #FFFFFF;
+        font-family: 'Inter', sans-serif;
+        color: #0B0E31;
+        font-weight: 800;
+        font-size: 32px;
+        
+        .conteudo {
+            padding: 30px;
+            
+            button {
+                color: white;
+                background-color: #E76148;
+                border: none;
+                width: 100%;
+                margin-top: 40px;
+                height: 40px;
+                border-radius: 20px;
+                font-weight: 700;
+                font-size: 18px;
+
+                .concluido {
+                    margin: auto;
+                    margin-top: 2px;
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .icone {
+            width: 100%;
+        }
+
+
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            text-align: center;
+            color: #0B0E31;
+        }
+
+    }
+
+    .botoesTopo {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .lixeira {
+        scale: 0.7;
+        border: none;
+        background-color: transparent;
+        margin: 5px 15px;
+        padding: 10px;
+    }
+
+    .botaoVoltar {
+
+        border: none;
+        background-color: transparent;
+        margin: 4px 10px;
+        padding: 10px;
+
+    }
+
+    .botaoVoltar:hover {
+        background-color: rgb(255, 73, 73);
+        margin: 1px 1px;
+        padding: 20px 20px;
+        color: white;
+        border-radius: 38px 0px 38px 0px;
+        transition: 0.3s;
+    }
+
+    .conteudo {
+
+        h3 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            color: #0B0E31;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+    }
+
+    .containerImagemDeCapa {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .descricaoCapaDoLivro {
+        color: #CAC8C8;
+
+        font-weight: 600;
+        font-size: 14px;
+
+        width: 70%;
+
+    }
+
+    .containerUpload {
+        border-radius: 12px;
+        margin-top: 20px;
+        background-color: #F4F4FE;
+        padding: 20px 30px;
+        align-items: center;
+        align-content: center;
+    }
+
+    .coluna {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .livro {
+        margin-top: 20px;
+        background-color: #F4F4FE;
+        padding: 10px;
+        box-shadow: 0px 1px 10.2px 0px #00000040;
+        border-radius: 25px;
+
+        h3 {
+            color: #0B0E31;
+
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    }
+
+    .ImgCapaDeLivro {
+        width: 104px;
+        height: 161px;
+        border-radius: 15px;
+    }
+
+    .mob {
+
+        .container {
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        
+            position: fixed;
+            z-index: 3;
+            margin: 0px;
+            margin-top: 70px;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            background-color: white;
+            height: 100%;
+            width: 100%;
+        }
+        
+        
+        .tituloContainer {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 0;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            align-items: center;
+            justify-content: space-between;
+        
+            h1 {
+                font-weight: 700;
+                font-size: 40px;
+                margin: 0px;
+                text-align: center;
+        
+                p {
+                    color: #C0C0C0;
+        
+                    font-weight: 700;
+                    font-size: 16px;
+                }
+            }
+        
+            .botaoNovo {
+                font-weight: 600;
+                font-size: 15px;
+                align-items: center;
+                align-content: center;
+                
+                color: #FFFFFF;
+                background-color: #E76148;
+                border-radius: 30px;
+                margin: 0px;
+                padding: 10px 30px;
+                border: none;
+                
+                strong {
+                    margin-left: 10px;
+                }
+        
+            }
+        }
+        
+        .containerFiltroEBotao {
+            margin-top: 40px;
+            margin-left: 50px;
+            margin-right: 50px;
+            justify-content: space-between;
+            display: flex;
+            flex-direction: row;
+        
+            .filtro {
+                display: flex;
+                flex-direction: row;
+        
+                h3 {
+                    margin-right: 30px;
+                    font-size: 20px;
+                    font-weight: 700;
+                }
+                
+                h4 {
+                    font-weight: 700;
+                    margin-right: 30px;
+                }
+        
+                .botaoFiltro {
+                    font-weight: 600;
+                    font-size: 16px;
+        
+                    color: #0B0E31;
+                    background-color: #EFEFEF;
+                    border-radius: 30px;
+                    margin-right: 30px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    padding: 0px 10px;
+                    border: none;
+                }
+        
+                .botaoFiltroStatus {
+                    font-weight: 600;
+                    font-size: 16px;
+        
+                    color: #0B0E31;
+                    background-color: #EFEFEF;
+                    border-radius: 30px;
+                    margin-right: 30px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    padding: 0px 10px;
+                    border: none;
+                }
+        
+                .botaoFiltro:hover{
+                    color: #EFEFEF;
+                    background-color: #0B0E31;
+                }
+        
+                .botaoFiltroAtivo {
+                    font-weight: 600;
+                    font-size: 16px;
+        
+                    color: #EFEFEF;
+                    background-color: #0B0E31;
+                    border-radius: 30px;
+                    margin-right: 30px;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    padding: 0px 30px;
+                    border: none;
+                }
+        
+            }
+        
+        }
+        
+        .containerConteudo {  
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-bottom: 150px;
+        
+        }
+        
+        .coluna {
+            width: 33%;
+            text-align: center;
+            margin-bottom: 30px;
+        
+            .tituloColuna {
+                color: #0B0E31;
+                font-weight: 600;
+                font-size: 16px;
+                padding: 1px 0px;
+        
+                border-radius: 20px;
+                background-color: #EFEFEF;
+                box-shadow: 0px 1px 10.2px 0px #00000040;
+            }
+        }
+        
+        
+        
+        .inputs {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+        }
+        
+        .input {
+            width: 100%;
+            height: 40px;
+            background-color: #F4F4FE;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        
+            input{
+                font-weight: 600;
+                font-size: 15px;
+                margin-left: 20px;
+                color: #0B0E31;
+                width: 100%;
+                height: 100%;
+                border: none;
+                background-color: transparent;
+            }
+        
+            input:focus {
+                outline: none;
+                border: none;
+                background-color: transparent;
+            }
+        
+        }
+        
+        .lapis {
+            margin: auto;
+            margin-right: 20px;
+        }
+        
+        .place {
+            margin: auto;
+            font-weight: 600;
+            font-size: 15px;
+            margin-left: 20px;
+            color: #999999;
+            width: 100%;
+            border: none;
+            background-color: transparent; 
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #D9D9D994;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .containerPopUp {
+            max-height: 70%; // define a altura da área visível
+            overflow-y: auto;  // ativa a rolagem vertical
+            padding-right: 8px; // evita scroll invisível
+        
+            // rolagem personalizada (opcional)
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
+        
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+        
+            &::-webkit-scrollbar-thumb {
+                background-color: #ccc;
+                border-radius: 4px;
+            }
+        
+        
+            scale: 1;
+            width: 90%;
+            border-radius: 38px;
+            align-items: center;
+            align-content: center;
+            background-color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            color: #0B0E31;
+            font-weight: 800;
+            font-size: 32px;
+            
+            .conteudo {
+                padding: 30px;
+                
+                button {
+                    color: white;
+                    background-color: #E76148;
+                    border: none;
+                    width: 100%;
+                    margin-top: 40px;
+                    height: 40px;
+                    border-radius: 20px;
+                    font-weight: 700;
+                    font-size: 18px;
+        
+                    .concluido {
+                        margin: auto;
+                        margin-top: 2px;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        
+            .icone {
+                width: 100%;
+            }
+        
+        
+            h2 {
+                font-family: 'Inter', sans-serif;
+                font-weight: 600;
+                font-size: 26px;
+                text-align: center;
+                color: #0B0E31;
+            }
+        
+        }
+        
+        .botoesTopo {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        
+        .lixeira {
+            scale: 0.7;
+            border: none;
+            background-color: transparent;
+            margin: 5px 15px;
+            padding: 10px;
+        }
+        
+        .botaoVoltar {
+        
+            border: none;
+            background-color: transparent;
+            margin: 4px 10px;
+            padding: 10px;
+        
+        }
+        
+        .botaoVoltar:hover {
+            background-color: rgb(255, 73, 73);
+            margin: 1px 1px;
+            padding: 20px 20px;
+            color: white;
+            border-radius: 38px 0px 38px 0px;
+            transition: 0.3s;
+        }
+        
+        .conteudo {
+        
+            h3 {
+                margin-top: 40px;
+                margin-bottom: 10px;
+                color: #0B0E31;
+                font-weight: 600;
+                font-size: 16px;
+            }
+        
+        }
+        
+        .containerImagemDeCapa {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .descricaoCapaDoLivro {
+            color: #CAC8C8;
+        
+            font-weight: 600;
+            font-size: 14px;
+        
+            width: 70%;
+        
+        }
+        
+        .containerUpload {
+            border-radius: 12px;
+            margin-top: 20px;
+            background-color: #F4F4FE;
+            padding: 20px 30px;
+            align-items: center;
+            align-content: center;
+        }
+        
+        .coluna {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+        }
+        
+        .livro {
+            margin-top: 20px;
+            background-color: #F4F4FE;
+            padding: 20px;
+            box-shadow: 0px 1px 10.2px 0px #00000040;
+            border-radius: 25px;
+        
+            h3 {
+                color: #0B0E31;
+        
+                font-weight: 600;
+                font-size: 16px;
+                text-align: center;
+            }
+        }
+        
+        .ImgCapaDeLivro {
+            width: 104px;
+            height: 161px;
+            border-radius: 15px;
+        }
+
+    }
+}

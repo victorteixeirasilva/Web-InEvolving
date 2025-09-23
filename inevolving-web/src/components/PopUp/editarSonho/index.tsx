@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { useRouter } from "next/navigation";
 import { Sonho } from "@/components/interfaces/Sonho";
-import { linkApi } from "@/app/page";
+import { linkApi } from "../../../constants";
 
 export default function EditarSonho( { sonho }: { sonho: Sonho } ) {
     const [isMobile, setIsMobile] = useState(false);

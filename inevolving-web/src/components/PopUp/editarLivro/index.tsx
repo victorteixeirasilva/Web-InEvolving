@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { useRouter } from "next/navigation";
 import { Livro } from "@/components/interfaces/Livro";
-import { linkApi } from "@/app/page";
+import { linkApi } from "../../../constants";
 
 export default function EditarLivro( { livro }: { livro: Livro } ) {
     

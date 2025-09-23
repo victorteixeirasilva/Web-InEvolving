@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Tarefa_Modulo_Tarefas } from "@/components/interfaces/Tarefa_Modulo_Tarefas";
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { Calendar, CalendarProps } from 'react-calendar';
-import { linkApi } from "@/app/page";
+import { linkApi } from "../../../constants";
 
 export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modulo_Tarefas; voltar:() => void } ) {
     const [isMobile, setIsMobile] = useState(false);

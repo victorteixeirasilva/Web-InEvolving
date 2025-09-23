@@ -7,7 +7,7 @@ import InputEmail from '../InputEmail';
 import { useRouter } from 'next/navigation';
 import { motion } from "motion/react";
 import { ClipLoader } from 'react-spinners';
-import { linkApi } from '@/app/page';
+import { linkApi } from '../../constants';
 
 
 export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {

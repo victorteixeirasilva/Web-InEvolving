@@ -3,6 +3,7 @@ import styles from "./EditarObjetivo.module.scss";
 import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
+import { linkApi } from "@/constants";
 
 export default function EsqueciSenha( { voltar }: { voltar:() => void } ) {
     const [isMobile, setIsMobile] = useState(false);
@@ -21,7 +22,7 @@ export default function EsqueciSenha( { voltar }: { voltar:() => void } ) {
             setCarregando(true);
 
             const response = await fetch(
-                'https://api.inevolving.inovasoft.tech/api/authentication/forgot', 
+                linkApi+'/api/authentication/forgot', 
             {
                     method: 'POST',
                     headers: {

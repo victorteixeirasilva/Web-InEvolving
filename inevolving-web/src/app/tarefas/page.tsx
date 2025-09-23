@@ -14,7 +14,8 @@ import { Objetivo } from '@/components/interfaces/Objetivo';
 import { useRouter } from 'next/navigation';
 import EditarTarefa from '@/components/PopUp/editarTarefa';
 import { isArray } from 'chart.js/helpers';
-import { linkApi } from '../page';
+import { linkApi } from '../../constants';
+import ListarTarefas from '@/components/Tarefas';
 
 export default function Tarefas() {
     const [isMobile, setIsMobile] = useState(false);
@@ -957,58 +958,8 @@ export default function Tarefas() {
                                     ))
                                 )}
                                 {!carregando && filtroAtivo === 1 && tarefasDeHoje && (
-                                    tarefasDeHoje.map((tarefa) => (
-                                        <motion.div
-                                            onClick={() => {
-                                                if (tarefa.blockedByObjective === null) {
-                                                    setTarefaAual(tarefa);
-                                                    setEditarTarefaAtual(true);
-                                                } else if (tarefa.blockedByObjective === true) {
-                                                    alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                                } else {
-                                                    setTarefaAual(tarefa);
-                                                    setEditarTarefaAtual(true);
-                                                }
-                                            }} 
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.4,
-                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                            }} 
-                                            whileHover={
-                                                tarefa.blockedByObjective === null ? { scale: 1.03 } :
-                                                tarefa.blockedByObjective === true ? {} : { scale: 1.03 }
-                                            } 
-                                            whileTap={
-                                                tarefa.blockedByObjective === null ? { scale: 0.8 } :
-                                                tarefa.blockedByObjective === true ? {} : { scale: 0.8 }
-                                            } 
-                                            key={tarefa.id} 
-                                            className={ 
-                                                tarefa.blockedByObjective === null ? styles.tarefa :
-                                                tarefa.blockedByObjective === true ? styles.tarefaBloqueada : styles.tarefa
-                                            }
-                                        >
-                                            {tarefa?.nameTask}
-                                            <p style={
-                                                    tarefa?.status === "DONE" ? { color: '#319f43' } :
-                                                    tarefa?.status === "IN PROGRESS" ? { color: '#a0ff47' } :
-                                                    tarefa?.status === "TODO" ? { color: '#6b6b6b' } :
-                                                    tarefa?.status === "CANCELLED" ? { color: '#ff0004' } :
-                                                    tarefa?.status === "LATE" ? { color: '#ffbf00' } : {}
-                                                }
-                                            >
-                                            {
-                                                    tarefa?.status === "DONE" ? "Concluída" :
-                                                    tarefa?.status === "IN PROGRESS" ? "Em Progresso" :
-                                                    tarefa?.status === "TODO" ? "Não Iniciada" :
-                                                    tarefa?.status === "CANCELLED" ? "Cancelada" :
-                                                    tarefa?.status === "LATE" ? "Atrasada" : "Status Desconhecido"
-                                                }
-                                            </p>
-                                        </motion.div>
-                                )))}
+                                    <ListarTarefas tarefas={tarefasDeHoje} voltar={voltar} />
+                                )}
                             </motion.div>
                         </div>
                     )}

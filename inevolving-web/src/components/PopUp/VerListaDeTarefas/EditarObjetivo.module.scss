@@ -59,8 +59,8 @@
 
     width: 70%;
     border-radius: 38px;
-    align-items: center;
-    align-content: center;
+    // align-items: center;
+    // align-content: center;
     background-color: #FFFFFF;
     font-family: 'Inter', sans-serif;
     color: #0B0E31;
@@ -84,13 +84,13 @@
         }
 
 
-        div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            align-content: center;
-            width: 100%;
-        }
+        // div {
+        //     display: flex;
+        //     flex-direction: column;
+        //     align-items: center;
+        //     align-content: center;
+        //     width: 100%;
+        // }
 
         .cardJarvas {
             font-weight: 600;

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { useRouter } from "next/navigation";
-import { linkApi } from "@/app/page";
+import { linkApi } from "../../../constants";
 
 export default function AdicionarNovaCategoria() {
     const [isMobile, setIsMobile] = useState(false);

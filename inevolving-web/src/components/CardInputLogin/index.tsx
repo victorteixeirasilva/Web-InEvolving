@@ -10,7 +10,7 @@ import { ClipLoader } from 'react-spinners';
 import { motion } from "motion/react";
 import EsqueciSenha from '../PopUp/esqueciSenha';
 import ConfirmeEmail from '../PopUp/confirmeEmail';
-import { linkApi } from '@/app/page';
+import { linkApi } from '../../constants';
 
 
 export default function CardInputLogin() {

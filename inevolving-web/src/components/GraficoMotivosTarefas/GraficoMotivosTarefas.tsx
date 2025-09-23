@@ -11,7 +11,7 @@ import type { ChartOptions, TooltipItem } from 'chart.js';
 import { useCallback, useEffect, useState } from 'react';
 import styles from './GraficoMotivosTarefas.module.scss';
 import { Objective } from "../interfaces/Objective";
-import { linkApi } from '@/app/page';
+import { linkApi } from '../../constants';
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 

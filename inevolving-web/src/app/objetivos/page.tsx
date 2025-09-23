@@ -11,7 +11,7 @@ import { ClipLoader } from 'react-spinners';
 import AdicionarNovoObjetivoOuCategoria from '@/components/PopUp/adicionarNovoObjetivoOuCategoria';
 import EditarObjetivo from '@/components/PopUp/editarObjetivo';
 import { useRouter } from 'next/navigation';
-import { linkApi } from '../page';
+import { linkApi } from '../../constants';
 
 
 export default function Categoria( ) {

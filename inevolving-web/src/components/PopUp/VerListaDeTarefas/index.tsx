@@ -3,7 +3,8 @@ import * as motion from "motion/react-client";
 import { useCallback, useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { Tarefa_Modulo_Tarefas } from "@/components/interfaces/Tarefa_Modulo_Tarefas";
-import { linkApi } from "@/app/page";
+import { linkApi } from "@/constants";
+import ListarTarefas from "@/components/Tarefas";
 
 
 export default function VerListaDeTarefas( { voltar, objetivoId }: { voltar:() => void, objetivoId:string } ) {
@@ -70,19 +71,20 @@ export default function VerListaDeTarefas( { voltar, objetivoId }: { voltar:() =
                             <p className={styles.semTarefas}>Nenhuma tarefa encontrada para este objetivo.</p>
                         )}
                         {!carregando && tarefas.length > 0 && (
-                            <ol className={styles.listaTarefas}>
-                                {tarefas
-                                    .slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse() // ordena da mais recente para a mais antiga
-                                    .map((tarefa) => (
-                                    <li key={tarefa.id} className={styles.tarefaItem}>
-                                        <h3>{tarefa.nameTask}</h3>
-                                        <p>{tarefa.descriptionTask}</p>
-                                        <p>
-                                            {new Date(tarefa.dateTask).toLocaleDateString('pt-BR')}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ol>
+                            <ListarTarefas tarefas={tarefas.slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse()} voltar={voltar}/>
+                            // <ol className={styles.listaTarefas}>
+                            //     {tarefas
+                            //         .slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse() // ordena da mais recente para a mais antiga
+                            //         .map((tarefa) => (
+                            //         <li key={tarefa.id} className={styles.tarefaItem}>
+                            //             <h3>{tarefa.nameTask}</h3>
+                            //             <p>{tarefa.descriptionTask}</p>
+                            //             <p>
+                            //                 {new Date(tarefa.dateTask).toLocaleDateString('pt-BR')}
+                            //             </p>
+                            //         </li>
+                            //     ))}
+                            // </ol>
                         )}
                     </div>
                 </div>

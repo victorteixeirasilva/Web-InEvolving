@@ -13,7 +13,7 @@ import { ResponseDashboard } from '@/components/interfaces/ResponseDashboard';
 import BotaoDashVerDatalhesCategoria from '@/components/BotaoDashVerDatalhesCategoria';
 import EditarCategoria from '@/components/PopUp/editarCategoria';
 import { useRouter } from 'next/navigation';
-import { linkApi } from '../page';
+import { linkApi } from '../../constants';
 
 export default function Dashboard() {
 
