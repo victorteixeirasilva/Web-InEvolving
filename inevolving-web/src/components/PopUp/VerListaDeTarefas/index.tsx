@@ -71,7 +71,9 @@ export default function VerListaDeTarefas( { voltar, objetivoId }: { voltar:() =
                             <p className={styles.semTarefas}>Nenhuma tarefa encontrada para este objetivo.</p>
                         )}
                         {!carregando && tarefas.length > 0 && (
-                            <ListarTarefas tarefas={tarefas.slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse()} voltar={voltar}/>
+                            <div className={isMobile ? '' : styles.listaTarefasContainer}>
+                                <ListarTarefas tarefas={tarefas.slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse()} voltar={voltar}/>
+                            </div>
                             // <ol className={styles.listaTarefas}>
                             //     {tarefas
                             //         .slice().sort((a, b) => new Date(b.dateTask).getTime() - new Date(a.dateTask).getTime()).reverse() // ordena da mais recente para a mais antiga
