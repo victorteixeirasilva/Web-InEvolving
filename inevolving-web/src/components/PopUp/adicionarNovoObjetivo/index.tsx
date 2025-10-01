@@ -6,7 +6,7 @@ import { ClipLoader } from 'react-spinners';
 import { useRouter } from "next/navigation";
 import { linkApi } from "../../../constants";
 
-export default function AdicionarNovoObjetivo() {
+export default function AdicionarNovoObjetivo( { voltar }: { voltar?:() => void } ) {
     const [isMobile, setIsMobile] = useState(false);
     
     useEffect(() => {
@@ -55,7 +55,11 @@ export default function AdicionarNovoObjetivo() {
         if (response.ok){
 
             setCarregando(false);
-            window.location.reload();
+            if (voltar === undefined) {
+                window.location.reload();
+            } else {
+                voltar();
+            }
         } else {
             setCarregando(false);
             alert(data.message);
@@ -72,7 +76,13 @@ export default function AdicionarNovoObjetivo() {
                         whileHover={{ scale: 1.1 }} 
                         whileTap={{ scale: 0.8 }}
                         className={styles.botaoVoltar} 
-                        onClick={() => window.location.reload()}
+                        onClick={() => {
+                            if (voltar === undefined) {
+                                window.location.reload();
+                            } else {
+                                voltar();
+                            }
+                        }}
                     >
                         <strong style={{color: '#0B0E31'}}>X</strong>
                     </motion.button>

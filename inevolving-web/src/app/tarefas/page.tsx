@@ -16,6 +16,7 @@ import EditarTarefa from '@/components/PopUp/editarTarefa';
 import { isArray } from 'chart.js/helpers';
 import { linkApi } from '../../constants';
 import ListarTarefas from '@/components/Tarefas';
+import AdicionarNovoObjetivo from '@/components/PopUp/adicionarNovoObjetivo';
 
 export default function Tarefas() {
     const [isMobile, setIsMobile] = useState(false);
@@ -472,6 +473,7 @@ export default function Tarefas() {
     }
 
     const [abrirNovaTarefa, setAbrirNovaTarefa] = useState(false);
+    const [abrirNovoObjetivo, setAbrirNovoObjetivo] = useState(false);
     const [verListaDeObjetivos, setVerListaDeObjetivos] = useState(false);
     const [objetivos, setObjetivos] = useState<Objetivo[] | null>(null);
     const [objetivoSelecionado, setObjetivoSelecionado] = useState<Objetivo | null>(null);
@@ -1435,6 +1437,14 @@ export default function Tarefas() {
                                 </motion.button>
                                 <div className={styles.conteudo}>
                                     <div className={styles.containerScroll}>
+                                        <motion.button 
+                                            className={styles.botaoNovo} 
+                                            whileHover={{ scale: 1.1 }} 
+                                            whileTap={{ scale: 0.8 }} 
+                                            onClick={() => setAbrirNovoObjetivo(true)}
+                                        >
+                                            Adicionar Novo <strong>+</strong>
+                                        </motion.button>
                                         {objetivos && objetivos.map((objetivo) => {
                                             return (
                                                 <div
@@ -1657,6 +1667,13 @@ export default function Tarefas() {
                                 </div>
                             </div>
                         </div>
+                    )}
+                    {abrirNovoObjetivo && (
+                        <AdicionarNovoObjetivo voltar={() => {
+                                setAbrirNovoObjetivo(false);
+                                pegarObjetivos();
+                            }}
+                        />
                     )}
                 </div>
             )}
