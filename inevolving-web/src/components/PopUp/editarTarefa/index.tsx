@@ -528,6 +528,30 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 >
                                     Escolher Data 
                             </motion.div>
+                            <motion.div
+                                whileHover={{ scale: 1.06 }} 
+                                whileTap={{ scale: 0.8 }}
+                                style={{marginTop: '0px'}}
+                                onClick={() => {
+                                    const dataTarefa = tarefa.dateTask;
+                                    const date = new Date(`${dataTarefa}T00:00:00-03:00`);
+
+                                    const ano = date.getFullYear(); // local
+                                    const mes = String(date.getMonth() + 1).padStart(2, '0'); // local
+                                    const dia = String(date.getDate() + 1).padStart(2, '0'); // local
+
+                                    const dataFormatada = `${ano}${mes}${dia}T000000`;
+
+                                    window.open(`https://calendar.google.com/calendar/r/eventedit?text=${tarefa.nameTask}&details=${tarefa.descriptionTask}&dates=${dataFormatada}/${dataFormatada}`, '_blank');
+                                }}
+                            >
+                                <Image 
+                                    alt="Icone Calendario"
+                                    src="/iconeGoogleAgenda.png"
+                                    width={100}
+                                    height={100}
+                                />
+                            </motion.div>
                         </div>
                         <motion.div 
                             className={styles.inputDescrição}
