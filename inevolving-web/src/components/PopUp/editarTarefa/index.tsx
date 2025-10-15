@@ -402,6 +402,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
 
     const [dataTarefa, setDataTarefa] = useState<Date | null>(new Date);
     const [escolherDataTarefa, setEscolherDataTarefa] = useState(false);
+    const [dataOriginal, setDataOriginal] = useState(true);
     
     const SetDataNovaTarefa : CalendarProps['onChange'] = (value) => {
         if (value instanceof Date) {
@@ -614,7 +615,8 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                     <motion.button
                         whileHover={{ scale: 1.05 }} 
                         whileTap={{ scale: 0.8 }}
-                        style={ 
+                        style={
+                                dataOriginal && 
                                 nomeTarefa === tarefa.nameTask && 
                                 descricaoObjetivo === tarefa.descriptionTask &&
                                 objetivoSelecionado?.id === tarefa.idObjective &&
@@ -623,6 +625,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                 {}
                         }
                         onClick={() => 
+                            dataOriginal &&
                             nomeTarefa === tarefa.nameTask && 
                             descricaoObjetivo === tarefa.descriptionTask &&
                             objetivoSelecionado?.id === tarefa.idObjective &&
@@ -1051,7 +1054,10 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                         <motion.button
                             whileHover={{ scale: 1.05 }} 
                             whileTap={{ scale: 0.8 }}
-                            onClick={() => setEscolherDataTarefa(false)}
+                            onClick={() => {
+                                setEscolherDataTarefa(false);
+                                setDataOriginal(false);
+                            }}
                         >
                             {carregando && <ClipLoader size={10} color="#0B0E31" />}
                             <span 
