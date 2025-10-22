@@ -18,7 +18,6 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
     }, []);
 
     const [opcaoAtualizar, setOpcaoAtualizar] = useState(1);
-    const [opcaoDeletar, setOpcaoDeletar] = useState(1);
 
     const [nomeTarefa, setNomeTarefa] = useState(tarefa.nameTask);
     const [motivos, setMotivos] = useState("");
@@ -57,48 +56,51 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
     const deletarTarefa = async () => {
         setCarregando(true);
 
-        if (opcaoDeletar === 1) {
-            const response = await fetch(
-                linkApi+'/auth/api/tasks/'+tarefa?.id, 
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + jwtToken
-                    },
-            });
-    
-            
-                if (!response.ok){
-                    setCarregando(false);
-                    alert('Erro ao deletar a tarefa');
-                }
-            
-        } else {
-
-            const response = await fetch(
-                linkApi+'/auth/api/tasks/repeat/'+tarefa?.id+"/3000-01-01", 
-                {
+        const response = await fetch(
+            linkApi+'/auth/api/tasks/'+tarefa?.id, 
+            {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + jwtToken
                 },
-            });
+        });
 
         
-            if (!response.ok){
-                setCarregando(false);
-                alert('Erro ao deletar a tarefa');
-            }
-            
+        if (!response.ok){
+            setCarregando(false);
+            alert('Erro ao deletar a tarefa');
         }
 
         setCarregando(false);
         // window.location.reload();
         voltar();
     };
+    
+    const deletarTarefaRecorrente = async () => {
+        setCarregando(true);
 
+        const response = await fetch(
+            linkApi+'/auth/api/tasks/repeat/'+tarefa?.id+"/3000-01-01", 
+            {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwtToken
+            },
+        });
+
+    
+        if (!response.ok){
+            setCarregando(false);
+            alert('Erro ao deletar a tarefa');
+        }
+
+        setCarregando(false);
+        // window.location.reload();
+        voltar();
+    };
+    
     const router = useRouter();
 
     const [objetivos, setObjetivos] = useState<Objetivo[] | null>(null);    
@@ -753,7 +755,6 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        setOpcaoDeletar(1);
                                         deletarTarefa();
                                     }}
                             >
@@ -770,8 +771,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => {
-                                        setOpcaoDeletar(2);
-                                        deletarTarefa();
+                                        deletarTarefaRecorrente();
                                     }}
                             >
                                 {carregando && <ClipLoader size={10} color="#0B0E31" />}
