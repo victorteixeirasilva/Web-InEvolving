@@ -414,7 +414,6 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
         }
     };
     
-
     return (
         <div className={isMobile ? styles.mob : ''}>
         <div className={styles.overlay}>

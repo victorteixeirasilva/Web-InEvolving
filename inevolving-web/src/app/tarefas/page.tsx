@@ -17,6 +17,7 @@ import { isArray } from 'chart.js/helpers';
 import { linkApi } from '../../constants';
 import ListarTarefas from '@/components/Tarefas';
 import AdicionarNovoObjetivo from '@/components/PopUp/adicionarNovoObjetivo';
+import MenuStatusTarefa from '@/components/PopUp/menuStatusTarefa';
 
 export default function Tarefas() {
     const [isMobile, setIsMobile] = useState(false);
@@ -630,6 +631,26 @@ export default function Tarefas() {
         }
     }
 
+    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+    const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.preventDefault();
+        setMenuPosition({ x: event.clientX, y: event.clientY });
+        setMenuVisible(true);
+    };
+
+    const handleClickOutside = () => {
+        setMenuVisible(false);
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+        document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
         <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
             <motion.div>
@@ -969,6 +990,33 @@ export default function Tarefas() {
                         <div className={styles.kanban}>
                         <motion.div className={styles.containerConteudo}>
                             <div className={styles.coluna}>
+                                {menuVisible && (
+                                    <motion.div
+                                        style={{
+                                            position: 'absolute',
+                                            top: menuPosition.y,
+                                            left: menuPosition.x,
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #ccc',
+                                            boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
+                                            listStyle: 'none',
+                                            padding: '20px',
+                                            margin: 0,
+                                            zIndex: 1000,
+                                            borderRadius: '20px',
+                                        }}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.1,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }}
+                                    >
+                                        {tarefaAtual && (
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                        )}
+                                    </motion.div>
+                                )}
                                 <div className={styles.tituloColuna} style={{backgroundColor: '#6b6b6b', color: "#FFFF"}}>
                                     <h3>Não Iniciadas</h3>
                                 </div>
@@ -999,6 +1047,18 @@ export default function Tarefas() {
                                                     setEditarTarefaAtual(true);
                                                 }
                                             }} 
+                                            onContextMenu={(event) => {
+                                                setEditarTarefaAtual(false);
+                                                setTarefaAual(tarefa);
+                                                handleRightClick(event);
+                                                setEditarTarefaAtual(false);
+                                            }}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.1,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }}
                                         >
                                             <h3>{tarefa.nameTask}</h3>
                                         </motion.div>
@@ -1006,6 +1066,33 @@ export default function Tarefas() {
                                 )}
                             </div>
                             <div className={styles.coluna}>
+                                {menuVisible && (
+                                    <motion.div
+                                        style={{
+                                            position: 'absolute',
+                                            top: menuPosition.y,
+                                            left: menuPosition.x,
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #ccc',
+                                            boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
+                                            listStyle: 'none',
+                                            padding: '20px',
+                                            margin: 0,
+                                            zIndex: 1000,
+                                            borderRadius: '20px',
+                                        }}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.1,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }}
+                                    >
+                                        {tarefaAtual && (
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                        )}
+                                    </motion.div>
+                                )}
                                 <div className={styles.tituloColuna} style={{backgroundColor: '#a0ff47', color: "#0B0E31"}}>
                                     <h3>Em Progresso</h3>
                                 </div>
@@ -1036,6 +1123,18 @@ export default function Tarefas() {
                                                     setEditarTarefaAtual(true);
                                                 }
                                             }} 
+                                            onContextMenu={(event) => {
+                                                setEditarTarefaAtual(false);
+                                                setTarefaAual(tarefa);
+                                                handleRightClick(event);
+                                                setEditarTarefaAtual(false);
+                                            }}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.1,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }}
                                         >
                                             <h3>{tarefa.nameTask}</h3>
                                         </motion.div>
@@ -1043,6 +1142,33 @@ export default function Tarefas() {
                                 )}
                             </div>
                             <div className={styles.coluna}>
+                                {menuVisible && (
+                                    <motion.div
+                                        style={{
+                                            position: 'absolute',
+                                            top: menuPosition.y,
+                                            left: menuPosition.x,
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #ccc',
+                                            boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
+                                            listStyle: 'none',
+                                            padding: '20px',
+                                            margin: 0,
+                                            zIndex: 1000,
+                                            borderRadius: '20px',
+                                        }}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.1,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }}
+                                    >
+                                        {tarefaAtual && (
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                        )}
+                                    </motion.div>
+                                )}
                                 <div className={styles.tituloColuna} style={{backgroundColor: "#319f43", color: "#0B0E31"}}>
                                     <h3>Concluídas</h3>
                                 </div>
@@ -1072,6 +1198,18 @@ export default function Tarefas() {
                                                     setTarefaAual(tarefa);
                                                     setEditarTarefaAtual(true);
                                                 }
+                                            }}
+                                            onContextMenu={(event) => {
+                                                setEditarTarefaAtual(false);
+                                                setTarefaAual(tarefa);
+                                                handleRightClick(event);
+                                                setEditarTarefaAtual(false);
+                                            }}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.1,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                             }} 
                                         >
                                             <h3>{tarefa.nameTask}</h3>
@@ -1080,6 +1218,33 @@ export default function Tarefas() {
                                 )}
                             </div>
                             <div className={styles.coluna}>
+                                {menuVisible && (
+                                    <motion.div
+                                        style={{
+                                            position: 'absolute',
+                                            top: menuPosition.y,
+                                            left: menuPosition.x,
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #ccc',
+                                            boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
+                                            listStyle: 'none',
+                                            padding: '20px',
+                                            margin: 0,
+                                            zIndex: 1000,
+                                            borderRadius: '20px',
+                                        }}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.1,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }}
+                                    >
+                                        {tarefaAtual && (
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                        )}
+                                    </motion.div>
+                                )}
                                 <div className={styles.tituloColuna} style={{backgroundColor: '#ffbf00', color: "#FFFF"}}>
                                     <h3>Atrasadas</h3>
                                 </div>
@@ -1109,6 +1274,18 @@ export default function Tarefas() {
                                                     setTarefaAual(tarefa);
                                                     setEditarTarefaAtual(true);
                                                 }
+                                            }}
+                                            onContextMenu={(event) => {
+                                                setEditarTarefaAtual(false);
+                                                setTarefaAual(tarefa);
+                                                handleRightClick(event);
+                                                setEditarTarefaAtual(false);
+                                            }}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.1,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                             }} 
                                         >
                                             <h3>{tarefa.nameTask}</h3>
@@ -1117,6 +1294,33 @@ export default function Tarefas() {
                                 )}
                             </div>
                             <div className={styles.coluna}>
+                                {menuVisible && (
+                                    <motion.div
+                                        style={{
+                                            position: 'absolute',
+                                            top: menuPosition.y,
+                                            left: menuPosition.x,
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #ccc',
+                                            boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
+                                            listStyle: 'none',
+                                            padding: '20px',
+                                            margin: 0,
+                                            zIndex: 1000,
+                                            borderRadius: '20px',
+                                        }}
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.1,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }}
+                                    >
+                                        {tarefaAtual && (
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                        )}
+                                    </motion.div>
+                                )}
                                 <div className={styles.tituloColuna} style={{backgroundColor: '#ff0004', color: "#FFFF"}}>
                                     <h3>Canceladas</h3>
                                 </div>
@@ -1146,6 +1350,18 @@ export default function Tarefas() {
                                                     setTarefaAual(tarefa);
                                                     setEditarTarefaAtual(true);
                                                 }
+                                            }}
+                                            onContextMenu={(event) => {
+                                                setEditarTarefaAtual(false);
+                                                setTarefaAual(tarefa);
+                                                handleRightClick(event);
+                                                setEditarTarefaAtual(false);
+                                            }}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.1,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                             }} 
                                         >
                                             <h3>{tarefa.nameTask}</h3>
