@@ -32,10 +32,6 @@ jobs:
         working-directory: inevolving-web
         run: npm run build
 
-      - name: Exportar arquivos
-        working-directory: inevolving-web
-        run: npm run export
-
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
