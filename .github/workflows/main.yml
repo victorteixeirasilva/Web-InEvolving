@@ -19,22 +19,24 @@ jobs:
           node-version: '20' # ou a versão que seu projeto usa
 
       - name: Alterando pasta de trabalho
-        run: cd /inevolving-web
+        run: ls
+        
+      - name: Alterando pasta de trabalho
+        run: cd inevolving-web
 
       - name: Instalar dependências
+        working-directory: inevolving-web
         run: npm install
 
       - name: Build do projeto
+        working-directory: inevolving-web
         run: npm run build
 
-      - name: Exportar arquivos
-        run: npm run export
-
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: out
-          server-dir: public_html
+          local-dir: inevolving-web/out/
+          server-dir: public_html/
