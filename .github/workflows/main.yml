@@ -16,13 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # ou a versão que seu projeto usa
-
-      - name: Alterando pasta de trabalho
-        run: ls
-        
-      - name: Alterando pasta de trabalho
-        run: cd inevolving-web
+          node-version: '20'
 
       - name: Instalar dependências
         working-directory: inevolving-web
@@ -33,8 +27,7 @@ jobs:
         run: npm run build
 
       - name: Verificar arquivos gerados
-        working-directory: inevolving-web
-        run: ls -la out
+        run: ls -la inevolving-web/out/
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -42,9 +35,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: out/
-          server-dir: public_html/
+          local-dir: inevolving-web/out/
+          server-dir: public_html
           dangerous-clean-slate: true
           exclude: .ftp-deploy-sync-state.json
           dry-run: false
-
