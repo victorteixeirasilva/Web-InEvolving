@@ -25,12 +25,15 @@ jobs:
         run: cd inevolving-web
 
       - name: Instalar dependências
+        working-directory: inevolving-web
         run: npm install
 
       - name: Build do projeto
+        working-directory: inevolving-web
         run: npm run build
 
       - name: Exportar arquivos
+        working-directory: inevolving-web
         run: npm run export
 
       - name: Deploy via FTP
@@ -39,5 +42,5 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: out
+          local-dir: inevolving-web/out
           server-dir: public_html
