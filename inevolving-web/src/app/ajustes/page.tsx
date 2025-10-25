@@ -49,7 +49,7 @@ export default function Page( ) {
                             window.location.reload();
                         }}
                     >
-                        alterar tipo do menu!
+                        alterar tipo do menu
                     </button>
                 </motion.div>
             </motion.div>
