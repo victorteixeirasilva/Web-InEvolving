@@ -19,6 +19,9 @@ jobs:
           node-version: '20' # ou a versão que seu projeto usa
 
       - name: Alterando pasta de trabalho
+        run: ls
+        
+      - name: Alterando pasta de trabalho
         run: cd /inevolving-web
 
       - name: Instalar dependências
