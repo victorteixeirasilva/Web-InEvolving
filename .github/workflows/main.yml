@@ -22,7 +22,7 @@ jobs:
         run: ls
         
       - name: Alterando pasta de trabalho
-        run: cd /inevolving-web
+        run: cd inevolving-web
 
       - name: Instalar dependências
         run: npm install
