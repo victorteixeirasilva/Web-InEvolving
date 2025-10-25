@@ -22,10 +22,6 @@ jobs:
         working-directory: inevolving-web
         run: npm install
 
-      - name: Start do projeto em development mode
-        working-directory: inevolving-web
-        run: npm run dev
-
       - name: Build do projeto
         working-directory: inevolving-web
         run: npm run build
