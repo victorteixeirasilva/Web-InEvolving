@@ -95,6 +95,8 @@ export default function Tarefas() {
         const hojeLocal = new Date();
         const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
 
+        setFiltroAtivo(1);
+        setEscolherOutraData(false);
         setCarregando(true);
         setTarefasDeHoje(null);
 
