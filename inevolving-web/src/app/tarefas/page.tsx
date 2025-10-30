@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Menu from "@/components/Menu";
 import styles from './page.module.scss';
 import Image from "next/image";
@@ -643,6 +643,8 @@ export default function Tarefas() {
     //     setMenuVisible(true);
     // };
 
+    const popupRef = useRef<HTMLDivElement>(null);
+
     const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
 
@@ -655,6 +657,10 @@ export default function Tarefas() {
         });
 
         setMenuVisible(true);
+        setTimeout(() => {
+            popupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+
     };
 
 
@@ -1010,6 +1016,7 @@ export default function Tarefas() {
                             <div className={styles.coluna}>
                                 {menuVisible && (
                                     <motion.div
+                                        ref={popupRef}
                                         style={{
                                             position: 'absolute',
                                             top: menuPosition.y,
@@ -1162,6 +1169,7 @@ export default function Tarefas() {
                             <div className={styles.coluna}>
                                 {menuVisible && (
                                     <motion.div
+                                        ref={popupRef}
                                         style={{
                                             position: 'absolute',
                                             top: menuPosition.y,
