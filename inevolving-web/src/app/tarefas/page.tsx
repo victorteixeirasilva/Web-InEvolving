@@ -636,11 +636,27 @@ export default function Tarefas() {
     const [menuVisible, setMenuVisible] = useState(false);
     const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
+    // const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    //     event.preventDefault();
+    //     // setMenuPosition({ x: event.clientX, y: event.clientY });
+    //     setMenuPosition({ x: event.pageX, y: event.pageY });
+    //     setMenuVisible(true);
+    // };
+
     const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.preventDefault();
-        setMenuPosition({ x: event.clientX, y: event.clientY });
+
+        const scrollOffsetY = document.querySelector(`.${styles.containerConteudo}`)?.scrollTop || window.scrollY;
+        const scrollOffsetX = document.querySelector(`.${styles.containerConteudo}`)?.scrollLeft || window.scrollX;
+
+        setMenuPosition({
+            x: event.clientX + scrollOffsetX,
+            y: event.clientY + scrollOffsetY,
+        });
+
         setMenuVisible(true);
     };
+
 
     const handleClickOutside = () => {
         setMenuVisible(false);
