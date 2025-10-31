@@ -100,7 +100,7 @@ export default function Dashboard() {
         <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
             <Menu />
             <motion.div
-                initial={{ opacity: 0, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
                     duration: 0.7,

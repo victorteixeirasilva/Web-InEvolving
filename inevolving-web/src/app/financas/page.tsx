@@ -825,7 +825,7 @@ export default function Categoria() {
             <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
-                    initial={{ opacity: 0, scale: 1 }}
+                    initial={{ opacity: 0, scale: 0.97 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
                         duration: 0.7,
@@ -846,7 +846,7 @@ export default function Categoria() {
                     </div>
                     <motion.div 
                         className={styles.containerConteudo}
-                        initial={{ opacity: 0, scale: 0 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{
                             duration: 0.4,
