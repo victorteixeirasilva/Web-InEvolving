@@ -636,13 +636,6 @@ export default function Tarefas() {
     const [menuVisible, setMenuVisible] = useState(false);
     const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
-    // const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //     event.preventDefault();
-    //     // setMenuPosition({ x: event.clientX, y: event.clientY });
-    //     setMenuPosition({ x: event.pageX, y: event.pageY });
-    //     setMenuVisible(true);
-    // };
-
     const popupRef = useRef<HTMLDivElement>(null);
 
     const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -1038,7 +1031,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1114,7 +1107,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1191,7 +1184,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1267,7 +1260,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1343,7 +1336,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
