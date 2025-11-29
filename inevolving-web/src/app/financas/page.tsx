@@ -96,6 +96,11 @@ export default function Categoria() {
                 "-" +
                 mesAtual +
                 "-01";
+            if (mesAtual === 12) {
+                mesAtual = 0;
+                anoAtual = anoAtual + 1;
+                setAnoAtual(anoAtual);
+            }
             const proximoMes = mesAtual + 1;
             const primeiroDiaDoMesSeguinte =
                 anoAtual +
