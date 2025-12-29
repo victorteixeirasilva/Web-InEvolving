@@ -59,9 +59,6 @@ export default function Tarefas() {
     const [editarTarefaAtual, setEditarTarefaAtual] = useState(false);
     const [escolherDataDaNovaTarefa, setEscolherDataDaNovaTarefa] = useState(false);
     const [dataNovaTarefa, setDataNovaTarefa] = useState<Date | null>(new Date);
-
-
-
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
     const [dataFinal, setDataFinal] = useState<Date | null>(new Date);
 
@@ -603,15 +600,18 @@ export default function Tarefas() {
         setIsTarefaFrequente(false);
         setExibirIsTarefaFrequente(false);
 
-        if (filtroAtivo === 1) {
-            pegarTarefasDeHoje();
-        } else if (filtroAtivo === 4) {
-            setEscolherOutraData(true);
-        } else if (filtroAtivo === 5) {
-            pegarTarefasAtrasadas();
-        } else if (opcaoDeVisualizacao === 2) {
+        if (opcaoDeVisualizacao === 2) {
             pegarTarefasDeHojeKanban();
+        } else {     
+            if (filtroAtivo === 1) {
+                pegarTarefasDeHoje();
+            } else if (filtroAtivo === 4) {
+                setEscolherOutraData(true);
+            } else if (filtroAtivo === 5) {
+                pegarTarefasAtrasadas();
+            }
         }
+
     }
 
     const voltar = () => {
@@ -635,13 +635,6 @@ export default function Tarefas() {
 
     const [menuVisible, setMenuVisible] = useState(false);
     const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
-
-    // const handleRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    //     event.preventDefault();
-    //     // setMenuPosition({ x: event.clientX, y: event.clientY });
-    //     setMenuPosition({ x: event.pageX, y: event.pageY });
-    //     setMenuVisible(true);
-    // };
 
     const popupRef = useRef<HTMLDivElement>(null);
 
@@ -680,7 +673,7 @@ export default function Tarefas() {
             <motion.div>
                 <Menu />
                 <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
                         duration: 0.4,
@@ -1038,7 +1031,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1114,7 +1107,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1191,7 +1184,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1267,7 +1260,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}
@@ -1343,7 +1336,7 @@ export default function Tarefas() {
                                         }}
                                     >
                                         {tarefaAtual && (
-                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={voltar} />
+                                            <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
                                         )}
                                     </motion.div>
                                 )}

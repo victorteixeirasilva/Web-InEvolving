@@ -126,7 +126,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
             return (
                 <>
                 <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
                         duration: 0.4,
@@ -148,7 +148,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                             <motion.div 
                                 key={tarefa.id}
                                 className={styles.tarefa}
-                                initial={{ opacity: 0, scale: 0 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
                                     duration: 0.4,
@@ -236,7 +236,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
             return (
                 <div className={styles.containerTipoMenu2}>
                     <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{
                             duration: 0.4,
@@ -273,7 +273,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                                     <motion.div 
                                         key={tarefa.id}
                                         className={styles.tarefa}
-                                        initial={{ opacity: 0, scale: 0 }}
+                                        initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{
                                             duration: 0.4,
@@ -300,7 +300,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                                 {!carregandoTarefas && !verTarefas && (
                                     <motion.div 
                                     className={styles.alerta}
-                                    initial={{ opacity: 0, scale: 0 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{
                                             duration: 0.4,
@@ -319,7 +319,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                                 {verTarefas && (
                                     <div className={styles.verTarefas}>
                                         <motion.button 
-                                            initial={{ opacity: 0, scale: 0 }}
+                                            initial={{ opacity: 0, scale: 0.95 }}
                                             animate={{ opacity: 1, scale: 1 }}
                                             transition={{
                                                 duration: 0.4,
@@ -362,7 +362,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
         return (
             <div className={styles.mob}>
                 <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
                         duration: 0.4,
@@ -393,7 +393,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                             <motion.div 
                                 key={tarefa.id}
                                 className={styles.tarefa}
-                                initial={{ opacity: 0, scale: 0 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
                                     duration: 0.4,
@@ -420,7 +420,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                         {!carregandoTarefas && !verTarefas && (
                             <motion.div 
                             className={styles.alerta}
-                            initial={{ opacity: 0, scale: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{
                                     duration: 0.4,
@@ -439,7 +439,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
                         {verTarefas && (
                             <div className={styles.verTarefas}>
                                 <motion.button 
-                                    initial={{ opacity: 0, scale: 0 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{
                                         duration: 0.4,
