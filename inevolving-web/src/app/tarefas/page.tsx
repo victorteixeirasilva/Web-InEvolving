@@ -491,7 +491,7 @@ export default function Tarefas() {
     const pegarObjetivos = async () => {
             setCarregando(true);
             const response = await fetch(
-                    linkApi+'/auth/api/objectives/user', 
+                    linkApi+'/auth/api/objectives/status/todo/user', 
                 {
                     method: 'GET',
                     headers: {
