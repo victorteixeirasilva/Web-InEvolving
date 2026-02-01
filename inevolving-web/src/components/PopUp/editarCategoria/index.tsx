@@ -71,76 +71,76 @@ export default function EditarCategoria() {
             console.error('Erro ao salvar:', data.message);
         }
 
-        if (objetivosSelecionados.length !== 0) {
-            const categoryId = data.id;
+        // if (objetivosSelecionados.length !== 0) {
+        //     const categoryId = data.id;
 
-            try {
-                await Promise.all (
-                    objetivosSelecionados.map(async (ob) => {
-                        const response2 = await fetch(
-                            linkApi + '/auth/api/categories/objective', 
-                            {
-                                method: 'POST',
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        'Authorization': 'Bearer ' + jwtToken
-                                },
-                                body: JSON.stringify({
-                                    idCategory: categoryId,
-                                    idObjective: ob.id,
-                                }),
-                            }
-                        );
+        //     try {
+        //         await Promise.all (
+        //             objetivosSelecionados.map(async (ob) => {
+        //                 const response2 = await fetch(
+        //                     linkApi + '/auth/api/categories/objective', 
+        //                     {
+        //                         method: 'POST',
+        //                         headers: {
+        //                                 'Content-Type': 'application/json',
+        //                                 'Authorization': 'Bearer ' + jwtToken
+        //                         },
+        //                         body: JSON.stringify({
+        //                             idCategory: categoryId,
+        //                             idObjective: ob.id,
+        //                         }),
+        //                     }
+        //                 );
 
-                        if (response.status === 401){
-                            setCarregando(false);
-                            router.push('/login');
-                            alert('Você não está logado, por favor faça login novamente.');
-                        }
+        //                 if (response.status === 401){
+        //                     setCarregando(false);
+        //                     router.push('/login');
+        //                     alert('Você não está logado, por favor faça login novamente.');
+        //                 }
 
-                        if (!response2.ok) {
-                            alert('Erro ao associar objetivo à categoria:' + ob.id);
-                        }
-                    })
-                );
-            } catch (err) {
-                console.error('Erro ao processar remoção de objetivos:', err);
-            }
-        }
+        //                 if (!response2.ok) {
+        //                     alert('Erro ao associar objetivo à categoria:' + ob.id);
+        //                 }
+        //             })
+        //         );
+        //     } catch (err) {
+        //         console.error('Erro ao processar remoção de objetivos:', err);
+        //     }
+        // }
 
-        if (objetivosParaRemover.length !== 0) {
-            const categoryId = data.id;
+        // if (objetivosParaRemover.length !== 0) {
+        //     const categoryId = data.id;
 
-            try {
-                await Promise.all(
-                objetivosParaRemover.map(async (ob) => {
-                    const response2 = await fetch(
-                    `https://api.inevolving.inovasoft.tech/auth/api/categories/objective/${categoryId}/${ob.id}`,
-                    {
-                        method: 'DELETE',
-                        headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + jwtToken,
-                        },
-                    }
-                    );
+        //     try {
+        //         await Promise.all(
+        //         objetivosParaRemover.map(async (ob) => {
+        //             const response2 = await fetch(
+        //             `https://api.inevolving.inovasoft.tech/auth/api/categories/objective/${categoryId}/${ob.id}`,
+        //             {
+        //                 method: 'DELETE',
+        //                 headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'Authorization': 'Bearer ' + jwtToken,
+        //                 },
+        //             }
+        //             );
 
-                    if (response.status === 401){
-                        setCarregando(false);
-                        router.push('/login');
-                        alert('Você não está logado, por favor faça login novamente.');
-                    }
+        //             if (response.status === 401){
+        //                 setCarregando(false);
+        //                 router.push('/login');
+        //                 alert('Você não está logado, por favor faça login novamente.');
+        //             }
 
-                    if (!response2.ok) {
-                    console.error('Erro ao remover objetivo:', ob.id);
-                    alert('Erro ao associar objetivo à categoria: ' + ob.id);
-                    }
-                })
-                );
-            } catch (err) {
-                console.error('Erro ao processar remoção de objetivos:', err);
-            }
-        }
+        //             if (!response2.ok) {
+        //             console.error('Erro ao remover objetivo:', ob.id);
+        //             alert('Erro ao associar objetivo à categoria: ' + ob.id);
+        //             }
+        //         })
+        //         );
+        //     } catch (err) {
+        //         console.error('Erro ao processar remoção de objetivos:', err);
+        //     }
+        // }
 
 
         setCarregando(false);
@@ -151,25 +151,98 @@ export default function EditarCategoria() {
 
     const [objetivosSelecionados, setObjetivosSelecionados] = useState<Objetivo[]>([]);
     const [objetivosParaRemover, setObjetivosParaRemover] = useState<Objetivo[]>([]);
-    
+  
+    const adicionarObjetivoACategoria = async (idCategoria:string, idObjetivo:string) => {
+        const response2 = await fetch(
+            linkApi + '/auth/api/categories/objective', 
+            {
+                method: 'POST',
+                headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwtToken
+                },
+                body: JSON.stringify({
+                    idCategory: idCategoria,
+                    idObjective: idObjetivo,
+                }),
+            }
+        );
+
+        if (response2.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
+        if (!response2.ok) {
+            alert('Erro ao associar objetivo à categoria: id do Objetivo' + idObjetivo);
+        }
+        setCarregando(false);
+    }
+
+    const removerObjetivoDaCategoria = async (idCategoria:string, idObjetivo:string) => {
+        const response2 = await fetch(
+        `https://api.inevolving.inovasoft.tech/auth/api/categories/objective/${idCategoria}/${idObjetivo}`,
+        {
+            method: 'DELETE',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwtToken,
+            },
+        }
+        );
+
+        if (response2.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
+        if (!response2.ok) {
+        console.error('Erro ao remover objetivo:', idObjetivo);
+        alert('Erro ao associar objetivo à categoria: ' + idObjetivo);
+        }
+        setCarregando(false);
+    }
+
     const toggleObjetivoSelecionado = (objetivo: Objetivo) => {
-
-        if (categoria?.objectives.some((objCat) => objCat.id === objetivo.id)) {
-            setObjetivosParaRemover(
-                [...objetivosParaRemover, objetivo]
-            );
+        // Primeiro, calculamos os novos estados baseados nos atuais
+        const isInCategory = categoria?.objectives.some((objCat) => objCat.id === objetivo.id);
+        
+        // Verificações usando os estados atuais
+        const isInSelecionados = objetivosSelecionados.some((item) => item.id === objetivo.id);
+        const isInParaRemover = objetivosParaRemover.some((item) => item.id === objetivo.id);
+        
+        if (isInCategory && !isInParaRemover) {
+            // Item está na categoria mas NÃO está na lista de remoção → adiciona à remoção
+            setObjetivosParaRemover(prev => [...prev, objetivo]);
+            if(categoria) {
+                removerObjetivoDaCategoria(categoria.id, objetivo.id);
+            }
+        } else if (isInCategory && isInParaRemover) {
+            // Item está na categoria e JÁ está na lista de remoção → remove da remoção
+            setObjetivosParaRemover(prev => prev.filter(item => item.id !== objetivo.id));
+            if (categoria) {
+                adicionarObjetivoACategoria(categoria?.id, objetivo.id);
+            }
         }
-
-        const jaSelecionado = objetivosSelecionados.some((item) => item.id === objetivo.id) || objetivosParaRemover.some((item) => item.id === objetivo.id);
-
-        if (jaSelecionado) {
-            setObjetivosSelecionados(
-                objetivosSelecionados.filter((item) => item.id !== objetivo.id)
-            );
-        } else {
-            setObjetivosSelecionados([...objetivosSelecionados, objetivo]);
+        
+        // Lógica para objetivosSelecionados
+        if (isInSelecionados) {
+            // Item já está selecionado → remove
+            setObjetivosSelecionados(prev => prev.filter(item => item.id !== objetivo.id));
+            if(categoria) {
+                removerObjetivoDaCategoria(categoria.id, objetivo.id);
+            }
+        } else if (!isInParaRemover) {
+            // Item NÃO está selecionado e NÃO está na lista de remoção → adiciona
+            setObjetivosSelecionados(prev => [...prev, objetivo]);
+            if (categoria) {
+                adicionarObjetivoACategoria(categoria?.id, objetivo.id);
+            }
         }
-    };
+        setCarregando(false);
+};
 
     const deletarCategoria = async () => {
             setCarregando(true);
