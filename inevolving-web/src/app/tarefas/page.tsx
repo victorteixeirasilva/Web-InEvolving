@@ -89,8 +89,10 @@ export default function Tarefas() {
     };
 
     const pegarTarefasDeHojeKanban = async () => {
+        // const hojeLocal = new Date();
+        // const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
         const hojeLocal = new Date();
-        const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
+        const dataFormatada = hojeLocal.toLocaleDateString('en-CA'); // Formato "YYYY-MM-DD" no fuso local        
 
         setFiltroAtivo(1);
         setEscolherOutraData(false);
@@ -130,8 +132,10 @@ export default function Tarefas() {
     }
 
     const pegarTarefasDeHoje = async () => {
+        // const hojeLocal = new Date();
+        // const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
         const hojeLocal = new Date();
-        const dataFormatada = hojeLocal.toLocaleDateString('pt-BR').split('/').reverse().join('-');
+        const dataFormatada = hojeLocal.toLocaleDateString('en-CA'); // Formato "YYYY-MM-DD" no fuso local
 
         setFiltroAtivo(1);
         setCarregando(true);
