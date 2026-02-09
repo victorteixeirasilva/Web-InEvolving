@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import styles from './cardRegistro.module.scss';
 import BotaoLogin from '../BotaoLogin';
-import InputEmail from '../InputEmail';
-import { useState } from 'react';
+// import InputEmail from '../InputEmail';
+// import { useState } from 'react';
 
 export default function CardRegistro() {
 
-    const [email, setEmail] = useState('');
+    // const [email, setEmail] = useState('');
 
     return (
         <div className={styles.cardRegistro}>
@@ -26,11 +26,11 @@ export default function CardRegistro() {
                     />
                 </div>
 
-                <InputEmail tema='claro' tipo='email' value={email} onChange={setEmail}/>
+                {/* <InputEmail tema='claro' tipo='email' value={email} onChange={setEmail}/> */}
                 
-                <div className={styles.margem}/>
+                {/* <div className={styles.margem}/> */}
                 
-                <BotaoLogin texto='Cadastrar' tipo='2' value={email}/>
+                <BotaoLogin texto='Iniciar Cadastro' tipo='2' />
             </div>
         </div>
     );
