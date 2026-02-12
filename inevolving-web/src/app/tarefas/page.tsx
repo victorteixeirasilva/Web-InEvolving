@@ -677,7 +677,7 @@ export default function Tarefas() {
 
     const buscarTarefaPorId = async (id:string) => {
         const response = await fetch(
-            linkApi+'/auth/api/tasks/task'+id, 
+            linkApi+'/auth/api/tasks/task/'+id, 
         {
             method: 'GET',
             headers: {
