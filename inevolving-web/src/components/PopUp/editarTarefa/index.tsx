@@ -414,6 +414,17 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
         }
     };
     
+    const [copiado, setCopiado] = useState<boolean>(false);
+
+    const handleCopyTaskId = async () => {
+        const id = tarefa?.id;
+        if (!id) return;
+
+        await navigator.clipboard.writeText(String(id));
+        setCopiado(true);
+    };
+
+
     return (
         <div className={isMobile ? styles.mob : ''}>
         <div className={styles.overlay}>
@@ -455,6 +466,45 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                     <h2>Editar Tarefa</h2>
                     <div className={styles.inputs}>
                         <div className={styles.inputObjetivo}>
+                            <h3>Id da Tarefa</h3>
+                            <div className={styles.input} onClick={handleCopyTaskId} style={{cursor: "pointer"}}>
+                                <input
+                                    type="text"
+                                    id="id"
+                                    readOnly
+                                    value={tarefa?.id ?? ""}
+                                    placeholder={tarefa && tarefa.id}
+                                    onClick={handleCopyTaskId}
+                                    style={{cursor: "pointer"}}
+                                />
+                                <Image 
+                                    className={styles.lapis}
+                                    src="/copiar.png"
+                                    alt="Icone Lapis"
+                                    width={45}
+                                    height={45}
+                                    onClick={handleCopyTaskId}
+                                />
+                            </div>
+                            {copiado && (
+                                <motion.h3 
+                                    style={{
+                                        marginTop: "6px", 
+                                        textAlign: "center", 
+                                        fontSize: "15px"
+                                    }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                    }}
+                                >
+                                    {"Id Copiado!"}
+                                </motion.h3>
+                            )}
+                        </div>
+                        <div className={styles.inputObjetivo}>
                             <h3>Tarefa</h3>
                             <div className={styles.input}>
                                 <input
@@ -472,7 +522,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     height={15}
                                     />
                             </div>
-                            </div>
+                        </div>
                         <div className={styles.inputDescrição}>
                             <h3>Descrição</h3>
                             <div className={styles.input}>

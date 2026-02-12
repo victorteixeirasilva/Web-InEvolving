@@ -672,6 +672,38 @@ export default function Tarefas() {
         };
     }, []);
 
+    const [idTarefaParaBusca, setIdTarefaParaBusca] = useState<string>("");
+    const [place, setPlace] = useState<string>("Informe o Id da tarefa que deseja buscar...");
+
+    const buscarTarefaPorId = async (id:string) => {
+        const response = await fetch(
+            linkApi+'/auth/api/tasks/'+id, 
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwtToken
+            },
+        });
+
+        const tarefa: Tarefa_Modulo_Tarefas = await response.json();
+        
+        if (response.ok) {
+            if (tarefa.blockedByObjective === null) {
+                setTarefaAual(tarefa);
+                setEditarTarefaAtual(true);
+            } else if (tarefa.blockedByObjective === true) {
+                alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+            } else {
+                setTarefaAual(tarefa);
+                setEditarTarefaAtual(true);
+            }
+        } {
+            setPlace("Nenhuma Tarefa Encontrada")
+            setIdTarefaParaBusca("")
+        }
+    }
+
     return (
         <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
             <motion.div>
@@ -687,6 +719,28 @@ export default function Tarefas() {
                 >
                     <div className={styles.tituloContainer}>
                         <h1>Tarefas</h1>
+                        <div className={styles.input}>
+                                <input 
+                                    type="text"
+                                    id="buscarTarefa"
+                                    value={idTarefaParaBusca}
+                                    onChange={(e) => setIdTarefaParaBusca(e.target.value)}
+                                    placeholder={place}
+                                />
+                                <Image
+                                    className={styles.lapis} 
+                                    src="/iconeLupa.png"
+                                    alt="Icone Lupa"
+                                    width={25}
+                                    height={25}
+                                    style={{cursor: "pointer"}}
+                                    onClick={() => {
+                                        if (idTarefaParaBusca !== "") {
+                                            buscarTarefaPorId(idTarefaParaBusca);
+                                        }
+                                    }}
+                                />
+                        </div>
                         <motion.button 
                             className={styles.botaoNovo} 
                             whileHover={{ scale: 1.1 }} 
