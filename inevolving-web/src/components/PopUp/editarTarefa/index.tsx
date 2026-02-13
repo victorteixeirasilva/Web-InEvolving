@@ -402,7 +402,12 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
             voltar();
     }
 
-    const [dataTarefa, setDataTarefa] = useState<Date | null>(new Date);
+    function parseYYYYMMDD(s: string): Date {
+        const [y, m, d] = s.split("-").map(Number);
+        return new Date(y, m - 1, d + 1); // mês é 0-based
+    }
+
+    const [dataTarefa, setDataTarefa] = useState<Date | null>(parseYYYYMMDD(tarefa.dateTask));
     const [escolherDataTarefa, setEscolherDataTarefa] = useState(false);
     const [dataOriginal, setDataOriginal] = useState(true);
     
@@ -423,7 +428,6 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
         await navigator.clipboard.writeText(String(id));
         setCopiado(true);
     };
-
 
     return (
         <div className={isMobile ? styles.mob : ''}>
@@ -578,7 +582,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     style={{marginTop: '0px'}}
                                     onClick={() => setEscolherDataTarefa(true)}
                                 >
-                                    Escolher Data 
+                                    {dataTarefa && (<strong>{dataTarefa.toLocaleDateString()}</strong>)}
                             </motion.div>
                             <motion.div
                                 whileHover={{ scale: 1.06 }} 

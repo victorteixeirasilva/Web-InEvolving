@@ -720,7 +720,12 @@ export default function Tarefas() {
                     <div className={styles.tituloContainer}>
                         <h1>Tarefas</h1>
                         <div className={styles.input}
-                            style={{
+                            style={isMobile ? {
+                                marginTop: "20px",
+                                marginBottom: "20px",
+                                border: "solid 3px",
+                                // width: "33%"
+                            }: {
                                 border: "solid 3px",
                                 width: "33%"
                             }}

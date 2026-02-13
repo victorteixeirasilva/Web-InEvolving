@@ -21,6 +21,10 @@ body {
   font-family: 'Inter', sans-serif !important;
   line-height: 1.125em !important;
   color: #0B0E31 !important;
+    @media (max-width: 768px) {
+        opacity: 1;
+        transition: 0.4s;
+    }
 }
 
 .react-calendar {
@@ -57,10 +61,19 @@ body {
     text-align: center;
     text-transform: lowercase !important;
     font: italic !important;
-    font-size: 0.75em;
+    font-size: 0.75em !important;
     font-weight: bold;
     color: #B3B3B3;
     text-decoration: none !important;
+
+    @media (max-width: 768px) {
+        opacity: 1;
+        transition: 0.4s;
+        font-size: 0.45em !important;
+        margin: 0 !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px;
+    }
 }
 
 .react-calendar__month-view__days__day--weekend {

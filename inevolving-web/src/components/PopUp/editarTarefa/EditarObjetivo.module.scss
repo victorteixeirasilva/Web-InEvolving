@@ -7,6 +7,7 @@
     width: 100%;
     font-family: 'Inter', sans-serif;
 
+
     button {
         background-color: transparent !important;
         border: none !important;
@@ -14,6 +15,16 @@
         font-family: 'Inter', sans-serif !important;
         line-height: 1.125em !important;
         color: #0B0E31 !important;
+        font-size: 1.0rem !important;
+        
+        @media (max-width: 768px) {
+            font-size: 0.5rem !important;
+            opacity: 1;
+            transition: 0.4s;
+            margin: 0 !important;
+        }
+
+        text-align: center !important;
     }
 
 }
@@ -80,7 +91,7 @@
             height: 40px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 5px;
 
             .concluido {
                 margin: auto;
@@ -476,7 +487,7 @@
         font-size: 24px;
         
         .conteudo {
-            padding: 30px;
+            padding: 20px;
             
             button {
                 color: white;
