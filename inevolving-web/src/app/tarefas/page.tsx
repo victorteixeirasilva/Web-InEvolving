@@ -719,7 +719,12 @@ export default function Tarefas() {
                 >
                     <div className={styles.tituloContainer}>
                         <h1>Tarefas</h1>
-                        <div className={styles.input}>
+                        <div className={styles.input}
+                            style={{
+                                border: "solid 3px",
+                                width: "33%"
+                            }}
+                        >
                                 <input 
                                     type="text"
                                     id="buscarTarefa"
