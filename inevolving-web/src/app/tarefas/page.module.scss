@@ -508,6 +508,26 @@
         font-family: 'Inter', sans-serif !important;
         line-height: 1.125em !important;
         color: #0B0E31 !important;
+        // font-size: 1.0rem !important;
+        
+        @media (max-width: 768px) {
+            font-size: 1.0rem !important;
+            opacity: 1;
+            transition: 0.4s;
+            margin: 0 !important;
+        }
+
+        text-align: center !important;
+    }
+
+    span {
+
+        @media (max-width: 768px) {
+            opacity: 1;
+            transition: 0.4s;
+            font-size: 8px;
+            line-height: 0%;
+        }
     }
 
 }
@@ -1152,22 +1172,42 @@
     
     }
     
-    .calendar {
-        margin: auto;
-        border: none;
-        width: 100%;
-        font-family: 'Inter', sans-serif;
-    
-        button {
-            background-color: transparent !important;
-            border: none !important;
-            width: 90% !important;
-            font-family: 'Inter', sans-serif !important;
-            line-height: 1.125em !important;
-            color: #0B0E31 !important;
+.calendar {
+    margin: auto;
+    border: none;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+
+    button {
+        background-color: transparent !important;
+        border: none !important;
+        width: 90% !important;
+        font-family: 'Inter', sans-serif !important;
+        line-height: 1.125em !important;
+        color: #0B0E31 !important;
+        // font-size: 1.0rem !important;
+        
+        @media (max-width: 768px) {
+            font-size: 1.0rem !important;
+            opacity: 1;
+            transition: 0.4s;
+            margin: 0 !important;
         }
-    
+
+        text-align: center !important;
     }
+
+    span {
+
+        @media (max-width: 768px) {
+            opacity: 1;
+            transition: 0.4s;
+            font-size: 8px;
+            line-height: 0%;
+        }
+    }
+
+}
     
     
     .tarefa {

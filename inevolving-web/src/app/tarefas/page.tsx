@@ -724,7 +724,7 @@ export default function Tarefas() {
                                 marginTop: "20px",
                                 marginBottom: "20px",
                                 border: "solid 3px",
-                                // width: "33%"
+                                width: "90%"
                             }: {
                                 border: "solid 3px",
                                 width: "33%"
