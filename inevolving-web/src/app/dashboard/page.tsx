@@ -50,8 +50,8 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        const storedUrl = localStorage.getItem('visionBordUrl');
-        setUrlVisionBord(storedUrl);
+        // const storedUrl = localStorage.getItem('visionBordUrl');
+        // setUrlVisionBord(storedUrl);
         const token = localStorage.getItem('token');
         setJwtToken(token ?? '');
     }, []);
@@ -81,11 +81,35 @@ export default function Dashboard() {
         }
     }, [jwtToken, router])
 
+    const getVisionBoard = useCallback(async () => {
+        const response = await fetch(
+                linkApi + "/auth/api/motivation/dreams/visionbord/generate", 
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwtToken
+                },
+            });
+
+        const data = await response.json();
+        
+        if (response.status === 401){
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
+        if (response.ok) {
+            setUrlVisionBord(data.urlVisionBord);
+        }
+    }, [jwtToken, router])
+
     useEffect(() => {
         if (jwtToken) {
             getDashboard();
+            getVisionBoard();
         }
-    }, [jwtToken, getDashboard]);
+    }, [jwtToken, getDashboard, getVisionBoard]);
 
 
     const handleOpenInNewTab = () => {

@@ -49,7 +49,7 @@ export default function CardInputLogin() {
 
             // Armazena no localStorage
             localStorage.setItem('token', data.BearerToken);
-            localStorage.setItem('visionBordUrl', data.urlVisionBord);
+            // localStorage.setItem('visionBordUrl', data.urlVisionBord);
 
             // Redireciona para o dashboard ou outra rota
             setCarregando(false);
