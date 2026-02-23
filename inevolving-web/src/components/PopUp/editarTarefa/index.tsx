@@ -9,6 +9,16 @@ import { Objetivo } from '@/components/interfaces/Objetivo';
 import { Calendar, CalendarProps } from 'react-calendar';
 import { linkApi } from "../../../constants";
 
+interface IReason {
+    reason: string,
+    amount: number
+}
+
+interface IReasonsCancelled {
+    totNumberTasks: number,
+    reasonList: IReason[]
+}
+
 export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modulo_Tarefas; voltar:() => void } ) {
     const [isMobile, setIsMobile] = useState(false);
     
@@ -18,9 +28,10 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
     }, []);
 
     const [opcaoAtualizar, setOpcaoAtualizar] = useState(1);
+    const [motivosDeCancelamento, setMotivosDeCancelamento] = useState<IReason[]>();
 
     const [nomeTarefa, setNomeTarefa] = useState(tarefa.nameTask);
-    const [motivos, setMotivos] = useState("");
+    const [motivos, setMotivos] = useState<string>("");
     const [descricaoObjetivo, setDescricaoObjetivo] = useState(tarefa.descriptionTask);
     const [carregando, setCarregando] = useState(false);
     const [jwtToken, setJwtToken] = useState('');
@@ -429,6 +440,35 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
         setCopiado(true);
     };
 
+    const pegarMotivosDeCancelamentoDaTarefa = async () => {
+            setCarregando(true);
+            const response = await fetch(
+                    linkApi+'/auth/api/dashboard/cancellation-reason/{idObjective}?idObjective='+tarefa.idObjective, 
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                });
+    
+            const data: IReasonsCancelled = await response.json();
+            
+            if (response.status === 401){
+                setCarregando(false);
+                alert('Você não está logado, por favor faça login novamente.');
+                router.push('/login');
+            }
+    
+            if (!response.ok){
+                setCarregando(false);
+                alert('Erro ao puxar motivos de cancelamento');
+            }
+            
+            setCarregando(false);
+            setMotivosDeCancelamento(data.reasonList);
+    };
+
     return (
         <div className={isMobile ? styles.mob : ''}>
         <div className={styles.overlay}>
@@ -660,6 +700,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     onClick={() => {
                                         setStatusDaTarefa("CANCELLED");
                                         setAbrirInputMotivoDoCancelamento(true);
+                                        pegarMotivosDeCancelamentoDaTarefa();
                                     }}
                                 >
                                     Cancelada
@@ -1077,6 +1118,27 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                     height={15}
                                 />
                                 </div>
+                                    <div>
+                                        <h3>
+                                            Motivos Usados Anteriormente
+                                        </h3>
+                                        {motivosDeCancelamento && motivosDeCancelamento.map((motivo) => (
+                                            <div 
+                                                style={{cursor: "pointer", display: "flex", width: "100%", justifyContent: "space-between"}}
+                                                key={motivo.reason}
+                                                onClick={() => {
+                                                    setMotivos(motivos + ";" + motivo.reason)
+                                                }}
+                                            >
+                                                <p style={{fontSize: "18px", fontWeight: "500"}}>
+                                                    {motivo.reason}
+                                                </p>
+                                                <p style={{fontSize: "18px", fontWeight: "500"}}>
+                                                    {motivo.amount} <span style={{fontWeight: "700"}}>Repetições</span>
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
                             </div>
                         </div>
                     </div>
