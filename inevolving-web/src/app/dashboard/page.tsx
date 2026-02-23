@@ -59,7 +59,7 @@ export default function Dashboard() {
     const getDashboard = useCallback(async () => {
         setCarregandoDash(true);
         const response = await fetch(
-                linkApi + "/auth/api/dashboard", 
+                linkApi + "/auth/api/dashboard/categories", 
             {
                 method: 'GET',
                 headers: {
