@@ -52,18 +52,23 @@ export default function Page( ) {
                         Alterar Tipo do Menu
                     </button>
                     <button>
+                        {/* TODO - Desenvolver Tela de Pop Up */}
                         Alterar Informações do Usuário
                     </button>
                     <button>
+                        {/* TODO - Desenvolver Tela de Pop Up */}
                         Alterar Senha
                     </button>
                     <button>
+                        {/* TODO - Desenvolver Tela de Pop Up */}
                         Alterar Tema
                     </button>
                     <button>
+                        {/* TODO - Desenvolver Tela de Pop Up */}
                         Ver Lista de Amigos
                     </button>
                     <button>
+                        {/* TODO - Desenvolver Tela de Pop Up */}
                         Alterar Data da Renovação
                     </button>
                 </motion.div>
