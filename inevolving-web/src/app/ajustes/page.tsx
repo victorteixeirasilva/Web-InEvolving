@@ -49,7 +49,22 @@ export default function Page( ) {
                             window.location.reload();
                         }}
                     >
-                        alterar tipo do menu
+                        Alterar Tipo do Menu
+                    </button>
+                    <button>
+                        Alterar Informações do Usuário
+                    </button>
+                    <button>
+                        Alterar Senha
+                    </button>
+                    <button>
+                        Alterar Tema
+                    </button>
+                    <button>
+                        Ver Lista de Amigos
+                    </button>
+                    <button>
+                        Alterar Data da Renovação
                     </button>
                 </motion.div>
             </motion.div>

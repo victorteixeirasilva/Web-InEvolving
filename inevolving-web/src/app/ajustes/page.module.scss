@@ -34,13 +34,37 @@
 
 .containerConteudo {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 30px;
     row-gap: 30px;  
     margin-top: 40px;
     margin-left: 50px;
     margin-right: 50px;
     margin-bottom: 150px;
+
+    button {
+        cursor: pointer;
+        color: white;
+        background-color: #E76148;
+        border: none;
+        width: 100%;
+        margin-top: 40px;
+        height: 100%;
+        border-radius: 20px;
+        font-weight: 700;
+        font-size: 20px;
+        padding: 0;
+
+    }
+
+    button:hover {
+        transition: 0.5s;
+        scale: 1.05;
+        // background-color: transparent;
+        // color: #E76148;
+        // font-size: 22px;
+        // border: solid 3px #E76148;
+    }
 
 }
 
