@@ -7,12 +7,14 @@ import styles from './page.module.scss';
 import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import AlterarTipoDoMenuPopUp from "@/components/PopUp/PopUpDeAjustes/AlterarTipoDoMenuPopUp";
+import AlterarInformacoesDoUsuario from "@/components/PopUp/PopUpDeAjustes/AlterarInformacoesDoUsuario";
 
 export default function Page( ) {
 
     const [isMobile, setIsMobile] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>();
     const [alterarTipoDoMenuPopUp, setAlterarTipoDoMenuPopUp] = useState<boolean>(false);
+    const [alterarInformacoesDoUsuariosPopUp, setAlterarInformacoesDoUsuariosPopUp] = useState<boolean>(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -46,16 +48,13 @@ export default function Page( ) {
                     </div>
                     <motion.div className={styles.containerConteudo}>
                         <button 
-                            // onClick={() => {
-                            //     const novoTipo = tipoMenuDesk === 1 ? 2 : 1;
-                            //     localStorage.setItem('tipoMenuDesk', novoTipo.toString());
-                            //     window.location.reload();
-                            // }}
                             onClick={() => setAlterarTipoDoMenuPopUp(true)}
                         >
                             Alterar Tipo do Menu
                         </button>
-                        <button>
+                        <button
+                            onClick={() => setAlterarInformacoesDoUsuariosPopUp(true)}
+                        >
                             {/* TODO - Desenvolver Tela de Pop Up */}
                             Alterar Informações do Usuário
                         </button>
@@ -80,6 +79,9 @@ export default function Page( ) {
             </motion.div>
             {alterarTipoDoMenuPopUp && (
                 <AlterarTipoDoMenuPopUp />
+            )}
+            {alterarInformacoesDoUsuariosPopUp && (
+                <AlterarInformacoesDoUsuario />
             )}
         </>
     );

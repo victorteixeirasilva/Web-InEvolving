@@ -72,8 +72,8 @@ export default function AlterarTipoDoMenuPopUp() {
                                     <Image
                                         src="/tipoMenu01.png"
                                         alt='Imagem de Exemplo do Menu tipo 01'
-                                        width={300}
-                                        height={300}
+                                        width={isMobile ? 200 : 300}
+                                        height={isMobile ? 200 : 300}
                                         style={{marginBottom: "20px"}}
                                     />
                                 </div>
@@ -108,8 +108,8 @@ export default function AlterarTipoDoMenuPopUp() {
                                     <Image
                                         src="/tipoMenu02.png"
                                         alt='Imagem de Exemplo do Menu tipo 02'
-                                        width={300}
-                                        height={300}
+                                        width={isMobile ? 200 : 300}
+                                        height={isMobile ? 200 : 300}
                                         style={{marginBottom: "20px"}}
                                     />
                                 </div>
