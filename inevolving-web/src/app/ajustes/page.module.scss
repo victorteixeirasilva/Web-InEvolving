@@ -2,16 +2,32 @@
 
 .dark {
     // --fundo: #14161c;
-    --fundo: #181818;
+    --fundo: url("../../../public/darkback3.jpg");
     --corTituloPage: white;
     --corBotoes: linear-gradient(
         135deg,
-        rgba(255,255,255,0.10) 0%,
+        rgba(255, 255, 255, 0) 0%,
         rgba(255,255,255,0.04) 30%,
-        rgba(11, 14, 49, 0.473) 65%,
+        rgba(11, 14, 49, 0.356) 65%,
         rgba(0,0,0,0.20) 100%
+    ),
+    /* Tom frio (vidro) + leve escurecimento no fundo */
+    linear-gradient(135deg,
+    rgba(160, 211, 255, 0.014) 0%,
+    rgba(120, 170, 255, 0) 45%,
+    rgba(0,0,0,0.06) 100%
+    ),
+    /* Brilho de borda “de cima” (edge highlight) */
+    linear-gradient(180deg,
+    rgba(255, 255, 255, 0.098) 0%,
+    rgba(255,255,255,0.08) 35%,
+    rgba(255,255,255,0.00) 70%
     );
     --sombraBtn: #0b0e3176;
+    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    ---webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --border: 1px solid rgba(255,255,255,0.22);
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
 }
 
 .temaClaro {
@@ -19,6 +35,10 @@
     --fundo: white;
     --corTituloPage: #0b0e31;
     --corBotoes: #E76148;
+    --backdrop-filter: none;
+    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+    --border: none;
+    ---webkit-backdrop-filter: none;
 }
 
 .container {
@@ -30,7 +50,7 @@
     margin-top: 30px;
     margin-left: 200px;
     border-top-left-radius: 50px;
-    background-color: var(--fundo);
+    background: var(--fundo);
     height: 100%;
     width: calc(100% - 200px - 20%);
 
@@ -108,7 +128,16 @@
         font-weight: 700;
         font-size: 18px;
         padding: 0;
-        box-shadow: 0px 0px 8.7px 0px var(--sombraBtn);
+        
+        /* O “vidro” de verdade */
+        backdrop-filter: var(--backdrop-filter);
+        -webkit-backdrop-filter: var(---webkit-backdrop-filter);
+
+        /* Borda e “acabamento” */
+        border: var(--border);
+
+        /* Sombra + brilho interno */
+        box-shadow: var(--box-shadow);
     }
 
     button:hover {

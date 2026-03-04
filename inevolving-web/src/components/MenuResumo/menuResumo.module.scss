@@ -5,23 +5,43 @@
     --fundoTarefa: #FFFFFF;
     --sombraTarefa: #00000040;
     --filterIconeTarefa: none;
+    --backdrop-filter: none;
+    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+    --border: none;
+    ---webkit-backdrop-filter: none;
 }
 
 .dark {
-    // --fundo: #181820;
+    // --fundo: url("../../../public/darkback4.jpg");
     --fundo: #131313;
     --texto: white;
     --fundoTarefa: linear-gradient(
         135deg,
-        rgba(255,255,255,0.10) 0%,
+        rgba(255, 255, 255, 0) 0%,
         rgba(255,255,255,0.04) 30%,
-        rgba(11, 14, 49, 0.123) 65%,
+        rgba(11, 14, 49, 0.356) 65%,
         rgba(0,0,0,0.20) 100%
+    ),
+    /* Tom frio (vidro) + leve escurecimento no fundo */
+    linear-gradient(135deg,
+    rgba(160, 211, 255, 0.014) 0%,
+    rgba(120, 170, 255, 0) 45%,
+    rgba(0,0,0,0.06) 100%
+    ),
+    /* Brilho de borda “de cima” (edge highlight) */
+    linear-gradient(180deg,
+    rgba(255, 255, 255, 0.098) 0%,
+    rgba(255,255,255,0.08) 35%,
+    rgba(255,255,255,0.00) 70%
     );
     --sombraTarefa: #0b0e31f5;
     --filterIconeTarefa: brightness(0) invert(1);
     --corNumerosCalendario: white;
     --corNav: white;
+    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    ---webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --border: 1px solid rgba(255,255,255,0.22);
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
 }
 
 .calendar {
@@ -141,6 +161,16 @@
         text-overflow: ellipsis;
         color: var(--texto);
     }
+
+    /* O “vidro” de verdade */
+    backdrop-filter: var(--backdrop-filter);
+    -webkit-backdrop-filter: var(---webkit-backdrop-filter);
+
+    /* Borda e “acabamento” */
+    border: var(--border);
+
+    /* Sombra + brilho interno */
+    box-shadow: var(--box-shadow);
 }
 
 .alerta {

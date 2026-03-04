@@ -11,6 +11,7 @@ import { linkApi } from "../../../constants";
 export default function EditarCategoria() {
     const [tema, setTema] = useState<number | undefined>(undefined);
     const [isMobile, setIsMobile] = useState(false);
+    const [corDoBotaoSalvarInativado, setCorDoBotaoSalvarInativado] = useState<string>('#E0E0E0');
 
     useEffect(() => {
         const largura = window.innerWidth;
@@ -20,7 +21,10 @@ export default function EditarCategoria() {
             localStorage.getItem('tema') ?
             parseInt(localStorage.getItem('tema') as string) : 2
         );
-    }, []);
+        if (tema === 1) {
+            setCorDoBotaoSalvarInativado("#535353");
+        }
+    }, [tema, setCorDoBotaoSalvarInativado]);
 
     const router = useRouter();
 
@@ -322,7 +326,7 @@ export default function EditarCategoria() {
                                 className={styles.botaoVoltar} 
                                 onClick={() => window.location.reload()}
                             >
-                                <strong style={{color: '#0B0E31'}}>X</strong>
+                                <strong>X</strong>
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.2 }} 
@@ -413,15 +417,13 @@ export default function EditarCategoria() {
                                 whileHover={!verListaDeObjetivos  ? { scale: 1.1 } : { scale: 1.0 }} 
                                 whileTap={!verListaDeObjetivos ? { scale: 0.8 } : { scale: 1.0 }}
                                 onClick={!verListaDeObjetivos ? handleSalvarCategoriaComObjetivos : undefined}
-                                // onClick={() => alert('Objetivos para adicionar: ' + objetivosSelecionados.length + 
-                                //     ' - Objetivos para remover: ' + objetivosParaRemover.length)}
                                 style={
                                         verListaDeObjetivos || 
                                         nomeCategoria === "" && 
                                         descricaoObjetivo === "" && 
                                         objetivosSelecionados.length === 0 && 
                                         objetivosParaRemover.length === 0 ? 
-                                        { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
+                                        {backgroundColor: corDoBotaoSalvarInativado, cursor: 'not-allowed' } : 
                                         {}
                                 }
                             >
