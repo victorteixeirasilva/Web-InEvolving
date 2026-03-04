@@ -9,17 +9,20 @@ import { ClipLoader } from "react-spinners";
 export default function AlterarInformacoesDoUsuario() {
     const [isMobile, setIsMobile] = useState(false);
         
-    useEffect(() => {
-        const largura = window.innerWidth;
-        setIsMobile(largura <= 1024);
-    }, []);
-
+    
     const [nomeUsuario, setNomeUsuario] = useState<string>("");
     const [novoNomeUsuario, setNovoNomeUsuario] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [novoEmail, setNovoEmail] = useState<string>("");
     const [carregando, setCarregando] = useState(false);
     
+    useEffect(() => {
+        const largura = window.innerWidth;
+        setIsMobile(largura <= 1024);
+        setCarregando(false)
+        setEmail("victoremail")
+        setNomeUsuario("usuarioteste")
+    }, []);
     // const router = useRouter();
 
 

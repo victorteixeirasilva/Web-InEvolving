@@ -9,11 +9,17 @@ import { useRouter } from "next/navigation";
 import { linkApi } from "../../../constants";
 
 export default function EditarCategoria() {
+    const [tema, setTema] = useState<number | undefined>(undefined);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
+
+        setTema(
+            localStorage.getItem('tema') ?
+            parseInt(localStorage.getItem('tema') as string) : 2
+        );
     }, []);
 
     const router = useRouter();
@@ -305,178 +311,180 @@ export default function EditarCategoria() {
     };
 
     return (
-        <div className={isMobile ? styles.mob : ''}>
-            <div className={styles.overlay}>
-                <div className={styles.containerPopUp}>
-                    <div className={styles.botoesTopo}>
-                        <motion.button
-                            whileHover={{ scale: 1.1 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.botaoVoltar} 
-                            onClick={() => window.location.reload()}
-                        >
-                            <strong style={{color: '#0B0E31'}}>X</strong>
-                        </motion.button>
-                        <motion.button
-                            whileHover={{ scale: 1.2 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.lixeira}
-                            onClick={() => {deletarCategoria();}}
-                        >
-                            <Image 
-                                src="/lixeiraIcon.svg"
-                                alt="Icone Lixeira"
-                                width={27}
-                                height={29}
-                            />
-                        </motion.button>
-                    </div>
-                    <div className={styles.conteudo}>
-                        <Image 
-                            src="/iconeObjetivo-NovoObjetivo.svg"
-                            alt="Icone Objetivo"
-                            width={72}
-                            height={72}
-                            className={styles.icone}
-                        />
-                        <h2>Editar Categoria</h2>
-                        <div className={styles.inputs}>
-                            <div className={styles.inputObjetivo}>
-                                <h3>Nome</h3>
-                                <div className={styles.input}>
-                                    <input
-                                        type="text"
-                                        id="nomeCategoria"
-                                        value={nomeCategoria}
-                                        onChange={(e) => setNomeCategoria(e.target.value)}
-                                        placeholder={categoria ? categoria.categoryName : "Digite o nome da categoria..."}
-                                    />
-                                    <Image 
-                                        className={styles.lapis}
-                                        src="/iconeLapisCinza.svg"
-                                        alt="Icone Lapis"
-                                        width={15}
-                                        height={15}
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.inputDescrição}>
-                                <h3>Descrição</h3>
-                                <div className={styles.input}>
-                                    <input 
-                                        type="text"
-                                        id="descricaoObjetivo"
-                                        value={descricaoObjetivo}
-                                        onChange={(e) => setDescricaoObjetivo(e.target.value)}
-                                        placeholder={categoria ? categoria.categoryDescription : "Escreva detalhes sobre o seu objetivo..."}
-                                    />
-                                    <Image
-                                        className={styles.lapis} 
-                                        src="/iconeLapisCinza.svg"
-                                        alt="Icone Lapis"
-                                        width={15}
-                                        height={15}
-                                        />
-                                </div>
-                            </div>
-                            <motion.div 
-                                className={styles.inputDescrição}
-                                whileHover={{ scale: 1.02 }} 
-                                whileTap={{ scale: 0.95 }}   
-                                onClick={() => {
-                                        setVerListaDeObjetivos(true);
-                                        pegarObjetivos();
-                                    }
-                                }     
-                            >
-                                <h3>Selecionar Objetivo Relacionado</h3>
-                                <div className={styles.input}>
-                                    <p className={styles.place}>Selecione os objetivos relacionados...</p>
-                                    <Image
-                                        className={styles.lapis} 
-                                        src="/iconeLapisCinza.svg"
-                                        alt="Icone Lapis"
-                                        width={15}
-                                        height={15}
-                                    />
-                                </div>
-                            </motion.div>
-                        </div>
-                        <motion.button
-                            whileHover={!verListaDeObjetivos  ? { scale: 1.1 } : { scale: 1.0 }} 
-                            whileTap={!verListaDeObjetivos ? { scale: 0.8 } : { scale: 1.0 }}
-                            onClick={!verListaDeObjetivos ? handleSalvarCategoriaComObjetivos : undefined}
-                            // onClick={() => alert('Objetivos para adicionar: ' + objetivosSelecionados.length + 
-                            //     ' - Objetivos para remover: ' + objetivosParaRemover.length)}
-                            style={
-                                    verListaDeObjetivos || 
-                                    nomeCategoria === "" && 
-                                    descricaoObjetivo === "" && 
-                                    objetivosSelecionados.length === 0 && 
-                                    objetivosParaRemover.length === 0 ? 
-                                    { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
-                                    {}
-                            }
-                        >
-                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                            <span 
-                                style={{ 
-                                    marginLeft: carregando ? '8px' : '0'
-                                }}
-                            ></span>
-                            Salvar
-                            <Image 
-                                className={styles.concluido}
-                                src="/checkIcon.svg"
-                                alt="Icone Check"
-                                width={23}
-                                height={18}
-                            />
-                        </motion.button>
-                    </div>
-                </div>
-                {verListaDeObjetivos && (
-                    <div className={styles.overlay}>
-                        <div className={styles.containerPopUp}>
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <div className={isMobile ? styles.mob : ''}>
+                <div className={styles.overlay}>
+                    <div className={styles.containerPopUp}>
+                        <div className={styles.botoesTopo}>
                             <motion.button
-                                whileHover={{ scale: 1.06 }} 
+                                whileHover={{ scale: 1.1 }} 
                                 whileTap={{ scale: 0.8 }}
                                 className={styles.botaoVoltar} 
-                                onClick={() => setVerListaDeObjetivos(false)}
-                                >
-                                <strong style={{color: '#0B0E31'}}>Voltar - Objetivos</strong>
+                                onClick={() => window.location.reload()}
+                            >
+                                <strong style={{color: '#0B0E31'}}>X</strong>
                             </motion.button>
-                            <div className={styles.conteudo}>
-                                <div className={styles.containerScroll}>
-                                    {objetivos && objetivos.map((objetivo) => {
-                                        const estaSelecionado = 
-                                            categoria?.objectives.some((objCat) => objCat.id === objetivo.id) && !objetivosParaRemover.some((item) => item.id === objetivo.id)
-                                                || 
-                                            objetivosSelecionados.some((item) => item.id === objetivo.id) && !objetivosParaRemover.some((item) => item.id === objetivo.id);
-        
-                                        return (
-                                            <div
-                                                key={objetivo.id}
-                                                className={styles.objetivo}
-                                                onClick={() => toggleObjetivoSelecionado(objetivo)}
-                                                style={{ cursor: 'pointer' }}
-                                            >
-                                                <h4>{objetivo.nameObjective}</h4>
-                                                <Image
-                                                    src="/checkIconAzul.svg"
-                                                    alt="Icone Check Azul"
-                                                    width={21}
-                                                    height={16}
-                                                    className={`${styles.checkIcon} ${estaSelecionado ? styles.selecionado : ''}`}
-                                                />
-                                            </div>
-                                        );
-                                    })}
+                            <motion.button
+                                whileHover={{ scale: 1.2 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.lixeira}
+                                onClick={() => {deletarCategoria();}}
+                            >
+                                <Image 
+                                    src="/lixeiraIcon.svg"
+                                    alt="Icone Lixeira"
+                                    width={27}
+                                    height={29}
+                                />
+                            </motion.button>
+                        </div>
+                        <div className={styles.conteudo}>
+                            <Image 
+                                src="/iconeObjetivo-NovoObjetivo.svg"
+                                alt="Icone Objetivo"
+                                width={72}
+                                height={72}
+                                className={styles.icone}
+                            />
+                            <h2>Editar Categoria</h2>
+                            <div className={styles.inputs}>
+                                <div className={styles.inputObjetivo}>
+                                    <h3>Nome</h3>
+                                    <div className={styles.input}>
+                                        <input
+                                            type="text"
+                                            id="nomeCategoria"
+                                            value={nomeCategoria}
+                                            onChange={(e) => setNomeCategoria(e.target.value)}
+                                            placeholder={categoria ? categoria.categoryName : "Digite o nome da categoria..."}
+                                        />
+                                        <Image 
+                                            className={styles.lapis}
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                        />
+                                    </div>
+                                </div>
+                                <div className={styles.inputDescrição}>
+                                    <h3>Descrição</h3>
+                                    <div className={styles.input}>
+                                        <input 
+                                            type="text"
+                                            id="descricaoObjetivo"
+                                            value={descricaoObjetivo}
+                                            onChange={(e) => setDescricaoObjetivo(e.target.value)}
+                                            placeholder={categoria ? categoria.categoryDescription : "Escreva detalhes sobre o seu objetivo..."}
+                                        />
+                                        <Image
+                                            className={styles.lapis} 
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                            />
+                                    </div>
+                                </div>
+                                <motion.div 
+                                    className={styles.inputDescrição}
+                                    whileHover={{ scale: 1.02 }} 
+                                    whileTap={{ scale: 0.95 }}   
+                                    onClick={() => {
+                                            setVerListaDeObjetivos(true);
+                                            pegarObjetivos();
+                                        }
+                                    }     
+                                >
+                                    <h3>Selecionar Objetivo Relacionado</h3>
+                                    <div className={styles.input}>
+                                        <p className={styles.place}>Selecione os objetivos relacionados...</p>
+                                        <Image
+                                            className={styles.lapis} 
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                        />
+                                    </div>
+                                </motion.div>
+                            </div>
+                            <motion.button
+                                whileHover={!verListaDeObjetivos  ? { scale: 1.1 } : { scale: 1.0 }} 
+                                whileTap={!verListaDeObjetivos ? { scale: 0.8 } : { scale: 1.0 }}
+                                onClick={!verListaDeObjetivos ? handleSalvarCategoriaComObjetivos : undefined}
+                                // onClick={() => alert('Objetivos para adicionar: ' + objetivosSelecionados.length + 
+                                //     ' - Objetivos para remover: ' + objetivosParaRemover.length)}
+                                style={
+                                        verListaDeObjetivos || 
+                                        nomeCategoria === "" && 
+                                        descricaoObjetivo === "" && 
+                                        objetivosSelecionados.length === 0 && 
+                                        objetivosParaRemover.length === 0 ? 
+                                        { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
+                                        {}
+                                }
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Salvar
+                                <Image 
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
+                                />
+                            </motion.button>
+                        </div>
+                    </div>
+                    {verListaDeObjetivos && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
+                                <motion.button
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setVerListaDeObjetivos(false)}
+                                    >
+                                    <strong style={{color: '#0B0E31'}}>Voltar - Objetivos</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <div className={styles.containerScroll}>
+                                        {objetivos && objetivos.map((objetivo) => {
+                                            const estaSelecionado = 
+                                                categoria?.objectives.some((objCat) => objCat.id === objetivo.id) && !objetivosParaRemover.some((item) => item.id === objetivo.id)
+                                                    || 
+                                                objetivosSelecionados.some((item) => item.id === objetivo.id) && !objetivosParaRemover.some((item) => item.id === objetivo.id);
+            
+                                            return (
+                                                <div
+                                                    key={objetivo.id}
+                                                    className={styles.objetivo}
+                                                    onClick={() => toggleObjetivoSelecionado(objetivo)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    <h4>{objetivo.nameObjective}</h4>
+                                                    <Image
+                                                        src="/checkIconAzul.svg"
+                                                        alt="Icone Check Azul"
+                                                        width={21}
+                                                        height={16}
+                                                        className={`${styles.checkIcon} ${estaSelecionado ? styles.selecionado : ''}`}
+                                                    />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     ); 

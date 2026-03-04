@@ -1,12 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.dark {
+    // --fundo: #14161c;
+    --fundo: #181818;
+    --corTituloPage: white;
+    --corBotoes: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.10) 0%,
+        rgba(255,255,255,0.04) 30%,
+        rgba(11, 14, 49, 0.587) 65%,
+        rgba(0,0,0,0.20) 100%
+    );
+    --sombraBtn: #0b0e3176;
+    --colorOverlay: #0B0E31F0;
+}
+
+.temaClaro {
+    --colorOverlay: #D9D9D994;
+    --sombraBtn: #dddddd;
+    --fundo: white;
+    --corTituloPage: #0b0e31;
+    --corBotoes: #F4F4FE;
+}
+
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #D9D9D994;
+    background-color: var(--colorOverlay);
     display: flex;
     flex-direction: column;
     justify-content: center;
