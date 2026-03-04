@@ -52,7 +52,7 @@ export default function AlterarTipoDoMenuPopUp() {
                                 whileHover={{ scale: 1.02 }} 
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => {
-                                    const novoTipo = 1;
+                                    const novoTipo = 2;
                                     localStorage.setItem('tipoMenuDesk', novoTipo.toString());
                                     window.location.reload();
                                 }} 
@@ -60,13 +60,13 @@ export default function AlterarTipoDoMenuPopUp() {
                                 <div 
                                     className={styles.inputStatus}
                                     style={
-                                        tipoMenuDesk === 1 ? { 
+                                        tipoMenuDesk === 2 ? { 
                                             color: '#0b0e31',
                                             border: 'solid 3px #0b0e31' 
                                         } : {}
                                     }
                                 >
-                                    <p style={tipoMenuDesk === 1 ? { color: '#0b0e31' } : {}}>
+                                    <p style={tipoMenuDesk === 2 ? { color: '#0b0e31' } : {}}>
                                         Menu Tipo 1
                                     </p>
                                     <Image
@@ -84,7 +84,7 @@ export default function AlterarTipoDoMenuPopUp() {
                                 whileHover={{ scale: 1.02 }} 
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => {
-                                    const novoTipo = 2;
+                                    const novoTipo = 1;
                                     localStorage.setItem('tipoMenuDesk', novoTipo.toString());
                                     window.location.reload();
                                 }} 
@@ -92,14 +92,14 @@ export default function AlterarTipoDoMenuPopUp() {
                                 <div 
                                     className={styles.inputStatus}
                                     style={
-                                        tipoMenuDesk === 2 ? { 
+                                        tipoMenuDesk === 1 ? { 
                                             color: '#0b0e31',
                                             border: 'solid 3px #0b0e31' 
                                         } : {}
                                     }
                                 >
                                     <p style={
-                                        tipoMenuDesk === 2 ? { 
+                                        tipoMenuDesk === 1 ? { 
                                             color: '#0b0e31'
                                         } : {}}
                                     >

@@ -29,10 +29,15 @@ export default function Menu() {
     const [verMenu, setVerMenu] = useState(false);
     const [verMenuResumo, setVerMenuResumo] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
+    const [tema, setTema] = useState<number | undefined>(undefined);
 
     
     useEffect(() => {
         if (typeof window !== 'undefined') {
+            setTema(
+                localStorage.getItem('tema') ?
+                parseInt(localStorage.getItem('tema') as string) : 2
+            )
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
@@ -44,7 +49,7 @@ export default function Menu() {
     if (!isMobile) {
         if (tipoMenuDesk === 1) {
             return (
-                <>
+            <div className={tema === 1 ? styles.dark : styles.temaClaro}>
                 <motion.div 
                     className={styles.linha}></motion.div>
                 <motion.div 
@@ -180,12 +185,261 @@ export default function Menu() {
                     </nav>
                 </motion.div>
                 <MenuResumo />
-                </>
+            </div>
             );
         } else if (tipoMenuDesk === 2) {
             return (
+                <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+                    <div 
+                        className={styles.mobTipoMenu2} 
+                        style={verMenu || verMenuResumo ? {zIndex: '4'} : {}}
+                    >
+                        {!verMenu && !verMenuResumo && (
+                            <div className={styles.topo}>
+                                <motion.div
+                                    whileTap={{ scale: 0.5 }}
+                                    onClick={() => setVerMenu(true)}
+                                >
+                                    <Image 
+                                        src="/mobile/IconeMenuFechado.svg"
+                                        alt="Menu"
+                                        width={27}
+                                        height={27}
+                                    />
+                                </motion.div>
+                                <div className={styles.icones}>
+                                    {isActiveDashboard && (
+                                        <Image 
+                                                src="/iconeDashboard.svg"
+                                            alt="Logo Dashboard"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveObjetivos && (
+                                        <Image 
+                                            src="/iconeObjetivos.svg"
+                                            alt="Logo Objetivos"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveTarefas && (
+                                        <Image 
+                                            src="/iconeTarefas.svg"
+                                            alt="Logo Tarefas"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveFinancas && (
+                                        <Image 
+                                            src="/iconeFinanças.svg"
+                                            alt="Logo Finanças"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveLivros && (
+                                        <Image 
+                                            src="/iconeLivros.svg"
+                                            alt="Logo Livros"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveMotivacao && (
+                                        <Image 
+                                            src="/iconeMot.svg"
+                                            alt="Logo Motivação"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveAjustes && (
+                                        <Image 
+                                            src="/iconeAjustes.svg"
+                                            alt="Logo Ajustes"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                    {isActiveAjuda && (
+                                        <Image 
+                                            src="/iconeAjuda.svg"
+                                            alt="Logo Ajuda"
+                                            width={27}
+                                            height={27}
+                                        />
+                                    )}
+                                </div>
+                                <motion.div
+                                    whileTap={{ scale: 0.5 }}
+                                    onClick={() => setVerMenuResumo(true)}
+                                >
+                                    <Image 
+                                        src="/mobile/IconeMenuResumoFechado.svg"
+                                        alt="Logo Menu Resumo"
+                                        width={27}
+                                        height={27}
+                                    />
+                                </motion.div>
+                            </div>
+                        )}
+                        {verMenu && (
+                            <div className={styles.overlay}>
+                                <motion.div 
+                                    initial={{ opacity: 0, scale: 1 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
+                                    }}
+                                    className={styles.container}
+                                >
+                                    <motion.div 
+                                        className={styles.titulo}
+                                        onClick={() => setVerMenu(false)}
+                                        whileTap={{ scale: 0.5 }}
+                                    >
+                                        {/* <Image 
+                                            src="/logo/logo-inovasoft-menu.svg"
+                                            alt="Logo InEvolving"
+                                            width={40}
+                                            height={40}
+                                            className={styles.logo}
+                                        /> */}
+                                        <h2>
+                                            Voltar  
+                                        </h2>
+                                    </motion.div>            
+                                    <nav className={styles.esp}>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeDashboard.svg"
+                                                alt="Logo Dashboard"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/dashboard">
+                                                Dashboard
+                                                <div className={styles.marcador}></div>
+                                                {isActiveDashboard && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeObjetivos.svg"
+                                                alt="Logo Objetivos"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/objetivos">
+                                                Objetivos
+                                                <div className={styles.marcador}></div>
+                                                {isActiveObjetivos && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeTarefas.svg"
+                                                alt="Logo Tarefas"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/tarefas">
+                                                Tarefas
+                                                <div className={styles.marcador}></div>
+                                                {isActiveTarefas && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeFinanças.svg"
+                                                alt="Logo Finanças"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/financas">
+                                                Finanças
+                                                <div className={styles.marcador}></div>
+                                                {isActiveFinancas && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeLivros.svg"
+                                                alt="Logo Livros"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/livros">
+                                                Livros
+                                                <div className={styles.marcador}></div>
+                                                {isActiveLivros && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                            <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeMot.svg"
+                                                alt="Logo Motivação"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/motivacao">
+                                                Motivação
+                                                <div className={styles.marcador}></div>
+                                                {isActiveMotivacao && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                    <div className={styles.ajuste}>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeAjustes.svg"
+                                                alt="Logo Ajustes"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/ajustes">
+                                                Ajustes
+                                                <div className={styles.marcador}></div>
+                                                {isActiveAjustes && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                        <div className={styles.nav}>
+                                            <Image 
+                                                src="/iconeAjuda.svg"
+                                                alt="Logo Ajuda"
+                                                width={27}
+                                                height={27}
+                                            />
+                                            <a href="/ajuda">
+                                                Ajuda
+                                                <div className={styles.marcador}></div>
+                                                {isActiveAjuda && <div className={styles.ativo}></div>}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </nav>
+                                </motion.div>
+                            </div>
+                        )}
+                        {verMenuResumo && (
+                            <div>
+                                <MenuResumo voltar={() => {
+                                    setVerMenuResumo(false);
+                                }}/>
+                            </div>
+                        )}
+                    </div> 
+                </div>
+            );           
+        }
+    } else {
+        return (
+            <div className={tema === 1 ? styles.dark : styles.temaClaro}>
                 <div 
-                    className={styles.mobTipoMenu2} 
+                    className={styles.mob} 
                     style={verMenu || verMenuResumo ? {zIndex: '4'} : {}}
                 >
                     {!verMenu && !verMenuResumo && (
@@ -201,7 +455,7 @@ export default function Menu() {
                                     height={27}
                                 />
                             </motion.div>
-                            <div className={styles.icones}>
+                            <div>
                                 {isActiveDashboard && (
                                     <Image 
                                             src="/iconeDashboard.svg"
@@ -426,252 +680,7 @@ export default function Menu() {
                         </div>
                     )}
                 </div> 
-            );           
-        }
-    } else {
-        return (
-            <div 
-                className={styles.mob} 
-                style={verMenu || verMenuResumo ? {zIndex: '4'} : {}}
-            >
-                {!verMenu && !verMenuResumo && (
-                    <div className={styles.topo}>
-                        <motion.div
-                            whileTap={{ scale: 0.5 }}
-                            onClick={() => setVerMenu(true)}
-                        >
-                            <Image 
-                                src="/mobile/IconeMenuFechado.svg"
-                                alt="Menu"
-                                width={27}
-                                height={27}
-                            />
-                        </motion.div>
-                        <div>
-                            {isActiveDashboard && (
-                                <Image 
-                                        src="/iconeDashboard.svg"
-                                    alt="Logo Dashboard"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveObjetivos && (
-                                <Image 
-                                    src="/iconeObjetivos.svg"
-                                    alt="Logo Objetivos"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveTarefas && (
-                                <Image 
-                                    src="/iconeTarefas.svg"
-                                    alt="Logo Tarefas"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveFinancas && (
-                                <Image 
-                                    src="/iconeFinanças.svg"
-                                    alt="Logo Finanças"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveLivros && (
-                                <Image 
-                                    src="/iconeLivros.svg"
-                                    alt="Logo Livros"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveMotivacao && (
-                                <Image 
-                                    src="/iconeMot.svg"
-                                    alt="Logo Motivação"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveAjustes && (
-                                <Image 
-                                    src="/iconeAjustes.svg"
-                                    alt="Logo Ajustes"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                            {isActiveAjuda && (
-                                <Image 
-                                    src="/iconeAjuda.svg"
-                                    alt="Logo Ajuda"
-                                    width={27}
-                                    height={27}
-                                />
-                            )}
-                        </div>
-                        <motion.div
-                            whileTap={{ scale: 0.5 }}
-                            onClick={() => setVerMenuResumo(true)}
-                        >
-                            <Image 
-                                src="/mobile/IconeMenuResumoFechado.svg"
-                                alt="Logo Menu Resumo"
-                                width={27}
-                                height={27}
-                            />
-                        </motion.div>
-                    </div>
-                )}
-                {verMenu && (
-                    <div className={styles.overlay}>
-                        <motion.div 
-                            initial={{ opacity: 0, scale: 1 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{
-                                duration: 0.4,
-                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.55 },
-                            }}
-                            className={styles.container}
-                        >
-                            <motion.div 
-                                className={styles.titulo}
-                                onClick={() => setVerMenu(false)}
-                                whileTap={{ scale: 0.5 }}
-                            >
-                                {/* <Image 
-                                    src="/logo/logo-inovasoft-menu.svg"
-                                    alt="Logo InEvolving"
-                                    width={40}
-                                    height={40}
-                                    className={styles.logo}
-                                /> */}
-                                <h2>
-                                    Voltar  
-                                </h2>
-                            </motion.div>            
-                            <nav className={styles.esp}>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeDashboard.svg"
-                                        alt="Logo Dashboard"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/dashboard">
-                                        Dashboard
-                                        <div className={styles.marcador}></div>
-                                        {isActiveDashboard && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeObjetivos.svg"
-                                        alt="Logo Objetivos"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/objetivos">
-                                        Objetivos
-                                        <div className={styles.marcador}></div>
-                                        {isActiveObjetivos && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeTarefas.svg"
-                                        alt="Logo Tarefas"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/tarefas">
-                                        Tarefas
-                                        <div className={styles.marcador}></div>
-                                        {isActiveTarefas && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeFinanças.svg"
-                                        alt="Logo Finanças"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/financas">
-                                        Finanças
-                                        <div className={styles.marcador}></div>
-                                        {isActiveFinancas && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeLivros.svg"
-                                        alt="Logo Livros"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/livros">
-                                        Livros
-                                        <div className={styles.marcador}></div>
-                                        {isActiveLivros && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                                    <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeMot.svg"
-                                        alt="Logo Motivação"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/motivacao">
-                                        Motivação
-                                        <div className={styles.marcador}></div>
-                                        {isActiveMotivacao && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                            <div className={styles.ajuste}>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeAjustes.svg"
-                                        alt="Logo Ajustes"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/ajustes">
-                                        Ajustes
-                                        <div className={styles.marcador}></div>
-                                        {isActiveAjustes && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                                <div className={styles.nav}>
-                                    <Image 
-                                        src="/iconeAjuda.svg"
-                                        alt="Logo Ajuda"
-                                        width={27}
-                                        height={27}
-                                    />
-                                    <a href="/ajuda">
-                                        Ajuda
-                                        <div className={styles.marcador}></div>
-                                        {isActiveAjuda && <div className={styles.ativo}></div>}
-                                    </a>
-                                </div>
-                            </div>
-                            </nav>
-                        </motion.div>
-                    </div>
-                )}
-                {verMenuResumo && (
-                    <div>
-                        <MenuResumo voltar={() => {
-                            setVerMenuResumo(false);
-                        }}/>
-                    </div>
-                )}
-            </div> 
+            </div>
         );
     }
 }

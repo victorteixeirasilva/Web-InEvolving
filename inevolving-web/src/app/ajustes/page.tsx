@@ -8,30 +8,32 @@ import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import AlterarTipoDoMenuPopUp from "@/components/PopUp/PopUpDeAjustes/AlterarTipoDoMenuPopUp";
 import AlterarInformacoesDoUsuario from "@/components/PopUp/PopUpDeAjustes/AlterarInformacoesDoUsuario";
+import EsqueciSenha from "@/components/PopUp/esqueciSenha";
 
 export default function Page( ) {
-
-    const [isMobile, setIsMobile] = useState(false);
+    const [tema, setTema] = useState<number | undefined>(undefined);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>();
     const [alterarTipoDoMenuPopUp, setAlterarTipoDoMenuPopUp] = useState<boolean>(false);
     const [alterarInformacoesDoUsuariosPopUp, setAlterarInformacoesDoUsuariosPopUp] = useState<boolean>(false);
+    const [alterarSenhaPopUp, setAlterarSenhaPopUp] = useState<boolean>(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-
-            const largura = window.innerWidth;
-            setIsMobile(largura <= 1024);
-
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+
+            setTema(
+                localStorage.getItem('tema') ?
+                parseInt(localStorage.getItem('tema') as string) : 2
             );
         }
     }, []);
 
     return (
-        <>
-            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0.97 }}
@@ -55,14 +57,31 @@ export default function Page( ) {
                         <button
                             onClick={() => setAlterarInformacoesDoUsuariosPopUp(true)}
                         >
-                            {/* TODO - Desenvolver Tela de Pop Up */}
                             Alterar Informações do Usuário
                         </button>
-                        <button>
-                            {/* TODO - Desenvolver Tela de Pop Up */}
+                        <button
+                            onClick={() => setAlterarSenhaPopUp(true)}
+                        >
                             Alterar Senha
                         </button>
-                        <button>
+                        <button
+                            onClick={() => {
+                                if (localStorage.getItem("tema")) {
+                                    const tema = localStorage.getItem("tema")
+                                    if (tema === "1") {
+                                        localStorage.setItem('tema', "2");
+                                        window.location.reload();
+                                    } else {
+                                        localStorage.setItem('tema', "1");
+                                        window.location.reload();
+                                    }
+                                } else {
+                                    localStorage.setItem('tema', "1");
+                                    window.location.reload();
+                                }
+                                
+                            }}
+                        >
                             {/* TODO - Desenvolver Tela de Pop Up */}
                             Alterar Tema
                         </button>
@@ -83,6 +102,9 @@ export default function Page( ) {
             {alterarInformacoesDoUsuariosPopUp && (
                 <AlterarInformacoesDoUsuario />
             )}
-        </>
+            {alterarSenhaPopUp && (
+                <EsqueciSenha voltar={() => setAlterarSenhaPopUp(false)} />
+            )}
+        </div>
     );
 }

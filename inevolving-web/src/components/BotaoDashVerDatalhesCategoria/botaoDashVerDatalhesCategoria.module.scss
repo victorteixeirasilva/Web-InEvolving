@@ -1,12 +1,23 @@
+
+.dark {
+    --corFundoBotao: rgb(53, 53, 53);
+    --corTextoBotao: #ACACAC;
+}
+
+.temaClaro {
+    --corFundoBotao: white;
+    --corTextoBotao: #ACACAC;
+}
+
 .containerBotaoVerDetalhes {
     cursor: pointer;
-    background-color: white;
+    background-color: var(--corFundoBotao);
     border: none;
     width: 119px;
     height: 27px;
     border-radius: 7px;
 
-    color: #ACACAC;
+    color: var(--corTextoBotao);
     font-weight: 500;
     font-size: 18px;
 }

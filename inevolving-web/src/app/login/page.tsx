@@ -35,12 +35,12 @@ export default function Login() {
                     >
                     <div>
                         <CardTextoImagem texto={
-                            <>
+                                <>
                                     Bem-vindo<br />
                                     de volta
                                 </>
                             }
-                            />
+                        />
                     </div>
                     <CardInputLogin />
                 </motion.div>

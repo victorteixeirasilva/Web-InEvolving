@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { linkApi } from '../../constants';
 
 export default function Dashboard() {
-
+    const [tema, setTema] = useState<number | undefined>(undefined);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     
     const [isMobile, setIsMobile] = useState(false);
@@ -26,6 +26,10 @@ export default function Dashboard() {
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+            setTema(
+                localStorage.getItem('tema') ?
+                parseInt(localStorage.getItem('tema') as string) : 2
             );
         }
     }, []);
@@ -120,247 +124,123 @@ export default function Dashboard() {
     const [abrirEditarCategoria, setAbrirEditarCategoria] = useState(false);
 
     return (
-        <>
-        <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
-            <Menu />
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                    duration: 0.7,
-                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                }} 
-                className={styles.container}>
-                {urlVisionBord && urlVisionBord !== "No dreams were found" && (
-                    <div className={styles.preVisionBordContainer}>
-                        <Image 
-                            src={urlVisionBord}
-                            width={1920}
-                            height={1080}
-                            alt="vision bord"
-                            className={styles.visionboardImage}
-                        />
-                        <div className={styles.verVisionBoard}>
-                            <button onClick={() => setShowVisionBoard(true)}>Ver Vision Board</button>
-                        </div>
-                    </div>
-                )}
-                <div className={styles.tituloContainer}>
-                    <h1>Dashboard</h1>
-                </div>
-
-                <motion.div ref={constraintsRef} className={styles.containerConteudo}>
-                    {carregandoDash && (
-                        <ClipLoader size={50} color="#0B0E31" />
-                    )}
-                    {!carregandoDash && !dashboardData && (
-                        <h3>
-                            Cadastre uma categoria no modulo de objetivos para ver seu dashboard!
-                        </h3>
-                    )}
-                    {!carregandoDash && dashboardData?.categoryDTOList.map((category) => (
-                        <motion.div 
-                            whileHover={{ scale: 1.03 }}
-                            // whileTap={{ scale: 0.8 }} 
-                            key={category.id} 
-                            className={styles.categoria}
-                        >
-                            <motion.div
-                                className={styles.containerConteudoCategoria}
-                                >
-                                <h2>{category.categoryName}</h2>
-                                <div className={styles.containerBotao}>
-                                    <BotaoDashVerDatalhesCategoria categoria={category}/>
-                                    <motion.div
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }}
-                                        onClick={() => {
-                                                localStorage.setItem('categoriaAtual', JSON.stringify(category));
-                                                setAbrirEditarCategoria(true);
-                                        }}
-                                        className={styles.botaoEditar}
-                                    >
-                                        Editar
-                                    </motion.div>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            </motion.div>
-            {!carregandoDash && showVisionBoard && (
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0 }}
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
+                <Menu />
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
-                        duration: 0.4,
+                        duration: 0.7,
                         scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                     }} 
-                    className={styles.overlay}
-                >
-                    <div className={styles.popup}>
-                        <div className={styles.containerBotoes}>
-                            <motion.button
-                                whileHover={{ scale: 1.2 }}
-                                whileTap={{ scale: 0.8 }} 
-                                className={styles.botaoVoltar} 
-                                onClick={() => setShowVisionBoard(false)}
-                                >
-                                Voltar
-                            </motion.button>
-                            <h2>Vision Board</h2>
-                            <motion.button 
-                                whileHover={{ scale: 1.2 }}
-                                whileTap={{ scale: 0.8 }} 
-                                className={styles.botaoVoltar} 
-                                onClick={handleOpenInNewTab}
-                                >
-                                <Image 
-                                    src='/iconeDownload.svg'
-                                    alt='Icone Download'
-                                    width={26}
-                                    height={26}
-                                    />
-                            </motion.button>
-                        </div>
-                        <Image
-                            src={urlVisionBord!}
-                            alt="Vision Board"
-                            width={800}
-                            height={450}
-                            className={styles.popupImage}
+                    className={styles.container}>
+                    {urlVisionBord && urlVisionBord !== "No dreams were found" && (
+                        <div className={styles.preVisionBordContainer}>
+                            <Image 
+                                src={urlVisionBord}
+                                width={1920}
+                                height={1080}
+                                alt="vision bord"
+                                className={styles.visionboardImage}
                             />
+                            <div className={styles.verVisionBoard}>
+                                <button onClick={() => setShowVisionBoard(true)}>Ver Vision Board</button>
+                            </div>
+                        </div>
+                    )}
+                    <div className={styles.tituloContainer}>
+                        <h1>Dashboard</h1>
                     </div>
+
+                    <motion.div ref={constraintsRef} className={styles.containerConteudo}>
+                        {carregandoDash && (
+                            <ClipLoader size={50} color="#0B0E31" />
+                        )}
+                        {!carregandoDash && !dashboardData && (
+                            <h3>
+                                Cadastre uma categoria no modulo de objetivos para ver seu dashboard!
+                            </h3>
+                        )}
+                        {!carregandoDash && dashboardData?.categoryDTOList.map((category) => (
+                            <motion.div 
+                                whileHover={{ scale: 1.03 }}
+                                // whileTap={{ scale: 0.8 }} 
+                                key={category.id} 
+                                className={styles.categoria}
+                            >
+                                <motion.div
+                                    className={styles.containerConteudoCategoria}
+                                >
+                                    <h2>{category.categoryName}</h2>
+                                    <div className={styles.containerBotao}>
+                                        <BotaoDashVerDatalhesCategoria categoria={category}/>
+                                        <motion.div
+                                            whileHover={{ scale: 1.2 }}
+                                            whileTap={{ scale: 0.8 }}
+                                            onClick={() => {
+                                                localStorage.setItem('categoriaAtual', JSON.stringify(category));
+                                                setAbrirEditarCategoria(true);
+                                            }}
+                                            className={styles.botaoEditar}
+                                        >
+                                            Editar
+                                        </motion.div>
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 </motion.div>
-            )}
-        </motion.div>
+                {!carregandoDash && showVisionBoard && (
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }} 
+                        className={styles.overlay}
+                    >
+                        <div className={styles.popup}>
+                            <div className={styles.containerBotoes}>
+                                <motion.button
+                                    whileHover={{ scale: 1.2 }}
+                                    whileTap={{ scale: 0.8 }} 
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setShowVisionBoard(false)}
+                                    >
+                                    Voltar
+                                </motion.button>
+                                <h2>Vision Board</h2>
+                                <motion.button 
+                                    whileHover={{ scale: 1.2 }}
+                                    whileTap={{ scale: 0.8 }} 
+                                    className={styles.botaoVoltar} 
+                                    onClick={handleOpenInNewTab}
+                                    >
+                                    <Image 
+                                        src='/iconeDownload.svg'
+                                        alt='Icone Download'
+                                        width={26}
+                                        height={26}
+                                        />
+                                </motion.button>
+                            </div>
+                            <Image
+                                src={urlVisionBord!}
+                                alt="Vision Board"
+                                width={800}
+                                height={450}
+                                className={styles.popupImage}
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </motion.div>
             {abrirEditarCategoria && (
                 <EditarCategoria />
             )}
-        </>
+        </div>
     );
-        // return (
-        //     <>
-        //     <motion.div className={styles.mob}>
-        //         <Menu />
-        //         <motion.div
-        //             initial={{ opacity: 0, scale: 0 }}
-        //             animate={{ opacity: 1, scale: 1 }}
-        //             transition={{
-        //                 duration: 0.4,
-        //                 scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-        //             }} 
-        //             className={styles.container}>
-        //             {/* ✅ Só renderiza se a URL for válida e diferente de "No dreams were found" */}
-        //             {urlVisionBord && urlVisionBord !== "No dreams were found" && (
-        //                 <div className={styles.preVisionBordContainer}>
-        //                     <Image 
-        //                         src={urlVisionBord}
-        //                         width={1920}
-        //                         height={1080}
-        //                         alt="vision bord"
-        //                         className={styles.visionboardImage}
-        //                         />
-        //                     <div className={styles.verVisionBoard}>
-        //                         <button onClick={() => setShowVisionBoard(true)}>Ver Vision Board</button>
-        //                     </div>
-        //                 </div>
-        //             )}
-        //             <div className={styles.tituloContainer}>
-        //                 <h1>Dashboard</h1>
-        //             </div>
-
-        //             <motion.div ref={constraintsRef} className={styles.containerConteudo}>
-        //                 {carregandoDash && (
-        //                     <ClipLoader size={50} color="#0B0E31" />
-        //                 )}
-        //                 {!carregandoDash && !dashboardData && (
-        //                     <h3>
-        //                         Cadastre uma categoria no modulo de objetivos para ver seu dashboard!
-        //                     </h3>
-        //                 )}
-        //                 {!carregandoDash && dashboardData?.categoryDTOList.map((category) => (
-        //                     <motion.div 
-        //                         key={category.id} 
-        //                         className={styles.categoria}
-        //                     >
-        //                         <motion.div
-        //                             className={styles.containerConteudoCategoria}
-        //                             >
-        //                             <h2>{category.categoryName}</h2>
-        //                             <div className={styles.containerBotao}>
-        //                                 <BotaoDashVerDatalhesCategoria categoria={category}/>
-        //                                 <div
-        //                                     onClick={() => {
-        //                                         localStorage.setItem('categoriaAtual', JSON.stringify(category));
-        //                                         setAbrirEditarCategoria(true);
-        //                                     }}
-        //                                 >
-        //                                     <motion.a 
-        //                                         whileHover={{ scale: 1.2 }}
-        //                                         whileTap={{ scale: 0.8 }}
-        //                                         onClick={() => {
-        //                                             localStorage.setItem('categoriaAtual', JSON.stringify(category));
-        //                                             setAbrirEditarCategoria(true);
-        //                                         }}
-        //                                     >
-        //                                         Editar
-        //                                     </motion.a>
-        //                                 </div>
-        //                             </div>
-        //                         </motion.div>
-        //                     </motion.div>
-        //                 ))}
-        //             </motion.div>
-        //         </motion.div>
-        //         {!carregandoDash && showVisionBoard && (
-        //             <motion.div 
-        //             initial={{ opacity: 0, scale: 0 }}
-        //             animate={{ opacity: 1, scale: 1 }}
-        //             transition={{
-        //                 duration: 0.4,
-        //                 scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-        //             }} 
-        //             className={styles.overlay}>
-        //                 <div className={styles.popup}>
-        //                     <div className={styles.containerBotoes}>
-        //                         <motion.button
-        //                             whileHover={{ scale: 1.2 }}
-        //                             whileTap={{ scale: 0.8 }} 
-        //                             className={styles.botaoVoltar} 
-        //                             onClick={() => setShowVisionBoard(false)}
-        //                             >
-        //                             Voltar
-        //                         </motion.button>
-        //                         <h2>Vision Board</h2>
-        //                         <motion.button 
-        //                             whileHover={{ scale: 1.2 }}
-        //                             whileTap={{ scale: 0.8 }} 
-        //                             className={styles.botaoVoltar} 
-        //                             onClick={handleOpenInNewTab}
-        //                             >
-        //                             <Image 
-        //                                 src='/iconeDownload.svg'
-        //                                 alt='Icone Download'
-        //                                 width={26}
-        //                                 height={26}
-        //                                 />
-        //                         </motion.button>
-        //                     </div>
-        //                     <Image
-        //                         src={urlVisionBord!}
-        //                         alt="Vision Board"
-        //                         width={800}
-        //                         height={450}
-        //                         className={styles.popupImage}
-        //                         />
-        //                 </div>
-        //             </motion.div>
-        //         )}
-        //     </motion.div>
-        //     {abrirEditarCategoria && (
-        //         <EditarCategoria />
-        //     )}
-        //     </>
-        // );
 }
