@@ -143,27 +143,32 @@
     margin-right: 50px;
     margin-bottom: 150px;
     
-    .categoria {
-        width: 100%;
-        height: 130px;
-        background: var(--corBotoes);
-        border-radius: 22px;
 
-        h2 {
-            font-weight: 600;
-            font-size: 18px;
-            color: var(--corTituloPage);
+    @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+        .categoria {
+            width: 100%;
+            height: 130px;
+            background: var(--corBotoes);
+            border-radius: 22px;
+    
+            h2 {
+                font-weight: 600;
+                font-size: 18px;
+                color: var(--corTituloPage);
+            }
+    
+            /* O “vidro” de verdade */
+            // backdrop-filter: var(--backdrop-filter);
+            backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+            // -webkit-backdrop-filter: var(--backdrop);
+    
+            /* Borda e “acabamento” */
+            border: var(--border);
+    
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
         }
-
-        /* O “vidro” de verdade */
-        backdrop-filter: var(--backdrop-filter);
-        -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
-
-        /* Borda e “acabamento” */
-        border: var(--border);
-
-        /* Sombra + brilho interno */
-        box-shadow: var(--box-shadow);
     }
 
 }
