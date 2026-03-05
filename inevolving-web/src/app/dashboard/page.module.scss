@@ -25,7 +25,7 @@
         );
     --sombraBtn: #0b0e3176;
     --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
-    --webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --webkitBackdropFilter: blur(18px) saturate(160%) contrast(105%);
     --border: 1px solid rgba(255,255,255,0.22);
     --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
 }
@@ -33,7 +33,7 @@
 .temaClaro {
     --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
     --border: none;
-    --webkit-backdrop-filter: none;
+    --webkitBackdropFilter: none;
     --sombraBtn: #dddddd;
     --fundo: white;
     --corTituloPage: #0b0e31;
@@ -157,7 +157,7 @@
 
         /* O “vidro” de verdade */
         backdrop-filter: var(--backdrop-filter);
-        -webkit-backdrop-filter: var(--webkit-backdrop-filter);
+        -webkit-backdrop-filter: var(--webkitBackdropFilter);
 
         /* Borda e “acabamento” */
         border: var(--border);
