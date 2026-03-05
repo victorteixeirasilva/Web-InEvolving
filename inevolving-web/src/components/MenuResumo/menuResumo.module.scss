@@ -12,8 +12,8 @@
 }
 
 .dark {
-    // --fundo: url("../../../public/darkback4.jpg");
-    --fundo: #131313;
+    --fundo: url("/darkback3.jpg");
+    // --fundo: #131313;
     --texto: white;
     --fundoTarefa: linear-gradient(
         135deg,
@@ -61,7 +61,7 @@
     right: 0;              
     width: 20%;
     height: 100%;         
-    background-color: var(--fundo);
+    background: var(--fundo);
     z-index: 4;
     display: flex;
     flex-direction: column;
@@ -163,7 +163,7 @@
     }
 
     /* O “vidro” de verdade */
-    backdrop-filter: var(--backdrop-filter);
+    backdrop-filter: none;
     -webkit-backdrop-filter: var(---webkit-backdrop-filter);
 
     /* Borda e “acabamento” */

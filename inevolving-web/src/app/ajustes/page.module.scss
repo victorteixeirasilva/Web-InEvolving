@@ -130,7 +130,7 @@
         padding: 0;
         
         /* O “vidro” de verdade */
-        backdrop-filter: var(--backdrop-filter);
+        backdrop-filter: none;
         -webkit-backdrop-filter: var(---webkit-backdrop-filter);
 
         /* Borda e “acabamento” */
