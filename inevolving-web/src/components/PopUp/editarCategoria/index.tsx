@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./EditarCategoria.module.scss";
 import * as motion from "motion/react-client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ClipLoader } from 'react-spinners';
 import { Objetivo } from '@/components/interfaces/Objetivo';
 import { Category } from "@/components/interfaces/Category";
@@ -48,6 +48,36 @@ export default function EditarCategoria() {
             setCategoria(categoriaObj);
         }
     }, []);
+
+    const getDashboard = useCallback(async () => {
+        setCarregando(true);
+        const response = await fetch(
+                linkApi + "/auth/api/dashboard/category/objectives/"+categoria?.id, 
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+            });
+
+        const data: Category = await response.json();
+        
+        if (response.status === 401){
+            setCarregando(false);
+            router.push('/login');
+            alert('Você não está logado, por favor faça login novamente.');
+        }
+
+        if (response.ok) {
+            setCarregando(false);
+            setCategoria(data);
+        }
+    }, [router, categoria?.id])
+
+    useEffect(() => {
+        getDashboard();
+    }, [getDashboard]);
 
     const handleSalvarCategoriaComObjetivos = async () => {
         setCarregando(true);
@@ -452,8 +482,8 @@ export default function EditarCategoria() {
                                     whileTap={{ scale: 0.8 }}
                                     className={styles.botaoVoltar} 
                                     onClick={() => setVerListaDeObjetivos(false)}
-                                    >
-                                    <strong style={{color: '#0B0E31'}}>Voltar - Objetivos</strong>
+                                >
+                                    <strong>Voltar - Objetivos</strong>
                                 </motion.button>
                                 <div className={styles.conteudo}>
                                     <div className={styles.containerScroll}>
@@ -462,7 +492,7 @@ export default function EditarCategoria() {
                                                 categoria?.objectives.some((objCat) => objCat.id === objetivo.id) && !objetivosParaRemover.some((item) => item.id === objetivo.id)
                                                     || 
                                                 objetivosSelecionados.some((item) => item.id === objetivo.id) && !objetivosParaRemover.some((item) => item.id === objetivo.id);
-            
+
                                             return (
                                                 <div
                                                     key={objetivo.id}
