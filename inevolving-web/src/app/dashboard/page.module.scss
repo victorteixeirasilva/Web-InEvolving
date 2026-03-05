@@ -157,7 +157,7 @@
 
         /* O “vidro” de verdade */
         backdrop-filter: var(--backdrop-filter);
-        -webkit-backdrop-filter: var(--webkitBackdropFilter);
+        -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
 
         /* Borda e “acabamento” */
         border: var(--border);
