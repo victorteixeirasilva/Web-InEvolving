@@ -1,5 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.dark {
+    --fundo: url("/darkback3.jpg");
+    // --fundo: #181818;
+    --corTituloPage: white;
+    --corBotoes: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgba(11, 14, 49, 0.356) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --sombraBtn: #0b0e3176;
+    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --webkitBackdropFilter: blur(18px) saturate(160%) contrast(105%);
+    --border: 1px solid rgba(255,255,255,0.22);
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
+    --corFundoBotao: rgb(53, 53, 53);
+}
+
+.temaClaro {
+    --corFundoBotao: white;
+    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+    --border: none;
+    --webkitBackdropFilter: none;
+    --sombraBtn: #dddddd;
+    --fundo: white;
+    --corTituloPage: #0b0e31;
+    --corBotoes: #F4F4FE;
+    --backdrop-filter: none;
+}
+
 .containerTipoMenu2 {
     .container {
         overflow-x: hidden;
@@ -11,7 +54,7 @@
         margin-left: 0px;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
-        background-color: white;
+        background: var(--fundo);
         height: 100%;
         width: 100%;
     }
@@ -26,9 +69,24 @@
     margin-top: 30px;
     margin-left: 200px;
     border-top-left-radius: 50px;
-    background-color: white;
+    background:var(--fundo);
     height: 100%;
     width: calc(80% - 200px);
+
+    overflow-y: auto;  // ativa a rolagem vertical
+
+    // // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
 }
 
 
@@ -40,6 +98,7 @@
     h1 {
         font-weight: 700;
         font-size: 40px;
+        color: var(--corTituloPage);
     }
 
     p {
@@ -58,18 +117,31 @@
     margin-right: 50px;
     margin-bottom: 150px;
 
-    .objetivo {
-        width: 100%;
-        padding: 30px 0px;
-        background-color: #F4F4FE;
-        border-radius: 22px;
-        box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
+    @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {    
+        .objetivo {
+            width: 100%;
+            padding: 30px 0px;
+            background: var(--corBotoes);
+            border-radius: 22px;
+            box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
+    
+            h3 {
+                font-weight: 600;
+                font-size: 18px;
+                color: var(--corTituloPage);
+            }
 
-        h3 {
-            font-weight: 600;
-            font-size: 18px;
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: var(--backdrop);
+    
+            /* Borda e “acabamento” */
+            border: var(--border);
+    
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+    
         }
-
     }
 
     .conteudoCard{
@@ -86,7 +158,7 @@
 
     button {
         cursor: pointer;
-        background-color: white;
+        background-color: var(--corFundoBotao);
         border: none;
         width: 119px;
         height: 27px;
@@ -118,7 +190,7 @@
         // margin-left: 200px;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
-        background-color: white;
+        background: var(--fundo);
         height: 100%;
         width: 100vw;
     }
@@ -132,7 +204,7 @@
 
         h1 {
             font-weight: 700;
-            font-size: 40px;
+            font-size: 28px;
         }
 
         p {
@@ -151,19 +223,32 @@
         margin-right: 20px;
         margin-bottom: 150px;
 
-        .objetivo {
-            width: 100%;
-            padding: 30px 0px;
-            background-color: #F4F4FE;
-            border-radius: 22px;
-            box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {        
+            .objetivo {
+                width: 100%;
+                padding: 30px 0px;
+                background: var(--corBotoes);
+                border-radius: 22px;
+                box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
+    
+                h3 {
+                    font-weight: 700;
+                    font-size: 12px;
+                }
 
-            h3 {
-                font-weight: 700;
-                font-size: 12px;
+                /* O “vidro” de verdade */
+                backdrop-filter: none;
+                -webkit-backdrop-filter: var(--backdrop);
+
+                /* Borda e “acabamento” */
+                border: var(--border);
+
+                /* Sombra + brilho interno */
+                box-shadow: var(--box-shadow);
+    
             }
-
         }
+
 
         .conteudoCard{
             margin: 0px 30px;
@@ -179,7 +264,7 @@
 
         button {
             cursor: pointer;
-            background-color: white;
+            background-color: var(--corFundoBotao);
             border: none;
             width: 119px;
             height: 27px;

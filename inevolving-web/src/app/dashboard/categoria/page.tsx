@@ -17,7 +17,7 @@ import { linkApi } from '@/constants';
 import { ClipLoader } from 'react-spinners';
 
 export default function Page( ) {
-    
+    const [tema, setTema] = useState<number | undefined>(undefined);
     const [carregandoDash, setCarregandoDash] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
@@ -26,6 +26,10 @@ export default function Page( ) {
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+            setTema(
+                localStorage.getItem('tema') ?
+                parseInt(localStorage.getItem('tema') as string) : 2
             );
         }
     }, []);
@@ -80,56 +84,58 @@ export default function Page( ) {
     };
 
     return (
-        <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
-            <Menu />
-            <motion.div
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                    duration: 0.4,
-                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                }} 
-                className={styles.container}
-            >
-                <div className={styles.tituloContainer}>
-                    <h1>{categoria?.categoryName}</h1>
-                    <p>{categoria?.categoryDescription}</p>
-                </div>
-                <motion.div className={styles.containerConteudo}>
-                    {carregandoDash && (
-                        <ClipLoader size={50} color="#0B0E31" />
-                    )}
-                    {categoria && categoria?.objectives.map((objetivo) => (
-                        <motion.div 
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.8 }}
-                            key={objetivo.id} 
-                            className={styles.objetivo}
-                            onClick={() => handleClick(objetivo)}
-                        >
-                            <div className={styles.conteudoCard}>
-                                <StatusObjetivoDashboard 
-                                    nome={objetivo.nameObjective} 
-                                    status={objetivo.statusObjective}
-                                />
-                                <CardRendimentoDoObjetivoDashboard 
-                                    objetivo={objetivo}
-                                />
-                                <div className={styles.containerBotao}>
-                                    <BotaoDashVerDatalhesObjetivo objetivo={objetivo}/>
-                                    <motion.a 
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.8 }}
-                                        href="/desculpa"
-                                    >
-                                        Editar
-                                    </motion.a>
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
+                <Menu />
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.4,
+                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                    }} 
+                    className={styles.container}
+                >
+                    <div className={styles.tituloContainer}>
+                        <h1>{categoria?.categoryName}</h1>
+                        <p>{categoria?.categoryDescription}</p>
+                    </div>
+                    <motion.div className={styles.containerConteudo}>
+                        {carregandoDash && (
+                            <ClipLoader size={50} color="#0B0E31" />
+                        )}
+                        {categoria && categoria?.objectives.map((objetivo) => (
+                            <motion.div 
+                                whileHover={{ scale: 1.03 }}
+                                whileTap={{ scale: 0.8 }}
+                                key={objetivo.id} 
+                                className={styles.objetivo}
+                                onClick={() => handleClick(objetivo)}
+                            >
+                                <div className={styles.conteudoCard}>
+                                    <StatusObjetivoDashboard 
+                                        nome={objetivo.nameObjective} 
+                                        status={objetivo.statusObjective}
+                                    />
+                                    <CardRendimentoDoObjetivoDashboard 
+                                        objetivo={objetivo}
+                                    />
+                                    <div className={styles.containerBotao}>
+                                        <BotaoDashVerDatalhesObjetivo objetivo={objetivo}/>
+                                        <motion.a 
+                                            whileHover={{ scale: 1.2 }}
+                                            whileTap={{ scale: 0.8 }}
+                                            href="/desculpa"
+                                        >
+                                            Editar
+                                        </motion.a>
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 </motion.div>
             </motion.div>
-        </motion.div>
+        </div>
     );
 }
