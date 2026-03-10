@@ -48,7 +48,7 @@
         rgba(255,255,255,0.08) 35%,
         rgba(255,255,255,0.00) 70%
         );
-        --corBotaoFiltro: linear-gradient(
+    --corBotaoFiltro: linear-gradient(
             135deg,
             rgba(255, 255, 255, 0) 0%,
             rgba(255,255,255,0.04) 30%,
@@ -67,7 +67,7 @@
         rgba(255,255,255,0.08) 35%,
         rgba(255,255,255,0.00) 70%
         );
-        --corBotoesAtivoFiltro: linear-gradient(
+    --corBotoesAtivoFiltro: linear-gradient(
             135deg,
             rgba(255, 255, 255, 0) 0%,
             rgba(255,255,255,0.04) 30%,
@@ -86,11 +86,11 @@
         rgba(255,255,255,0.08) 35%,
         rgba(255,255,255,0.00) 70%
         );
-        --iconePrincipal: brightness(0) invert(1);
-        --background-inputs: #535353;
-        --colorOverlay: #0b0e3156;
-        --fundoPopUp: #181818;
-    }
+    --iconePrincipal: brightness(0) invert(1);
+    --background-inputs: #535353;
+    --colorOverlay: #0b0e3156;
+    --fundoPopUp: #181818;
+}
     
 .temaClaro {
     --fundoPopUp: white;
@@ -1325,42 +1325,41 @@
     
     }
     
-.calendar {
-    margin: auto;
-    border: none;
-    width: 100%;
-    font-family: 'Inter', sans-serif;
+    .calendar {
+        margin: auto;
+        border: none;
+        width: 100%;
+        font-family: 'Inter', sans-serif;
 
-    button {
-        background-color: transparent !important;
-        border: none !important;
-        width: 90% !important;
-        font-family: 'Inter', sans-serif !important;
-        line-height: 1.125em !important;
-        // font-size: 1.0rem !important;
-        
-        @media (max-width: 768px) {
-            font-size: 1.0rem !important;
-            opacity: 1;
-            transition: 0.4s;
-            margin: 0 !important;
+        button {
+            background-color: transparent !important;
+            border: none !important;
+            width: 90% !important;
+            font-family: 'Inter', sans-serif !important;
+            line-height: 1.125em !important;
+            // font-size: 1.0rem !important;
+            
+            @media (max-width: 768px) {
+                font-size: 1.0rem !important;
+                opacity: 1;
+                transition: 0.4s;
+                margin: 0 !important;
+            }
+
+            text-align: center !important;
         }
 
-        text-align: center !important;
-    }
+        span {
 
-    span {
-
-        @media (max-width: 768px) {
-            opacity: 1;
-            transition: 0.4s;
-            font-size: 8px;
-            line-height: 0%;
+            @media (max-width: 768px) {
+                opacity: 1;
+                transition: 0.4s;
+                font-size: 8px;
+                line-height: 0%;
+            }
         }
-    }
 
-}
-    
+    }
     
     .tarefa {
         box-shadow: 0px 1px 10.2px 0px #00000040;
@@ -1480,7 +1479,6 @@
             padding: none !important;
             border: none !important;
             background-color: transparent !important;
-            color: #0B0E31 !important;
             align-items: center;
     
             font-weight: 600;
@@ -1494,7 +1492,6 @@
             padding: 3px;
             height: 10px;
             width: 10px;
-            border: solid 3px #0B0E31;
             border-radius: 100%;
             align-items: center;
             align-content: center;
@@ -1517,16 +1514,12 @@
         width: 100%;
         height: 60px;
         border-bottom: solid 2px #F3F3F3;
-        color: #0B0E31;
         font-weight: 600;
         font-size: 18px;
         justify-content: space-between;
         display: flex;
     }
     
-    .diaDaSemana:hover {
-        background-color: #F3F3F3;
-    }
     
     .containerDataFinal {
         margin-top: 40px;
@@ -1541,13 +1534,9 @@
         .inputDataFinal {
             padding: 10px 20px;
             border-radius: 9px;
-            background-color: #F3F3F3;
             font-size: 18px;
             color: #929292;
             
-            strong {
-                color: #0B0E31;
-            }
         }
     }
 

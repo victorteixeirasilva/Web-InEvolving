@@ -21,10 +21,21 @@ interface IReasonsCancelled {
 
 export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modulo_Tarefas; voltar:() => void } ) {
     const [isMobile, setIsMobile] = useState(false);
+    const [tema, setTema] = useState<number | undefined>(undefined);
+    const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
+        setTema(
+            localStorage.getItem('tema') ?
+            parseInt(localStorage.getItem('tema') as string) : 2
+        );
+        if (parseInt(localStorage.getItem('tema') as string) === 2) {
+            setCorBackgroundInput("#F4F4FE");
+        } else {
+            setCorBackgroundInput("#535353");
+        }
     }, []);
 
     const [opcaoAtualizar, setOpcaoAtualizar] = useState(1);
@@ -470,730 +481,732 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
     };
 
     return (
-        <div className={isMobile ? styles.mob : ''}>
-        <div className={styles.overlay}>
-            <div className={styles.containerPopUp}>
-                <div className={styles.botoesTopo}>
-                    <motion.button
-                        whileHover={{ scale: 1.1 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.botaoVoltar} 
-                        // onClick={() => window.location.reload()}
-                        onClick={voltar}
-                    >
-                        <strong>X</strong>
-                    </motion.button>
-                    <motion.button
-                        whileHover={{ scale: 1.2 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.lixeira}
-                        onClick={() => {        
-                            setVerPopUpConfirmacaoDelete(true);
-                        }}
-                    >
-                        <Image 
-                            src="/lixeiraIcon.svg"
-                            alt="Icone Lixeira"
-                            width={27}
-                            height={29}
-                        />
-                    </motion.button>
-                </div>
-                <div className={styles.conteudo}>
-                    <Image 
-                        src="/iconeObjetivo-NovoObjetivo.svg"
-                        alt="Icone Objetivo"
-                        width={72}
-                        height={72}
-                        className={styles.icone}
-                    />
-                    <h2>Editar Tarefa</h2>
-                    <div className={styles.inputs}>
-                        <div className={styles.inputObjetivo}>
-                            <h3>Id da Tarefa</h3>
-                            <div className={styles.input} onClick={handleCopyTaskId} style={{cursor: "pointer"}}>
-                                <input
-                                    type="text"
-                                    id="id"
-                                    readOnly
-                                    value={tarefa?.id ?? ""}
-                                    placeholder={tarefa && tarefa.id}
-                                    onClick={handleCopyTaskId}
-                                    style={{cursor: "pointer"}}
-                                />
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <div className={isMobile ? styles.mob : ''}>
+                <div className={styles.overlay}>
+                    <div className={styles.containerPopUp}>
+                        <div className={styles.botoesTopo}>
+                            <motion.button
+                                whileHover={{ scale: 1.1 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.botaoVoltar} 
+                                // onClick={() => window.location.reload()}
+                                onClick={voltar}
+                            >
+                                <strong>X</strong>
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.2 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.lixeira}
+                                onClick={() => {        
+                                    setVerPopUpConfirmacaoDelete(true);
+                                }}
+                            >
                                 <Image 
-                                    className={styles.lapis}
-                                    src="/copiar.png"
-                                    alt="Icone Lapis"
-                                    width={45}
-                                    height={45}
-                                    onClick={handleCopyTaskId}
+                                    src="/lixeiraIcon.svg"
+                                    alt="Icone Lixeira"
+                                    width={27}
+                                    height={29}
                                 />
-                            </div>
-                            {copiado && (
-                                <motion.h3 
-                                    style={{
-                                        marginTop: "6px", 
-                                        textAlign: "center", 
-                                        fontSize: "15px"
-                                    }}
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                    }}
+                            </motion.button>
+                        </div>
+                        <div className={styles.conteudo}>
+                            <Image 
+                                src="/iconeObjetivo-NovoObjetivo.svg"
+                                alt="Icone Objetivo"
+                                width={72}
+                                height={72}
+                                className={styles.icone}
+                            />
+                            <h2>Editar Tarefa</h2>
+                            <div className={styles.inputs}>
+                                <div className={styles.inputObjetivo}>
+                                    <h3>Id da Tarefa</h3>
+                                    <div className={styles.input} onClick={handleCopyTaskId} style={{cursor: "pointer"}}>
+                                        <input
+                                            type="text"
+                                            id="id"
+                                            readOnly
+                                            value={tarefa?.id ?? ""}
+                                            placeholder={tarefa && tarefa.id}
+                                            onClick={handleCopyTaskId}
+                                            style={{cursor: "pointer"}}
+                                        />
+                                        <Image 
+                                            className={styles.lapis}
+                                            src="/copiar.png"
+                                            alt="Icone Lapis"
+                                            width={45}
+                                            height={45}
+                                            onClick={handleCopyTaskId}
+                                        />
+                                    </div>
+                                    {copiado && (
+                                        <motion.h3 
+                                            style={{
+                                                marginTop: "6px", 
+                                                textAlign: "center", 
+                                                fontSize: "15px"
+                                            }}
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{
+                                                duration: 0.4,
+                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                            }}
+                                        >
+                                            {"Id Copiado!"}
+                                        </motion.h3>
+                                    )}
+                                </div>
+                                <div className={styles.inputObjetivo}>
+                                    <h3>Tarefa</h3>
+                                    <div className={styles.input}>
+                                        <input
+                                            type="text"
+                                            id="nomeTarefa"
+                                            value={nomeTarefa}
+                                            onChange={(e) => setNomeTarefa(e.target.value)}
+                                            placeholder={tarefa ? tarefa.nameTask : "Digite o nome da tarefa..."}
+                                        />
+                                        <Image 
+                                            className={styles.lapis}
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                            />
+                                    </div>
+                                </div>
+                                <div className={styles.inputDescrição}>
+                                    <h3>Descrição</h3>
+                                    <div className={styles.input}>
+                                        <input 
+                                            type="text"
+                                            id="descricaoObjetivo"
+                                            value={descricaoObjetivo}
+                                            onChange={(e) => setDescricaoObjetivo(e.target.value)}
+                                            placeholder={tarefa ? tarefa.descriptionTask : "Escreva detalhes sobre a sua tarefa..."}
+                                        />
+                                        <Image
+                                            className={styles.lapis} 
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                            />
+                                    </div>
+                                </div>
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }} 
+                                    whileTap={{ scale: 0.95 }}   
+                                    onClick={() => {
+                                            setVerListaDeObjetivos(true);
+                                            pegarObjetivos();
+                                    }}     
                                 >
-                                    {"Id Copiado!"}
-                                </motion.h3>
-                            )}
-                        </div>
-                        <div className={styles.inputObjetivo}>
-                            <h3>Tarefa</h3>
-                            <div className={styles.input}>
-                                <input
-                                    type="text"
-                                    id="nomeTarefa"
-                                    value={nomeTarefa}
-                                    onChange={(e) => setNomeTarefa(e.target.value)}
-                                    placeholder={tarefa ? tarefa.nameTask : "Digite o nome da tarefa..."}
-                                />
-                                <Image 
-                                    className={styles.lapis}
-                                    src="/iconeLapisCinza.svg"
-                                    alt="Icone Lapis"
-                                    width={15}
-                                    height={15}
-                                    />
+                                    <h3>Selecionar Objetivo Relacionado</h3>
+                                    <div className={styles.input}>
+                                        <p 
+                                            className={styles.place}
+                                            style={{ 
+                                                color: objetivoSelecionado ? '#0B0E31' : '#999999'
+                                            }}
+                                        >
+                                            {objetivoSelecionado ? objetivoSelecionado.nameObjective : "Selecione o objetivo a ser relacionado..."}
+                                        </p>
+                                        <Image
+                                            className={styles.lapis} 
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                        />
+                                    </div>
+                                </motion.div>
+                                <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
+                                <div className={styles.containerDataFinal}>
+                                    <motion.div 
+                                            className={styles.inputDataFinal}
+                                            whileHover={{ scale: 1.06 }} 
+                                            whileTap={{ scale: 0.8 }}
+                                            style={{marginTop: '0px'}}
+                                            onClick={() => setEscolherDataTarefa(true)}
+                                        >
+                                            {dataTarefa && (<strong>{dataTarefa.toLocaleDateString()}</strong>)}
+                                    </motion.div>
+                                    <motion.div
+                                        whileHover={{ scale: 1.06 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        style={{marginTop: '0px'}}
+                                        onClick={() => {
+                                            const dataTarefa = tarefa.dateTask;
+                                            const date = new Date(`${dataTarefa}T00:00:00-03:00`);
+
+                                            const ano = date.getFullYear(); // local
+                                            const mes = String(date.getMonth() + 1).padStart(2, '0'); // local
+                                            const dia = String(date.getDate() + 1).padStart(2, '0'); // local
+
+                                            const dataFormatada = `${ano}${mes}${dia}T000000`;
+
+                                            window.open(`https://calendar.google.com/calendar/r/eventedit?text=${tarefa.nameTask}&details=${tarefa.descriptionTask}&dates=${dataFormatada}/${dataFormatada}`, '_blank');
+                                        }}
+                                    >
+                                        <Image 
+                                            alt="Icone Calendario"
+                                            src="/iconeGoogleAgenda.png"
+                                            width={100}
+                                            height={100}
+                                        />
+                                    </motion.div>
+                                </div>
+                                <motion.div 
+                                    className={styles.inputDescrição}
+                                    // whileHover={{ scale: 1.02 }} 
+                                    // whileTap={{ scale: 0.95 }} 
+                                >
+                                    <h3>Status da Tarefa</h3>
+                                    <div className={styles.containerStatus}>
+                                        <motion.div
+                                            style={statusDaTarefa === "TODO" ? { backgroundColor: '#6b6b6b', color: '#FFF' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setStatusDaTarefa("TODO")}
+                                        >
+                                            Não Iniciada
+                                        </motion.div>
+                                        <motion.div
+                                            style={statusDaTarefa === "IN PROGRESS" ? { backgroundColor: '#a0ff47' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setStatusDaTarefa("IN PROGRESS")}
+                                        >
+                                            Em Progresso
+                                        </motion.div>
+                                        <motion.div
+                                            style={statusDaTarefa === "LATE" ? { backgroundColor: '#ffbf00' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#ffbf00' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setStatusDaTarefa("LATE")}
+                                        >
+                                            Atrasada
+                                        </motion.div>
+                                        <motion.div 
+                                            style={statusDaTarefa === "DONE" ? { backgroundColor: '#319f43', color: '#FFF' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#319f43', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => setStatusDaTarefa("DONE")}
+                                        >
+                                            Concluída
+                                        </motion.div>
+                                        <motion.div 
+                                            style={statusDaTarefa === "CANCELLED" ? { backgroundColor: '#ff0004', color: '#FFF' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                setStatusDaTarefa("CANCELLED");
+                                                setAbrirInputMotivoDoCancelamento(true);
+                                                pegarMotivosDeCancelamentoDaTarefa();
+                                            }}
+                                        >
+                                            Cancelada
+                                        </motion.div>
+                                    </div>
+                                </motion.div>
                             </div>
-                        </div>
-                        <div className={styles.inputDescrição}>
-                            <h3>Descrição</h3>
-                            <div className={styles.input}>
-                                <input 
-                                    type="text"
-                                    id="descricaoObjetivo"
-                                    value={descricaoObjetivo}
-                                    onChange={(e) => setDescricaoObjetivo(e.target.value)}
-                                    placeholder={tarefa ? tarefa.descriptionTask : "Escreva detalhes sobre a sua tarefa..."}
-                                />
-                                <Image
-                                    className={styles.lapis} 
-                                    src="/iconeLapisCinza.svg"
-                                    alt="Icone Lapis"
-                                    width={15}
-                                    height={15}
-                                    />
-                            </div>
-                        </div>
-                        <motion.div
-                            whileHover={{ scale: 1.02 }} 
-                            whileTap={{ scale: 0.95 }}   
-                            onClick={() => {
-                                    setVerListaDeObjetivos(true);
-                                    pegarObjetivos();
-                            }}     
-                        >
-                            <h3>Selecionar Objetivo Relacionado</h3>
-                            <div className={styles.input}>
-                                <p 
-                                    className={styles.place}
+                            <motion.button
+                                whileHover={{ scale: 1.05 }} 
+                                whileTap={{ scale: 0.8 }}
+                                style={
+                                        dataOriginal && 
+                                        nomeTarefa === tarefa.nameTask && 
+                                        descricaoObjetivo === tarefa.descriptionTask &&
+                                        objetivoSelecionado?.id === tarefa.idObjective &&
+                                        tarefa.status === statusDaTarefa ? 
+                                        { backgroundColor: corBackgroundInput, cursor: 'not-allowed' } : 
+                                        {}
+                                }
+                                onClick={() => 
+                                    dataOriginal &&
+                                    nomeTarefa === tarefa.nameTask && 
+                                    descricaoObjetivo === tarefa.descriptionTask &&
+                                    objetivoSelecionado?.id === tarefa.idObjective &&
+                                    tarefa.status === statusDaTarefa ?
+                                    undefined :
+                                    setVerPopUpConfirmacao(true)
+                                }
+                            >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
                                     style={{ 
-                                        color: objetivoSelecionado ? '#0B0E31' : '#999999'
+                                        marginLeft: carregando ? '8px' : '0'
                                     }}
-                                >
-                                    {objetivoSelecionado ? objetivoSelecionado.nameObjective : "Selecione o objetivo a ser relacionado..."}
-                                </p>
-                                <Image
-                                    className={styles.lapis} 
-                                    src="/iconeLapisCinza.svg"
-                                    alt="Icone Lapis"
-                                    width={15}
-                                    height={15}
+                                ></span>
+                                Salvar
+                                <Image 
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
                                 />
-                            </div>
-                        </motion.div>
-                        <h3 style={{marginBottom: '-20px'}}>Data da Tarefa</h3>
-                        <div className={styles.containerDataFinal}>
-                            <motion.div 
-                                    className={styles.inputDataFinal}
+                            </motion.button>
+                        </div>
+                    </div>
+                    {verListaDeObjetivos && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
+                                <motion.button
                                     whileHover={{ scale: 1.06 }} 
                                     whileTap={{ scale: 0.8 }}
-                                    style={{marginTop: '0px'}}
-                                    onClick={() => setEscolherDataTarefa(true)}
-                                >
-                                    {dataTarefa && (<strong>{dataTarefa.toLocaleDateString()}</strong>)}
-                            </motion.div>
-                            <motion.div
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setVerListaDeObjetivos(false)}
+                                    >
+                                    <strong>Voltar - Tarefa</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <div className={styles.containerScroll}>
+                                        {objetivos && objetivos.map((objetivo) => {
+                                            return (
+                                                <div
+                                                    key={objetivo.id}
+                                                    className={styles.objetivo}
+                                                    onClick={() => {
+                                                        setObjetivoSelecionado(objetivo);
+                                                        setVerListaDeObjetivos(false);
+                                                    }}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                <h4>{objetivo.nameObjective}</h4>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {verPopUpConfirmacao && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
+                                <motion.button
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setVerPopUpConfirmacao(false)}
+                                    >
+                                    <strong>Voltar - Tarefa</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <h4>Deseja atualizar essa tarefa, ou atualizar ela e suas repetições futuras?</h4>
+                                    <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                setOpcaoAtualizar(1);
+                                                atualizarTarefa();
+                                            }}
+                                    >
+                                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                        <span 
+                                            style={{ 
+                                                marginLeft: carregando ? '8px' : '0'
+                                            }}
+                                        ></span>
+                                        Está apenas!
+                                    </motion.div>
+                                    <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                setOpcaoAtualizar(2);
+                                                setExibirIsTarefaFrequente(true);
+                                            }}
+                                    >
+                                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                        <span 
+                                            style={{ 
+                                                marginLeft: carregando ? '8px' : '0'
+                                            }}
+                                        ></span>
+                                        Essa e suas aparições futuras!
+                                    </motion.div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {verPopUpConfirmacaoDelete && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
+                                <motion.button
+                                    whileHover={{ scale: 1.06 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    className={styles.botaoVoltar} 
+                                    onClick={() => setVerPopUpConfirmacaoDelete(false)}
+                                    >
+                                    <strong>Voltar - Tarefa</strong>
+                                </motion.button>
+                                <div className={styles.conteudo}>
+                                    <h4>Deseja deletar essa tarefa, ou deletar ela e suas repetições futuras?</h4>
+                                    <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                deletarTarefa();
+                                            }}
+                                    >
+                                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                        <span 
+                                            style={{ 
+                                                marginLeft: carregando ? '8px' : '0'
+                                            }}
+                                        ></span>
+                                        Está apenas!
+                                    </motion.div>
+                                    <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                deletarTarefaRecorrente();
+                                            }}
+                                    >
+                                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                        <span 
+                                            style={{ 
+                                                marginLeft: carregando ? '8px' : '0'
+                                            }}
+                                        ></span>
+                                        Essa e suas aparições futuras!
+                                    </motion.div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {exibirIsTarefaFrequente && (
+                        <div className={styles.overlay}>
+                            <div className={styles.containerPopUp}>
+                            <motion.button
                                 whileHover={{ scale: 1.06 }} 
                                 whileTap={{ scale: 0.8 }}
-                                style={{marginTop: '0px'}}
+                                className={styles.botaoVoltar} 
                                 onClick={() => {
-                                    const dataTarefa = tarefa.dateTask;
-                                    const date = new Date(`${dataTarefa}T00:00:00-03:00`);
-
-                                    const ano = date.getFullYear(); // local
-                                    const mes = String(date.getMonth() + 1).padStart(2, '0'); // local
-                                    const dia = String(date.getDate() + 1).padStart(2, '0'); // local
-
-                                    const dataFormatada = `${ano}${mes}${dia}T000000`;
-
-                                    window.open(`https://calendar.google.com/calendar/r/eventedit?text=${tarefa.nameTask}&details=${tarefa.descriptionTask}&dates=${dataFormatada}/${dataFormatada}`, '_blank');
+                                    window.location.reload();
                                 }}
                             >
+                                <strong>Voltar - Tarefas</strong>
+                            </motion.button>
+                            <div className={styles.conteudo}>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodoDomingo(!todoDomingo)}
+                                >
+                                    Todo domingo
+                                    <Image
+                                        style={{ visibility: todoDomingo ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodaSegunda(!todaSegunda)}
+                                >
+                                    Toda segunda-feira
+                                    <Image
+                                        style={{ visibility: todaSegunda ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodaTerca(!todaTerca)}
+                                >
+                                    Toda terça-feira
+                                    <Image
+                                        style={{ visibility: todaTerca ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodaQuarta(!todaQuarta)}
+                                >
+                                    Toda quarta-feira
+                                    <Image
+                                        style={{ visibility: todaQuarta ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodaQuinta(!todaQuinta)}
+                                >
+                                    Toda quinta-feira
+                                    <Image
+                                        style={{ visibility: todaQuinta ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodaSexta(!todaSexta)}
+                                >
+                                    Toda sexta-feira
+                                    <Image
+                                        style={{ visibility: todaSexta ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div 
+                                    className={styles.diaDaSemana}
+                                    onClick={() => setTodoSabado(!todoSabado)}
+                                >
+                                    Todo sábado
+                                    <Image
+                                        style={{ visibility: todoSabado ? 'visible' : 'hidden' }}
+                                        src="/checkIconAzul.svg"
+                                        alt="Icone Check Azul"
+                                        width={21}
+                                        height={16}
+                                    />
+                                </div>
+                                <div className={styles.containerDataFinal}>
+                                    Repetir até a data:
+                                    <motion.div 
+                                        className={styles.inputDataFinal}
+                                        whileHover={{ scale: 1.06 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        onClick={() => setEscolherDataFinal(true)}
+                                    >
+                                        {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
+                                    </motion.div>
+                                </div>
+                                <motion.button
+                                    style={
+                                        !todoDomingo && 
+                                        !todaSegunda &&
+                                        !todaTerca &&
+                                        !todaQuarta &&
+                                        !todaQuinta &&
+                                        !todaSexta &&
+                                        !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
+                                    }
+                                    whileHover={{ scale: 1.05 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={
+                                        !todoDomingo && 
+                                        !todaSegunda &&
+                                        !todaTerca &&
+                                        !todaQuarta &&
+                                        !todaQuinta &&
+                                        !todaSexta &&
+                                        !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => atualizarTarefa()
+                                    }
+                                >
+                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                <span 
+                                    style={{ 
+                                        marginLeft: carregando ? '8px' : '0'
+                                    }}
+                                ></span>
+                                Salvar
                                 <Image 
-                                    alt="Icone Calendario"
-                                    src="/iconeGoogleAgenda.png"
-                                    width={100}
-                                    height={100}
+                                    className={styles.concluido}
+                                    src="/checkIcon.svg"
+                                    alt="Icone Check"
+                                    width={23}
+                                    height={18}
                                 />
-                            </motion.div>
+                            </motion.button>
+                            </div>
+                            </div>
                         </div>
-                        <motion.div 
-                            className={styles.inputDescrição}
-                            // whileHover={{ scale: 1.02 }} 
-                            // whileTap={{ scale: 0.95 }} 
-                        >
-                            <h3>Status da Tarefa</h3>
-                            <div className={styles.containerStatus}>
-                                <motion.div
-                                    style={statusDaTarefa === "TODO" ? { backgroundColor: '#6b6b6b', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatusDaTarefa("TODO")}
+                    )}
+                    {escolherDataFinal && (
+                        <div className={styles.overlay}>
+                        <div className={styles.containerPopUp}>
+                            <motion.button
+                                whileHover={{ scale: 1.06 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.botaoVoltar} 
+                                onClick={() => setEscolherDataFinal(false)}
                                 >
-                                    Não Iniciada
-                                </motion.div>
-                                <motion.div
-                                    style={statusDaTarefa === "IN PROGRESS" ? { backgroundColor: '#a0ff47' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatusDaTarefa("IN PROGRESS")}
+                                <strong>Voltar</strong>
+                            </motion.button>
+                            <div className={styles.conteudo}>
+                                <h4>Data final das repetições!</h4>
+                                <Calendar
+                                    className={styles.calendar}
+                                    selectRange={false}
+                                    value={dataFinal}
+                                    onChange={SetDataFinal}
+                                />
+                                {dataFinal && (
+                                    <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
+                                )}
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={() => setEscolherDataFinal(false)}
                                 >
-                                    Em Progresso
-                                </motion.div>
-                                <motion.div
-                                    style={statusDaTarefa === "LATE" ? { backgroundColor: '#ffbf00' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#ffbf00' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatusDaTarefa("LATE")}
-                                >
-                                    Atrasada
-                                </motion.div>
-                                <motion.div 
-                                    style={statusDaTarefa === "DONE" ? { backgroundColor: '#319f43', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#319f43', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatusDaTarefa("DONE")}
-                                >
-                                    Concluída
-                                </motion.div>
-                                <motion.div 
-                                    style={statusDaTarefa === "CANCELLED" ? { backgroundColor: '#ff0004', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
+                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                    <span 
+                                        style={{ 
+                                            marginLeft: carregando ? '8px' : '0'
+                                        }}
+                                    ></span>
+                                    Selecionar
+                                    <Image 
+                                        className={styles.concluido}
+                                        src="/checkIcon.svg"
+                                        alt="Icone Check"
+                                        width={23}
+                                        height={18}
+                                    />
+                                </motion.button>
+                            </div>
+                        </div>
+                        </div>
+                    )}
+                    {abrirInputMotivoDoCancelamento && (
+                        <div className={styles.overlay}>
+                        <div className={styles.containerPopUp}>
+                            <motion.button
+                                whileHover={{ scale: 1.06 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.botaoVoltar} 
+                                onClick={() => setAbrirInputMotivoDoCancelamento(false)}
+                            >
+                                <strong>Voltar - Tarefa</strong>
+                            </motion.button>
+                            <div className={styles.conteudo}>
+                                <h4 style={{fontSize: '18px'}}>
+                                    Para te ajudar a estar sempre na sua velocidade e produtividade máxima, precisamos entender o por que não vai realizar essa tarefa hoje. 
+                                    Separe os motivos por ponto e vírgula (;), exemplo: <strong>Imprevisto; Doente; Cansaço</strong>.
+                                </h4>
+                                <div className={styles.inputs}>
+                                    <div className={styles.inputObjetivo}>
+                                        <h3>Motivos</h3>
+                                        <div className={styles.input}>
+                                        <input
+                                            type="text"
+                                            id="motivos"
+                                            value={motivos}
+                                            onChange={handleInputChange}
+                                            placeholder={"Informe os seus motivos para não realizar as tarefas..."}
+                                        />
+                                        <Image 
+                                            className={styles.lapis}
+                                            src="/iconeLapisCinza.svg"
+                                            alt="Icone Lapis"
+                                            width={15}
+                                            height={15}
+                                        />
+                                        </div>
+                                            <div>
+                                                <h3>
+                                                    Motivos Usados Anteriormente
+                                                </h3>
+                                                {motivosDeCancelamento && motivosDeCancelamento.map((motivo) => (
+                                                    <div 
+                                                        style={{cursor: "pointer", display: "flex", width: "100%", justifyContent: "space-between"}}
+                                                        key={motivo.reason}
+                                                        onClick={() => {
+                                                            setMotivos(motivos + ";" + motivo.reason)
+                                                        }}
+                                                    >
+                                                        <p style={{fontSize: "18px", fontWeight: "500"}}>
+                                                            {motivo.reason}
+                                                        </p>
+                                                        <p style={{fontSize: "18px", fontWeight: "500"}}>
+                                                            {motivo.amount} <span style={{fontWeight: "700"}}>Repetições</span>
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    )}
+                    {escolherDataTarefa && (
+                        <div className={styles.overlay}>
+                        <div className={styles.containerPopUp}>
+                            <motion.button
+                                whileHover={{ scale: 1.06 }} 
+                                whileTap={{ scale: 0.8 }}
+                                className={styles.botaoVoltar} 
+                                onClick={() => setEscolherDataTarefa(false)}
+                            >
+                                <strong>Voltar</strong>
+                            </motion.button>
+                            <div className={styles.conteudo}>
+                                <Calendar
+                                    className={styles.calendar}
+                                    selectRange={false}
+                                    value={dataTarefa}
+                                    onChange={SetDataNovaTarefa}
+                                />
+                                {dataTarefa && (
+                                    <h3>Data selecionada: {dataTarefa.toLocaleDateString()}</h3>
+                                )}
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }} 
+                                    whileTap={{ scale: 0.8 }}
                                     onClick={() => {
-                                        setStatusDaTarefa("CANCELLED");
-                                        setAbrirInputMotivoDoCancelamento(true);
-                                        pegarMotivosDeCancelamentoDaTarefa();
+                                        setEscolherDataTarefa(false);
+                                        setDataOriginal(false);
                                     }}
                                 >
-                                    Cancelada
-                                </motion.div>
+                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                    <span 
+                                        style={{ 
+                                            marginLeft: carregando ? '8px' : '0'
+                                        }}
+                                    ></span>
+                                    Selecionar
+                                    <Image 
+                                        className={styles.concluido}
+                                        src="/checkIcon.svg"
+                                        alt="Icone Check"
+                                        width={23}
+                                        height={18}
+                                    />
+                                </motion.button>
                             </div>
-                        </motion.div>
-                    </div>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }} 
-                        whileTap={{ scale: 0.8 }}
-                        style={
-                                dataOriginal && 
-                                nomeTarefa === tarefa.nameTask && 
-                                descricaoObjetivo === tarefa.descriptionTask &&
-                                objetivoSelecionado?.id === tarefa.idObjective &&
-                                tarefa.status === statusDaTarefa ? 
-                                { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
-                                {}
-                        }
-                        onClick={() => 
-                            dataOriginal &&
-                            nomeTarefa === tarefa.nameTask && 
-                            descricaoObjetivo === tarefa.descriptionTask &&
-                            objetivoSelecionado?.id === tarefa.idObjective &&
-                            tarefa.status === statusDaTarefa ?
-                            undefined :
-                            setVerPopUpConfirmacao(true)
-                        }
-                    >
-                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                        <span 
-                            style={{ 
-                                marginLeft: carregando ? '8px' : '0'
-                            }}
-                        ></span>
-                        Salvar
-                        <Image 
-                            className={styles.concluido}
-                            src="/checkIcon.svg"
-                            alt="Icone Check"
-                            width={23}
-                            height={18}
-                        />
-                    </motion.button>
+                        </div>
+                        </div>
+                    )}
                 </div>
             </div>
-            {verListaDeObjetivos && (
-                <div className={styles.overlay}>
-                    <div className={styles.containerPopUp}>
-                        <motion.button
-                            whileHover={{ scale: 1.06 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.botaoVoltar} 
-                            onClick={() => setVerListaDeObjetivos(false)}
-                            >
-                            <strong>Voltar - Tarefa</strong>
-                        </motion.button>
-                        <div className={styles.conteudo}>
-                            <div className={styles.containerScroll}>
-                                {objetivos && objetivos.map((objetivo) => {
-                                    return (
-                                        <div
-                                            key={objetivo.id}
-                                            className={styles.objetivo}
-                                            onClick={() => {
-                                                setObjetivoSelecionado(objetivo);
-                                                setVerListaDeObjetivos(false);
-                                            }}
-                                            style={{ cursor: 'pointer' }}
-                                        >
-                                        <h4>{objetivo.nameObjective}</h4>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {verPopUpConfirmacao && (
-                <div className={styles.overlay}>
-                    <div className={styles.containerPopUp}>
-                        <motion.button
-                            whileHover={{ scale: 1.06 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.botaoVoltar} 
-                            onClick={() => setVerPopUpConfirmacao(false)}
-                            >
-                            <strong>Voltar - Tarefa</strong>
-                        </motion.button>
-                        <div className={styles.conteudo}>
-                            <h4>Deseja atualizar essa tarefa, ou atualizar ela e suas repetições futuras?</h4>
-                            <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        setOpcaoAtualizar(1);
-                                        atualizarTarefa();
-                                    }}
-                            >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Está apenas!
-                            </motion.div>
-                            <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        setOpcaoAtualizar(2);
-                                        setExibirIsTarefaFrequente(true);
-                                    }}
-                            >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Essa e suas aparições futuras!
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {verPopUpConfirmacaoDelete && (
-                <div className={styles.overlay}>
-                    <div className={styles.containerPopUp}>
-                        <motion.button
-                            whileHover={{ scale: 1.06 }} 
-                            whileTap={{ scale: 0.8 }}
-                            className={styles.botaoVoltar} 
-                            onClick={() => setVerPopUpConfirmacaoDelete(false)}
-                            >
-                            <strong>Voltar - Tarefa</strong>
-                        </motion.button>
-                        <div className={styles.conteudo}>
-                            <h4>Deseja deletar essa tarefa, ou deletar ela e suas repetições futuras?</h4>
-                            <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        deletarTarefa();
-                                    }}
-                            >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Está apenas!
-                            </motion.div>
-                            <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#0B0E31', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        deletarTarefaRecorrente();
-                                    }}
-                            >
-                                {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                <span 
-                                    style={{ 
-                                        marginLeft: carregando ? '8px' : '0'
-                                    }}
-                                ></span>
-                                Essa e suas aparições futuras!
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {exibirIsTarefaFrequente && (
-                <div className={styles.overlay}>
-                    <div className={styles.containerPopUp}>
-                    <motion.button
-                        whileHover={{ scale: 1.06 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.botaoVoltar} 
-                        onClick={() => {
-                            window.location.reload();
-                        }}
-                    >
-                        <strong>Voltar - Tarefas</strong>
-                    </motion.button>
-                    <div className={styles.conteudo}>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodoDomingo(!todoDomingo)}
-                        >
-                            Todo domingo
-                            <Image
-                                style={{ visibility: todoDomingo ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodaSegunda(!todaSegunda)}
-                        >
-                            Toda segunda-feira
-                            <Image
-                                style={{ visibility: todaSegunda ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodaTerca(!todaTerca)}
-                        >
-                            Toda terça-feira
-                            <Image
-                                style={{ visibility: todaTerca ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodaQuarta(!todaQuarta)}
-                        >
-                            Toda quarta-feira
-                            <Image
-                                style={{ visibility: todaQuarta ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodaQuinta(!todaQuinta)}
-                        >
-                            Toda quinta-feira
-                            <Image
-                                style={{ visibility: todaQuinta ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodaSexta(!todaSexta)}
-                        >
-                            Toda sexta-feira
-                            <Image
-                                style={{ visibility: todaSexta ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div 
-                            className={styles.diaDaSemana}
-                            onClick={() => setTodoSabado(!todoSabado)}
-                        >
-                            Todo sábado
-                            <Image
-                                style={{ visibility: todoSabado ? 'visible' : 'hidden' }}
-                                src="/checkIconAzul.svg"
-                                alt="Icone Check Azul"
-                                width={21}
-                                height={16}
-                            />
-                        </div>
-                        <div className={styles.containerDataFinal}>
-                            Repetir até a data:
-                            <motion.div 
-                                className={styles.inputDataFinal}
-                                whileHover={{ scale: 1.06 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={() => setEscolherDataFinal(true)}
-                            >
-                                {dataFinal && (<strong>{dataFinal.toLocaleDateString()}</strong>)} 
-                            </motion.div>
-                        </div>
-                        <motion.button
-                            style={
-                                !todoDomingo && 
-                                !todaSegunda &&
-                                !todaTerca &&
-                                !todaQuarta &&
-                                !todaQuinta &&
-                                !todaSexta &&
-                                !todoSabado ? { opacity: 0.3, cursor: 'not-allowed' } : {}
-                            }
-                            whileHover={{ scale: 1.05 }} 
-                            whileTap={{ scale: 0.8 }}
-                            onClick={
-                                !todoDomingo && 
-                                !todaSegunda &&
-                                !todaTerca &&
-                                !todaQuarta &&
-                                !todaQuinta &&
-                                !todaSexta &&
-                                !todoSabado ? () => alert("Primeiro selecione um dia da semana") : () => atualizarTarefa()
-                            }
-                        >
-                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                        <span 
-                            style={{ 
-                                marginLeft: carregando ? '8px' : '0'
-                            }}
-                        ></span>
-                        Salvar
-                        <Image 
-                            className={styles.concluido}
-                            src="/checkIcon.svg"
-                            alt="Icone Check"
-                            width={23}
-                            height={18}
-                        />
-                    </motion.button>
-                    </div>
-                    </div>
-                </div>
-            )}
-            {escolherDataFinal && (
-                <div className={styles.overlay}>
-                <div className={styles.containerPopUp}>
-                    <motion.button
-                        whileHover={{ scale: 1.06 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.botaoVoltar} 
-                        onClick={() => setEscolherDataFinal(false)}
-                        >
-                        <strong>Voltar</strong>
-                    </motion.button>
-                    <div className={styles.conteudo}>
-                        <h4>Data final das repetições!</h4>
-                        <Calendar
-                            className={styles.calendar}
-                            selectRange={false}
-                            value={dataFinal}
-                            onChange={SetDataFinal}
-                        />
-                        {dataFinal && (
-                            <h3>Data selecionada: {dataFinal.toLocaleDateString()}</h3>
-                        )}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }} 
-                            whileTap={{ scale: 0.8 }}
-                            onClick={() => setEscolherDataFinal(false)}
-                        >
-                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                            <span 
-                                style={{ 
-                                    marginLeft: carregando ? '8px' : '0'
-                                }}
-                            ></span>
-                            Selecionar
-                            <Image 
-                                className={styles.concluido}
-                                src="/checkIcon.svg"
-                                alt="Icone Check"
-                                width={23}
-                                height={18}
-                            />
-                        </motion.button>
-                    </div>
-                </div>
-                </div>
-            )}
-            {abrirInputMotivoDoCancelamento && (
-                <div className={styles.overlay}>
-                <div className={styles.containerPopUp}>
-                    <motion.button
-                        whileHover={{ scale: 1.06 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.botaoVoltar} 
-                        onClick={() => setAbrirInputMotivoDoCancelamento(false)}
-                    >
-                        <strong>Voltar - Tarefa</strong>
-                    </motion.button>
-                    <div className={styles.conteudo}>
-                        <h4 style={{fontSize: '18px'}}>
-                            Para te ajudar a estar sempre na sua velocidade e produtividade máxima, precisamos entender o por que não vai realizar essa tarefa hoje. 
-                            Separe os motivos por ponto e vírgula (;), exemplo: <strong>Imprevisto; Doente; Cansaço</strong>.
-                        </h4>
-                        <div className={styles.inputs}>
-                            <div className={styles.inputObjetivo}>
-                                <h3>Motivos</h3>
-                                <div className={styles.input}>
-                                <input
-                                    type="text"
-                                    id="motivos"
-                                    value={motivos}
-                                    onChange={handleInputChange}
-                                    placeholder={"Informe os seus motivos para não realizar as tarefas..."}
-                                />
-                                <Image 
-                                    className={styles.lapis}
-                                    src="/iconeLapisCinza.svg"
-                                    alt="Icone Lapis"
-                                    width={15}
-                                    height={15}
-                                />
-                                </div>
-                                    <div>
-                                        <h3>
-                                            Motivos Usados Anteriormente
-                                        </h3>
-                                        {motivosDeCancelamento && motivosDeCancelamento.map((motivo) => (
-                                            <div 
-                                                style={{cursor: "pointer", display: "flex", width: "100%", justifyContent: "space-between"}}
-                                                key={motivo.reason}
-                                                onClick={() => {
-                                                    setMotivos(motivos + ";" + motivo.reason)
-                                                }}
-                                            >
-                                                <p style={{fontSize: "18px", fontWeight: "500"}}>
-                                                    {motivo.reason}
-                                                </p>
-                                                <p style={{fontSize: "18px", fontWeight: "500"}}>
-                                                    {motivo.amount} <span style={{fontWeight: "700"}}>Repetições</span>
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            )}
-            {escolherDataTarefa && (
-                <div className={styles.overlay}>
-                <div className={styles.containerPopUp}>
-                    <motion.button
-                        whileHover={{ scale: 1.06 }} 
-                        whileTap={{ scale: 0.8 }}
-                        className={styles.botaoVoltar} 
-                        onClick={() => setEscolherDataTarefa(false)}
-                    >
-                        <strong>Voltar</strong>
-                    </motion.button>
-                    <div className={styles.conteudo}>
-                        <Calendar
-                            className={styles.calendar}
-                            selectRange={false}
-                            value={dataTarefa}
-                            onChange={SetDataNovaTarefa}
-                        />
-                        {dataTarefa && (
-                            <h3>Data selecionada: {dataTarefa.toLocaleDateString()}</h3>
-                        )}
-                        <motion.button
-                            whileHover={{ scale: 1.05 }} 
-                            whileTap={{ scale: 0.8 }}
-                            onClick={() => {
-                                setEscolherDataTarefa(false);
-                                setDataOriginal(false);
-                            }}
-                        >
-                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                            <span 
-                                style={{ 
-                                    marginLeft: carregando ? '8px' : '0'
-                                }}
-                            ></span>
-                            Selecionar
-                            <Image 
-                                className={styles.concluido}
-                                src="/checkIcon.svg"
-                                alt="Icone Check"
-                                width={23}
-                                height={18}
-                            />
-                        </motion.button>
-                    </div>
-                </div>
-                </div>
-            )}
-        </div>
         </div>
     );
 
