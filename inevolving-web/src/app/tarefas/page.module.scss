@@ -1,5 +1,116 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.dark {
+    --fundo: url("/darkback3.jpg");
+    // --fundo: #181818;
+    --corTituloPage: white;
+    --corBotoes: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgba(11, 14, 49, 0.356) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --sombraBtn: #0b0e3176;
+    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --webkitBackdropFilter: blur(18px) saturate(160%) contrast(105%);
+    --border: 1px solid rgba(255,255,255,0.22);
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
+    --corFundoBotao: rgb(53, 53, 53);
+    --fundoBotaoNovo: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            #e760484f 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+        --corBotaoFiltro: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            #e7604800 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+        --corBotoesAtivoFiltro: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgb(11, 14, 49) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+        --iconePrincipal: brightness(0) invert(1);
+        --background-inputs: #535353;
+        --colorOverlay: #0b0e3156;
+        --fundoPopUp: #181818;
+    }
+    
+.temaClaro {
+    --fundoPopUp: white;
+    --corFundoBotao: white;
+    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+    --border: none;
+    --webkitBackdropFilter: none;
+    --sombraBtn: #dddddd;
+    --fundo: white;
+    --corTituloPage: #0b0e31;
+    --corBotoes: #F4F4FE;
+    --backdrop-filter: none;
+    --fundoBotaoNovo: #E76148;
+    --corBotaoFiltro: #EFEFEF;
+    --corBotoesAtivoFiltro: #0b0e31;
+    --iconePrincipal: none;
+    --background-inputs: #F4F4FE;
+    --colorOverlay: #D9D9D994;
+}
+
 .containerTipoMenu2 {
     .container {
         overflow-x: hidden;
@@ -11,7 +122,7 @@
         margin-left: 0px;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
-        background-color: white;
+        background: var(--fundo);
         height: 100%;
         width: 100%;
     }
@@ -26,9 +137,22 @@
     margin-top: 30px;
     margin-left: 200px;
     border-top-left-radius: 50px;
-    background-color: white;
+    background: var(--fundo);
     height: 100%;
     width: calc(100% - 200px - 20%);
+
+        // // rolagem personalizada (opcional)
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
 }
 
 .tituloContainer {
@@ -44,6 +168,7 @@
         font-weight: 700;
         font-size: 40px;
         margin-left: 50px;
+        color: var(--corTituloPage);
     }
 
     .botaoNovo {
@@ -53,16 +178,28 @@
         align-content: center;
         
         color: #FFFFFF;
-        background-color: #E76148;
+        background: var(--fundoBotaoNovo);
         border-radius: 30px;
         margin-right: 30px;
         margin-top: 10px;
         margin-bottom: 10px;
         padding: 10px 30px;
-        border: none;
+        border: var(--border);
         
         strong {
             margin-left: 10px;
+        }
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: var(--backdrop);
+    
+            /* Borda e “acabamento” */
+            border: var(--border);
+    
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
         }
 
     }
@@ -112,12 +249,12 @@
     h4 {
         font-weight: 600;
         font-size: 18px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 }
 
 .objetivo:hover {
-    background-color: #F3F3F3;
+    background-color: var(--colorOverlay);
     cursor: pointer;
     transition: 0.3s;
 }
@@ -138,39 +275,65 @@
             margin-right: 30px;
             font-size: 20px;
             font-weight: 700;
+            color: var(--corTituloPage);
         }
         
         h4 {
             font-weight: 700;
             margin-right: 30px;
+            color: var(--corTituloPage);
         }
 
         .botaoFiltroK {
             font-weight: 600;
             font-size: 16px;
 
-            color: #0B0E31;
-            background-color: #EFEFEF;
+            color: var(--corTituloPage);
+            background-color: var(--fundoBotaoNovo);
             border-radius: 30px;
             margin-right: 30px;
             margin-top: 10px;
             margin-bottom: 10px;
             padding: 0px 10px;
-            border: none;
+            border: var(--border);
+            filter: var(--iconePrincipal);
+            @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+                /* O “vidro” de verdade */
+                backdrop-filter: none;
+                -webkit-backdrop-filter: var(--backdrop);
+        
+                /* Borda e “acabamento” */
+                border: var(--border);
+        
+                /* Sombra + brilho interno */
+                box-shadow: var(--box-shadow);
+            }
         }
 
         .botaoFiltro {
             font-weight: 600;
             font-size: 16px;
 
-            color: #0B0E31;
-            background-color: #EFEFEF;
+            color: var(--corTituloPage);
+            background: var(--corBotoes);
             border-radius: 30px;
             margin-right: 30px;
             margin-top: 10px;
             margin-bottom: 10px;
             padding: 0px 10px;
-            border: none;
+            border: var(--border);
+
+            @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+                /* O “vidro” de verdade */
+                backdrop-filter: none;
+                -webkit-backdrop-filter: var(--backdrop);
+        
+                /* Borda e “acabamento” */
+                border: var(--border);
+        
+                /* Sombra + brilho interno */
+                box-shadow: var(--box-shadow);
+            }
         }
 
         .botaoFiltroK:hover{
@@ -182,8 +345,8 @@
             font-weight: 600;
             font-size: 16px;
 
-            color: #0B0E31;
-            background-color: #EFEFEF;
+            color: var(--corTituloPage);
+            background: var(--corBotoes);
             border-radius: 30px;
             margin-right: 30px;
             margin-top: 10px;
@@ -191,8 +354,9 @@
             padding: 0px 10px;
             border: none;
 
-            border: solid 2px #0B0E31;
+            border: var(--border);
             box-shadow: 0px 1px 10.2px 0px #0b0e315b;
+            filter: var(--iconePrincipal);
         }
 
         .botaoFiltroStatus {
@@ -241,7 +405,7 @@
 
 .input {
     height: 40px;
-    background-color: #F4F4FE;
+    background: var(--background-inputs);
     border-radius: 25px;
     display: flex;
     flex-direction: row;
@@ -252,7 +416,7 @@
         font-weight: 600;
         font-size: 15px;
         margin-left: 20px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
         width: 100%;
         height: 100%;
         border: none;
@@ -289,7 +453,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #D9D9D994;
+    background-color: var(--colorOverlay);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -322,9 +486,9 @@
     border-radius: 38px;
     align-items: center;
     align-content: center;
-    background-color: #FFFFFF;
+    background-color: var(--fundoPopUp);
     font-family: 'Inter', sans-serif;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 800;
     font-size: 32px;
     
@@ -352,6 +516,7 @@
 
     .icone {
         width: 100%;
+        filter: var(--iconePrincipal);
     }
 
 
@@ -360,12 +525,13 @@
         font-weight: 600;
         font-size: 28px;
         text-align: center;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
 }
 
 .botoesTopo {
+    color: var(--corTituloPage);
     width: 100%;
     margin: 0;
     display: flex;
@@ -382,7 +548,7 @@
 }
 
 .botaoVoltar {
-
+    color: var(--corTituloPage);
     border: none;
     background-color: transparent;
     margin: 4px 10px;
@@ -424,9 +590,9 @@
     border-radius: 38px;
     align-items: center;
     align-content: center;
-    background-color: #FFFFFF;
+    background-color: var(--fundoPopUp);
     font-family: 'Inter', sans-serif;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 800;
     font-size: 32px;
     
@@ -462,18 +628,18 @@
         font-weight: 600;
         font-size: 28px;
         text-align: center;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
     h3 {
         font-family: 'Inter', sans-serif;
         font-weight: 600;
         font-size: 28px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
     .botaoVoltar {
-        color: #0B0E31;
+        color: var(--corTituloPage);
         border: none;
         background-color: transparent;
         margin: 4px 10px;
@@ -488,7 +654,7 @@
     h3 {
         margin-top: 40px;
         margin-bottom: 10px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
         font-weight: 600;
         font-size: 18px;
     }
@@ -507,7 +673,7 @@
         width: 90% !important;
         font-family: 'Inter', sans-serif !important;
         line-height: 1.125em !important;
-        color: #0B0E31 !important;
+        color: var(--corTituloPage) !important;
         // font-size: 1.0rem !important;
         
         @media (max-width: 768px) {
@@ -534,14 +700,28 @@
 
 
 .tarefa {
-    background-color: #F4F4FE;
+    background: var(--corBotoes);
     box-shadow: 0px 1px 10.2px 0px #00000040;
     padding: 40px;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 600;
     font-size: 18px;
     border-radius: 22px;
     cursor: pointer;
+
+    border: var(--border);
+
+    @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+        /* O “vidro” de verdade */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: var(--backdrop);
+
+        /* Borda e “acabamento” */
+        border: var(--border);
+
+        /* Sombra + brilho interno */
+        box-shadow: var(--box-shadow);
+    }
 
     p {
         font-weight: 500;
@@ -653,7 +833,7 @@
         padding: none !important;
         border: none !important;
         background-color: transparent !important;
-        color: #0B0E31 !important;
+        color: var(--corTituloPage) !important;
         align-items: center;
 
         font-weight: 600;
@@ -667,7 +847,7 @@
         padding: 3px;
         height: 10px;
         width: 10px;
-        border: solid 3px #0B0E31;
+        border: solid 3px var(--corTituloPage);
         border-radius: 100%;
         align-items: center;
         align-content: center;
@@ -690,7 +870,7 @@
     width: 100%;
     height: 60px;
     border-bottom: solid 2px #F3F3F3;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 600;
     font-size: 18px;
     justify-content: space-between;
@@ -698,7 +878,7 @@
 }
 
 .diaDaSemana:hover {
-    background-color: #F3F3F3;
+    background-color: var(--colorOverlay);
 }
 
 .containerDataFinal {
@@ -714,12 +894,12 @@
     .inputDataFinal {
         padding: 10px 20px;
         border-radius: 9px;
-        background-color: #F3F3F3;
+        background-color: var(--background-inputs);
         font-size: 18px;
         color: #929292;
         
         strong {
-            color: #0B0E31;
+            color: var(--corTituloPage);
         }
     }
 }
@@ -736,7 +916,6 @@
         margin-top: 70px;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
-        background-color: white;
         height: 100%;
         width: 100%;
     }
@@ -766,8 +945,6 @@
             align-items: center;
             align-content: center;
             
-            color: #FFFFFF;
-            background-color: #E76148;
             border-radius: 30px;
             // margin-right: 30px;
             margin-top: 10px;
@@ -824,12 +1001,10 @@
         h4 {
             font-weight: 600;
             font-size: 18px;
-            color: #0B0E31;
         }
     }
     
     .objetivo:hover {
-        background-color: #F3F3F3;
         cursor: pointer;
         transition: 0.3s;
     }
@@ -860,8 +1035,6 @@
                 font-weight: 600;
                 font-size: 16px;
     
-                color: #0B0E31;
-                background-color: #EFEFEF;
                 border-radius: 30px;
                 // margin-right: 30px;
                 margin-top: 10px;
@@ -875,8 +1048,6 @@
                 font-weight: 600;
                 font-size: 16px;
     
-                color: #0B0E31;
-                background-color: #EFEFEF;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -885,17 +1056,11 @@
                 border: none;
             }
     
-            .botaoFiltro:hover{
-                color: #EFEFEF;
-                background-color: #0B0E31;
-            }
     
             .botaoFiltroAtivo {
                 font-weight: 600;
                 font-size: 16px;
     
-                color: #EFEFEF;
-                background-color: #0B0E31;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -918,7 +1083,6 @@
     .input {
         width: 100%;
         height: 40px;
-        background-color: #F4F4FE;
         border-radius: 25px;
         display: flex;
         flex-direction: row;
@@ -928,7 +1092,6 @@
             font-weight: 600;
             font-size: 15px;
             margin-left: 20px;
-            color: #0B0E31;
             width: 100%;
             height: 100%;
             border: none;
@@ -965,7 +1128,6 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #D9D9D994;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -999,9 +1161,7 @@
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        color: #0B0E31;
         font-weight: 800;
         font-size: 26px;
         
@@ -1037,7 +1197,6 @@
             font-weight: 600;
             font-size: 20px;
             text-align: center;
-            color: #0B0E31;
         }
     
     }
@@ -1101,9 +1260,7 @@
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        color: #0B0E31;
         font-weight: 800;
         font-size: 32px;
         
@@ -1139,18 +1296,15 @@
             font-weight: 600;
             font-size: 28px;
             text-align: center;
-            color: #0B0E31;
         }
     
         h3 {
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 28px;
-            color: #0B0E31;
         }
     
         .botaoVoltar {
-            color: #0B0E31;
             border: none;
             background-color: transparent;
             margin: 4px 10px;
@@ -1165,7 +1319,6 @@
         h3 {
             margin-top: 40px;
             margin-bottom: 10px;
-            color: #0B0E31;
             font-weight: 600;
             font-size: 18px;
         }
@@ -1184,7 +1337,6 @@
         width: 90% !important;
         font-family: 'Inter', sans-serif !important;
         line-height: 1.125em !important;
-        color: #0B0E31 !important;
         // font-size: 1.0rem !important;
         
         @media (max-width: 768px) {
@@ -1211,10 +1363,8 @@
     
     
     .tarefa {
-        background-color: #F4F4FE;
         box-shadow: 0px 1px 10.2px 0px #00000040;
         padding: 40px;
-        color: #0B0E31;
         font-weight: 600;
         font-size: 18px;
         border-radius: 22px;
@@ -1416,7 +1566,6 @@
         margin-top: 30px;
         margin-left: 200px;
         border-top-left-radius: 50px;
-        background-color: white;
         height: 100%;
         width: calc(100% - 200px - 20%);
     }
@@ -1437,7 +1586,6 @@
             margin-left: 50px;
 
             p {
-                color: #C0C0C0;
 
                 font-weight: 700;
                 font-size: 16px;
@@ -1450,8 +1598,6 @@
             align-items: center;
             align-content: center;
             
-            color: #FFFFFF;
-            background-color: #E76148;
             border-radius: 30px;
             margin-right: 30px;
             margin-top: 10px;
@@ -1474,6 +1620,7 @@
         display: flex;
         flex-direction: row;
 
+
         .filtro {
             display: flex;
             flex-direction: row;
@@ -1493,8 +1640,6 @@
                 font-weight: 600;
                 font-size: 16px;
 
-                color: #0B0E31;
-                background-color: #EFEFEF;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -1507,8 +1652,6 @@
                 font-weight: 600;
                 font-size: 16px;
 
-                color: #0B0E31;
-                background-color: #EFEFEF;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -1552,6 +1695,9 @@
         margin-right: 50px;
         margin-bottom: 150px;
 
+        @media (max-width: 768px) {
+            flex-direction: column;
+        }
     }
 
     .coluna {
@@ -1560,14 +1706,18 @@
         margin-right: 0px;
         margin-left: 0px;
 
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
         .tituloColuna {
-            color: #0B0E31;
+            color: var(--corTituloPage);
             font-weight: 600;
             font-size: 0.8rem;
             padding: 1px 0px;
 
             border-radius: 20px;
-            background-color: #EFEFEF;
+            background: #EFEFEF;
             box-shadow: 0px 1px 10.2px 0px #00000040;
         }
     }
@@ -1631,7 +1781,6 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #D9D9D994;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1786,13 +1935,26 @@
 
     .livro {
         margin-top: 20px;
-        background-color: #F4F4FE;
+        background: var(--corBotoes);
         padding: 10px;
         box-shadow: 0px 1px 10.2px 0px #00000040;
         border-radius: 25px;
+        border: var(--border);
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: var(--backdrop);
+
+            /* Borda e “acabamento” */
+            border: var(--border);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
 
         h3 {
-            color: #0B0E31;
+            color: var(--corTituloPage);
 
             font-weight: 600;
             font-size: 0.9rem;
@@ -1818,7 +1980,6 @@
             margin-top: 70px;
             border-top-left-radius: 50px;
             border-top-right-radius: 50px;
-            background-color: white;
             height: 100%;
             width: 100%;
         }
@@ -1841,7 +2002,6 @@
                 text-align: center;
         
                 p {
-                    color: #C0C0C0;
         
                     font-weight: 700;
                     font-size: 16px;
@@ -1854,8 +2014,6 @@
                 align-items: center;
                 align-content: center;
                 
-                color: #FFFFFF;
-                background-color: #E76148;
                 border-radius: 30px;
                 margin: 0px;
                 padding: 10px 30px;
@@ -1872,36 +2030,34 @@
             margin-top: 40px;
             margin-left: 50px;
             margin-right: 50px;
-            justify-content: space-between;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
         
             .filtro {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
         
                 h3 {
-                    margin-right: 30px;
+                    margin-right: 20px;
                     font-size: 20px;
                     font-weight: 700;
                 }
                 
                 h4 {
                     font-weight: 700;
-                    margin-right: 30px;
+                    margin-right: 20px;
                 }
         
                 .botaoFiltro {
                     font-weight: 600;
                     font-size: 16px;
         
-                    color: #0B0E31;
-                    background-color: #EFEFEF;
                     border-radius: 30px;
-                    margin-right: 30px;
+                    // margin-right: 30px;
                     margin-top: 10px;
                     margin-bottom: 10px;
-                    padding: 0px 10px;
+                    // margin: 0;
+                    padding: 10px 20px;
                     border: none;
                 }
         
@@ -1909,32 +2065,24 @@
                     font-weight: 600;
                     font-size: 16px;
         
-                    color: #0B0E31;
-                    background-color: #EFEFEF;
                     border-radius: 30px;
                     margin-right: 30px;
                     margin-top: 10px;
                     margin-bottom: 10px;
-                    padding: 0px 10px;
+                    padding: 10px 10px;
                     border: none;
                 }
         
-                .botaoFiltro:hover{
-                    color: #EFEFEF;
-                    background-color: #0B0E31;
-                }
         
                 .botaoFiltroAtivo {
                     font-weight: 600;
                     font-size: 16px;
         
-                    color: #EFEFEF;
-                    background-color: #0B0E31;
                     border-radius: 30px;
                     margin-right: 30px;
                     margin-top: 10px;
                     margin-bottom: 10px;
-                    padding: 0px 30px;
+                    padding: 10px 30px;
                     border: none;
                 }
         

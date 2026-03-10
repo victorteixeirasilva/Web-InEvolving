@@ -1,12 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.dark {
+    // --fundo: #14161c;
+    --fundo: #181818;
+    --corTituloPage: white;
+    --corBotoes: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.10) 0%,
+        rgba(255,255,255,0.04) 30%,
+        rgba(11, 14, 49, 0.587) 65%,
+        rgba(0,0,0,0.20) 100%
+    );
+    --sombraBtn: #0b0e3176;
+    --colorOverlay: #0b0e3156;
+    --iconePrincipal: brightness(0) invert(1);
+    --background-inputs: #535353;
+    --objetivoHover: #0b0e31;
+}
+
+.temaClaro {
+    --objetivoHover: #F3F3F3;
+    --background-inputs: #F4F4FE;
+    --colorOverlay: #D9D9D994;
+    --sombraBtn: #dddddd;
+    --fundo: white;
+    --corTituloPage: #0b0e31;
+    --corBotoes: #F4F4FE;
+    --iconePrincipal: none;
+}
+
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #D9D9D994;
+    background-color: var(--colorOverlay);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,9 +48,8 @@
     border-radius: 38px;
     align-items: center;
     align-content: center;
-    background-color: #FFFFFF;
+    background: var(--fundo);
     font-family: 'Inter', sans-serif;
-    color: #0B0E31;
     font-weight: 800;
     font-size: 32px;
     
@@ -31,6 +59,7 @@
 
     .icone {
         width: 100%;
+        filter: var(--iconePrincipal);
     }
 
 
@@ -39,7 +68,7 @@
         font-weight: 600;
         font-size: 28px;
         text-align: center;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
 }
@@ -50,11 +79,12 @@
     background-color: transparent;
     margin: 4px 10px;
     padding: 10px;
+    color: var(--corTituloPage);
 
 }
 
 .botaoVoltar:hover {
-    background-color: rgb(255, 73, 73);
+    background: rgb(255, 73, 73);
     margin: 1px 1px;
     padding: 20px 20px;
     color: white;
@@ -71,12 +101,17 @@
     button {
         padding: 20px;
         border: none;
-        background-color: #F4F4FE;
+        background-color: var(--background-inputs);
         border-radius: 10px;
         margin-bottom: 10px;
         font-weight: 600;
         font-size: 18px;
+        color: var(--corTituloPage);
 
+    }
+
+    .iconeBotao {
+        filter: var(--iconePrincipal);
     }
 
     .containerBotoes {
@@ -88,14 +123,12 @@
 }
 
 .mob {
-    color: #0B0E31;
     .overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #D9D9D994;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -108,9 +141,7 @@
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        color: #0B0E31;
         font-weight: 800;
         font-size: 22px;
         
@@ -128,7 +159,6 @@
             font-weight: 600;
             font-size: 18px;
             text-align: center;
-            color: #0B0E31;
         }
     
     }
@@ -143,10 +173,9 @@
     }
     
     .botaoVoltar:hover {
-        background-color: rgb(255, 73, 73);
+        background: rgb(255, 73, 73);
         margin: 1px 1px;
         padding: 20px 20px;
-        color: white;
         border-radius: 38px 0px 38px 0px;
         transition: 0.3s;
     }
@@ -160,7 +189,6 @@
         button {
             padding: 20px;
             border: none;
-            background-color: #F4F4FE;
             border-radius: 10px;
             margin-bottom: 10px;
             font-weight: 600;

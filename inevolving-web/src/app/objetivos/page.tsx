@@ -15,6 +15,7 @@ import { linkApi } from '../../constants';
 
 
 export default function Categoria( ) {
+    const [tema, setTema] = useState<number | undefined>(undefined);
     const [isMobile, setIsMobile] = useState(false);
 
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
@@ -24,6 +25,10 @@ export default function Categoria( ) {
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
+            );
+            setTema(
+                localStorage.getItem('tema') ?
+                parseInt(localStorage.getItem('tema') as string) : 2
             );
         }
     }, []);
@@ -125,234 +130,121 @@ export default function Categoria( ) {
     const [objetivoAtual, setObjetivoAtual] = useState<Objetivo | null>(null);
 
     return (
-        <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
-            <motion.div>
-                <Menu />
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                        duration: 0.4,
-                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                    }} 
-                    className={styles.container}
-                    >
-                    <div className={styles.tituloContainer}>
-                        <h1>Objetivos</h1>
-                        <motion.button className={styles.botaoNovo} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={() => {setPopUpObjetivoECategoria(true)}}>
-                            Novo <strong>+</strong>
-                        </motion.button>
-                    </div>
-                    <motion.div className={styles.containerFiltroEBotao}>
-                        <motion.div className={styles.filtro}>
-                            <h3>
-                                Filtrar por:
-                            </h3>    
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 1 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                } 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={pegarObjetivos}
-                            >
-                                Todos
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+                <motion.div>
+                    <Menu />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }} 
+                        className={styles.container}
+                        >
+                        <div className={styles.tituloContainer}>
+                            <h1>Objetivos</h1>
+                            <motion.button className={styles.botaoNovo} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={() => {setPopUpObjetivoECategoria(true)}}>
+                                Novo <strong>+</strong>
                             </motion.button>
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                }
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={pegarObjetivosDone}
-                            >
-                                Concluídos
-                            </motion.button>
-                            <motion.button 
-                                className={
-                                    filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-                                } 
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.8 }}
-                                onClick={pegarObjetivosToDo}
+                        </div>
+                        <motion.div className={styles.containerFiltroEBotao}>
+                            <motion.div className={styles.filtro}>
+                                <h3>
+                                    Filtrar por:
+                                </h3>    
+                                <motion.button 
+                                    className={
+                                        filtroAtivo === 1 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    } 
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={pegarObjetivos}
                                 >
-                                Em progresso
-                            </motion.button>
+                                    Todos
+                                </motion.button>
+                                <motion.button 
+                                    className={
+                                        filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    }
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={pegarObjetivosDone}
+                                >
+                                    Concluídos
+                                </motion.button>
+                                <motion.button 
+                                    className={
+                                        filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
+                                    } 
+                                    whileHover={{ scale: 1.1 }} 
+                                    whileTap={{ scale: 0.8 }}
+                                    onClick={pegarObjetivosToDo}
+                                    >
+                                    Em progresso
+                                </motion.button>
+                            </motion.div>
+                        </motion.div>
+                        <motion.div className={styles.containerConteudo}>
+                            {carregandoObjetivos && (
+                                <ClipLoader size={50} color="#0B0E31" />
+                            )}
+                            {!carregandoObjetivos && !Array.isArray(objetivos) || !objetivos ? (
+                                <h3>
+                                    Não existe nenhum objetivo cadastrado com o filtro selecionado
+                                </h3>
+                            ) : (
+        
+                                Array.isArray(objetivos) && objetivos?.map((objetivo) => (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.4,
+                                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                        }} 
+                                        whileHover={{ scale: 1.03 }} 
+                                        whileTap={{ scale: 0.8 }}
+                                        className={styles.objetivo}
+                                        key={objetivo.id}
+                                        onClick={() => {
+                                            setObjetivoAtual(objetivo);
+                                            setEditarObjetivo(true);
+                                        }}
+                                    >
+                                        <h3>{objetivo.nameObjective}</h3>
+                                        <p
+                                            className={
+                                                objetivo.statusObjective === "DONE" ? styles.ok : styles.p
+                                            }
+                                            >
+                                            {objetivo.statusObjective === "TODO" ? "Em execução" : "Concluído"}
+                                        </p>
+                                    </motion.div>
+                                    ))
+                                )
+                            }
                         </motion.div>
                     </motion.div>
-                    <motion.div className={styles.containerConteudo}>
-                        {carregandoObjetivos && (
-                            <ClipLoader size={50} color="#0B0E31" />
-                        )}
-                        {!carregandoObjetivos && !Array.isArray(objetivos) || !objetivos ? (
-                            <h3>
-                                Não existe nenhum objetivo cadastrado com o filtro selecionado
-                            </h3>
-                        ) : (
-    
-                            Array.isArray(objetivos) && objetivos?.map((objetivo) => (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{
-                                        duration: 0.4,
-                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                    }} 
-                                    whileHover={{ scale: 1.03 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    className={styles.objetivo}
-                                    key={objetivo.id}
-                                    onClick={() => {
-                                        setObjetivoAtual(objetivo);
-                                        setEditarObjetivo(true);
-                                    }}
-                                >
-                                    <h3>{objetivo.nameObjective}</h3>
-                                    <p
-                                        className={
-                                            objetivo.statusObjective === "DONE" ? styles.ok : styles.p
-                                        }
-                                        >
-                                        {objetivo.statusObjective === "TODO" ? "Em execução" : "Concluído"}
-                                    </p>
-                                </motion.div>
-                                ))
-                            )
-                        }
-                    </motion.div>
                 </motion.div>
+                {popUpObjetivoECategoria && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }} 
+                    >
+                        <AdicionarNovoObjetivoOuCategoria/>
+                    </motion.div>    
+                )}
+                {editarObjetivo && objetivoAtual && (
+                    <EditarObjetivo objetivo={objetivoAtual}/>
+                )}
             </motion.div>
-            {popUpObjetivoECategoria && (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                        duration: 0.4,
-                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                    }} 
-                >
-                    <AdicionarNovoObjetivoOuCategoria/>
-                </motion.div>    
-            )}
-            {editarObjetivo && objetivoAtual && (
-                <EditarObjetivo objetivo={objetivoAtual}/>
-            )}
-        </motion.div>
+        </div>
     );
 
-    // return (
-    //     <div className={styles.mob}>
-    //         <motion.div>
-    //             <Menu />
-    //             <motion.div
-    //                 initial={{ opacity: 0, scale: 0 }}
-    //                 animate={{ opacity: 1, scale: 1 }}
-    //                 transition={{
-    //                     duration: 0.4,
-    //                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-    //                 }} 
-    //                 className={styles.container}
-    //                 >
-    //                 <div className={styles.tituloContainer}>
-    //                     <h1>Objetivos</h1>
-    //                     <motion.button className={styles.botaoNovo} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={() => {setPopUpObjetivoECategoria(true)}}>
-    //                         Novo <strong>+</strong>
-    //                     </motion.button>
-    //                 </div>
-    //                 <motion.div className={styles.containerFiltroEBotao}>
-    //                     <motion.div className={styles.filtro}>
-    //                         <h3>
-    //                             Filtrar por:
-    //                         </h3>    
-    //                         <motion.button 
-    //                             className={
-    //                                 filtroAtivo === 1 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-    //                             } 
-    //                             whileHover={{ scale: 1.1 }} 
-    //                             whileTap={{ scale: 0.8 }}
-    //                             onClick={pegarObjetivos}
-    //                         >
-    //                             Todos
-    //                         </motion.button>
-    //                         <motion.button 
-    //                             className={
-    //                                 filtroAtivo === 3 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-    //                             }
-    //                             whileHover={{ scale: 1.1 }} 
-    //                             whileTap={{ scale: 0.8 }}
-    //                             onClick={pegarObjetivosDone}
-    //                         >
-    //                             Concluídos
-    //                         </motion.button>
-    //                         <motion.button 
-    //                             className={
-    //                                 filtroAtivo === 2 ? styles.botaoFiltroAtivo : styles.botaoFiltro
-    //                             } 
-    //                             whileHover={{ scale: 1.1 }} 
-    //                             whileTap={{ scale: 0.8 }}
-    //                             onClick={pegarObjetivosToDo}
-    //                             >
-    //                             Em progresso
-    //                         </motion.button>
-    //                     </motion.div>
-    //                 </motion.div>
-    //                 <motion.div className={styles.containerConteudo}>
-    //                     {carregandoObjetivos && (
-    //                         <ClipLoader size={50} color="#0B0E31" />
-    //                     )}
-    //                     {!carregandoObjetivos && !Array.isArray(objetivos) || !objetivos ? (
-    //                         <h3>
-    //                             Não existe nenhum objetivo cadastrado com o filtro selecionado
-    //                         </h3>
-    //                     ) : (
-    
-    //                         Array.isArray(objetivos) && objetivos?.map((objetivo) => (
-    //                             <motion.div
-    //                                 initial={{ opacity: 0, scale: 0 }}
-    //                                 animate={{ opacity: 1, scale: 1 }}
-    //                                 transition={{
-    //                                     duration: 0.4,
-    //                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-    //                                 }} 
-    //                                 whileHover={{ scale: 1.03 }} 
-    //                                 whileTap={{ scale: 0.8 }}
-    //                                 className={styles.objetivo}
-    //                                 key={objetivo.id}
-    //                                 onClick={() => {
-    //                                     setObjetivoAtual(objetivo);
-    //                                     setEditarObjetivo(true);
-    //                                 }}
-    //                             >
-    //                                 <h3>{objetivo.nameObjective}</h3>
-    //                                 <p
-    //                                     className={
-    //                                         objetivo.statusObjective === "DONE" ? styles.ok : styles.p
-    //                                     }
-    //                                     >
-    //                                     {objetivo.statusObjective === "TODO" ? "Em execução" : "Concluído"}
-    //                                 </p>
-    //                             </motion.div>
-    //                             ))
-    //                         )
-    //                     }
-    //                 </motion.div>
-    //             </motion.div>
-    //         </motion.div>
-    //         {popUpObjetivoECategoria && (
-    //             <motion.div
-    //                 initial={{ opacity: 0, scale: 0 }}
-    //                 animate={{ opacity: 1, scale: 1 }}
-    //                 transition={{
-    //                     duration: 0.4,
-    //                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-    //                 }} 
-    //             >
-    //                 <AdicionarNovoObjetivoOuCategoria/>
-    //             </motion.div>    
-    //         )}
-    //         {editarObjetivo && objetivoAtual && (
-    //             <EditarObjetivo objetivo={objetivoAtual}/>
-    //         )}
-    //     </div>
-    // );
 }
