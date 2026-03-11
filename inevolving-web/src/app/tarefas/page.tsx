@@ -973,71 +973,18 @@ export default function Tarefas() {
                                     </>
                                 )}
                             <div className={styles.kanban}>
-                            <motion.div className={styles.containerConteudo}>
-                                <div className={styles.coluna}>
-                                    {menuVisible && (
-                                        <motion.div
-                                            ref={popupRef}
-                                            style={{
-                                                position: 'absolute',
-                                                top: menuPosition.y,
-                                                left: menuPosition.x,
-                                                backgroundColor: '#fff',
-                                                border: '1px solid #ccc',
-                                                boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
-                                                listStyle: 'none',
-                                                padding: '20px',
-                                                margin: 0,
-                                                zIndex: 1000,
-                                                borderRadius: '20px',
-                                            }}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.1,
-                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                            }}
-                                        >
-                                            {tarefaAtual && (
-                                                <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
-                                            )}
-                                        </motion.div>
-                                    )}
-                                    <div className={styles.tituloColuna} style={{backgroundColor: '#6b6b6b', color: "#FFFF"}}>
-                                        <h3>Não Iniciadas</h3>
-                                    </div>
-                                    {(tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "TODO"))?.length === 0 && (
-                                        <div className={styles.livro}>
-                                            {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
-                                            <h3>---</h3>
-                                        </div>
-                                    )}
-                                    {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "TODO"))?.length >= 1 && (
-                                        tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "TODO").map((tarefa) => (
-                                            <motion.div 
-                                                whileHover={{ scale: 1.05 }} 
-                                                whileTap={{ scale: 0.9 }}
-                                                key={tarefa.id} 
-                                                className={styles.livro}
-                                                onClick={() => {
-                                                    if (tarefa.blockedByObjective === null) {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    } else if (tarefa.blockedByObjective === true) {
-                                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                                    } else {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    }
-                                                }} 
-                                                onContextMenu={(event) => {
-                                                    setEditarTarefaAtual(false);
-                                                    setTarefaAual(tarefa);
-                                                    handleRightClick(event);
-                                                    setEditarTarefaAtual(false);
+                                <motion.div className={styles.containerConteudo}>
+                                    <div className={styles.coluna}>
+                                        {menuVisible && (
+                                            <motion.div
+                                                ref={popupRef}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: menuPosition.y,
+                                                    left: menuPosition.x,
+                                                    listStyle: 'none',
+                                                    margin: 0,
+                                                    zIndex: 1000,
                                                 }}
                                                 initial={{ opacity: 0, scale: 0 }}
                                                 animate={{ opacity: 1, scale: 1 }}
@@ -1046,74 +993,69 @@ export default function Tarefas() {
                                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                                 }}
                                             >
-                                                <h3>{tarefa.nameTask}</h3>
+                                                {tarefaAtual && (
+                                                    <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
+                                                )}
                                             </motion.div>
-                                        ))
-                                    )}
-                                </div>
-                                <div className={styles.coluna}>
-                                    {menuVisible && (
-                                        <motion.div
-                                            style={{
-                                                position: 'absolute',
-                                                top: menuPosition.y,
-                                                left: menuPosition.x,
-                                                backgroundColor: '#fff',
-                                                border: '1px solid #ccc',
-                                                boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
-                                                listStyle: 'none',
-                                                padding: '20px',
-                                                margin: 0,
-                                                zIndex: 1000,
-                                                borderRadius: '20px',
-                                            }}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.1,
-                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                            }}
-                                        >
-                                            {tarefaAtual && (
-                                                <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
-                                            )}
-                                        </motion.div>
-                                    )}
-                                    <div className={styles.tituloColuna} style={{backgroundColor: '#a0ff47', color: "#0B0E31"}}>
-                                        <h3>Em Progresso</h3>
-                                    </div>
-                                    {(tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length === 0 && (
-                                        <div className={styles.livro}>
-                                            {/* <h3>No momento você não tem tarefas em progresso</h3> */}
-                                            <h3>---</h3>
+                                        )}
+                                        <div className={styles.tituloColuna} style={{backgroundColor: '#6b6b6b', color: "#FFFF"}}>
+                                            <h3>Não Iniciadas</h3>
                                         </div>
-                                    )}
-                                    {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length >= 1 && (
-                                        tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "IN PROGRESS").map((tarefa) => (
-                                            <motion.div 
-                                                whileHover={{ scale: 1.05 }} 
-                                                whileTap={{ scale: 0.9 }}
-                                                key={tarefa.id} 
-                                                className={styles.livro}
-                                                onClick={() => {
-                                                    if (tarefa.blockedByObjective === null) {
+                                        {(tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "TODO"))?.length === 0 && (
+                                            <div className={styles.livro}>
+                                                {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                                <h3>---</h3>
+                                            </div>
+                                        )}
+                                        {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "TODO"))?.length >= 1 && (
+                                            tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "TODO").map((tarefa) => (
+                                                <motion.div 
+                                                    whileHover={{ scale: 1.05 }} 
+                                                    whileTap={{ scale: 0.9 }}
+                                                    key={tarefa.id} 
+                                                    className={styles.livro}
+                                                    onClick={() => {
+                                                        if (tarefa.blockedByObjective === null) {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        } else if (tarefa.blockedByObjective === true) {
+                                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                        } else {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        }
+                                                    }} 
+                                                    onContextMenu={(event) => {
+                                                        setEditarTarefaAtual(false);
                                                         setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    } else if (tarefa.blockedByObjective === true) {
-                                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                                    } else {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    }
-                                                }} 
-                                                onContextMenu={(event) => {
-                                                    setEditarTarefaAtual(false);
-                                                    setTarefaAual(tarefa);
-                                                    handleRightClick(event);
-                                                    setEditarTarefaAtual(false);
+                                                        handleRightClick(event);
+                                                        setEditarTarefaAtual(false);
+                                                    }}
+                                                    initial={{ opacity: 0, scale: 0 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{
+                                                        duration: 0.1,
+                                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                                    }}
+                                                >
+                                                    <h3>{tarefa.nameTask}</h3>
+                                                </motion.div>
+                                            ))
+                                        )}
+                                    </div>
+                                    <div className={styles.coluna}>
+                                        {menuVisible && (
+                                            <motion.div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: menuPosition.y,
+                                                    left: menuPosition.x,
+                                                    listStyle: 'none',
+                                                    margin: 0,
+                                                    zIndex: 1000,
                                                 }}
                                                 initial={{ opacity: 0, scale: 0 }}
                                                 animate={{ opacity: 1, scale: 1 }}
@@ -1122,241 +1064,274 @@ export default function Tarefas() {
                                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                                                 }}
                                             >
-                                                <h3>{tarefa.nameTask}</h3>
+                                                {tarefaAtual && (
+                                                    <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
+                                                )}
                                             </motion.div>
-                                        ))
-                                    )}
-                                </div>
-                                <div className={styles.coluna}>
-                                    {menuVisible && (
-                                        <motion.div
-                                            ref={popupRef}
-                                            style={{
-                                                position: 'absolute',
-                                                top: menuPosition.y,
-                                                left: menuPosition.x,
-                                                backgroundColor: '#fff',
-                                                border: '1px solid #ccc',
-                                                boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
-                                                listStyle: 'none',
-                                                padding: '20px',
-                                                margin: 0,
-                                                zIndex: 1000,
-                                                borderRadius: '20px',
-                                            }}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.1,
-                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                            }}
-                                        >
-                                            {tarefaAtual && (
-                                                <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
-                                            )}
-                                        </motion.div>
-                                    )}
-                                    <div className={styles.tituloColuna} style={{backgroundColor: "#319f43", color: "#0B0E31"}}>
-                                        <h3>Concluídas</h3>
-                                    </div>
-                                    {(tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "DONE"))?.length === 0 && (
-                                        <div className={styles.livro}>
-                                            {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
-                                            <h3>---</h3>
+                                        )}
+                                        <div className={styles.tituloColuna} style={{backgroundColor: '#a0ff47', color: "#0B0E31"}}>
+                                            <h3>Em Progresso</h3>
                                         </div>
-                                    )}
-                                    {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "DONE"))?.length >= 1 && (
-                                        tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "DONE").map((tarefa) => (
-                                            <motion.div 
-                                                whileHover={{ scale: 1.05 }} 
-                                                whileTap={{ scale: 0.9 }}
-                                                key={tarefa.id} 
-                                                className={styles.livro}
-                                                onClick={() => {
-                                                    if (tarefa.blockedByObjective === null) {
+                                        {(tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length === 0 && (
+                                            <div className={styles.livro}>
+                                                {/* <h3>No momento você não tem tarefas em progresso</h3> */}
+                                                <h3>---</h3>
+                                            </div>
+                                        )}
+                                        {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "IN PROGRESS"))?.length >= 1 && (
+                                            tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "IN PROGRESS").map((tarefa) => (
+                                                <motion.div 
+                                                    whileHover={{ scale: 1.05 }} 
+                                                    whileTap={{ scale: 0.9 }}
+                                                    key={tarefa.id} 
+                                                    className={styles.livro}
+                                                    onClick={() => {
+                                                        if (tarefa.blockedByObjective === null) {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        } else if (tarefa.blockedByObjective === true) {
+                                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                        } else {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        }
+                                                    }} 
+                                                    onContextMenu={(event) => {
+                                                        setEditarTarefaAtual(false);
                                                         setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    } else if (tarefa.blockedByObjective === true) {
-                                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                                    } else {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    }
-                                                }}
-                                                onContextMenu={(event) => {
-                                                    setEditarTarefaAtual(false);
-                                                    setTarefaAual(tarefa);
-                                                    handleRightClick(event);
-                                                    setEditarTarefaAtual(false);
+                                                        handleRightClick(event);
+                                                        setEditarTarefaAtual(false);
+                                                    }}
+                                                    initial={{ opacity: 0, scale: 0 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{
+                                                        duration: 0.1,
+                                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                                    }}
+                                                >
+                                                    <h3>{tarefa.nameTask}</h3>
+                                                </motion.div>
+                                            ))
+                                        )}
+                                    </div>
+                                    <div className={styles.coluna}>
+                                        {menuVisible && (
+                                            <motion.div
+                                                ref={popupRef}
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: menuPosition.y,
+                                                    left: menuPosition.x,
+                                                    listStyle: 'none',
+                                                    margin: 0,
+                                                    zIndex: 1000,
                                                 }}
                                                 initial={{ opacity: 0, scale: 0 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{
                                                     duration: 0.1,
                                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                                }} 
-                                            >
-                                                <h3>{tarefa.nameTask}</h3>
-                                            </motion.div>
-                                        ))
-                                    )}
-                                </div>
-                                <div className={styles.coluna}>
-                                    {menuVisible && (
-                                        <motion.div
-                                            style={{
-                                                position: 'absolute',
-                                                top: menuPosition.y,
-                                                left: menuPosition.x,
-                                                backgroundColor: '#fff',
-                                                border: '1px solid #ccc',
-                                                boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
-                                                listStyle: 'none',
-                                                padding: '20px',
-                                                margin: 0,
-                                                zIndex: 1000,
-                                                borderRadius: '20px',
-                                            }}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.1,
-                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                            }}
-                                        >
-                                            {tarefaAtual && (
-                                                <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
-                                            )}
-                                        </motion.div>
-                                    )}
-                                    <div className={styles.tituloColuna} style={{backgroundColor: '#ffbf00', color: "#FFFF"}}>
-                                        <h3>Atrasadas</h3>
-                                    </div>
-                                    {(tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "LATE"))?.length === 0 && (
-                                        <div className={styles.livro}>
-                                            {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
-                                            <h3>---</h3>
-                                        </div>
-                                    )}
-                                    {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "LATE"))?.length >= 1 && (
-                                        tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "LATE").map((tarefa) => (
-                                            <motion.div 
-                                                whileHover={{ scale: 1.05 }} 
-                                                whileTap={{ scale: 0.9 }}
-                                                key={tarefa.id} 
-                                                className={styles.livro}
-                                                onClick={() => {
-                                                    if (tarefa.blockedByObjective === null) {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    } else if (tarefa.blockedByObjective === true) {
-                                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                                    } else {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    }
                                                 }}
-                                                onContextMenu={(event) => {
-                                                    setEditarTarefaAtual(false);
-                                                    setTarefaAual(tarefa);
-                                                    handleRightClick(event);
-                                                    setEditarTarefaAtual(false);
+                                            >
+                                                {tarefaAtual && (
+                                                    <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
+                                                )}
+                                            </motion.div>
+                                        )}
+                                        <div className={styles.tituloColuna} style={{backgroundColor: "#319f43", color: "#0B0E31"}}>
+                                            <h3>Concluídas</h3>
+                                        </div>
+                                        {(tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "DONE"))?.length === 0 && (
+                                            <div className={styles.livro}>
+                                                {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                                <h3>---</h3>
+                                            </div>
+                                        )}
+                                        {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "DONE"))?.length >= 1 && (
+                                            tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "DONE").map((tarefa) => (
+                                                <motion.div 
+                                                    whileHover={{ scale: 1.05 }} 
+                                                    whileTap={{ scale: 0.9 }}
+                                                    key={tarefa.id} 
+                                                    className={styles.livro}
+                                                    onClick={() => {
+                                                        if (tarefa.blockedByObjective === null) {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        } else if (tarefa.blockedByObjective === true) {
+                                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                        } else {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        }
+                                                    }}
+                                                    onContextMenu={(event) => {
+                                                        setEditarTarefaAtual(false);
+                                                        setTarefaAual(tarefa);
+                                                        handleRightClick(event);
+                                                        setEditarTarefaAtual(false);
+                                                    }}
+                                                    initial={{ opacity: 0, scale: 0 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{
+                                                        duration: 0.1,
+                                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                                    }} 
+                                                >
+                                                    <h3>{tarefa.nameTask}</h3>
+                                                </motion.div>
+                                            ))
+                                        )}
+                                    </div>
+                                    <div className={styles.coluna}>
+                                        {menuVisible && (
+                                            <motion.div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: menuPosition.y,
+                                                    left: menuPosition.x,
+                                                    listStyle: 'none',
+                                                    margin: 0,
+                                                    zIndex: 1000,
                                                 }}
                                                 initial={{ opacity: 0, scale: 0 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{
                                                     duration: 0.1,
                                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                                }} 
-                                            >
-                                                <h3>{tarefa.nameTask}</h3>
-                                            </motion.div>
-                                        ))
-                                    )}
-                                </div>
-                                <div className={styles.coluna}>
-                                    {menuVisible && (
-                                        <motion.div
-                                            style={{
-                                                position: 'absolute',
-                                                top: menuPosition.y,
-                                                left: menuPosition.x,
-                                                backgroundColor: '#fff',
-                                                border: '1px solid #ccc',
-                                                boxShadow: '0 22px 16px rgba(0, 0, 0, 0.014)',
-                                                listStyle: 'none',
-                                                padding: '20px',
-                                                margin: 0,
-                                                zIndex: 1000,
-                                                borderRadius: '20px',
-                                            }}
-                                            initial={{ opacity: 0, scale: 0 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                duration: 0.1,
-                                                scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                            }}
-                                        >
-                                            {tarefaAtual && (
-                                                <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
-                                            )}
-                                        </motion.div>
-                                    )}
-                                    <div className={styles.tituloColuna} style={{backgroundColor: '#ff0004', color: "#FFFF"}}>
-                                        <h3>Canceladas</h3>
-                                    </div>
-                                    {(tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "CANCELLED"))?.length === 0 && (
-                                        <div className={styles.livro}>
-                                            {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
-                                            <h3>---</h3>
-                                        </div>
-                                    )}
-                                    {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "CANCELLED"))?.length >= 1 && (
-                                        tarefasDeHoje?.slice()
-                                        .filter((tarefa) => tarefa.status === "CANCELLED").map((tarefa) => (
-                                            <motion.div 
-                                                whileHover={{ scale: 1.05 }} 
-                                                whileTap={{ scale: 0.9 }}
-                                                key={tarefa.id} 
-                                                className={styles.livro}
-                                                onClick={() => {
-                                                    if (tarefa.blockedByObjective === null) {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    } else if (tarefa.blockedByObjective === true) {
-                                                        alert("Tarefa com objetivo já concluído não é possível fazer alteração");
-                                                    } else {
-                                                        setTarefaAual(tarefa);
-                                                        setEditarTarefaAtual(true);
-                                                    }
                                                 }}
-                                                onContextMenu={(event) => {
-                                                    setEditarTarefaAtual(false);
-                                                    setTarefaAual(tarefa);
-                                                    handleRightClick(event);
-                                                    setEditarTarefaAtual(false);
+                                            >
+                                                {tarefaAtual && (
+                                                    <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
+                                                )}
+                                            </motion.div>
+                                        )}
+                                        <div className={styles.tituloColuna} style={{backgroundColor: '#ffbf00', color: "#FFFF"}}>
+                                            <h3>Atrasadas</h3>
+                                        </div>
+                                        {(tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "LATE"))?.length === 0 && (
+                                            <div className={styles.livro}>
+                                                {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                                <h3>---</h3>
+                                            </div>
+                                        )}
+                                        {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "LATE"))?.length >= 1 && (
+                                            tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "LATE").map((tarefa) => (
+                                                <motion.div 
+                                                    whileHover={{ scale: 1.05 }} 
+                                                    whileTap={{ scale: 0.9 }}
+                                                    key={tarefa.id} 
+                                                    className={styles.livro}
+                                                    onClick={() => {
+                                                        if (tarefa.blockedByObjective === null) {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        } else if (tarefa.blockedByObjective === true) {
+                                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                        } else {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        }
+                                                    }}
+                                                    onContextMenu={(event) => {
+                                                        setEditarTarefaAtual(false);
+                                                        setTarefaAual(tarefa);
+                                                        handleRightClick(event);
+                                                        setEditarTarefaAtual(false);
+                                                    }}
+                                                    initial={{ opacity: 0, scale: 0 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{
+                                                        duration: 0.1,
+                                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                                    }} 
+                                                >
+                                                    <h3>{tarefa.nameTask}</h3>
+                                                </motion.div>
+                                            ))
+                                        )}
+                                    </div>
+                                    <div className={styles.coluna}>
+                                        {menuVisible && (
+                                            <motion.div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: menuPosition.y,
+                                                    left: menuPosition.x,
+                                                    listStyle: 'none',
+                                                    margin: 0,
+                                                    zIndex: 1000,
                                                 }}
                                                 initial={{ opacity: 0, scale: 0 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{
                                                     duration: 0.1,
                                                     scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                                                }} 
+                                                }}
                                             >
-                                                <h3>{tarefa.nameTask}</h3>
+                                                {tarefaAtual && (
+                                                    <MenuStatusTarefa tarefa={tarefaAtual} voltar={pegarTarefasDeHojeKanban} />
+                                                )}
                                             </motion.div>
-                                        ))
-                                    )}
-                                </div>
-                            </motion.div>
+                                        )}
+                                        <div className={styles.tituloColuna} style={{backgroundColor: '#ff0004', color: "#FFFF"}}>
+                                            <h3>Canceladas</h3>
+                                        </div>
+                                        {(tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "CANCELLED"))?.length === 0 && (
+                                            <div className={styles.livro}>
+                                                {/* <h3>No momento você não tem tarefas não iniciadas</h3> */}
+                                                <h3>---</h3>
+                                            </div>
+                                        )}
+                                        {isArray(tarefasDeHoje) && (tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "CANCELLED"))?.length >= 1 && (
+                                            tarefasDeHoje?.slice()
+                                            .filter((tarefa) => tarefa.status === "CANCELLED").map((tarefa) => (
+                                                <motion.div 
+                                                    whileHover={{ scale: 1.05 }} 
+                                                    whileTap={{ scale: 0.9 }}
+                                                    key={tarefa.id} 
+                                                    className={styles.livro}
+                                                    onClick={() => {
+                                                        if (tarefa.blockedByObjective === null) {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        } else if (tarefa.blockedByObjective === true) {
+                                                            alert("Tarefa com objetivo já concluído não é possível fazer alteração");
+                                                        } else {
+                                                            setTarefaAual(tarefa);
+                                                            setEditarTarefaAtual(true);
+                                                        }
+                                                    }}
+                                                    onContextMenu={(event) => {
+                                                        setEditarTarefaAtual(false);
+                                                        setTarefaAual(tarefa);
+                                                        handleRightClick(event);
+                                                        setEditarTarefaAtual(false);
+                                                    }}
+                                                    initial={{ opacity: 0, scale: 0 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{
+                                                        duration: 0.1,
+                                                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                                                    }} 
+                                                >
+                                                    <h3>{tarefa.nameTask}</h3>
+                                                </motion.div>
+                                            ))
+                                        )}
+                                    </div>
+                                </motion.div>
                             </div>
                             </>
                         )}

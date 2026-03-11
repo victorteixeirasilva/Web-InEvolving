@@ -8,10 +8,15 @@ import { ClipLoader } from "react-spinners";
 
 export default function MenuStatusTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modulo_Tarefas; voltar:() => void } ) {
     const [isMobile, setIsMobile] = useState(false);
+    const [tema, setTema] = useState<number | undefined>(undefined);
     
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
+        setTema(
+            localStorage.getItem('tema') ?
+            parseInt(localStorage.getItem('tema') as string) : 2
+        );
     }, []);
 
 
@@ -141,81 +146,81 @@ export default function MenuStatusTarefa( { tarefa, voltar }: { tarefa: Tarefa_M
     
     
     return (
-        <div className={isMobile ? styles.mob : ''}>
-        <div className={styles.overlay}>
-            <div className={styles.containerPopUp}>
-                <div className={styles.conteudo}>
-                    <div className={styles.inputs}>
-                        <motion.div 
-                            className={styles.inputDescrição}
-                            // whileHover={{ scale: 1.02 }} 
-                            // whileTap={{ scale: 0.95 }} 
-                        >
-                            <h3>Status da Tarefa</h3>
-                            <div className={styles.containerStatus}>
-                                <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        atualizarTarefaTodo();
-                                    }}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    Não Iniciada
-                                </motion.div>
-                                <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        atualizarTarefaInProgress();
-                                    }}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    Em Progresso
-                                </motion.div>
-                                <motion.div
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#ffbf00' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        atualizarTarefaLate();
-                                    }}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    Atrasada
-                                </motion.div>
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <div className={isMobile ? styles.mob : ''}>
+                <div className={styles.overlay}>
+                    <div className={styles.containerPopUp}>
+                        <div className={styles.conteudo}>
+                            <div className={styles.inputs}>
                                 <motion.div 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#319f43', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        atualizarTarefaDone();
-                                    }}
+                                    className={styles.inputDescrição}
                                 >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    Concluída
+                                    <h3>Status da Tarefa</h3>
+                                    <div className={styles.containerStatus}>
+                                        <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#6b6b6b', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                atualizarTarefaTodo();
+                                            }}
+                                        >
+                                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                            Não Iniciada
+                                        </motion.div>
+                                        <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#a0ff47' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                atualizarTarefaInProgress();
+                                            }}
+                                        >
+                                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                            Em Progresso
+                                        </motion.div>
+                                        <motion.div
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#ffbf00' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                atualizarTarefaLate();
+                                            }}
+                                        >
+                                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                            Atrasada
+                                        </motion.div>
+                                        <motion.div 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#319f43', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                atualizarTarefaDone();
+                                            }}
+                                        >
+                                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                            Concluída
+                                        </motion.div>
+                                        {/* <motion.div 
+                                            style={statusDaTarefa === "CANCELLED" ? { backgroundColor: '#ff0004', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+                                            className={styles.status}
+                                            whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: '#FFF' }} 
+                                            whileTap={{ scale: 0.95 }}
+                                            onClick={() => {
+                                                setStatusDaTarefa("CANCELLED");
+                                                setAbrirInputMotivoDoCancelamento(true);
+                                            }}
+                                        >
+                                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                            Cancelada
+                                        </motion.div> */}
+                                    </div>
                                 </motion.div>
-                                {/* <motion.div 
-                                    style={statusDaTarefa === "CANCELLED" ? { backgroundColor: '#ff0004', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
-                                    className={styles.status}
-                                    whileHover={{ scale: 1.1, backgroundColor: '#ff0004', color: '#FFF' }} 
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => {
-                                        setStatusDaTarefa("CANCELLED");
-                                        setAbrirInputMotivoDoCancelamento(true);
-                                    }}
-                                >
-                                    {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                    Cancelada
-                                </motion.div> */}
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     );
 
