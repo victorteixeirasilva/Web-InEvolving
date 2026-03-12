@@ -17,6 +17,7 @@ export default function Categoria() {
     const [isMobile, setIsMobile] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     const [tema, setTema] = useState<number | undefined>(undefined);
+    const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -29,6 +30,12 @@ export default function Categoria() {
                 localStorage.getItem('tema') ?
                 parseInt(localStorage.getItem('tema') as string) : 2
             );
+
+            if (parseInt(localStorage.getItem('tema') as string) === 2) {
+                setCorBackgroundInput("#F4F4FE");
+            } else {
+                setCorBackgroundInput("#535353");
+            }
         }
     }, []);
 
@@ -710,7 +717,7 @@ export default function Categoria() {
                                     <h3>Tipo da Transação</h3>
                                     <div className={styles.containerStatus}>
                                         <motion.div
-                                            style={tipoDaNovaTransacao === 1 ? { backgroundColor: '#0B0E31', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+                                            style={tipoDaNovaTransacao === 1 ? { backgroundColor: '#0B0E31', color: '#FFF' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
                                             className={styles.status}
                                             whileHover={{ scale: 1.05, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                             whileTap={{ scale: 0.95 }}
@@ -719,7 +726,7 @@ export default function Categoria() {
                                         - Custo de Vida -
                                         </motion.div>
                                         <motion.div
-                                            style={tipoDaNovaTransacao === 2 ? { backgroundColor: '#0B0E31', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+                                            style={tipoDaNovaTransacao === 2 ? { backgroundColor: '#0B0E31', color: '#FFF' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
                                             className={styles.status}
                                             whileHover={{ scale: 1.05, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                             whileTap={{ scale: 0.95 }}
@@ -728,7 +735,7 @@ export default function Categoria() {
                                         - Investimento -
                                         </motion.div>
                                         <motion.div
-                                            style={tipoDaNovaTransacao === 3 ? { backgroundColor: '#0B0E31', color: '#FFF' } : { backgroundColor: '#F4F4FE', color: '#0B0E31'}} 
+                                            style={tipoDaNovaTransacao === 3 ? { backgroundColor: '#0B0E31', color: '#FFF' } : { backgroundColor: corBackgroundInput, color: '#0B0E31'}} 
                                             className={styles.status}
                                             whileHover={{ scale: 1.05, backgroundColor: '#0B0E31', color: '#FFF' }} 
                                             whileTap={{ scale: 0.95 }}
@@ -759,7 +766,7 @@ export default function Categoria() {
                                                     valorDaNovaTransacaoNumerico === 0 ||
                                                     valorDaNovaTransacao === "" ||
                                                     tipoDaNovaTransacao === 0 ? 
-                                                    { backgroundColor: '#E0E0E0', cursor: 'not-allowed' } : 
+                                                    { backgroundColor: corBackgroundInput, cursor: 'not-allowed' } : 
                                                     {}
                                             }
                                             onClick={() => 
@@ -788,46 +795,48 @@ export default function Categoria() {
                             </div>
                         </div>
                         {escolherDataFinal && (
-                            <div className={styles.containerPopUpEdit}>
-                                <motion.button
-                                    whileHover={{ scale: 1.06 }} 
-                                    whileTap={{ scale: 0.8 }}
-                                    className={styles.botaoVoltar} 
-                                    onClick={() => setEscolherDataFinal(false)}
-                                >
-                                    <strong>Voltar</strong>
-                                </motion.button>
-                                <div className={styles.conteudo}>
-                                    {/* <h4>Data final das repetições!</h4> */}
-                                    <Calendar
-                                        className={styles.calendar}
-                                        selectRange={false}
-                                        value={data}
-                                        onChange={SetDataFinal}
-                                    />
-                                    {data && (
-                                        <h3>Data selecionada: {data.toLocaleDateString()}</h3>
-                                    )}
+                            <div className={styles.overlay}>
+                                <div className={styles.containerPopUpEdit}>
                                     <motion.button
-                                        whileHover={{ scale: 1.05 }} 
+                                        whileHover={{ scale: 1.06 }} 
                                         whileTap={{ scale: 0.8 }}
+                                        className={styles.botaoVoltar} 
                                         onClick={() => setEscolherDataFinal(false)}
                                     >
-                                        {carregando && <ClipLoader size={10} color="#0B0E31" />}
-                                        <span 
-                                            style={{ 
-                                                marginLeft: carregando ? '8px' : '0'
-                                            }}
-                                        ></span>
-                                        Selecionar
-                                        <Image 
-                                            className={styles.concluido}
-                                            src="/checkIcon.svg"
-                                            alt="Icone Check"
-                                            width={23}
-                                            height={18}
-                                        />
+                                        <strong>Voltar</strong>
                                     </motion.button>
+                                    <div className={styles.conteudo}>
+                                        {/* <h4>Data final das repetições!</h4> */}
+                                        <Calendar
+                                            className={styles.calendar}
+                                            selectRange={false}
+                                            value={data}
+                                            onChange={SetDataFinal}
+                                        />
+                                        {data && (
+                                            <h3>Data selecionada: {data.toLocaleDateString()}</h3>
+                                        )}
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }} 
+                                            whileTap={{ scale: 0.8 }}
+                                            onClick={() => setEscolherDataFinal(false)}
+                                        >
+                                            {carregando && <ClipLoader size={10} color="#0B0E31" />}
+                                            <span 
+                                                style={{ 
+                                                    marginLeft: carregando ? '8px' : '0'
+                                                }}
+                                            ></span>
+                                            Selecionar
+                                            <Image 
+                                                className={styles.concluido}
+                                                src="/checkIcon.svg"
+                                                alt="Icone Check"
+                                                width={23}
+                                                height={18}
+                                            />
+                                        </motion.button>
+                                    </div>
                                 </div>
                             </div>
                         )}

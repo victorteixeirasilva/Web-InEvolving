@@ -90,6 +90,7 @@
     --background-inputs: #535353;
     --colorOverlay: #0b0e3156;
     --fundoPopUp: #181818;
+    --sombraNavegacao: 0px 1px 10.2px 0px #ffffff40;
 }
     
 .temaClaro {
@@ -109,6 +110,7 @@
     --iconePrincipal: none;
     --background-inputs: #F4F4FE;
     --colorOverlay: #D9D9D994;
+    --sombraNavegacao: 0px 1px 10.2px 0px #00000040;
 }
 
 .containerTipoMenu2 {
@@ -137,7 +139,7 @@
     margin-top: 30px;
     margin-left: 200px;
     border-top-left-radius: 50px;
-    background-color: white;
+    background: var(--fundo);
     height: 100%;
     width: calc(100% - 200px - 20%);
 }
@@ -151,6 +153,7 @@
     margin-bottom: 50px;
     align-items: center;
     justify-content: space-between;
+    color: var(--corTituloPage);
 
     h1 {
         font-weight: 700;
@@ -158,7 +161,6 @@
         margin-left: 50px;
 
         p {
-            color: #C0C0C0;
 
             font-weight: 700;
             font-size: 16px;
@@ -171,8 +173,8 @@
         align-items: center;
         align-content: center;
         
-        color: #FFFFFF;
-        background-color: #E76148;
+        color: var(--corTituloPage);
+        background: var(--fundoBotaoNovo);
         border-radius: 30px;
         margin-right: 30px;
         margin-top: 10px;
@@ -205,7 +207,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #D9D9D994;
+    background-color: var(--colorOverlay);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -233,10 +235,6 @@
         background-color: #ccc;
         border-radius: 4px;
     }
-
-    // border-right: solid 10px white;
-    // border-top: solid 10px white;
-    // border-bottom: solid 10px white;
 
     scale: 0.9;
     width: 70%;
@@ -277,11 +275,13 @@
         p {
             font-size: 18px;
             font-weight: 700px;
+            color: var(--corTituloPage);
         }
 
         h3 {
             font-size: 30px;
             font-weight: 700px;
+            color: var(--corTituloPage);
         }
 
     }
@@ -321,15 +321,17 @@
         border-radius: 4px;
     }
 
+    color: var(--corTituloPage);
+
 
     scale: 0.9;
     width: 40%;
     border-radius: 38px;
     align-items: center;
     align-content: center;
-    background-color: #FFFFFF;
+    background-color: var(--fundoPopUp);
     font-family: 'Inter', sans-serif;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 800;
     font-size: 32px;
     
@@ -365,18 +367,18 @@
         font-weight: 600;
         font-size: 28px;
         text-align: center;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
     h3 {
         font-family: 'Inter', sans-serif;
         font-weight: 600;
         font-size: 28px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
     .botaoVoltar {
-        color: #0B0E31;
+        color: var(--corTituloPage);
         border: none;
         background-color: transparent;
         margin: 4px 10px;
@@ -411,9 +413,9 @@
     border-radius: 38px;
     align-items: center;
     align-content: center;
-    background-color: #FFFFFF;
+    background-color: var(--fundoPopUp);
     font-family: 'Inter', sans-serif;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 800;
     font-size: 32px;
     
@@ -449,18 +451,18 @@
         font-weight: 600;
         font-size: 28px;
         text-align: center;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
     h3 {
         font-family: 'Inter', sans-serif;
         font-weight: 600;
         font-size: 28px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
     .botaoVoltar {
-        color: #0B0E31;
+        color: var(--corTituloPage);
         border: none;
         background-color: transparent;
         margin: 4px 10px;
@@ -508,7 +510,7 @@
 .input {
     width: 100%;
     height: 40px;
-    background-color: #F4F4FE;
+    background-color: var(--background-inputs);
     border-radius: 15px;
     display: flex;
     flex-direction: row;
@@ -518,7 +520,7 @@
         font-weight: 600;
         font-size: 15px;
         margin-left: 20px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
         width: 100%;
         height: 100%;
         border: none;
@@ -565,12 +567,12 @@
     // font-size: 1.5rem;
     font-size: 20px;
     font-weight: 700;
-    color: #0B0E31;
+    color: var(--corTituloPage);
 
     div {
         cursor: pointer;
         padding: 20px 30px;
-        box-shadow: 0px 1px 10.2px 0px #00000040;
+        box-shadow: var(--sombraNavegacao);
         border-radius: 20px;
     }
 }
@@ -590,7 +592,7 @@
 
     cursor: pointer;
     padding: 0px 30px;
-    box-shadow: 0px 1px 10.2px 0px #00000040;
+    box-shadow: var(--sombraNavegacao);
     border-radius: 30px;
 
     h2 {
@@ -626,7 +628,7 @@
 
     cursor: pointer;
     padding: 20px 30px;
-    box-shadow: 0px 1px 10.2px 0px #00000040;
+    box-shadow: var(--sombraNavegacao);
     border-radius: 20px;
 
     h2 {
@@ -669,7 +671,7 @@
         display: flex;
         flex-direction: column;
         cursor: pointer;
-        box-shadow: 0px 1px 10.2px 0px #00000040;
+        box-shadow: var(--sombraNavegacao);
         border-radius: 20px;
         background-color: #1b8800;
         width: 40%;
@@ -712,35 +714,18 @@
     .inputDataFinal {
         padding: 10px 20px;
         border-radius: 9px;
-        background-color: #F3F3F3;
+        background-color: var(--background-inputs);
         font-size: 18px;
         color: #929292;
         
         strong {
-            color: #0B0E31;
+            color: var(--corTituloPage);
         }
     }
 }
 
 .containerStatus {
     width: 100%;
-    // max-height: 100px; // define a altura da área visível
-    // overflow-y: auto;  // ativa a rolagem vertical
-    // padding-right: 8px; // evita scroll invisível
-    // margin-top: 16px;
-
-    // // rolagem personalizada (opcional)
-    // scrollbar-width: thin;
-    // scrollbar-color: #ccc transparent;
-
-    // &::-webkit-scrollbar {
-    //     width: 6px;
-    // }
-
-    // &::-webkit-scrollbar-thumb {
-    //     background-color: #ccc;
-    //     border-radius: 4px;
-    // }
 }
 
 .status {
@@ -752,8 +737,8 @@
     margin-bottom: 15px;
     border-radius: 20px;
     padding: 10px 20px;
-    background-color: #F4F4FE;
-    color: #0B0E31;
+    background-color: var(--background-inputs);
+    color: var(--corTituloPage);
 
     font-weight: 600;
     font-size: 16px;
@@ -803,8 +788,8 @@
             font-weight: 600;
             font-size: 16px;
 
-            color: #0B0E31;
-            background-color: #EFEFEF;
+            color: var(--corTituloPage);
+            background-color: var(--background-inputs);
             border-radius: 30px;
             margin-right: 30px;
             margin-top: 10px;
@@ -879,7 +864,7 @@
         width: 90% !important;
         font-family: 'Inter', sans-serif !important;
         line-height: 1.125em !important;
-        color: #0B0E31 !important;
+        color: var(--corTituloPage) !important;
     }
 }
 
@@ -895,7 +880,6 @@
         margin-top: 70px;
         border-top-left-radius: 50px;
         border-top-right-radius: 50px;
-        background-color: white;
         height: 100%;
         width: 100%;
     }
@@ -919,7 +903,6 @@
             
             p {
                 margin: 0;
-                color: #C0C0C0;
     
                 font-weight: 700;
                 font-size: 16px;
@@ -934,8 +917,6 @@
             align-items: center;
             align-content: center;
             
-            color: #FFFFFF;
-            background-color: #E76148;
             border-radius: 30px;
             padding: 10px 20px;
             border: none;
@@ -965,7 +946,6 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #D9D9D994;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -993,19 +973,13 @@
             background-color: #ccc;
             border-radius: 4px;
         }
-    
-        // border-right: solid 10px white;
-        // border-top: solid 10px white;
-        // border-bottom: solid 10px white;
-    
+        
         scale: 1;
         width: 95%;
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #0B0E31;
         font-family: 'Inter', sans-serif;
-        color: white;
         font-weight: 800;
         font-size: 26px;
         
@@ -1017,8 +991,6 @@
             text-align: center;
             
             button {
-                color: white;
-                background-color: #E76148;
                 border: none;
                 width: 100%;
                 margin-top: 40px;
@@ -1048,7 +1020,6 @@
     
         .icone {
             width: 100%;
-            fill: #0B0E31;
         }
     
     
@@ -1057,7 +1028,6 @@
             font-weight: 600;
             font-size: 22px;
             text-align: center;
-            color: white;
         }
     
     }
@@ -1087,9 +1057,7 @@
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        color: #0B0E31;
         font-weight: 800;
         font-size: 32px;
         
@@ -1097,8 +1065,6 @@
             padding: 20px;
             
             button {
-                color: white;
-                background-color: #E76148;
                 border: none;
                 width: 100%;
                 margin-top: 40px;
@@ -1125,18 +1091,15 @@
             font-weight: 600;
             font-size: 22px;
             text-align: center;
-            color: #0B0E31;
         }
     
         h3 {
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 22px;
-            color: #0B0E31;
         }
     
         .botaoVoltar {
-            color: #0B0E31;
             border: none;
             background-color: transparent;
             margin: 4px 10px;
@@ -1171,9 +1134,7 @@
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        color: #0B0E31;
         font-weight: 800;
         font-size: 22px;
         
@@ -1181,8 +1142,6 @@
             padding: 30px;
             
             button {
-                color: white;
-                background-color: #E76148;
                 border: none;
                 width: 100%;
                 margin-top: 40px;
@@ -1209,18 +1168,15 @@
             font-weight: 600;
             font-size: 22px;
             text-align: center;
-            color: #0B0E31;
         }
     
         h3 {
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 22px;
-            color: #0B0E31;
         }
     
         .botaoVoltar {
-            color: #0B0E31;
             border: none;
             background-color: transparent;
             margin: 4px 10px;
@@ -1241,7 +1197,6 @@
     
     
     .botaoVoltar {
-        color: white;
         border: none;
         background-color: transparent;
         margin: 4px 10px;
@@ -1250,10 +1205,8 @@
     }
     
     .botaoVoltar:hover {
-        background-color: rgb(255, 73, 73);
         margin: 1px 1px;
         padding: 20px 20px;
-        color: white;
         border-radius: 38px 0px 38px 0px;
         transition: 0.3s;
     }
@@ -1268,7 +1221,6 @@
     .input {
         width: 100%;
         height: 40px;
-        background-color: #F4F4FE;
         border-radius: 15px;
         display: flex;
         flex-direction: row;
@@ -1278,7 +1230,6 @@
             font-weight: 600;
             font-size: 15px;
             margin-left: 20px;
-            color: #0B0E31;
             width: 100%;
             height: 100%;
             border: none;
@@ -1325,14 +1276,12 @@
         // font-size: 1.5rem;
         font-size: 14px;
         font-weight: 700;
-        color: #0B0E31;
         margin: 0px;
     
         div {
             width: 100%;
             cursor: pointer;
             padding: 20px 20px;
-            box-shadow: 0px 1px 10.2px 0px #00000040;
             border-radius: 20px;
         }
     }
@@ -1346,12 +1295,9 @@
         align-content: center;
         text-align: center;
     
-        background-color: #0B0E31;
-        color: white;
     
         cursor: pointer;
         padding: 0px 20px;
-        box-shadow: 0px 1px 10.2px 0px #00000040;
         border-radius: 30px;
     
         h2 {
@@ -1365,8 +1311,6 @@
             width: 50%;
             padding: 20px;
             border-radius: 30px;
-            background-color: white;
-            color: #0B0E31;
             font-size: 30px;
             font-weight: 700;
         }
@@ -1376,17 +1320,12 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        // max-width: 800px;
         align-items: center;
         align-content: center;
         text-align: center;
     
-        background-color: #0B0E31;
-        color: white;
-    
         cursor: pointer;
         padding: 10px 10px;
-        box-shadow: 0px 1px 10.2px 0px #00000040;
         border-radius: 20px;
     
         h2 {
@@ -1399,8 +1338,6 @@
             width: 50%;
             padding: 20px;
             border-radius: 30px;
-            background-color: white;
-            color: #0B0E31;
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 20px;
@@ -1416,9 +1353,6 @@
         align-content: center;
         text-align: center;
     
-        color: white;
-        
-        
         h2 {
             width: 50%;
             font-size: 30px;
@@ -1429,23 +1363,17 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
-            box-shadow: 0px 1px 10.2px 0px #00000040;
             border-radius: 20px;
-            background-color: #1b8800;
             width: 95%;
             padding: 20px;
             border-radius: 30px;
-            color: white;
             font-size: 30px;
             font-weight: 700;
             margin-bottom: 40px;
 
             
             .valorDisponivel {
-                color: #0B0E31;
                 margin: auto;
-                // background-color: ;
-                background-color: #a2e093;
                 width: 80%;
                 margin-bottom: 20px;
     
@@ -1475,35 +1403,13 @@
         .inputDataFinal {
             padding: 10px 20px;
             border-radius: 9px;
-            background-color: #F3F3F3;
             font-size: 18px;
-            color: #929292;
             
-            strong {
-                color: #0B0E31;
-            }
         }
     }
     
     .containerStatus {
         width: 100%;
-        // max-height: 100px; // define a altura da área visível
-        // overflow-y: auto;  // ativa a rolagem vertical
-        // padding-right: 8px; // evita scroll invisível
-        // margin-top: 16px;
-    
-        // // rolagem personalizada (opcional)
-        // scrollbar-width: thin;
-        // scrollbar-color: #ccc transparent;
-    
-        // &::-webkit-scrollbar {
-        //     width: 6px;
-        // }
-    
-        // &::-webkit-scrollbar-thumb {
-        //     background-color: #ccc;
-        //     border-radius: 4px;
-        // }
     }
     
     .status {
@@ -1515,8 +1421,6 @@
         margin-bottom: 15px;
         border-radius: 20px;
         padding: 10px 20px;
-        background-color: #F4F4FE;
-        color: #0B0E31;
     
         font-weight: 600;
         font-size: 16px;
@@ -1553,8 +1457,6 @@
                 font-weight: 600;
                 font-size: 16px;
     
-                color: #0B0E31;
-                background-color: #EFEFEF;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -1567,8 +1469,6 @@
                 font-weight: 600;
                 font-size: 16px;
     
-                color: #0B0E31;
-                background-color: #EFEFEF;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -1577,17 +1477,11 @@
                 border: none;
             }
     
-            .botaoFiltro:hover{
-                color: #EFEFEF;
-                background-color: #0B0E31;
-            }
     
             .botaoFiltroAtivo {
                 font-weight: 600;
                 font-size: 16px;
     
-                color: #EFEFEF;
-                background-color: #0B0E31;
                 border-radius: 30px;
                 margin-right: 30px;
                 margin-top: 10px;
@@ -1650,7 +1544,6 @@
             width: 90% !important;
             font-family: 'Inter', sans-serif !important;
             line-height: 1.125em !important;
-            color: #0B0E31 !important;
         }
     }
 
