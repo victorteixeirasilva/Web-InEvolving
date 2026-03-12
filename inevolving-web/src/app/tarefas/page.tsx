@@ -974,7 +974,7 @@ export default function Tarefas() {
                                 )}
                             <div className={styles.kanban}>
                                 <motion.div className={styles.containerConteudo}>
-                                    <div className={styles.coluna}>
+                                    <div className={styles.colunaNaoIniciada}>
                                         {menuVisible && (
                                             <motion.div
                                                 ref={popupRef}
@@ -1046,7 +1046,7 @@ export default function Tarefas() {
                                             ))
                                         )}
                                     </div>
-                                    <div className={styles.coluna}>
+                                    <div className={styles.colunaEmProgresso}>
                                         {menuVisible && (
                                             <motion.div
                                                 style={{
@@ -1117,7 +1117,7 @@ export default function Tarefas() {
                                             ))
                                         )}
                                     </div>
-                                    <div className={styles.coluna}>
+                                    <div className={styles.colunaEmConcluida}>
                                         {menuVisible && (
                                             <motion.div
                                                 ref={popupRef}
@@ -1189,7 +1189,7 @@ export default function Tarefas() {
                                             ))
                                         )}
                                     </div>
-                                    <div className={styles.coluna}>
+                                    <div className={styles.colunaAtrasadas}>
                                         {menuVisible && (
                                             <motion.div
                                                 style={{
@@ -1260,7 +1260,7 @@ export default function Tarefas() {
                                             ))
                                         )}
                                     </div>
-                                    <div className={styles.coluna}>
+                                    <div className={styles.colunaCanceladas}>
                                         {menuVisible && (
                                             <motion.div
                                                 style={{

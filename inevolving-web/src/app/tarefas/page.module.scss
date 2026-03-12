@@ -1,6 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .dark {
+    --fundoColuna: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255,255,255,0.04) 30%,
+        #6b6b6b 65%,
+        rgba(0,0,0,0.20) 100%
+    ),
+    /* Tom frio (vidro) + leve escurecimento no fundo */
+    linear-gradient(135deg,
+    rgba(160, 211, 255, 0.014) 0%,
+    rgba(120, 170, 255, 0) 45%,
+    rgba(0,0,0,0.06) 100%
+    ),
+    /* Brilho de borda “de cima” (edge highlight) */
+    linear-gradient(180deg,
+    rgba(255, 255, 255, 0.098) 0%,
+    rgba(255,255,255,0.08) 35%,
+    rgba(255,255,255,0.00) 70%
+    );
     --fundo: url("/darkback3.jpg");
     // --fundo: #181818;
     --corTituloPage: white;
@@ -266,11 +285,16 @@
     justify-content: space-between;
     display: flex;
     flex-direction: row;
-
+    
+    
     .filtro {
         display: flex;
         flex-direction: row;
 
+        @media (max-width: 768px) {
+            margin-right: -30px;
+        }
+        
         h3 {
             margin-right: 30px;
             font-size: 20px;
@@ -283,11 +307,11 @@
             margin-right: 30px;
             color: var(--corTituloPage);
         }
-
+        
         .botaoFiltroK {
             font-weight: 600;
             font-size: 16px;
-
+            
             color: var(--corTituloPage);
             background-color: var(--fundoBotaoNovo);
             border-radius: 30px;
@@ -301,7 +325,7 @@
                 /* O “vidro” de verdade */
                 backdrop-filter: none;
                 -webkit-backdrop-filter: var(--backdrop);
-        
+                
                 /* Borda e “acabamento” */
                 border: var(--border);
         
@@ -382,8 +406,8 @@
             font-weight: 600;
             font-size: 16px;
 
-            color: #EFEFEF;
-            background-color: #0B0E31;
+            color: var(--corTituloPage);
+            background: var(--corBotoesAtivoFiltro);
             border-radius: 30px;
             margin-right: 30px;
             margin-top: 10px;
@@ -1613,7 +1637,7 @@
         .filtro {
             display: flex;
             flex-direction: row;
-
+            
             h3 {
                 margin-right: 30px;
                 font-size: 20px;
@@ -1635,6 +1659,7 @@
                 margin-bottom: 10px;
                 padding: 0px 10px;
                 border: none;
+
             }
 
             .botaoFiltroStatus {
@@ -1686,6 +1711,7 @@
 
         @media (max-width: 768px) {
             flex-direction: column;
+            margin-left: 30px;
         }
     }
 
@@ -1694,23 +1720,251 @@
         text-align: center;
         margin-right: 0px;
         margin-left: 0px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: var(--fundoColuna);
 
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+        
         @media (max-width: 768px) {
             width: 100%;
         }
 
-        .tituloColuna {
-            color: var(--corTituloPage);
-            font-weight: 600;
-            font-size: 0.8rem;
-            padding: 1px 0px;
-
-            border-radius: 20px;
-            background: #EFEFEF;
-            box-shadow: 0px 1px 10.2px 0px #00000040;
-        }
     }
 
+    .colunaNaoIniciada {
+        width: 100%;
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: linear-gradient(
+                        135deg,
+                        rgba(255, 255, 255, 0) 0%,
+                        rgba(255,255,255,0.04) 30%,
+                        #6b6b6b7b 65%,
+                        rgba(0,0,0,0.20) 100%
+                    ),
+                    /* Tom frio (vidro) + leve escurecimento no fundo */
+                    linear-gradient(135deg,
+                    rgba(160, 211, 255, 0.014) 0%,
+                    rgba(120, 170, 255, 0) 45%,
+                    rgba(0,0,0,0.06) 100%
+                    ),
+                    /* Brilho de borda “de cima” (edge highlight) */
+                    linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.098) 0%,
+                    rgba(255,255,255,0.08) 35%,
+                    rgba(255,255,255,0.00) 70%
+                    );
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+        
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+    }
+
+    .colunaEmProgresso {
+        width: 100%;
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: linear-gradient(
+                        135deg,
+                        #a0ff4714 0%,
+                        #a0ff474d 30%,
+                        #a0ff4780 65%,
+                        rgba(0,0,0,0.20) 100%
+                    ),
+                    /* Tom frio (vidro) + leve escurecimento no fundo */
+                    linear-gradient(135deg,
+                    rgba(160, 211, 255, 0.014) 0%,
+                    rgba(120, 170, 255, 0) 45%,
+                    rgba(0,0,0,0.06) 100%
+                    ),
+                    /* Brilho de borda “de cima” (edge highlight) */
+                    linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.098) 0%,
+                    rgba(255,255,255,0.08) 35%,
+                    rgba(255,255,255,0.00) 70%
+                    );
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+        
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+    }
+
+    .colunaEmConcluida {
+        width: 100%;
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: linear-gradient(
+                        135deg,
+                        #319f430c 0%,
+                        #319f433e 30%,
+                        #319f437d 65%,
+                        rgba(0,0,0,0.20) 100%
+                    ),
+                    /* Tom frio (vidro) + leve escurecimento no fundo */
+                    linear-gradient(135deg,
+                    rgba(160, 211, 255, 0.014) 0%,
+                    rgba(120, 170, 255, 0) 45%,
+                    rgba(0,0,0,0.06) 100%
+                    ),
+                    /* Brilho de borda “de cima” (edge highlight) */
+                    linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.098) 0%,
+                    rgba(255,255,255,0.08) 35%,
+                    rgba(255,255,255,0.00) 70%
+                    );
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+        
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+    }
+
+    .colunaAtrasadas {
+        width: 100%;
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: linear-gradient(
+                        135deg,
+                        #ffbf0010,
+                        #ffbf0037 30%,
+                        #ffbf007e 65%,
+                        rgba(0,0,0,0.20) 100%
+                    ),
+                    /* Tom frio (vidro) + leve escurecimento no fundo */
+                    linear-gradient(135deg,
+                    rgba(160, 211, 255, 0.014) 0%,
+                    rgba(120, 170, 255, 0) 45%,
+                    rgba(0,0,0,0.06) 100%
+                    ),
+                    /* Brilho de borda “de cima” (edge highlight) */
+                    linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.098) 0%,
+                    rgba(255,255,255,0.08) 35%,
+                    rgba(255,255,255,0.00) 70%
+                    );
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+        
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+    }
+
+    .colunaCanceladas {
+        width: 100%;
+        text-align: center;
+        margin-right: 0px;
+        margin-left: 0px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.22);
+        background: linear-gradient(
+                        135deg,
+                        #ff00040a 0%,
+                        #ff000448 30%,
+                        #ff00048a 65%,
+                        rgba(0,0,0,0.20) 100%
+                    ),
+                    /* Tom frio (vidro) + leve escurecimento no fundo */
+                    linear-gradient(135deg,
+                    rgba(160, 211, 255, 0.014) 0%,
+                    rgba(120, 170, 255, 0) 45%,
+                    rgba(0,0,0,0.06) 100%
+                    ),
+                    /* Brilho de borda “de cima” (edge highlight) */
+                    linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.098) 0%,
+                    rgba(255,255,255,0.08) 35%,
+                    rgba(255,255,255,0.00) 70%
+                    );
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+        
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+
+    }
+    
+    .tituloColuna {
+        color: var(--corTituloPage);
+        font-weight: 600;
+        font-size: 0.8rem;
+        padding: 1px 0px;
+
+        border-radius: 20px;
+        background: #EFEFEF;
+        box-shadow: 0px 1px 10.2px 0px #00000040;
+    }
 
 
     .inputs {
