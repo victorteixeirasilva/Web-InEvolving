@@ -1,5 +1,117 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.dark {
+    --fundo: url("/darkback3.jpg");
+    // --fundo: #181818;
+    --corTituloPage: white;
+    --corBotoes: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgba(11, 14, 49, 0.356) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --sombraBtn: #0b0e3176;
+    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --webkitBackdropFilter: blur(18px) saturate(160%) contrast(105%);
+    --border: 1px solid rgba(255,255,255,0.22);
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
+    --corFundoBotao: rgb(53, 53, 53);
+    --fundoBotaoNovo: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            #e760484f 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --corBotaoFiltro: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            #e7604800 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --corBotoesAtivoFiltro: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgb(11, 14, 49) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --iconePrincipal: brightness(0) invert(1);
+    --background-inputs: #535353;
+    --colorOverlay: #0b0e3156;
+    --fundoPopUp: #181818;
+    --sombraNavegacao: 0px 1px 10.2px 0px #ffffff40;
+}
+    
+.temaClaro {
+    --fundoPopUp: white;
+    --corFundoBotao: white;
+    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+    --border: none;
+    --webkitBackdropFilter: none;
+    --sombraBtn: #dddddd;
+    --fundo: white;
+    --corTituloPage: #0b0e31;
+    --corBotoes: #F4F4FE;
+    --backdrop-filter: none;
+    --fundoBotaoNovo: #E76148;
+    --corBotaoFiltro: #EFEFEF;
+    --corBotoesAtivoFiltro: #0b0e31;
+    --iconePrincipal: none;
+    --background-inputs: #F4F4FE;
+    --colorOverlay: #D9D9D994;
+    --sombraNavegacao: 0px 1px 10.2px 0px #00000040;
+}
 
 .calendar {
     margin: auto;
@@ -13,7 +125,7 @@
         width: 90% !important;
         font-family: 'Inter', sans-serif !important;
         line-height: 1.125em !important;
-        color: #0B0E31 !important;
+        color: var(--corTituloPage) !important;
     }
 
 }
@@ -24,7 +136,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #D9D9D994;
+    background-color: var(--colorOverlay);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,9 +170,9 @@
     border-radius: 38px;
     align-items: center;
     align-content: center;
-    background-color: #FFFFFF;
+    background-color: var(--fundoPopUp);
     font-family: 'Inter', sans-serif;
-    color: #0B0E31;
+    color: var(--corTituloPage);
     font-weight: 800;
     font-size: 32px;
     
@@ -88,6 +200,7 @@
 
     .icone {
         width: 100%;
+        filter: var(--iconePrincipal);
     }
 
 
@@ -96,7 +209,7 @@
         font-weight: 600;
         font-size: 28px;
         text-align: center;
-        color: #0B0E31;
+        color: var(--corTituloPage);
     }
 
 }
@@ -123,6 +236,7 @@
     background-color: transparent;
     margin: 4px 10px;
     padding: 10px;
+    color: var(--corTituloPage);
 
 }
 
@@ -140,7 +254,7 @@
     h3 {
         margin-top: 40px;
         margin-bottom: 10px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
         font-weight: 600;
         font-size: 18px;
     }
@@ -151,7 +265,7 @@
     cursor: pointer;
     width: 100%;
     height: 40px;
-    background-color: #F4F4FE;
+    background-color: var(--background-inputs);
     border-radius: 15px;
     display: flex;
     flex-direction: row;
@@ -216,7 +330,7 @@
 .input {
     width: 100%;
     height: 40px;
-    background-color: #F4F4FE;
+    background-color: var(--background-inputs);
     border-radius: 15px;
     display: flex;
     flex-direction: row;
@@ -226,7 +340,7 @@
         font-weight: 600;
         font-size: 15px;
         margin-left: 20px;
-        color: #0B0E31;
+        color: var(--corTituloPage);
         width: 100%;
         height: 100%;
         border: none;
@@ -404,7 +518,6 @@
             width: 90% !important;
             font-family: 'Inter', sans-serif !important;
             line-height: 1.125em !important;
-            color: #0B0E31 !important;
         }
     
     }
@@ -415,7 +528,6 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #D9D9D994;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -449,9 +561,7 @@
         border-radius: 38px;
         align-items: center;
         align-content: center;
-        background-color: #FFFFFF;
         font-family: 'Inter', sans-serif;
-        color: #0B0E31;
         font-weight: 800;
         font-size: 22px;
         
@@ -459,8 +569,6 @@
             padding: 20px;
             
             button {
-                color: white;
-                background-color: #E76148;
                 border: none;
                 width: 100%;
                 margin-top: 40px;
@@ -487,7 +595,6 @@
             font-weight: 600;
             font-size: 22px;
             text-align: center;
-            color: #0B0E31;
         }
     
     }
@@ -518,10 +625,8 @@
     }
     
     .botaoVoltar:hover {
-        background-color: rgb(255, 73, 73);
         margin: 1px 1px;
         padding: 20px 20px;
-        color: white;
         border-radius: 38px 0px 38px 0px;
         transition: 0.3s;
     }
@@ -531,7 +636,6 @@
         h3 {
             margin-top: 40px;
             margin-bottom: 10px;
-            color: #0B0E31;
             font-weight: 600;
             font-size: 16px;
         }
@@ -542,24 +646,20 @@
         cursor: pointer;
         width: 100%;
         height: 40px;
-        background-color: #F4F4FE;
         border-radius: 15px;
         display: flex;
         flex-direction: row;
         align-items: center;
         align-content: center;
-        // justify-content: center;
     
         position: relative;
         overflow: hidden;
         justify-content: space-around;
-        color: white;
     
         p {
             text-align: center;
             font-weight: 600;
             font-size: 15px;
-            color: #999999;
             width: 50%;
             border: none;
             background-color: transparent; 
@@ -574,18 +674,15 @@
             background-color: transparent;
             border-radius: 15px;
             transition: left 0.3s ease;
-            box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
             z-index: 0;
         }
     
         .right {
             left: 50%;
-            background-color: #9bffa8;
         }
     
         .left {
             left: 0%;
-            background-color: #0b0e31;
         }
         
         p {
@@ -607,7 +704,6 @@
     .input {
         width: 100%;
         height: 40px;
-        background-color: #F4F4FE;
         border-radius: 15px;
         display: flex;
         flex-direction: row;
@@ -617,15 +713,10 @@
             font-weight: 600;
             font-size: 15px;
             margin-left: 20px;
-            color: #0B0E31;
             width: 100%;
             height: 100%;
             border: none;
             background-color: transparent;
-        }
-    
-        input::placeholder {
-            color: #999999;
         }
     
         input:focus {
@@ -646,7 +737,6 @@
         font-weight: 600;
         font-size: 15px;
         margin-left: 20px;
-        color: #999999;
         width: 100%;
         border: none;
         background-color: transparent; 
@@ -675,7 +765,6 @@
     .objetivo {
         display: flex;
         flex-direction: row;
-        border-bottom: solid 2px #F3F3F3;
         padding: 3px 20px;
         align-items: center;
         align-content: center;
@@ -684,12 +773,10 @@
         h4 {
             font-weight: 600;
             font-size: 18px;
-            color: #0B0E31;
         }
     }
     
     .objetivo:hover {
-        background-color: #F3F3F3;
         cursor: pointer;
         transition: 0.3s;
     }
@@ -704,23 +791,6 @@
     
     .containerStatus {
         width: 100%;
-        // max-height: 100px; // define a altura da área visível
-        // overflow-y: auto;  // ativa a rolagem vertical
-        // padding-right: 8px; // evita scroll invisível
-        // margin-top: 16px;
-    
-        // // rolagem personalizada (opcional)
-        // scrollbar-width: thin;
-        // scrollbar-color: #ccc transparent;
-    
-        // &::-webkit-scrollbar {
-        //     width: 6px;
-        // }
-    
-        // &::-webkit-scrollbar-thumb {
-        //     background-color: #ccc;
-        //     border-radius: 4px;
-        // }
     }
     
     .status {
@@ -732,8 +802,6 @@
         margin-bottom: 15px;
         border-radius: 20px;
         padding: 10px 20px;
-        background-color: #F4F4FE;
-        color: #0B0E31;
     
         font-weight: 600;
         font-size: 16px;
@@ -746,17 +814,12 @@
         align-content: center;
         width: 100%;
         height: 60px;
-        border-bottom: solid 2px #F3F3F3;
-        color: #0B0E31;
         font-weight: 600;
         font-size: 18px;
         justify-content: space-between;
         display: flex;
     }
     
-    .diaDaSemana:hover {
-        background-color: #F3F3F3;
-    }
     
     .containerDataFinal {
         margin-top: 40px;
@@ -771,13 +834,8 @@
         .inputDataFinal {
             padding: 10px 20px;
             border-radius: 9px;
-            background-color: #F3F3F3;
             font-size: 18px;
-            color: #929292;
             
-            strong {
-                color: #0B0E31;
-            }
         }
     }
 
