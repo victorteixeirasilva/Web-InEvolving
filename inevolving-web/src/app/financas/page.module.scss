@@ -186,6 +186,18 @@
             margin-left: 10px;
         }
 
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            /* O “vidro” de verdade */
+            backdrop-filter: none;
+            -webkit-backdrop-filter: var(--backdrop);
+            
+            /* Borda e “acabamento” */
+            border: var(--border);
+
+            /* Sombra + brilho interno */
+            box-shadow: var(--box-shadow);
+        }
+
     }
 }
 

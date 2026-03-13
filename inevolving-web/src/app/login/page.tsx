@@ -8,66 +8,78 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function Login() {
-
+    const [tema, setTema] = useState<number | undefined>(undefined);
+    // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     const [isMobile, setIsMobile] = useState(false);
     
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
+
+        setTema(
+            localStorage.getItem('tema') ?
+            parseInt(localStorage.getItem('tema') as string) : 2
+        );
+
+        // if (parseInt(localStorage.getItem('tema') as string) === 2) {
+        //     setCorBackgroundInput("#F4F4FE");
+        // } else {
+        //     setCorBackgroundInput("#535353");
+        // }
     }, []);
 
 
     return (
-        <>
-        {!isMobile && (
-            <div 
-                className={styles.background}
-                
-                >
-                <motion.div
-                    className={styles.container}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                        duration: 0.4,
-                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                    }}
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            {!isMobile && (
+                <div 
+                    className={styles.background}
+                    
                     >
-                    <div>
-                        <CardTextoImagem texto={
-                                <>
-                                    Bem-vindo<br />
-                                    de volta
-                                </>
-                            }
+                    <motion.div
+                        className={styles.container}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                        }}
+                        >
+                        <div>
+                            <CardTextoImagem texto={
+                                    <>
+                                        Bem-vindo<br />
+                                        de volta
+                                    </>
+                                }
+                            />
+                        </div>
+                        <CardInputLogin />
+                    </motion.div>
+                </div>
+            )}
+            {isMobile && (
+                <div className={styles.topo}>
+                    <motion.div 
+                        className={styles.logo}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                            duration: 0.5,
+                            delay: 0.00,
+                            ease: [0, 0.71, 0.2, 1.01],
+                        }}
+                    >
+                        <Image 
+                            src="/mobile/LogoPequenoLogin.svg"
+                            alt=""
+                            width={86}
+                            height={86}
                         />
-                    </div>
-                    <CardInputLogin />
-                </motion.div>
-            </div>
-        )}
-        {isMobile && (
-            <div className={styles.topo}>
-                <motion.div 
-                    className={styles.logo}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                        duration: 0.5,
-                        delay: 0.00,
-                        ease: [0, 0.71, 0.2, 1.01],
-                    }}
-                >
-                    <Image 
-                        src="/mobile/LogoPequenoLogin.svg"
-                        alt=""
-                        width={86}
-                        height={86}
-                    />
-                </motion.div>
-               <CardInputLogin/> 
-            </div>
-        )}
-        </>
+                    </motion.div>
+                <CardInputLogin/> 
+                </div>
+            )}
+        </div>
     );
 }

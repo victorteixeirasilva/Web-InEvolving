@@ -15,10 +15,22 @@ import { linkApi } from '../../constants';
 
 export default function CardInputLogin() {
     const [isMobile, setIsMobile] = useState(false);
+    const [tema, setTema] = useState<number | undefined>(undefined);
+    // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
+        setTema(
+            localStorage.getItem('tema') ?
+            parseInt(localStorage.getItem('tema') as string) : 2
+        );
+
+        // if (parseInt(localStorage.getItem('tema') as string) === 2) {
+        //     setCorBackgroundInput("#F4F4FE");
+        // } else {
+        //     setCorBackgroundInput("#535353");
+        // }
     }, []);
 
     const [email, setEmail] = useState('');
@@ -62,7 +74,7 @@ export default function CardInputLogin() {
     };
 
     return (
-        <>
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
             <div className={isMobile ? styles.mobile : styles.cardRegistro}>
                 <motion.div className={styles.container}
                     initial={isMobile ? { opacity: 0, scale: 0.5 } : {}}
@@ -148,77 +160,7 @@ export default function CardInputLogin() {
             {verPopUpConfrimEmail && (
                 <ConfirmeEmail voltar={() => setVerPopUpConfrimEmail(false)}/>
             )}
-        </>
+        </div>
     );
 
-    // {!isMobile && (
-    // )}
-    // {isMobile && (
-    //     <>
-    //     <motion.div 
-    //         className={styles.mobile}
-    //     >
-    //         <motion.div className={styles.container}
-    //             initial={{ opacity: 0, scale: 0.5 }}
-    //             animate={{ opacity: 1, scale: 1 }}
-    //             transition={{
-    //                 duration: 0.5,
-    //                 delay: 0.05,
-    //                 ease: [0, 0.71, 0.2, 1.01],
-    //             }}
-    //         >
-    //             <h1>
-    //                 Login
-    //             </h1>
-                
-    //             <InputEmail tema="escuro" tipo="email" value={email} onChange={setEmail} />
-                
-    //             <InputEmail tema="escuro" tipo="senha" value={senha} onChange={setSenha} />
-                
-    //             <div className={styles.esqueciSenhaContainer}>
-    //                 <a onClick={
-    //                     () => {
-    //                        setVerPopUpEsqueceuSenha(true); 
-    //                     }
-    //                 }>
-    //                     Esqueci minha senha
-    //                 </a>
-    //             </div>
-
-    //             <motion.button 
-    //                 whileTap={{ scale: 0.8 }}
-    //                 disabled={carregando} 
-    //                 type="submit" 
-    //                 className={styles.botaoGrande} 
-    //                 onClick={handleLogin}
-    //             >
-    //                 {carregando && <ClipLoader size={10} color="#ffffff" />}
-    //                 <span 
-    //                     style={{ 
-    //                         marginLeft: carregando ? '8px' : '0'
-    //                     }}
-    //                 >
-    //                     {carregando ? 'Entrando...' : 'Entrar'}
-    //                 </span>
-    //             </motion.button>
-
-    //             <div className={styles.naoTemConta}>
-    //                 Não tem uma conta? 
-    //                 <strong>
-    //                     <a href="/cadastro">
-    //                         Cadastre-se
-    //                     </a>
-    //                 </strong>
-    //             </div>
-    //         </motion.div>
-    //     </motion.div>
-    //     {verPopUpEsqueceuSenha && (
-    //         <EsqueciSenha voltar={() => setVerPopUpEsqueceuSenha(false)}/>
-    //     )}
-    //     {verPopUpConfrimEmail && (
-    //         <ConfirmeEmail voltar={() => setVerPopUpConfrimEmail(false)}/>
-    //     )}
-    //     </>
-    // )}
-    // </>
 } 

@@ -1,7 +1,120 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
+.dark {
+    --fundo: url("/darkback3.jpg");
+    // --fundo: #181818;
+    --corTituloPage: white;
+    --corBotoes: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgba(11, 14, 49, 0.356) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --sombraBtn: #0b0e3176;
+    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+    --webkitBackdropFilter: blur(18px) saturate(160%) contrast(105%);
+    --border: 1px solid rgba(255,255,255,0.22);
+    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
+    --corFundoBotao: rgb(53, 53, 53);
+    --fundoBotaoNovo: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            #e760484f 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --corBotaoFiltro: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            #e7604800 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --corBotoesAtivoFiltro: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255,255,255,0.04) 30%,
+            rgb(11, 14, 49) 65%,
+            rgba(0,0,0,0.20) 100%
+        ),
+        /* Tom frio (vidro) + leve escurecimento no fundo */
+        linear-gradient(135deg,
+        rgba(160, 211, 255, 0.014) 0%,
+        rgba(120, 170, 255, 0) 45%,
+        rgba(0,0,0,0.06) 100%
+        ),
+        /* Brilho de borda “de cima” (edge highlight) */
+        linear-gradient(180deg,
+        rgba(255, 255, 255, 0.098) 0%,
+        rgba(255,255,255,0.08) 35%,
+        rgba(255,255,255,0.00) 70%
+        );
+    --iconePrincipal: brightness(0) invert(1);
+    --background-inputs: #535353;
+    --colorOverlay: #0b0e3156;
+    --fundoPopUp: #181818;
+    --sombraNavegacao: 0px 1px 10.2px 0px #ffffff40;
+}
+    
+.temaClaro {
+    --fundoPopUp: white;
+    --corFundoBotao: white;
+    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+    --border: none;
+    --webkitBackdropFilter: none;
+    --sombraBtn: #dddddd;
+    --fundo: white;
+    --corTituloPage: #E76148;
+    --corBotoes: #F4F4FE;
+    --backdrop-filter: none;
+    --fundoBotaoNovo: #E76148;
+    --corBotaoFiltro: #EFEFEF;
+    --corBotoesAtivoFiltro: #0b0e31;
+    --iconePrincipal: none;
+    --background-inputs: #F4F4FE;
+    --colorOverlay: #D9D9D994;
+    --sombraNavegacao: 0px 1px 10.2px 0px #00000040;
+}
+
 .cardRegistro{
-    background-color: #F4F4FE;
+    background-color: var(--background-inputs);
     width: 622px;
     height: 583px;
     border-top-right-radius: 16px;
@@ -21,7 +134,7 @@
     margin: auto;
 
     h1 {
-        color: #E76148;
+        color: var(--corTituloPage);
         font-family: 'Inter', sans-serif;
         font-weight: 900;
         font-size: 32px;

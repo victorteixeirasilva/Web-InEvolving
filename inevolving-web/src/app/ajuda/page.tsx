@@ -12,6 +12,7 @@ import { linkWpp } from "../../constants";
 export default function Page( ) {
     const [isMobile, setIsMobile] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
+    const [tema, setTema] = useState<number | undefined>(undefined);
     
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -21,62 +22,68 @@ export default function Page( ) {
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
             );
+            setTema(
+                localStorage.getItem('tema') ?
+                parseInt(localStorage.getItem('tema') as string) : 2
+            );
         }
     }, []);
 
     return (
-        <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
-            <Menu />
-            <motion.div
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                    duration: 0.7,
-                    scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-                }} 
-                className={styles.container}
-            >
-                <motion.div className={styles.tituloContainer}>
-                    <h1>Ajuda</h1>
-                    <p>Precisa de Ajuda, entre em contato com a InovaSoft pelo telefone ou pelas redes sociais!</p>
-                </motion.div>
-                <motion.div className={styles.containerConteudo}>
-                    <motion.div
-                        className={styles.containerWpp}
-                    >
-                        <div className={styles.texto}>
-                            <h2>
-                                Fale conosco pelo WhatsApp!
-                            </h2>
-                            <p>
-                                Caso tenha alguma dúvida, ou tenha algum problema, entre em contato conosco pelo WhatsApp, clicando no botão ao lado. 
-                            </p>
-                        </div>
+        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+                <Menu />
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                        duration: 0.7,
+                        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+                    }} 
+                    className={styles.container}
+                >
+                    <motion.div className={styles.tituloContainer}>
+                        <h1>Ajuda</h1>
+                        <p>Precisa de Ajuda, entre em contato com a InovaSoft pelo telefone ou pelas redes sociais!</p>
+                    </motion.div>
+                    <motion.div className={styles.containerConteudo}>
                         <motion.div
-                            whileHover={{ scale: 1.1 }} 
-                            whileTap={{ scale: 0.8 }} 
-                            className={styles.containerBotao}
-                            onClick={() => {
-                                window.open(
-                                    linkWpp,
-                                    "_blank"
-                                );
-                            }}
+                            className={styles.containerWpp}
                         >
-                            <Image 
-                                src="/ic_baseline-whatsapp-branco.svg"
-                                alt="Icone Wpp"
-                                width={70}
-                                height={70}
-                                className={styles.icon}
-                            />
-                            <div className={styles.botao}>
-                                Fale conosco!
+                            <div className={styles.texto}>
+                                <h2>
+                                    Fale conosco pelo WhatsApp!
+                                </h2>
+                                <p>
+                                    Caso tenha alguma dúvida, ou tenha algum problema, entre em contato conosco pelo WhatsApp, clicando no botão ao lado. 
+                                </p>
                             </div>
+                            <motion.div
+                                whileHover={{ scale: 1.1 }} 
+                                whileTap={{ scale: 0.8 }} 
+                                className={styles.containerBotao}
+                                onClick={() => {
+                                    window.open(
+                                        linkWpp,
+                                        "_blank"
+                                    );
+                                }}
+                            >
+                                <Image 
+                                    src="/ic_baseline-whatsapp-branco.svg"
+                                    alt="Icone Wpp"
+                                    width={70}
+                                    height={70}
+                                    className={styles.icon}
+                                />
+                                <div className={styles.botao}>
+                                    Fale conosco!
+                                </div>
+                            </motion.div>
                         </motion.div>
                     </motion.div>
                 </motion.div>
             </motion.div>
-        </motion.div>
+        </div>
     );
 }
