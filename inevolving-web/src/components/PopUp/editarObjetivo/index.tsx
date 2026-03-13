@@ -16,7 +16,7 @@ export default function EditarObjetivo( { objetivo }: { objetivo: Objetivo } ) {
         setIsMobile(largura <= 1024);
         setTema(
             localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
+            parseInt(localStorage.getItem('tema') as string) : 1
         );
     }, []);
 

@@ -26,7 +26,7 @@ export default function Categoria( ) {
 
         setTema(
             localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
+            parseInt(localStorage.getItem('tema') as string) : 1
         );
 
         // if (parseInt(localStorage.getItem('tema') as string) === 2) {

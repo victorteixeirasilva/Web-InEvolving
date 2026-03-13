@@ -13,28 +13,15 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [animacaoFinalizada, setAnimacaoFinalizada] = useState(false);
   const router = useRouter();
-  const [tema, setTema] = useState<number | undefined>(undefined);
-  // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
 
   useEffect(() => {
     const largura = window.innerWidth;
     setIsMobile(largura <= 1024);
-
-    setTema(
-        localStorage.getItem('tema') ?
-        parseInt(localStorage.getItem('tema') as string) : 2
-    );
-
-    // if (parseInt(localStorage.getItem('tema') as string) === 2) {
-    //     setCorBackgroundInput("#F4F4FE");
-    // } else {
-    //     setCorBackgroundInput("#535353");
-    // }
   }, []);
 
 
   return (
-    <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+    <>
       {!isMobile && (
         <motion.div 
           animate={isMobile ? {} : {
@@ -123,7 +110,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
       )}
-    </div>
+    </>
   );
 }
 

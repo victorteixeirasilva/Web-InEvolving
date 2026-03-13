@@ -15,22 +15,10 @@ import { linkApi } from '../../constants';
 
 export default function CardInputLogin() {
     const [isMobile, setIsMobile] = useState(false);
-    const [tema, setTema] = useState<number | undefined>(undefined);
-    // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
-        setTema(
-            localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
-        );
-
-        // if (parseInt(localStorage.getItem('tema') as string) === 2) {
-        //     setCorBackgroundInput("#F4F4FE");
-        // } else {
-        //     setCorBackgroundInput("#535353");
-        // }
     }, []);
 
     const [email, setEmail] = useState('');
@@ -74,7 +62,7 @@ export default function CardInputLogin() {
     };
 
     return (
-        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+        <>
             <div className={isMobile ? styles.mobile : styles.cardRegistro}>
                 <motion.div className={styles.container}
                     initial={isMobile ? { opacity: 0, scale: 0.5 } : {}}
@@ -160,7 +148,7 @@ export default function CardInputLogin() {
             {verPopUpConfrimEmail && (
                 <ConfirmeEmail voltar={() => setVerPopUpConfrimEmail(false)}/>
             )}
-        </div>
+        </>
     );
 
 } 

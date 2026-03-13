@@ -15,7 +15,7 @@ export default function AdicionarNovoObjetivo( { voltar }: { voltar?:() => void 
         setIsMobile(largura <= 1024);
         setTema(
             localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
+            parseInt(localStorage.getItem('tema') as string) : 1
         );
     }, []);
 

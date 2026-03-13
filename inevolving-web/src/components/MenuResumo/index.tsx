@@ -32,7 +32,7 @@ export default function MenuResumo( {voltar} : {voltar?:()=>void}) {
             );
             setTema(
                 localStorage.getItem('tema') ?
-                parseInt(localStorage.getItem('tema') as string) : 2
+                parseInt(localStorage.getItem('tema') as string) : 1
             );
         }
     }, []);

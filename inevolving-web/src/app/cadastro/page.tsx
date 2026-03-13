@@ -9,23 +9,10 @@ import Image from "next/image";
 
 export default function Cadastro() {
     const [isMobile, setIsMobile] = useState(false);
-    const [tema, setTema] = useState<number | undefined>(undefined);
-    // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
-
-        setTema(
-            localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
-        );
-
-        // if (parseInt(localStorage.getItem('tema') as string) === 2) {
-        //     setCorBackgroundInput("#F4F4FE");
-        // } else {
-        //     setCorBackgroundInput("#535353");
-        // }
     }, []);
 
     const [preEmail, setPreEmail] = useState('');
@@ -37,7 +24,7 @@ export default function Cadastro() {
 
     if (isMobile) {
         return (
-            <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <>
                 <div className={styles.mob}>
                     <Image 
                         src="/mobile/Wave Background.png"
@@ -67,11 +54,11 @@ export default function Cadastro() {
                     </div>
                     <CardInputCadastro preEmail={preEmail}/>
                 </div>
-            </div>
+            </>
         );
     } else {
         return (
-            <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+            <>
                 <div 
                     className={styles.background}
                     
@@ -96,7 +83,7 @@ export default function Cadastro() {
                         <CardInputCadastro preEmail={preEmail}/>
                     </motion.div>
                 </div>
-            </div>
+            </>
         );
     }
 }

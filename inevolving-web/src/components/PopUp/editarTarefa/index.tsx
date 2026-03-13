@@ -29,7 +29,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
         setIsMobile(largura <= 1024);
         setTema(
             localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
+            parseInt(localStorage.getItem('tema') as string) : 1
         );
         if (parseInt(localStorage.getItem('tema') as string) === 2) {
             setCorBackgroundInput("#F4F4FE");

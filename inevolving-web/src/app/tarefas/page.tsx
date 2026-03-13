@@ -33,7 +33,7 @@ export default function Tarefas() {
             );
             setTema(
                 localStorage.getItem('tema') ?
-                parseInt(localStorage.getItem('tema') as string) : 2
+                parseInt(localStorage.getItem('tema') as string) : 1
             );
         }
     }, []);

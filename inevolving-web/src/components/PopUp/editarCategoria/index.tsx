@@ -19,7 +19,7 @@ export default function EditarCategoria() {
 
         setTema(
             localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
+            parseInt(localStorage.getItem('tema') as string) : 1
         );
         if (tema === 1) {
             setCorDoBotaoSalvarInativado("#535353");

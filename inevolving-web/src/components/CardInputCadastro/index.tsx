@@ -14,32 +14,15 @@ import ObrigadoPorSeCadastrar from '../PopUp/ObrigadoPorSeCadastrar';
 export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
     const [isMobile, setIsMobile] = useState(false);
     const [carregando, setCarregando] = useState(false);
-    const [tema, setTema] = useState<number | undefined>(undefined);
-    // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
         
     useEffect(() => {
         const largura = window.innerWidth;
         setIsMobile(largura <= 1024);
-
-        setTema(
-            localStorage.getItem('tema') ?
-            parseInt(localStorage.getItem('tema') as string) : 2
-        );
-
-        // if (parseInt(localStorage.getItem('tema') as string) === 2) {
-        //     setCorBackgroundInput("#F4F4FE");
-        // } else {
-        //     setCorBackgroundInput("#535353");
-        // }
     }, []);
 
     const [email, setEmail] = useState(preEmail || '');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
-
-    // const router = useRouter();
-
-    // const [asSenhasNaoCoincidem, setAsSenhasNaoCoincidem] = useState<boolean>(false);
     const [obrigadoPorCadastrar, setObrigadoPorCadastrar] = useState<boolean>(false);
     const [mensagemDeErro, setMensagemDeErro] = useState<string>("");
 
@@ -78,7 +61,7 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
     };
     
     return (
-        <div className={tema === 1 ? styles.dark : styles.temaClaro}>
+        <>
             <div className={isMobile ? styles.mob : styles.cardRegistro}>
                 <motion.div 
                     className={styles.container}
@@ -162,7 +145,7 @@ export default function CardInputCadastro({ preEmail }: { preEmail?: string }) {
             {obrigadoPorCadastrar && (
                 <ObrigadoPorSeCadastrar />
             )}
-        </div>
+        </>
     );
 
 } 
