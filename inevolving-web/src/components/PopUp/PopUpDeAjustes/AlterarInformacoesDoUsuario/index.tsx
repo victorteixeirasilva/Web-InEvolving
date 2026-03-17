@@ -68,7 +68,7 @@ export default function AlterarInformacoesDoUsuario() {
                                         height={15}
                                         />
                                 </div>
-                                </div>
+                            </div>
                             <div className={styles.inputDescrição}>
                                 <h3>Email</h3>
                                 <div className={styles.input}>

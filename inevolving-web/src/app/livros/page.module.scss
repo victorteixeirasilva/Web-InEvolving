@@ -542,7 +542,6 @@
 .containerImagemDeCapa {
     display: flex;
     flex-direction: row;
-    box-shadow: var(--sombraNavegacao);
 }
 
 .descricaoCapaDoLivro {
@@ -558,7 +557,7 @@
 .containerUpload {
     border-radius: 12px;
     margin-top: 20px;
-    background-color: #F4F4FE;
+    background-color: var(--background-inputs);
     padding: 20px 30px;
     align-items: center;
     align-content: center;

@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import AlterarTipoDoMenuPopUp from "@/components/PopUp/PopUpDeAjustes/AlterarTipoDoMenuPopUp";
 import AlterarInformacoesDoUsuario from "@/components/PopUp/PopUpDeAjustes/AlterarInformacoesDoUsuario";
 import EsqueciSenha from "@/components/PopUp/esqueciSenha";
+import VerListaDeAmigos from "@/components/PopUp/PopUpDeAjustes/VerListaDeAmigos";
+import RenovacaoPopUp from "@/components/PopUp/PopUpDeAjustes/RenovacaoPopUp";
 
 export default function Page( ) {
     const [tema, setTema] = useState<number | undefined>(undefined);
@@ -16,6 +18,8 @@ export default function Page( ) {
     const [alterarTipoDoMenuPopUp, setAlterarTipoDoMenuPopUp] = useState<boolean>(false);
     const [alterarInformacoesDoUsuariosPopUp, setAlterarInformacoesDoUsuariosPopUp] = useState<boolean>(false);
     const [alterarSenhaPopUp, setAlterarSenhaPopUp] = useState<boolean>(false);
+    const [verListaDeAmigosPopUp, setVerListaDeAmigos] = useState<boolean>(false);
+    const [verRenovacaoPopUp, setRenovacaoPopUp] = useState<boolean>(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -82,20 +86,28 @@ export default function Page( ) {
                                 
                             }}
                         >
-                            {/* TODO - Desenvolver Tela de Pop Up */}
                             Alterar Tema
                         </button>
-                        <button>
-                            {/* TODO - Desenvolver Tela de Pop Up */}
+                        <button
+                            onClick={() => {
+                                setVerListaDeAmigos(true);
+                            }}
+                        >
                             Ver Lista de Amigos
                         </button>
-                        <button>
-                            {/* TODO - Desenvolver Tela de Pop Up */}
+                        <button
+                            onClick={() => {
+                                setRenovacaoPopUp(true)
+                            }}
+                        >
                             Alterar Data da Renovação
                         </button>
                     </motion.div>
                 </motion.div>
             </motion.div>
+            {verRenovacaoPopUp && (
+                <RenovacaoPopUp />
+            )}
             {alterarTipoDoMenuPopUp && (
                 <AlterarTipoDoMenuPopUp />
             )}
@@ -104,6 +116,9 @@ export default function Page( ) {
             )}
             {alterarSenhaPopUp && (
                 <EsqueciSenha voltar={() => setAlterarSenhaPopUp(false)} />
+            )}
+            {verListaDeAmigosPopUp && (
+                <VerListaDeAmigos />
             )}
         </div>
     );
