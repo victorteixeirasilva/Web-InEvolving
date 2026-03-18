@@ -917,6 +917,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div 
@@ -930,6 +931,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div 
@@ -943,6 +945,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div 
@@ -956,6 +959,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div 
@@ -969,6 +973,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div 
@@ -982,6 +987,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div 
@@ -995,6 +1001,7 @@ export default function EditarTarefa( { tarefa, voltar }: { tarefa: Tarefa_Modul
                                         alt="Icone Check Azul"
                                         width={21}
                                         height={16}
+                                        className={styles.selecionado}
                                     />
                                 </div>
                                 <div className={styles.containerDataFinal}>

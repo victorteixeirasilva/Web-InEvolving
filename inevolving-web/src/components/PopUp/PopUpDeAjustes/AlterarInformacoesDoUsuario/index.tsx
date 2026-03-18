@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./EditarObjetivo.module.scss";
+import styles from "./AlterarInformacoesDoUsuario.module.scss";
 import * as motion from "motion/react-client";
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
