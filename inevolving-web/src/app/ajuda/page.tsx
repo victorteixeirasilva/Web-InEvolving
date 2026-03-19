@@ -10,14 +10,14 @@ import { useEffect, useState } from "react";
 import { linkWpp } from "../../constants";
 
 export default function Page( ) {
-    const [isMobile, setIsMobile] = useState(false);
+    // const [isMobile, setIsMobile] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     const [tema, setTema] = useState<number | undefined>(undefined);
     
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const largura = window.innerWidth;
-            setIsMobile(largura <= 1024);
+            // const largura = window.innerWidth;
+            // setIsMobile(largura <= 1024);
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1
@@ -31,7 +31,7 @@ export default function Page( ) {
 
     return (
         <div className={tema === 1 ? styles.dark : styles.temaClaro}>
-            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0.97 }}
@@ -59,7 +59,7 @@ export default function Page( ) {
                                 </p>
                             </div>
                             <motion.div
-                                whileHover={{ scale: 1.1 }} 
+                                whileHover={{ scale: 1.01 }} 
                                 whileTap={{ scale: 0.8 }} 
                                 className={styles.containerBotao}
                                 onClick={() => {
