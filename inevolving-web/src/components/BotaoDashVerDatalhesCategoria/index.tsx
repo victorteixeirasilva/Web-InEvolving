@@ -28,8 +28,8 @@ export default function BotaoDashVerDatalhesCategoria( { categoria }: {categoria
         <div className={tema === 1 ? styles.dark : styles.temaClaro}>
             <motion.button
                 className={styles.containerBotaoVerDetalhes}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.8 }}
+                // whileHover={{ scale: 1.2 }}
+                // whileTap={{ scale: 0.8 }}
                 onClick={handleClick}
             >
                 Ver detalhes
