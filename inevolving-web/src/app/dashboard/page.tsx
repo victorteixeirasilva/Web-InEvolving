@@ -17,6 +17,7 @@ import { linkApi } from '../../constants';
 
 export default function Dashboard() {
     const [tema, setTema] = useState<number | undefined>(undefined);
+    const [colorCarregando, setColorCarregando] = useState<string>("#0B0E31");
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     
     const [isMobile, setIsMobile] = useState(false);
@@ -31,6 +32,9 @@ export default function Dashboard() {
                 localStorage.getItem('tema') ?
                 parseInt(localStorage.getItem('tema') as string) : 1
             );
+            if (parseInt(localStorage.getItem('tema') as string) === 1) {
+                setColorCarregando("white");
+            }
         }
     }, []);
 
@@ -50,6 +54,7 @@ export default function Dashboard() {
     const [showVisionBoard, setShowVisionBoard] = useState(false);
 
     const [carregandoDash, setCarregandoDash] = useState(false);
+    const [carregandoVision, setCarregandoVision] = useState(false);
 
     const router = useRouter();
 
@@ -86,6 +91,7 @@ export default function Dashboard() {
     }, [jwtToken, router])
 
     const getVisionBoard = useCallback(async () => {
+        setCarregandoVision(true);
         const response = await fetch(
                 linkApi + "/auth/api/motivation/dreams/visionbord/generate", 
             {
@@ -106,6 +112,7 @@ export default function Dashboard() {
         if (response.ok) {
             setUrlVisionBord(data.urlVisionBord);
         }
+        setCarregandoVision(false);
     }, [jwtToken, router])
 
     useEffect(() => {
@@ -135,6 +142,9 @@ export default function Dashboard() {
                         scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
                     }} 
                     className={styles.container}>
+                    {carregandoVision && (
+                        <ClipLoader size={50} color={colorCarregando} />
+                    )}
                     {urlVisionBord && urlVisionBord !== "No dreams were found" && (
                         <div className={styles.preVisionBordContainer}>
                             <Image 
@@ -155,7 +165,7 @@ export default function Dashboard() {
 
                     <motion.div ref={constraintsRef} className={styles.containerConteudo}>
                         {carregandoDash && (
-                            <ClipLoader size={50} color="#0B0E31" />
+                            <ClipLoader size={50} color={colorCarregando} />
                         )}
                         {!carregandoDash && !dashboardData && (
                             <h3>

@@ -16,8 +16,6 @@ export default function Page( ) {
     
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            // const largura = window.innerWidth;
-            // setIsMobile(largura <= 1024);
             setTipoMenuDesk(
                 localStorage.getItem('tipoMenuDesk') ? 
                 parseInt(localStorage.getItem('tipoMenuDesk') as string) : 1

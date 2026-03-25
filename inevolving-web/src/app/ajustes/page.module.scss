@@ -1,179 +1,424 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap');
+
+// ============================================================
+// KEYFRAMES
+// ============================================================
+
+/// Entrada da página com desfoque inicial
+@keyframes entradaPagina {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/// Fade com subida leve
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/// Entrada individual dos botões — escala + fade
+@keyframes botaoEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.94);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/// Brilho deslizante no hover
+@keyframes brilhoDeslizante {
+  0%   { left: -80%; opacity: 0.7; }
+  70%  { opacity: 1; }
+  100% { left: 130%; opacity: 0; }
+}
+
+/// Ícone do botão aparece com rotação
+@keyframes iconeGira {
+  from { transform: rotate(-12deg) scale(0.7); opacity: 0; }
+  to   { transform: rotate(0deg) scale(1);    opacity: 1; }
+}
+
+/// Linha decorativa se desenha
+@keyframes desenhaBorda {
+  from { width: 0; opacity: 0; }
+  to   { width: 44px; opacity: 1; }
+}
+
+/// Ripple ao clicar
+@keyframes ripple {
+  0%   { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+// ============================================================
+// TOKENS — Tema Escuro
+// ============================================================
 
 .dark {
-    // --fundo: #14161c;
-    --fundo: url("../../../public/darkback3.jpg");
-    --corTituloPage: white;
-    --corBotoes: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255,255,255,0.04) 30%,
-        rgba(11, 14, 49, 0.356) 65%,
-        rgba(0,0,0,0.20) 100%
+  --fundo: url("../../../public/darkback3.jpg");
+  --corTituloPage: #ffffff;
+
+  // Variáveis originais mantidas
+  --corBotoes: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.04) 30%,
+      rgba(11, 14, 49, 0.356) 65%,
+      rgba(0, 0, 0, 0.20) 100%
     ),
-    /* Tom frio (vidro) + leve escurecimento no fundo */
     linear-gradient(135deg,
-    rgba(160, 211, 255, 0.014) 0%,
-    rgba(120, 170, 255, 0) 45%,
-    rgba(0,0,0,0.06) 100%
+      rgba(160, 211, 255, 0.014) 0%,
+      rgba(120, 170, 255, 0) 45%,
+      rgba(0, 0, 0, 0.06) 100%
     ),
-    /* Brilho de borda “de cima” (edge highlight) */
     linear-gradient(180deg,
-    rgba(255, 255, 255, 0.098) 0%,
-    rgba(255,255,255,0.08) 35%,
-    rgba(255,255,255,0.00) 70%
+      rgba(255, 255, 255, 0.098) 0%,
+      rgba(255, 255, 255, 0.08) 35%,
+      rgba(255, 255, 255, 0.00) 70%
     );
-    --sombraBtn: #0b0e3176;
-    --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
-    ---webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
-    --border: 1px solid rgba(255,255,255,0.22);
-    --box-shadow: 0 10px 30px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.45);
+
+  --sombraBtn: #0b0e3176;
+  --backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+  ---webkit-backdrop-filter: blur(18px) saturate(160%) contrast(105%);
+  --border: 1px solid rgba(255, 255, 255, 0.22);
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+
+  // Tokens glass — escuro
+  --glass-bg:           rgba(255, 255, 255, 0.05);
+  --glass-borda:        rgba(255, 255, 255, 0.14);
+  --glass-blur:         blur(24px) saturate(180%) brightness(1.05);
+  --glass-sombra:
+    0 8px 32px rgba(0, 0, 0, 0.36),
+    0 2px 6px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  --glass-sombra-hover:
+    0 18px 56px rgba(0, 0, 0, 0.50),
+    0 4px 16px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+  --glass-borda-hover:  rgba(255, 255, 255, 0.32);
+
+  // Botão — acento coral sobre glass
+  --btn-texto:          rgba(255, 255, 255, 0.92);
+  --btn-hover-bg:       rgba(255, 255, 255, 0.10);
+  --btn-acento-glow:    rgba(231, 97, 72, 0.28);
+
+  --cor-subtitulo:      rgba(192, 192, 192, 0.72);
+  --acento:             #E76148;
+  --acento-suave:       rgba(231, 97, 72, 0.18);
 }
+
+// ============================================================
+// TOKENS — Tema Claro
+// ============================================================
 
 .temaClaro {
-    --sombraBtn: #dddddd;
-    --fundo: white;
-    --corTituloPage: #0b0e31;
-    --corBotoes: #E76148;
-    --backdrop-filter: none;
-    --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
-    --border: none;
-    ---webkit-backdrop-filter: none;
+  --sombraBtn: #dddddd;
+  --fundo: white;
+  --corTituloPage: #0b0e31;
+  --corBotoes: #E76148;
+  --backdrop-filter: none;
+  --box-shadow: 0px 1px 10.2px 0px #a6a6a6;
+  --border: none;
+  ---webkit-backdrop-filter: none;
+
+  // Tokens glass — claro (leitoso, arejado)
+  --glass-bg:           rgba(255, 255, 255, 0.75);
+  --glass-borda:        rgba(11, 14, 49, 0.09);
+  --glass-blur:         blur(20px) saturate(150%);
+  --glass-sombra:
+    0 4px 20px rgba(11, 14, 49, 0.07),
+    0 1px 3px rgba(11, 14, 49, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --glass-sombra-hover:
+    0 12px 40px rgba(11, 14, 49, 0.13),
+    0 3px 10px rgba(11, 14, 49, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  --glass-borda-hover:  rgba(11, 14, 49, 0.18);
+
+  // Botão — coral sólido, expressivo
+  --btn-texto:          #ffffff;
+  --btn-hover-bg:       #d9543c;
+  --btn-acento-glow:    rgba(231, 97, 72, 0.30);
+
+  --cor-subtitulo:      #8888a0;
+  --acento:             #E76148;
+  --acento-suave:       rgba(231, 97, 72, 0.10);
 }
+
+// ============================================================
+// CONTAINER PRINCIPAL
+// ============================================================
 
 .container {
-    overflow-x: hidden;
-    font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  font-family: 'Sora', sans-serif;
+  position: fixed;
+  z-index: 3;
+  margin-top: 30px;
+  margin-left: 200px;
+  border-top-left-radius: 50px;
+  background: var(--fundo);
+  height: 100%;
+  width: calc(100% - 200px - 20%);
+  animation: entradaPagina 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 
+  @media (max-width: 768px) {
+    overflow-x: hidden;
+    font-family: 'Sora', sans-serif;
     position: fixed;
     z-index: 3;
-    margin-top: 30px;
-    margin-left: 200px;
+    margin: 0;
+    margin-top: 70px;
     border-top-left-radius: 50px;
-    background: var(--fundo);
+    border-top-right-radius: 50px;
     height: 100%;
-    width: calc(100% - 200px - 20%);
-
-    @media (max-width: 768px) {
-        overflow-x: hidden;
-        font-family: 'Inter', sans-serif;
-    
-        position: fixed;
-        z-index: 3;
-        margin: 0px;
-        margin-top: 70px;
-        border-top-left-radius: 50px;
-        border-top-right-radius: 50px;
-        height: 100%;
-        width: 100%;
-    }
+    width: 100%;
+  }
 }
+
+// ============================================================
+// CABEÇALHO
+// ============================================================
 
 .tituloContainer {
-    width: 100%;
-    margin: 50px;
-    align-items: center;
+  width: 100%;
+  padding: 56px 60px 0;
+  box-sizing: border-box;
+  animation: fadeSlideUp 0.55s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: clamp(30px, 4vw, 46px);
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--corTituloPage);
+    margin: 0 0 14px;
+
+    // Linha acento animada
+    &::after {
+      content: '';
+      display: block;
+      width: 44px;
+      height: 3px;
+      margin-top: 16px;
+      background: linear-gradient(90deg, var(--acento), rgba(231, 97, 72, 0.25));
+      border-radius: 99px;
+      animation: desenhaBorda 0.55s 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:hover::after { width: 72px; }
+  }
+
+  p {
+    width: 65%;
+    max-width: 520px;
+    color: var(--cor-subtitulo);
+    font-weight: 400;
+    font-size: clamp(13px, 1.35vw, 15.5px);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    margin: 4px 0 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 32px 28px 0;
+    text-align: center;
 
     h1 {
-        font-weight: 700;
-        font-size: 40px;
-        color: var(--corTituloPage);
+      font-size: 30px;
+      margin: 16px 0;
+      &::after { margin: 16px auto 0; }
     }
+
     p {
-        width: 80%;
-        color: #C0C0C0;
-
-        font-weight: 700;
-        font-size: 16px;
+      width: 90%;
+      margin: 0 auto;
+      font-size: 14px;
     }
-
-    @media (max-width: 768px) {
-        margin: 0px;
-        text-align: center;
-
-        h1 {
-            width: 100%;
-            margin: auto;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin: auto;
-            width: 90%;
-        }
-
-    }
+  }
 }
+
+// ============================================================
+// GRID DE BOTÕES DE CONFIGURAÇÃO
+// ============================================================
 
 .containerConteudo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 30px;
-    row-gap: 30px;  
-    margin-top: 40px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 150px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 44px 60px 150px;
+  animation: fadeSlideUp 0.55s 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  // ── Botão Glass expressivo ────────────────────────────────
+  button {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    // Tipografia
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: clamp(13px, 1.2vw, 17px);
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    color: var(--btn-texto);
+    text-align: center;
+
+    // Dimensões
+    width: 100%;
+    min-height: 88px;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    border-radius: 24px;
+
+    // Glass
+    background: var(--corBotoes);
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    backdrop-filter: var(--backdrop-filter);
+    -webkit-backdrop-filter: var(---webkit-backdrop-filter);
+
+    // Transições
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s ease,
+      border-color 0.3s ease,
+      letter-spacing 0.3s ease,
+      filter 0.3s ease;
+
+    // Entrada escalonada em cascata
+    @for $i from 1 through 6 {
+      &:nth-child(#{$i}) {
+        animation: botaoEntrada 0.5s #{0.18s + ($i * 0.08s)} cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+    }
+
+    // Camada de brilho top — constante
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        transparent 100%
+      );
+      border-radius: 24px 24px 0 0;
+      pointer-events: none;
+    }
+
+    // Brilho deslizante de hover
+    &::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -80%;
+      width: 55%;
+      height: 130%;
+      background: linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.28) 45%,
+        rgba(255, 255, 255, 0.08) 58%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-15deg);
+      pointer-events: none;
+    }
+
+    // ── Hover ───────────────────────────────────────────────
+    &:hover {
+      transform: translateY(-5px) scale(1.025);
+      box-shadow:
+        var(--glass-sombra-hover),
+        0 0 0 1px var(--glass-borda-hover);
+      letter-spacing: 0.04em;
+      filter: brightness(1.06);
+
+      &::before {
+        animation: brilhoDeslizante 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+    }
+
+    // ── Clique ──────────────────────────────────────────────
+    &:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow: var(--glass-sombra);
+      filter: brightness(0.95);
+      transition-duration: 0.08s;
+    }
+
+    // ── Foco acessível ──────────────────────────────────────
+    &:focus-visible {
+      outline: 2px solid var(--acento);
+      outline-offset: 3px;
+    }
+  }
+
+  // ── Tablet ────────────────────────────────────────────────
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: 36px;
+    margin-right: 36px;
+  }
+
+  // ── Mobile ────────────────────────────────────────────────
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 28px 24px 300px;
 
     button {
-        cursor: pointer;
-        color: white;
-        background: var(--corBotoes);
-        border: none;
-        width: 100%;
-        margin-top: 40px;
-        height: 100%;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 18px;
-        padding: 0;
-        
-        /* O “vidro” de verdade */
-        backdrop-filter: none;
-        -webkit-backdrop-filter: var(---webkit-backdrop-filter);
-
-        /* Borda e “acabamento” */
-        border: var(--border);
-
-        /* Sombra + brilho interno */
-        box-shadow: var(--box-shadow);
+      min-height: 68px;
+      padding: 20px;
+      font-size: 15px;
+      border-radius: 20px;
     }
-
-    button:hover {
-        transition: 0.5s;
-        scale: 1.05;
-    }
-
-    @media (max-width: 768px) {
-            grid-template-columns: repeat(1, 1fr);
-            margin-bottom: 300px;
-
-            button {
-                font-size: 12px;
-            }
-
-            button:hover {
-                transition: 0.5s;
-                scale: 1.05;
-            }
-    }
-
+  }
 }
 
-.containerTipoMenu2 {
-    .container {
-        overflow-x: hidden;
-        font-family: 'Inter', sans-serif;
+// ============================================================
+// LAYOUT ALTERNATIVO — Menu tipo 2
+// ============================================================
 
-        position: fixed;
-        z-index: 3;
-        margin-top: 70px;
-        margin-left: 0px;
-        border-top-left-radius: 50px;
-        border-top-right-radius: 50px;
-        background: var(--fundo);
-        height: 100%;
-        width: 100%;
-    }
+.containerTipoMenu2 {
+  .container {
+    overflow-x: hidden;
+    font-family: 'Sora', sans-serif;
+    position: fixed;
+    z-index: 3;
+    margin-top: 70px;
+    margin-left: 0;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background: var(--fundo);
+    height: 100%;
+    width: 100%;
+    animation: entradaPagina 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
