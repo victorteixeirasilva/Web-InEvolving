@@ -16,14 +16,10 @@ import { AnimatePresence } from 'framer-motion';
 import { linkApi } from '../../constants';
 
 export default function Categoria( ) {
-    const [isMobile, setIsMobile] = useState(false);
     const [tema, setTema] = useState<number | undefined>(undefined);
     // const [corBackgroundInput, setCorBackgroundInput] = useState<string>("");
     
     useEffect(() => {
-        const largura = window.innerWidth;
-        setIsMobile(largura <= 1024);
-
         setTema(
             localStorage.getItem('tema') ?
             parseInt(localStorage.getItem('tema') as string) : 1
@@ -181,8 +177,8 @@ export default function Categoria( ) {
     
     return (
         <div className={tema === 1 ? styles.dark : styles.temaClaro}>
-            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
-                <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+                <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                     <Menu />
                     <motion.div
                         initial={{ opacity: 0, scale: 0.97 }}

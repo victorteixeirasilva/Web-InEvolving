@@ -17,7 +17,7 @@
         rgba(120, 170, 255, 0) 45%,
         rgba(0,0,0,0.06) 100%
         ),
-        /* Brilho de borda “de cima” (edge highlight) */
+        /* Brilho de borda "de cima" (edge highlight) */
         linear-gradient(180deg,
         rgba(255, 255, 255, 0.098) 0%,
         rgba(255,255,255,0.08) 35%,
@@ -87,6 +87,13 @@
         background-color: #ccc;
         border-radius: 4px;
     }
+
+    @media (max-width: 768px) {
+        margin: auto;
+        margin-top: 70px;
+        border-top-right-radius: 50px;
+        width: 100vw;
+    }
 }
 
 
@@ -104,6 +111,15 @@
     p {
         color: #C0C0C0;
         width: 80%;
+    }
+
+    @media (max-width: 768px) {
+        margin: 0px;
+        text-align: center;
+
+        h1 {
+            font-size: 28px;
+        }
     }
 }
 
@@ -131,11 +147,11 @@
                 color: var(--corTituloPage);
             }
 
-            /* O “vidro” de verdade */
+            /* O "vidro" de verdade */
             backdrop-filter: none;
             -webkit-backdrop-filter: var(--backdrop);
     
-            /* Borda e “acabamento” */
+            /* Borda e "acabamento" */
             border: var(--border);
     
             /* Sombra + brilho interno */
@@ -146,6 +162,19 @@
 
     .conteudoCard{
         margin: 0px 30px;
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+        margin-left: 20px;
+        margin-right: 20px;
+
+        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            .objetivo h3 {
+                font-weight: 700;
+                font-size: 12px;
+            }
+        }
     }
 
 }
@@ -175,111 +204,11 @@
         font-weight: 500;
         font-size: 18px;
     }
-}
 
-.mob {
-
-    .container {
-        overflow-x: hidden;
-        font-family: 'Inter', sans-serif;
-
-        position: fixed;
-        z-index: 3;
-        margin: auto;
-        margin-top: 70px;
-        // margin-left: 200px;
-        border-top-left-radius: 50px;
-        border-top-right-radius: 50px;
-        background: var(--fundo);
-        height: 100%;
-        width: 100vw;
-    }
-
-
-    .tituloContainer {
-        width: 100%;
-        margin: 0px;
-        align-items: center;
-        text-align: center;
-
-        h1 {
-            font-weight: 700;
-            font-size: 28px;
-        }
-
-        p {
-            color: #C0C0C0;
-            width: 80%;
-        }
-    }
-
-    .containerConteudo {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        column-gap: 30px;
-        row-gap: 30px;  
-        margin-top: 40px;
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 150px;
-
-        @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {        
-            .objetivo {
-                width: 100%;
-                padding: 30px 0px;
-                background: var(--corBotoes);
-                border-radius: 22px;
-                box-shadow: 0px 1px 10.2px 0px rgba(0, 0, 0, 0.25);
-    
-                h3 {
-                    font-weight: 700;
-                    font-size: 12px;
-                }
-
-                /* O “vidro” de verdade */
-                backdrop-filter: none;
-                -webkit-backdrop-filter: var(--backdrop);
-
-                /* Borda e “acabamento” */
-                border: var(--border);
-
-                /* Sombra + brilho interno */
-                box-shadow: var(--box-shadow);
-    
-            }
-        }
-
-
-        .conteudoCard{
-            margin: 0px 30px;
-        }
-
-    }
-
-    .containerBotao {
-        margin-top: 30px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
+    @media (max-width: 768px) {
         button {
-            cursor: pointer;
-            background-color: var(--corFundoBotao);
-            border: none;
-            width: 119px;
-            height: 27px;
-            border-radius: 7px;
-
-            color: #ACACAC;
             font-weight: 700;
             font-size: 12px;
         }
-
-        a {
-            text-decoration: none;
-            color: #ACACAC;
-            font-weight: 500;
-            font-size: 18px;
-        }
-    }  
+    }
 }

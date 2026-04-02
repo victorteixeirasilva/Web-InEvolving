@@ -19,7 +19,6 @@ import { ClipLoader } from 'react-spinners';
 export default function Page( ) {
     const [tema, setTema] = useState<number | undefined>(undefined);
     const [carregandoDash, setCarregandoDash] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -32,10 +31,6 @@ export default function Page( ) {
                 parseInt(localStorage.getItem('tema') as string) : 1
             );
         }
-    }, []);
-    useEffect(() => {
-        const largura = window.innerWidth;
-        setIsMobile(largura <= 1024);
     }, []);
     const [categoria, setCategoria] = useState<Category | null>(null);
     
@@ -85,7 +80,7 @@ export default function Page( ) {
 
     return (
         <div className={tema === 1 ? styles.dark : styles.temaClaro}>
-            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>                
                 <Menu />
                 <motion.div
                     initial={{ opacity: 0, scale: 0.97 }}

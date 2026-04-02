@@ -351,7 +351,7 @@ export default function Categoria() {
 
     return (
         <div className={tema === 1 ? styles.dark : styles.temaClaro}>
-            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 {primeiroLogin && (
                     <div className={styles.overlay}>
                         <motion.div 

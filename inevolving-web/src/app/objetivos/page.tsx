@@ -16,7 +16,6 @@ import { linkApi } from '../../constants';
 
 export default function Categoria( ) {
     const [tema, setTema] = useState<number | undefined>(undefined);
-    const [isMobile, setIsMobile] = useState(false);
 
     const [tipoMenuDesk, setTipoMenuDesk] = useState<number | undefined>(undefined);
     
@@ -33,11 +32,6 @@ export default function Categoria( ) {
         }
     }, []);
     
-    useEffect(() => {
-        const largura = window.innerWidth;
-        setIsMobile(largura <= 1024);
-    }, []);
-
     const router = useRouter();
     const [filtroAtivo, setFiltroAtivo] = useState(1);
 
@@ -131,7 +125,7 @@ export default function Categoria( ) {
 
     return (
         <div className={tema === 1 ? styles.dark : styles.temaClaro}>
-            <motion.div className={isMobile ? styles.mob : tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
+            <motion.div className={tipoMenuDesk === 2 ? styles.containerTipoMenu2 : ''}>
                 <motion.div>
                     <Menu />
                     <motion.div
